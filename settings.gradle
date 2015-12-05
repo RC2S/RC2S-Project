@@ -1,0 +1,9 @@
+rootProject.name = 'RC2S-Project'
+
+include 'rc2s-application'
+include 'rc2s-client'
+include 'rc2s-common'
+include 'rc2s-daemon'
+include 'rc2s-dao'
+include 'rc2s-ear'
+include 'rc2s-ejb'

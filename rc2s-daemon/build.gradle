@@ -1,0 +1,3 @@
+dependencies {
+    compile group: 'com.pi4j', name: 'pi4j-core', version: '0.0.5'
+}

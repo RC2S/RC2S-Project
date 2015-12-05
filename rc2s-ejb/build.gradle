@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':rc2s-application')
+    compile project(':rc2s-dao')
+    compile group: 'javax', name: 'javaee-api', version: '7.0'
+}
