@@ -1,0 +1,12 @@
+task initProfile << {
+    def profilesAvailable = ['dev', 'uat', 'prod']
+    def profile = project.hasProperty('env') ? project.env : 'dev'
+    project.ext.set 'env', profile
+ 
+    if(!profilesAvailable.contains(profile)) {
+        println "[WARN] Target environment '${env}' does not exists in the available profiles list: [" + profilesAvailable.join(", ") + "]. Configuring default profile 'dev'."
+    }
+    else {
+        println "[INFO] Using profile '${env}'."
+    }
+}
