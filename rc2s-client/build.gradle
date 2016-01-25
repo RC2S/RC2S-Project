@@ -1,3 +1,5 @@
+project.ext.set 'mainClass', 'com.rc2s.client.Main'
+
 dependencies {
     
 }
