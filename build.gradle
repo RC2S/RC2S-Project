@@ -2,7 +2,6 @@ apply plugin: 'base' // To add "clean" task to the root project.
 apply from: 'profiles.gradle'
 
 loadProfile()
-
 def loadProfile() {
     def env = project.hasProperty('env') ? project.env : 'dev'
     project.ext.set 'env', env

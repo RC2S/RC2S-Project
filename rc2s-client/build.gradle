@@ -1,3 +1,92 @@
-dependencies {
+/**
+ * JNLP
+ */
+task copyLibs(type: Copy, dependsOn: [jar]) {
+    from configurations.runtime
+    from("build/libs")
+    into("build/jws/lib")
+    include('*.jar')
+}
+
+task signAll(dependsOn: [copyLibs]) << {
+    new File('build/jws/signed').mkdirs()
+    def libFiles = files { file('build/jnlp/lib').listFiles() }
+    libFiles.each {
+        ant.signjar(
+                destDir: 'build/jws/signed',
+                alias: 'RC2S',
+                jar: it,
+                keystore: 'src/main/jnlp/keys/rc2s.key',
+                storepass: 'P@ssword1234',
+                preservelastmodified: 'true'
+        )
+    }
+}
+
+/*task copyJnlp(type: Copy, dependsOn: [signAll]) << {
+    from configurations.runtime
+    from("src/main/jnlp/descriptors/")
+    into("build/jws/signed")
+    include("rc2s-${env}.jnlp")
+}*/
+
+task generateJnlp(dependsOn: [signAll]) << {
+    File jnlpTemplateFile = new File("src/main/jnlp/descriptors/rc2s-${env}.jnlp")
+    def root = new XmlParser().parse(jnlpTemplateFile)
+    def jnlpFileName = "rc2s-client-${env}-${version}.jnlp"
     
+    // Setting values in the jnlp template
+    
+    // Racine
+    root.@codebase = 'file:/' + new File('build/jws/signed').absolutePath
+    //root.@codebase = 'https://someserver.com/some/path'
+    root.@href = jnlpFileName
+    
+    // Initialisation des informations
+    def information = root.information[0]
+    def title = information.title[0]
+    def vendor = information.vendor[0]
+    title.setValue("RC2S-Client")
+    vendor.setValue("RC2S")
+    
+    // Initialisation des ressources (main JAR + libs)
+    def resource = root.resources[0]
+    def j2se = resource.j2se[0]
+    j2se.@version = "1.8+"
+    
+    def mainJar = "rc2s-client-${version}.jar"
+    def libs = files { file('build/jws/lib').listFiles() }
+    libs.each {
+        def resourceValues = [href: it.name]
+        if (mainJar == it.name) {
+            resourceValues = [href: it.name, main: 'true']
+        }
+        resource.appendNode('jar', resourceValues)
+    }
+    
+    // On définit la class principale
+    def applicationDesc = root.'application-desc'[0]
+    applicationDesc.'@main-class' = ${mainClass}
+    
+    // Écriture du nouveau contenu dans un nouveau fichier JNLP
+    File jnlpFile = new File('build/jws/signed/' + jnlpFileName)
+    new XmlNodePrinter(new PrintWriter(jnlpFile)).print(root)
+}
+
+task generateJws (dependsOn: [generateJnlp]) << {
+    println("Generating JWS files in: build/jws/signed")
+}
+
+dependencies {
+    compile project(':rc2s-common')
+}
+
+sourceSets {
+    main {
+        resources {
+            // On ajoute toutes les ressources du répertoire views quelque soit
+            // le profile de compilation
+            include 'src/main/resources/views/**'
+        }
+    }
 }
