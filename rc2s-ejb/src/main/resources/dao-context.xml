@@ -9,14 +9,7 @@
             http://www.springframework.org/schema/tx
             http://www.springframework.org/schema/tx/spring-tx.xsd">
     
-    <bean id="beanRefContext" class="org.springframework.context.support.ClassPathXmlApplicationContext">
-        <constructor-arg>
-            <list>
-                <value>application-context.xml</value>
-                <!--<value>enterprise-context.xml</value>
-                <value>dataSource-context.xml</value>
-                <value>sessionFactory-context.xml</value>-->
-            </list>
-        </constructor-arg>
+    <bean id="userDAO" class="com.rc2s.dao.UserDAO" autowire="byName">
+        <!--<property name="sessionFactoryName" ref="sessionFactory"/>-->
     </bean>
 </beans>

@@ -9,7 +9,5 @@
             http://www.springframework.org/schema/tx
             http://www.springframework.org/schema/tx/spring-tx.xsd">
     
-    <bean id="UserService" class="com.rc2s.application.services.user.UserService">
-        <property name="message" value="Spring is fun." />
-    </bean>
+    <bean id="userService" class="com.rc2s.application.services.user.UserService"/>
 </beans>

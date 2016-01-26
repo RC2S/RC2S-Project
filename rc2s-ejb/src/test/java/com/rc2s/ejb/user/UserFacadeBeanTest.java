@@ -25,11 +25,9 @@ public class UserFacadeBeanTest
     @Before
     public void setUp() throws NamingException
     {
-        /*final Properties p = new Properties();  
+        final Properties p = new Properties();  
         p.setProperty("java.naming.factory.initial", "org.apache.openejb.client.LocalInitialContextFactory");  
-        p.setProperty("openejb.jndiname.format", "{ejbName}/{interfaceType.annotationName}");  
-        p.setProperty("openejb.deployments.classpath.include", "com.rc2s.ejb.*");  
-        userBean = ((UserFacadeRemote) new InitialContext(p).lookup("UserFacadeBean/Local"));*/
+        userBean = ((UserFacadeRemote) new InitialContext(p).lookup("java:app/main/UserFacadeBean"));
     }
     
     @After
@@ -38,8 +36,8 @@ public class UserFacadeBeanTest
     @Test
     public void testGetAllUsers()
     {
-        /*final String result = userBean.getAllUsers();  
+        final String result = userBean.getAllUsers();  
         assertNotNull(result);  
-        assertEquals("coucou", result); */
+        assertEquals("coucou", result);
     }
 }
