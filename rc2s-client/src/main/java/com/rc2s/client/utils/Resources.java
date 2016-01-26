@@ -70,7 +70,6 @@ public class Resources
         
         try
         {
-            System.out.println("Loading resource: " + fxmlFile.toString());
             if(resourceExists(fxmlFile.toString()))
             {
                 loader.setLocation(getResource(fxmlFile.toString()));
