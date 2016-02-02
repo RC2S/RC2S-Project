@@ -1,5 +1,6 @@
 package com.rc2s.client.models;
 
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -50,27 +51,25 @@ public class LedCube extends Group
             System.out.println("CLICKED");
         });
         
-        this.setOnMouseDragged((MouseEvent me) -> {
-            if(mx == 0) mx = me.getX();
-            if(my == 0) my = me.getY();
+        this.setOnMouseDragged((MouseEvent e) -> {            
+            double oldx = mx;
+            double oldy = my;
+            mx = e.getX();
+            my = e.getY();
             
-            double mouseOldX = mx;
-            double mouseOldY = my;
-            mx = me.getX();
-            my = me.getY();
-            double mouseDeltaX = mx - mouseOldX;
-            double mouseDeltaY = my - mouseOldY;
+            double dx = mx - oldx;
+            double dy = my - oldy;
+            double nx = this.rx.getAngle() - dx;
+            double ny = this.ry.getAngle() + dy;
             
-            if(me.isAltDown() && me.isShiftDown() && me.isPrimaryButtonDown())
+            if(e.isPrimaryButtonDown())
             {
-                this.rz.setAngle(this.rz.getAngle() - mouseDeltaX);
-            }
-            else if(me.isAltDown() && me.isPrimaryButtonDown())
-            {
-                this.ry.setAngle(this.ry.getAngle() - mouseDeltaX);
-                this.rx.setAngle(this.rx.getAngle() + mouseDeltaY);
+                this.ry.setAngle(ny);
+                this.rx.setAngle(nx);
             }
         });
+        
+        this.setCursor(Cursor.HAND);
     }
     
     /*public void draw(Scene scene)
