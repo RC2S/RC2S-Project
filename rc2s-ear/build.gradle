@@ -1,5 +1,10 @@
 apply plugin: 'ear'
 
+task autodeploy(type: Exec, dependsOn: [ear]) << {
+  executable "asadmin"
+  args "deploy", "--force=true", "rc2s-ear-${version}.ear"
+}
+
 dependencies {
     deploy project(':rc2s-ejb')
     earlib project(path: ':rc2s-ejb', configuration: 'compile')
@@ -13,6 +18,6 @@ ear {
         initializeInOrder = true
         displayName = "RC2S Server"
         description = "JEE Server for RC2S project"
-        module("rc2s-ejb-1.0.jar", "ejb")
+        // module("rc2s-ejb-1.0.jar", "ejb")
     }
 }

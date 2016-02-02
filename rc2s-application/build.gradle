@@ -1,32 +1,7 @@
-apply plugin: 'ear'
-
-/**
- * Tâche de déploiement automatique dans GlassFish.
- */
-task autodeploy(type: Exec, dependsOn: [ear]) << {
-  executable "asadmin"
-  args "deploy", "--force=true", "rc2s-app.ear"
-}
-
 dependencies {
     compile project(':rc2s-common')
     compile project(':rc2s-dao')
     compile group: 'javax', name: 'javaee-api', version: '7.0'
     compile group: 'org.springframework', name: 'spring-context', version: '4.2.1.RELEASE'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.0.2.Final'
-}
-
-// Détails du descripteur de fichier de l'EAR
-ear {
-    libDirName 'lib'
-    
-    deploymentDescriptor { 
-        fileName = "application.xml"
-        version = "6"
-        initializeInOrder = true
-        
-        applicationName = "rc2s-app"
-        displayName = "RC2S-Application"
-        description = "RC2S Application Server"
-    }
 }
