@@ -17,19 +17,10 @@ public class UserService implements UserServiceI
         this.userDAO = userDAO;
     }
     
-    /*private CubeServiceI cubeService;
-    
-    @Autowired
-    public void setCubeService(CubeServiceI cubeService)
-    {
-        this.cubeService = cubeService;
-    }*/
-    
     @Override
     public String getAllUsersOrderedByName()
     {
         //return "coucou";
         return userDAO.getUsersByName();
-        //return cubeService.getCube();
     }
 }
