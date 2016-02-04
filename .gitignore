@@ -2,6 +2,7 @@
 /.nb-gradle/
 /rc2s-client/build/
 /rc2s-ejb/build/
+/rc2s-ejb/private/
 /rc2s-dao/build/
 /rc2s-application/build/
 /rc2s-common/build/
