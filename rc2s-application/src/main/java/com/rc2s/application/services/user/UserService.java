@@ -1,22 +1,35 @@
 package com.rc2s.application.services.user;
 
 import com.rc2s.dao.UserDAO;
+import javax.interceptor.Interceptors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import org.springframework.stereotype.Service;
 
 @Service
+@Interceptors(SpringBeanAutowiringInterceptor.class)
 public class UserService implements UserServiceI
 {
-    /*private UserDAO userDAO;
+    private UserDAO userDAO;
     
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+    
+    /*private CubeServiceI cubeService;
+    
+    @Autowired
+    public void setCubeService(CubeServiceI cubeService)
+    {
+        this.cubeService = cubeService;
     }*/
     
     @Override
     public String getAllUsersOrderedByName()
     {
-        return "coucou"; //userDAO.getUsersByName();
+        //return "coucou";
+        return userDAO.getUsersByName();
+        //return cubeService.getCube();
     }
 }
