@@ -20,7 +20,6 @@ public class UserService implements UserServiceI
     @Override
     public String getAllUsersOrderedByName()
     {
-        //return "coucou";
         return userDAO.getUsersByName();
     }
 }
