@@ -10,12 +10,12 @@
             http://www.springframework.org/schema/tx/spring-tx.xsd">
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <!--<property name="dataSource" ref="dataSourceRC2S"/>
-        <property name="mappingResources">
+        <property name="dataSource" ref="dataSourceRC2S"/>
+        <property name="annotatedPackages">
             <list>
-                <value>package.User.hbm.xml</value>
+                <value>com.rc2s.common.vo</value>
             </list>
-        </property>-->
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>

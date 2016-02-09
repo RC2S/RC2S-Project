@@ -1,6 +1,8 @@
 package com.rc2s.ejb.user;
 
 import com.rc2s.application.services.user.UserServiceI;
+import com.rc2s.common.vo.User;
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ public class UserFacadeBean implements UserFacadeRemote
     private UserServiceI userService;
     
     @Override
-    public String getAllUsers() {
-        return userService.getAllUsersOrderedByName();
+    public ArrayList<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }
