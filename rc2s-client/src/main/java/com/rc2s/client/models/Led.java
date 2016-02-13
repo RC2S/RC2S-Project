@@ -9,8 +9,6 @@ public class Led extends Sphere
 {
     private final double SIZE_MODIFIER = 4.;
     
-    //private final Sphere component;
-    
     private double x, y, z;
     private double size;
     private boolean activated;
@@ -27,10 +25,6 @@ public class Led extends Sphere
         this.activated = activated;
         this.color = color;
         
-        /*this.component = new Sphere(size);
-        this.component.setTranslateX(x * size * SIZE_MODIFIER);
-        this.component.setTranslateY(y * size * SIZE_MODIFIER);
-        this.component.setTranslateZ(z * size * SIZE_MODIFIER);*/
         this.setTranslateX(x * size * SIZE_MODIFIER);
         this.setTranslateY(y * size * SIZE_MODIFIER);
         this.setTranslateZ(z * size * SIZE_MODIFIER);
@@ -39,24 +33,16 @@ public class Led extends Sphere
         material.setDiffuseColor(color);
         material.setSpecularColor(Color.BLACK);
         this.setMaterial(material);
-        /*this.component.setMaterial(material);*/
-        
-        //this.component.setOnMouseClicked((MouseEvent e) -> {
+		
         this.setOnMouseClicked((MouseEvent e) -> {
             PhongMaterial newColor = new PhongMaterial();
             newColor.setSpecularColor(Color.BLACK);
             newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
             
-            //this.component.setMaterial(newColor);
             this.setMaterial(newColor);
             this.activated = !this.activated;
         });
     }
-
-    /*public Sphere getComponent()
-    {
-        return component;
-    }*/
 
     public double getX()
     {
@@ -66,7 +52,6 @@ public class Led extends Sphere
     public void setX(double x)
     {
         this.x = x;
-        //this.component.setTranslateX(x);
         this.setTranslateX(x);
     }
 
@@ -78,7 +63,6 @@ public class Led extends Sphere
     public void setY(double y)
     {
         this.y = y;
-        //this.component.setTranslateY(y);
         this.setTranslateY(y);
     }
 
@@ -90,7 +74,6 @@ public class Led extends Sphere
     public void setZ(double z)
     {
         this.z = z;
-        //this.component.setTranslateZ(z);
         this.setTranslateZ(z);
     }
 

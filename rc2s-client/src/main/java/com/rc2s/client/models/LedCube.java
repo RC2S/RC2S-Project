@@ -7,9 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
 public class LedCube extends Group
-{
-    private final Led[] leds;
-    
+{    
     private double mx, my;
     private double x, y, z;
     private Rotate rx, ry, rz;
@@ -26,22 +24,30 @@ public class LedCube extends Group
         this.rx = new Rotate(0., Rotate.X_AXIS);
         this.ry = new Rotate(0., Rotate.Y_AXIS);
         this.rz = new Rotate(0., Rotate.Z_AXIS);
-        getTransforms().addAll(rz, ry, rx);
+        this.getTransforms().addAll(rz, ry, rx);
         
         this.size = size;
         this.color = color;
         
-        this.leds = new Led[(int)(x * y * z)];
-        
-        int index = 0;
-        for(int i = 0 ; i < x ; i++)
+        /*for(int i = 0 ; i < x ; i++)
         {
             for(int j = 0 ; j < y ; j++)
             {
-                for(int k = 0 ; k < z ; k++, index++)
+                for(int k = 0 ; k < z ; k++)
                 {
                     Led led = new Led(i, j, k, size, true, color);
-                    //leds[index] = led;
+                    this.getChildren().add(led);
+                }
+            }
+        }*/
+		
+		for(int i = 0 ; i < x ; i++)
+        {
+            for(int j = 0 ; j < y ; j++)
+            {
+                for(int k = 0 ; k < z ; k++)
+                {
+                    Led led = new Led(i - x/2., j - y/2., k - z/2., size, true, color);
                     this.getChildren().add(led);
                 }
             }
@@ -51,34 +57,27 @@ public class LedCube extends Group
             System.out.println("CLICKED");
         });
         
-        this.setOnMouseDragged((MouseEvent e) -> {            
-            double oldx = mx;
-            double oldy = my;
-            mx = e.getX();
-            my = e.getY();
-            
-            double dx = mx - oldx;
-            double dy = my - oldy;
-            double nx = this.rx.getAngle() - dx;
-            double ny = this.ry.getAngle() + dy;
-            
-            if(e.isPrimaryButtonDown())
+        this.setOnMouseDragged((MouseEvent e) -> {
+			if(e.isPrimaryButtonDown())
             {
-                this.ry.setAngle(ny);
-                this.rx.setAngle(nx);
+				double oldx = mx;
+				double oldy = my;
+				mx = e.getX();
+				my = e.getY();
+
+				double dx = mx - oldx;
+				double dy = my - oldy;
+				double nx = this.rx.getAngle() - dx;
+				double ny = this.ry.getAngle() + dy;
+            
+                this.ry.setAngle(this.rx.getAngle() + 1.);
+                this.rx.setAngle(this.ry.getAngle() + 1.);
+                //this.rx.setAngle(this.rz.getAngle() + 1.);
             }
         });
-        
+		
         this.setCursor(Cursor.HAND);
     }
-    
-    /*public void draw(Scene scene)
-    {
-        for(Led led : leds)
-        {
-            ((Pane)scene.getRoot()).getChildren().add(led.getComponent());
-        }
-    }*/
 
     public double getX()
     {

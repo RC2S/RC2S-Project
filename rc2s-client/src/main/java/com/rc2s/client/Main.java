@@ -4,7 +4,6 @@ package com.rc2s.client;
 import com.rc2s.client.models.LedCube;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
