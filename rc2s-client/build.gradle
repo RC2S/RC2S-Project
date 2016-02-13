@@ -1,3 +1,7 @@
+project.ext.set 'mainClass', 'com.rc2s.client.test.ClientTest'
+
 dependencies {
-    
+    compile project(':rc2s-common')
+	//compile fileTree(dir: 'lib', include: ['*.jar'])
+	compile files('/media/Data/Programmes/payara41/glassfish/lib/gf-client.jar')
 }

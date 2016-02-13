@@ -1,5 +1,7 @@
 package com.rc2s.ejb.user;
 
+import com.rc2s.common.vo.User;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -36,8 +38,8 @@ public class UserFacadeBeanTest
     @Test
     public void testGetAllUsers()
     {
-        /*final String result = userBean.getAllUsers();  
+        /*final ArrayList<User> result = userBean.getAllUsers();  
         assertNotNull(result);  
-        assertEquals("coucou", result);*/
+        assertEquals(3, result.size());*/
     }
 }

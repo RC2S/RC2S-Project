@@ -1,12 +1,13 @@
 package com.rc2s.common.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "user")
-public class User
+public class User implements Serializable
 {
     private int id;
     private String username;
