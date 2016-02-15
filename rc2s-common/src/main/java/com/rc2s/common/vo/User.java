@@ -44,90 +44,107 @@ public class User implements Serializable
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
     @Column(name = "password", nullable = false, length = 40)
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
     }
     
     @Column(name = "password", nullable = false, length = 40)
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
     @Column(name = "role", nullable = false, length = 10) // Enum
-    public String getRole() {
+    public String getRole()
+    {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(String role)
+    {
         this.role = role;
     }
 
     @Column(name = "token", nullable = true, length = 40)
-    public String getToken() {
+    public String getToken()
+    {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(String token)
+    {
         this.token = token;
     }
 
     @Column(name = "activated", nullable = false)
-    public boolean isActivated() {
+    public boolean isActivated()
+    {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(boolean activated)
+    {
         this.activated = activated;
     }
 
     @Column(name = "lock", nullable = false)
-    public boolean isLock() {
+    public boolean isLock()
+    {
         return lock;
     }
 
-    public void setLock(boolean lock) {
+    public void setLock(boolean lock)
+    {
         this.lock = lock;
     }
 
     @Column(name = "lastip", nullable = true, length = 255)
-    public String getLastIp() {
+    public String getLastIp()
+    {
         return lastIp;
     }
 
-    public void setLastIp(String lastIp) {
+    public void setLastIp(String lastIp)
+    {
         this.lastIp = lastIp;
     }
 
     @Column(name = "created", nullable = false)
-    public Date getCreated() {
+    public Date getCreated()
+    {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Date created)
+    {
         this.created = created;
     }
     
     @Column(name = "updated", nullable = false)
-    public Date getUpdated() {
+    public Date getUpdated()
+    {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdated(Date updated)
+    {
         this.updated = updated;
     }
-    
-    
 }

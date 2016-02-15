@@ -1,20 +1,21 @@
 package com.rc2s.application.services.user;
 
 import com.rc2s.common.vo.User;
-import com.rc2s.dao.UserDAOI;
 import java.util.ArrayList;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.rc2s.dao.IUserDAO;
 
 @Service
 @Transactional
-public class UserService implements UserServiceI
+public class UserService implements IUserService
 {
-    private UserDAOI userDAO;
+    private IUserDAO userDAO;
     
     @Autowired
-    public void setUserDAO(UserDAOI userDAO) {
+    public void setUserDAO(IUserDAO userDAO)
+    {
         this.userDAO = userDAO;
     }
     
