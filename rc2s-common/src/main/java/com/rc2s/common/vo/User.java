@@ -21,6 +21,12 @@ public class User implements Serializable
     private Date updated;
 
     public User() {}
+    
+    public User(String username, String password)
+    {
+        this.username   = username;
+        this.password   = password;
+    }
 
     public User(int id, String username, String password,
         String role, String token, boolean activated,

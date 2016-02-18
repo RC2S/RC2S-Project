@@ -3,6 +3,8 @@ project.ext.set 'mainClass', 'com.rc2s.client.test.ClientTest'
 dependencies {
     compile project(':rc2s-common')
     //compile fileTree(dir: 'lib', include: ['*.jar'])
-    compile files('C:/Users/Mathieu/Desktop/payara41/glassfish/lib/gf-client.jar')
+    //compile fileTree(dir: 'modules', include: ['*.jar'])
+    //compile files('C:/Users/Mathieu/Desktop/payara41/glassfish/lib/gf-client.jar')
     //compile files('/opt/payara41/glassfish/lib/gf-client.jar')
+    //compile group: 'org.glassfish.main.packager', name: 'glassfish-appclient', version: '4.1'
 }

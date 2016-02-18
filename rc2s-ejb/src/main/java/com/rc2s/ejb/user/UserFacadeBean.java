@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import com.rc2s.application.services.user.IUserService;
 
-@Stateless
+@Stateless(mappedName = "UserEJB")
 @Interceptors(SpringBeanAutowiringInterceptor.class)
 public class UserFacadeBean implements UserFacadeRemote
 {

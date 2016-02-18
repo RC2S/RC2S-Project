@@ -11,5 +11,8 @@
 
     <bean id="dataSourceRC2S" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="rc2s-ds"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="cache" value="true"/>
+        <property name="proxyInterface" value="javax.sql.DataSource"/>
     </bean>
 </beans>
