@@ -32,7 +32,7 @@
                 <value>application-context.xml</value>
                 <value>dao-context.xml</value>
                 <value>dataSource-context.xml</value>
-                <value>sessionFactory-context.xml</value>
+                <!--<value>sessionFactory-context.xml</value>-->
             </list>
         </constructor-arg>
     </bean>
