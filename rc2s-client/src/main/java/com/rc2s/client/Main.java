@@ -1,6 +1,5 @@
 package com.rc2s.client;
 
-
 import com.rc2s.client.models.LedCube;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

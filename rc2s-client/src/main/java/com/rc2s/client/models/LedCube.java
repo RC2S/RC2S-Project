@@ -1,5 +1,6 @@
 package com.rc2s.client.models;
 
+import javafx.geometry.Point3D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -21,15 +22,15 @@ public class LedCube extends Group
         this.y = y;
         this.z = z;
         
-        this.rx = new Rotate(0., Rotate.X_AXIS);
-        this.ry = new Rotate(0., Rotate.Y_AXIS);
-        this.rz = new Rotate(0., Rotate.Z_AXIS);
+        this.rx = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.X_AXIS);
+        this.ry = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Y_AXIS);
+        this.rz = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Z_AXIS);
         this.getTransforms().addAll(rz, ry, rx);
         
         this.size = size;
         this.color = color;
         
-        /*for(int i = 0 ; i < x ; i++)
+        for(int i = 0 ; i < x ; i++)
         {
             for(int j = 0 ; j < y ; j++)
             {
@@ -39,20 +40,8 @@ public class LedCube extends Group
                     this.getChildren().add(led);
                 }
             }
-        }*/
-		
-		for(int i = 0 ; i < x ; i++)
-        {
-            for(int j = 0 ; j < y ; j++)
-            {
-                for(int k = 0 ; k < z ; k++)
-                {
-                    Led led = new Led(i - x/2., j - y/2., k - z/2., size, true, color);
-                    this.getChildren().add(led);
-                }
-            }
         }
-        
+		
         this.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("CLICKED");
         });
@@ -67,12 +56,11 @@ public class LedCube extends Group
 
 				double dx = mx - oldx;
 				double dy = my - oldy;
-				double nx = this.rx.getAngle() - dx;
-				double ny = this.ry.getAngle() + dy;
+				double nx = this.rx.getAngle() + dx;
+				double ny = this.ry.getAngle() - dy;
             
-                this.ry.setAngle(this.rx.getAngle() + 1.);
-                this.rx.setAngle(this.ry.getAngle() + 1.);
-                //this.rx.setAngle(this.rz.getAngle() + 1.);
+                this.rx.setAngle(this.ry.getAngle() + 0.5);
+                this.ry.setAngle(this.rx.getAngle() + 0.5);
             }
         });
 		

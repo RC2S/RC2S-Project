@@ -7,7 +7,7 @@ import javafx.scene.shape.Sphere;
 
 public class Led extends Sphere
 {
-    private final double SIZE_MODIFIER = 4.;
+    public static final double SIZE_MODIFIER = 4.;
     
     private double x, y, z;
     private double size;
