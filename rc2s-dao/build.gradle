@@ -3,6 +3,5 @@ dependencies {
     compile group: 'javax', name: 'javaee-api', version: '7.0'
     compile group: 'org.springframework', name: 'spring-context', version: '4.2.4.RELEASE'
     compile group: 'org.springframework', name: 'spring-orm', version: '4.2.4.RELEASE'
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.0.7.Final'
-    compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'
 }

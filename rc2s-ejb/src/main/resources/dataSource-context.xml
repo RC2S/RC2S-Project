@@ -7,12 +7,16 @@
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop.xsd
             http://www.springframework.org/schema/tx
-            http://www.springframework.org/schema/tx/spring-tx.xsd">
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/jee
+            http://www.springframework.org/schema/jee/spring-jee-4.2.xsd"
+       xmlns:jee="http://www.springframework.org/schema/jee">
 
-    <bean id="dataSourceRC2S" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <!--<bean id="dataSourceRC2S" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="rc2s-ds"/>
         <property name="lookupOnStartup" value="false"/>
         <property name="cache" value="true"/>
         <property name="proxyInterface" value="javax.sql.DataSource"/>
-    </bean>
+    </bean>-->
+    <jee:jndi-lookup id="dataSourceRC2S" jndi-name="rc2s-ds" expected-type="javax.sql.DataSource" />
 </beans>
