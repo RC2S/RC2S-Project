@@ -1,5 +1,3 @@
-/.gradle/
-/.nb-gradle/
 /rc2s-client/build/
 /rc2s-ejb/build/
 /rc2s-ejb/private/

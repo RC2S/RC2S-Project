@@ -5,6 +5,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
@@ -17,56 +18,15 @@
 	http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
         http://www.springframework.org/schema/jee
-        http://www.springframework.org/schema/jee/spring-jee-4.2.xsd"
-        xmlns:jee="http://www.springframework.org/schema/jee">
-    
-    <!-- Enable Spring Annotation Configuration -->
-    <context:annotation-config />
-	
-    <!-- Scan for all of Spring components such as Spring Services -->
-    <context:component-scan base-package="com.rc2s" />
-    
-    <!-- Activates annotation based transaction management -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    
-    <!-- Hibernate Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    
-    <!--<jee:jndi-lookup id="dataSourceRC2S" jndi-name="rc2s-ds" expected-type="javax.sql.DataSource" />-->
-    <bean id="dataSourceRC2S" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="rc2s-ds"/>
-        <property name="lookupOnStartup" value="false"/>
-        <property name="cache" value="true"/>
-        <property name="proxyInterface" value="javax.sql.DataSource"/>
-    </bean>
-    
-    <!-- Hibernate Session Factory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSourceRC2S"/>
-        
-        <property name="annotatedPackages">
-            <list>
-                <value>com.rc2s.common.vo</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
-    </bean>
-   
+        http://www.springframework.org/schema/jee/spring-jee-4.2.xsd">
     
     <bean id="beanRefContext" class="org.springframework.context.support.ClassPathXmlApplicationContext">
         <constructor-arg>
             <list>
-                <!--<value>dataSource-context.xml</value>-->
-                <!--<value>sessionFactory-context.xml</value>-->
                 <value>application-context.xml</value>
                 <value>dao-context.xml</value>
+                <value>dataSource-context.xml</value>
+                <value>sessionFactory-context.xml</value>
             </list>
         </constructor-arg>
     </bean>

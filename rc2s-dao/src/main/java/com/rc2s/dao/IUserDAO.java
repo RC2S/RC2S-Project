@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 public interface IUserDAO
 {
-	public ArrayList<User> getUsers();
+    public ArrayList<User> getUsers();
 }

@@ -8,7 +8,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-// https://medium.com/@mertcal/using-hibernate-5-on-payara-cc242212a5d6#.iqqrqr70b
 public class ClientTest
 {
     public static void main(String[] args)

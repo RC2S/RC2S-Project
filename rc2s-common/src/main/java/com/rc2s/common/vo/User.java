@@ -3,9 +3,11 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Entity
 @Table(name = "user")
 public class User implements Serializable
 {
@@ -55,7 +57,7 @@ public class User implements Serializable
         this.id = id;
     }
 
-    @Column(name = "password", nullable = false, length = 40)
+    @Column(name = "username", nullable = false, length = 40)
     public String getUsername()
     {
         return username;
