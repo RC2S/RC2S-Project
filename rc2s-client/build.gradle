@@ -1,6 +1,14 @@
-project.ext.set 'mainClass', 'com.rc2s.client.test.ClientTest'
+apply plugin: 'application'
+
+mainClassName = 'com.rc2s.client.test.ClientTest'
 
 dependencies {
     compile project(':rc2s-common')
     compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.rc2s.client.test.ClientTest'
+    }
 }
