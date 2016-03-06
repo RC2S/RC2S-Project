@@ -1,5 +1,10 @@
 apply plugin: 'ear'
 
+task autodeploy(type: Exec, dependsOn: [ear]) << {
+  executable "asadmin"
+  args "deploy", "--force=true", "rc2s-ear-${version}.ear"
+}
+
 dependencies {
     deploy project(':rc2s-ejb')
     earlib project(path: ':rc2s-ejb', configuration: 'compile')

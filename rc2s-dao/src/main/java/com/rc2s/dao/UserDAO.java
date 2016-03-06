@@ -18,6 +18,7 @@ public class UserDAO implements IUserDAO
     }
     
     @Override
+	@SuppressWarnings("unchecked")
     public ArrayList<User> getUsers()
     {
         return (ArrayList<User>) sessionFactory.getCurrentSession().createQuery("from User").list();
