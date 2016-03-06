@@ -18,8 +18,11 @@ public class ClientTest
             props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
             props.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
             props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-            props.put("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
+            props.put("org.omg.CORBA.ORBInitialHost", "192.168.1.107");
             props.put("org.omg.CORBA.ORBInitialPort", "3700");
+            //props.put(Context.PROVIDER_URL, "192.168.1.107:3700");
+            //System.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.1.107");
+            //System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             
             InitialContext ctx = new InitialContext(props);
             UserFacadeRemote test = (UserFacadeRemote) ctx.lookup("UserEJB");
