@@ -1,6 +1,5 @@
 package com.rc2s.client.models;
 
-import javafx.geometry.Point3D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
