@@ -38,7 +38,7 @@ public class Main extends Application
         layout.setPrefSize(1280, 720);
         scene = new Scene(layout);
         
-        LedCube cube = new LedCube(4, 4, 4, 15., Color.RED);
+        LedCube cube = new LedCube(scene.getRoot(), 4, 4, 4, 15., Color.RED);
         //cube.draw(scene);
         ((Pane)scene.getRoot()).getChildren().add(cube);
 

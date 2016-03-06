@@ -2,44 +2,28 @@ package com.rc2s.client.models;
 
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
 public class LedCube extends Group
-{    
+{
+	private final Parent parent;
+	
     private double mx, my;
     private double x, y, z;
     private Rotate rx, ry, rz;
     private double size;
     
-    private final Color color;
+    private Color color;
     
-    public LedCube(double x, double y, double z, double size, Color color)
+    public LedCube(Parent parent, double x, double y, double z, double size, Color color)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        
-        this.rx = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.X_AXIS);
-        this.ry = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Y_AXIS);
-        this.rz = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Z_AXIS);
-        this.getTransforms().addAll(rz, ry, rx);
-        
-        this.size = size;
-        this.color = color;
-        
-        for(int i = 0 ; i < x ; i++)
-        {
-            for(int j = 0 ; j < y ; j++)
-            {
-                for(int k = 0 ; k < z ; k++)
-                {
-                    Led led = new Led(i, j, k, size, true, color);
-                    this.getChildren().add(led);
-                }
-            }
-        }
+		this.parent = parent;
+        drawCube(x, y, z, size, color);
 		
         this.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("CLICKED");
@@ -63,8 +47,58 @@ public class LedCube extends Group
             }
         });
 		
+		this.parent.setOnScroll((ScrollEvent e) -> {
+			if(e.getDeltaY() == 0)
+				return;
+			
+			double delta = e.getDeltaY() > 0 ? 1. : -1.;
+			System.out.println(">> " + (this.size + delta));
+			this.getChildren().clear();
+			drawCube(this.x, this.y, this.z, this.size + delta, this.color);
+			System.out.println("<< " + this.size);
+		});
+		
         this.setCursor(Cursor.HAND);
     }
+	
+	private void drawCube(double x, double y, double z, double size, Color color)
+	{
+		this.x = x;
+        this.y = y;
+        this.z = z;
+        
+		if(this.getTransforms().isEmpty())
+		{
+			this.rx = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.X_AXIS);
+			this.ry = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Y_AXIS);
+			this.rz = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Z_AXIS);
+			this.getTransforms().addAll(rx, ry, rz);
+		}
+		else
+		{
+			for(int i = 0 ; i < 3 ; i++)
+			{
+				double pos = (i == 0 ? x : (i == 1 ? y : z));
+				Rotate axis = (Rotate)this.getTransforms().get(i);
+				axis.setPivotX(((pos-1)*size*Led.SIZE_MODIFIER)/2);
+			}
+		}
+        
+        this.size = size;
+        this.color = color;
+        
+        for(int i = 0 ; i < x ; i++)
+        {
+            for(int j = 0 ; j < y ; j++)
+            {
+                for(int k = 0 ; k < z ; k++)
+                {
+                    Led led = new Led(i, j, k, size, true, color);
+                    this.getChildren().add(led);
+                }
+            }
+        }
+	}
 
     public double getX()
     {
