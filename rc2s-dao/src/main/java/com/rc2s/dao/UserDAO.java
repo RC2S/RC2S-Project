@@ -20,6 +20,6 @@ public class UserDAO implements IUserDAO
     @Override
     public ArrayList<User> getUsers()
     {
-        return (ArrayList<User>) sessionFactory.getCurrentSession().createQuery("from User").list();
+        return (ArrayList<User>) sessionFactory.getCurrentSession().createQuery("FROM User").list();
     }
 }

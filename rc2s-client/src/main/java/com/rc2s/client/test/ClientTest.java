@@ -26,7 +26,7 @@ public class ClientTest
             ArrayList<User> tst = test.getAllUsers();
             
             for(User usr : tst) {
-                System.out.println(usr.getUsername() + " " + usr.getPassword());
+                System.out.println(usr.getUsername() + " " + usr.getPassword() + " " + usr.getCreated());
             }
         }
         catch(NamingException e)
