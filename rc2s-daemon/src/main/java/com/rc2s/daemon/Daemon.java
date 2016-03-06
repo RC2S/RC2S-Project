@@ -29,10 +29,9 @@ public class Daemon implements Runnable
     public void run()
     {
         this.running = true;
-
-
-        Stage s1 = new Stage(new boolean[][] {{true, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}});
-        Stage s2 = new Stage(new boolean[][] {{false, false, true, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}});
+        
+        Stage s1 = new Stage(new boolean[][] {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}});
+        Stage s2 = new Stage(new boolean[][] {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}});
         Stage s3 = new Stage(new boolean[][] {{false, false, false, false}, {true, false, false, false}, {false, false, false, false}, {false, false, false, false}});
         Stage s4 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, true, false}, {false, false, false, false}, {false, false, false, false}});
         Stage s5 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {true, false, false, false}, {false, false, false, false}});
@@ -40,7 +39,7 @@ public class Daemon implements Runnable
         Stage s7 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {true, false, false, false}});
         Stage s8 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, true, false}});
         Stage s9 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, true}});
-
+        
         processor.add(new Packet(10000l, new Stage[] {s1, s2, s3, s4, s5, s6, s7, s8, s9}));
 
         processor.run();
@@ -53,7 +52,7 @@ public class Daemon implements Runnable
 
         try
         {
-                Thread.sleep(3000l);
+            Thread.sleep(3000l);
         } catch (InterruptedException ex) {}
 
         gpdo = hardware.bit();
@@ -69,7 +68,7 @@ public class Daemon implements Runnable
 
         try
         {
-                Thread.sleep(3000l);
+            Thread.sleep(3000l);
         } catch (InterruptedException ex) {}
 
         gpdo = hardware.bit();
@@ -80,7 +79,7 @@ public class Daemon implements Runnable
 
         /*try
         {
-                Thread.sleep(99999999999L);
+            Thread.sleep(99999999999L);
         } catch (InterruptedException ex) {}*/
     }
 
