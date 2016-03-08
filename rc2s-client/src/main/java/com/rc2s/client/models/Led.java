@@ -35,11 +35,11 @@ public class Led extends Sphere
         this.setMaterial(material);
 		
         this.setOnMouseClicked((MouseEvent e) -> {
-            PhongMaterial newColor = new PhongMaterial();
-            newColor.setSpecularColor(Color.BLACK);
-            newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
-            
-            this.setMaterial(newColor);
+			PhongMaterial newColor = new PhongMaterial();
+			newColor.setSpecularColor(Color.BLACK);
+			newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
+
+			this.setMaterial(newColor);
             this.activated = !this.activated;
         });
     }
@@ -52,7 +52,7 @@ public class Led extends Sphere
     public void setX(double x)
     {
         this.x = x;
-        this.setTranslateX(x);
+        this.setTranslateX(x * size * Led.SIZE_MODIFIER);
     }
 
     public double getY()
@@ -63,7 +63,7 @@ public class Led extends Sphere
     public void setY(double y)
     {
         this.y = y;
-        this.setTranslateY(y);
+        this.setTranslateY(y * size * Led.SIZE_MODIFIER);
     }
 
     public double getZ()
@@ -74,7 +74,7 @@ public class Led extends Sphere
     public void setZ(double z)
     {
         this.z = z;
-        this.setTranslateZ(z);
+        this.setTranslateZ(z * size * Led.SIZE_MODIFIER);
     }
 
     public double getSize()
@@ -85,6 +85,10 @@ public class Led extends Sphere
     public void setSize(double size)
     {
         this.size = size;
+		super.setRadius(size);
+		setX(getX());
+		setY(getY());
+		setZ(getZ());
     }
 
     public boolean isActivated()
@@ -104,6 +108,11 @@ public class Led extends Sphere
 
     public void setColor(Color color)
     {
+		PhongMaterial newColor = new PhongMaterial();
+		newColor.setSpecularColor(Color.BLACK);
+		newColor.setDiffuseColor(color);
+
+		this.setMaterial(newColor);
         this.color = color;
     }
 }

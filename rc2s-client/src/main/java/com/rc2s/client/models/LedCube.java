@@ -11,6 +11,9 @@ import javafx.scene.transform.Rotate;
 
 public class LedCube extends Group
 {
+	private static final double MIN_SIZE = 8.;
+	private static final double MAX_SIZE = 20.;
+	
 	private final Parent parent;
 	
     private double mx, my;
@@ -25,10 +28,6 @@ public class LedCube extends Group
 		this.parent = parent;
         drawCube(x, y, z, size, color);
 		
-        this.setOnMouseClicked((MouseEvent e) -> {
-            System.out.println("CLICKED");
-        });
-        
         this.setOnMouseDragged((MouseEvent e) -> {
 			if(e.isPrimaryButtonDown())
             {
@@ -39,23 +38,22 @@ public class LedCube extends Group
 
 				double dx = mx - oldx;
 				double dy = my - oldy;
-				double nx = this.rx.getAngle() + dx;
-				double ny = this.ry.getAngle() - dy;
-            
-                this.rx.setAngle(this.ry.getAngle() + 0.5);
-                this.ry.setAngle(this.rx.getAngle() + 0.5);
+				double nx = this.rx.getAngle() - Math.toRadians(dy) * 2.;
+				double ny = this.ry.getAngle() + Math.toRadians(dx) * 2.;
+				
+                this.rx.setAngle(nx);
+                this.ry.setAngle(ny);
             }
         });
 		
 		this.parent.setOnScroll((ScrollEvent e) -> {
-			if(e.getDeltaY() == 0)
+			if(e.getDeltaY() == 0
+			|| (this.size <= LedCube.MIN_SIZE && e.getDeltaY() < 0)
+			|| (this.size >= LedCube.MAX_SIZE && e.getDeltaY() > 0))
 				return;
 			
 			double delta = e.getDeltaY() > 0 ? 1. : -1.;
-			System.out.println(">> " + (this.size + delta));
-			this.getChildren().clear();
-			drawCube(this.x, this.y, this.z, this.size + delta, this.color);
-			System.out.println("<< " + this.size);
+			this.setSize(this.size + delta);
 		});
 		
         this.setCursor(Cursor.HAND);
@@ -69,19 +67,32 @@ public class LedCube extends Group
         
 		if(this.getTransforms().isEmpty())
 		{
-			this.rx = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.X_AXIS);
-			this.ry = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Y_AXIS);
-			this.rz = new Rotate(0., ((x-1)*size*Led.SIZE_MODIFIER)/2, ((y-1)*size*Led.SIZE_MODIFIER)/2, ((z-1)*size*Led.SIZE_MODIFIER)/2, Rotate.Z_AXIS);
+			this.rx = new Rotate(
+				0.,
+				((x-1) * size * Led.SIZE_MODIFIER) / 2,
+				((y-1) * size * Led.SIZE_MODIFIER) / 2,
+				((z-1) * size * Led.SIZE_MODIFIER) / 2,
+				Rotate.X_AXIS
+			);
+			this.ry = new Rotate(
+				0.,
+				((x-1) * size * Led.SIZE_MODIFIER) / 2,
+				((y-1) * size * Led.SIZE_MODIFIER) / 2,
+				((z-1) * size * Led.SIZE_MODIFIER) / 2,
+				Rotate.Y_AXIS
+			);
+			this.rz = new Rotate(
+				0.,
+				((x-1) * size * Led.SIZE_MODIFIER) / 2,
+				((y-1) * size * Led.SIZE_MODIFIER) / 2,
+				((z-1) * size * Led.SIZE_MODIFIER) / 2,
+				Rotate.Z_AXIS
+			);
 			this.getTransforms().addAll(rx, ry, rz);
 		}
 		else
 		{
-			for(int i = 0 ; i < 3 ; i++)
-			{
-				double pos = (i == 0 ? x : (i == 1 ? y : z));
-				Rotate axis = (Rotate)this.getTransforms().get(i);
-				axis.setPivotX(((pos-1)*size*Led.SIZE_MODIFIER)/2);
-			}
+			updateAxis();
 		}
         
         this.size = size;
@@ -138,7 +149,7 @@ public class LedCube extends Group
     public void setRx(Rotate rx)
     {
         this.rx = rx;
-        getTransforms().add(rx);
+        getTransforms().set(0, rx);
     }
 
     public Rotate getRy()
@@ -149,7 +160,7 @@ public class LedCube extends Group
     public void setRy(Rotate ry)
     {
         this.ry = ry;
-        getTransforms().add(ry);
+        getTransforms().set(1, ry);
     }
 
     public Rotate getRz()
@@ -160,8 +171,19 @@ public class LedCube extends Group
     public void setRz(Rotate rz)
     {
         this.rz = rz;
-        getTransforms().add(rz);
+        getTransforms().set(2, rz);
     }
+	
+	public void updateAxis()
+	{
+		for(int i = 0 ; i < 3 ; i++)
+		{
+			Rotate axis = (Rotate)this.getTransforms().get(i);
+			axis.setPivotX(((x-1) * size * Led.SIZE_MODIFIER) / 2);
+			axis.setPivotY(((y-1) * size * Led.SIZE_MODIFIER) / 2);
+			axis.setPivotZ(((z-1) * size * Led.SIZE_MODIFIER) / 2);
+		}
+	}
 
     public double getSize()
     {
@@ -171,5 +193,12 @@ public class LedCube extends Group
     public void setSize(double size)
     {
         this.size = size;
+		
+		for(Node n : this.getChildren())
+		{
+			Led l = (Led)n;
+			l.setSize(this.size);
+		}
+		updateAxis();
     }
 }
