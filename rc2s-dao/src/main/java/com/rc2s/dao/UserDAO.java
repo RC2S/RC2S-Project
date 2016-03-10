@@ -24,13 +24,13 @@ public class UserDAO extends DaoAuthenticationProvider implements IUserDAO
 	
 	@Override
 	public User getUser(String login) {
-        ArrayList<User> userList = new ArrayList<>();
-		userList = (ArrayList<User>) sessionFactory.getCurrentSession()
+        ArrayList<com.rc2s.common.vo.User> userList = new ArrayList<>();
+		userList = (ArrayList<com.rc2s.common.vo.User>) sessionFactory.getCurrentSession()
 				.createQuery("FROM User WHERE login = :login")
 				.setParameter(":login", login)
 				.list();
         if (userList.size() > 0)
-            return userList.get(0);
+            return buildUserFromUserEntity(userList.get(0));
         else
             return null;    
     }
