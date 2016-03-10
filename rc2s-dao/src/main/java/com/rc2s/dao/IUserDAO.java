@@ -1,9 +1,15 @@
 package com.rc2s.dao;
 
-import com.rc2s.common.vo.User;
+import org.springframework.security.core.userdetails.User;
 import java.util.ArrayList;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface IUserDAO
+/**
+ *
+ * @author captp
+ */
+public interface IUserDAO extends UserDetailsService
 {
-    public ArrayList<User> getUsers();
+	public User getUser(String login);
+    public ArrayList<com.rc2s.common.vo.User> getUsers();
 }

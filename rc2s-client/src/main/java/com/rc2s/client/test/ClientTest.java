@@ -23,11 +23,19 @@ public class ClientTest
             
             InitialContext ctx = new InitialContext(props);
             UserFacadeRemote test = (UserFacadeRemote) ctx.lookup("UserEJB");
+			
+			
+			/* BEGIN AUTHENTICATE TEST */
+			
+			/* END AUTHENTICATE TEST */
+			
+			/* BEGIN USER TEST */
             ArrayList<User> tst = test.getAllUsers();
             
             for(User usr : tst) {
                 System.out.println(usr.getUsername() + " " + usr.getPassword() + " " + usr.getCreated());
             }
+			/* END USER TEST */
         }
         catch(NamingException e)
         {
