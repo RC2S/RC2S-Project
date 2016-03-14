@@ -10,8 +10,8 @@ import com.rc2s.application.services.user.IUserService;
 
 @Stateless(mappedName = "UserEJB")
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class UserFacadeBean implements UserFacadeRemote
-{
+public class UserFacadeBean  implements UserFacadeRemote
+{	
     @Autowired
     private IUserService userService;
     

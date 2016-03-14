@@ -44,11 +44,11 @@ public class UserDAO extends DaoAuthenticationProvider implements IUserDAO
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		throw new UnsupportedOperationException("Not supported yet (loadUserByUsername)"); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 	private User buildUserFromUserEntity(com.rc2s.common.vo.User userEntity) {
-		// convert model user to spring security user
+		// Convert model user to spring security user
 		String username = userEntity.getUsername();
 		String password = userEntity.getPassword();
 		boolean enabled = true;
