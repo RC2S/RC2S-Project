@@ -27,4 +27,6 @@
     <context:component-scan base-package="com.rc2s" />
     
     <bean id="userService" class="com.rc2s.application.services.user.UserService" autowire="byName"/>
+    
+    <bean id="streamingService" class="com.rc2s.application.services.streaming.StreamingService" autowire="byName"/>
 </beans>
