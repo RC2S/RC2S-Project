@@ -1,6 +1,6 @@
 apply plugin: 'application'
 
-mainClassName = 'com.rc2s.client.test.ClientTest'
+mainClassName = 'com.rc2s.client.Main'
 
 dependencies {
     compile project(':rc2s-common')
@@ -12,7 +12,7 @@ sourceSets {
         resources {
             // On ajoute toutes les ressources du répertoire views quelque soit
             // le profile de compilation
-            include 'src/main/resources/views/**'
+            //include 'src/main/resources/views/**'
         }
     }
 }
