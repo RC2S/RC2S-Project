@@ -7,11 +7,20 @@ repositories {
 		dirs '../rc2s-ejb/build/libs'
 	}
 }
+
 dependencies {
     compile project(':rc2s-common')
-    compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 	compile name: "interfaces-$version"
+    compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 }
+
+project.tasks.compileJava.dependsOn(
+	rootProject.getSubprojects().findAll {
+		subproject -> subproject.name != project.name 
+	}.collect { 
+		subproject -> "${subproject.getPath()}:build"
+	}
+)
 
 sourceSets {
     main {

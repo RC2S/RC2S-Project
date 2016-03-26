@@ -1,7 +1,6 @@
 package com.rc2s.client.test;
 
 import com.rc2s.common.vo.User;
-import com.rc2s.ejb.user.UserFacadeRemote;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.naming.Context;
@@ -22,12 +21,12 @@ public class ClientTest
             props.put("org.omg.CORBA.ORBInitialPort", "3700");
             
             InitialContext ctx = new InitialContext(props);
-            UserFacadeRemote test = (UserFacadeRemote) ctx.lookup("UserEJB");
+            /*UserFacadeRemote test = (UserFacadeRemote) ctx.lookup("UserEJB");
             ArrayList<User> tst = test.getAllUsers();
             
             for(User usr : tst) {
                 System.out.println(usr.getUsername() + " " + usr.getPassword());
-            }
+            }*/
         }
         catch(NamingException e)
         {

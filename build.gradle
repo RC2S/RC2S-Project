@@ -8,7 +8,6 @@ def loadProfile() {
 }
 
 allprojects {
-    
     group = 'com.rc2sproject'
     version = '1.0'
 }
