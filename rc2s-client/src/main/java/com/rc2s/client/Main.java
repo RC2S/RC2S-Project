@@ -29,7 +29,7 @@ public class Main extends Application
         this.stage = stage;
         this.stage.setTitle(Config.APP_NAME);
         
-        loader = Resources.loadFxml("LoginView");
+        loader = Resources.loadFxml("MusicPlaylistView");
         scene = new Scene((Parent)loader.getRoot());
         
 		/*StackPane layout = new StackPane();
@@ -42,6 +42,7 @@ public class Main extends Application
 
         this.stage.setScene(scene);
         Resources.loadCss(scene, "rc2s-client");
+        Resources.loadCss(scene, "musicplayliststyle");
         this.stage.show();
     }
 
