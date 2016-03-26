@@ -85,7 +85,7 @@
             </GridPane>
             <BorderPane fx:id="MainGridBorderPane" prefHeight="200.0" prefWidth="200.0" styleClass="borderpane-border" GridPane.rowIndex="5" GridPane.rowSpan="2">
                <top>
-                  <Label fx:id="borderPaneLabel" styleClass="borderpane-label" text="Visual Effects" BorderPane.alignment="TOP_LEFT" />
+                  <Label fx:id="borderPaneLabel" styleClass="borderpane-label" text=" Visual Effects " BorderPane.alignment="TOP_LEFT" />
                </top>
             </BorderPane>
          </children>

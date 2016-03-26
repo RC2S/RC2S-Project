@@ -29,7 +29,7 @@ public class Main extends Application
         this.stage = stage;
         this.stage.setTitle(Config.APP_NAME);
         
-        loader = Resources.loadFxml("MusicPlaylistView");
+        loader = Resources.loadFxml("AccessManagementView");
         scene = new Scene((Parent)loader.getRoot());
         
 		/*StackPane layout = new StackPane();
@@ -42,7 +42,8 @@ public class Main extends Application
 
         this.stage.setScene(scene);
         Resources.loadCss(scene, "rc2s-client");
-        Resources.loadCss(scene, "musicplayliststyle");
+        Resources.loadCss(scene, "musicPlaylist-style");
+        Resources.loadCss(scene, "managementAccess-style");
         this.stage.show();
     }
 
