@@ -14,11 +14,11 @@ public class StreamingService implements IStreamingService
     private static final Logger log = LogManager.getLogger(StreamingService.class);
     
     // Synchronisation object to wait for the audio to finish.
-    private final Semaphore sync = new Semaphore(0);
+    private Semaphore sync = new Semaphore(0);
     
-    private final MediaPlayerFactory factory;
+    private MediaPlayerFactory factory;
     
-    private final MediaPlayer audioPlayer;
+    private MediaPlayer audioPlayer;
     
     public StreamingService()
     {
@@ -51,39 +51,49 @@ public class StreamingService implements IStreamingService
     @Override
     public void start(String mrl)
     {
-        log.info("Begin start " + mrl);
-        audioPlayer.playMedia(mrl);
-        
-        log.info("Waiting for finished...");
+        Thread thread = new Thread() {
+            public void run() {
+                log.info("Begin start " + mrl);
+                audioPlayer.playMedia(mrl);
 
-        try {
-            // Slight race condition in theory possible if the audio finishes immediately
-            // (but this is just a test so it's good enough)...
-            sync.acquire();
-        }
-        catch(InterruptedException e) {
-            e.printStackTrace();
-        }
+                log.info("Waiting for finished...");
 
-        log.info("Finished, releasing native resources...");
+                try {
+                    // Slight race condition in theory possible if the audio finishes immediately
+                    // (but this is just a test so it's good enough)...
+                    sync.acquire();
+                }
+                catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-        audioPlayer.release();
-        factory.release();
+                log.info("Finished, releasing native resources...");
 
-        log.info("All done");
+                audioPlayer.release();
+                factory.release();
+
+                log.info("All done");
+            }
+        };
+        thread.start();
     }
 
     @Override
     public void stop()
     {
-        log.info("Stop streaming");
-        if(audioPlayer.isPlaying())
-        {
-            audioPlayer.stop();
-            
-            sync.release();
-            audioPlayer.release();
-            factory.release();
-        }
+        Thread thread = new Thread() {
+            public void run() {
+                log.info("Stop streaming");
+                if(audioPlayer.isPlaying())
+                {
+                    audioPlayer.stop();
+
+                    sync.release();
+                    audioPlayer.release();
+                    factory.release();
+                }
+            }
+        };
+        thread.start();
     }
 }

@@ -11,23 +11,18 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 {
     private final Logger log = LogManager.getLogger(CallbackAdapter.class);
     
-    private final BufferedOutputStream out;
+    private final BufferedOutputStream out = null;
     
     public CallbackAdapter(int blockSize)
     {
         super(blockSize);
-        out = new BufferedOutputStream(System.out);
+        //out = new BufferedOutputStream(System.out);
     }
 
     @Override
     protected void onPlay(DirectAudioPlayer mediaPlayer, byte[] bytes, int sampleCount, long pts)
     {
-        try {
-            out.write(bytes);
-            
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        
     }
     
     @Override
@@ -40,13 +35,5 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
     public void drain(DirectAudioPlayer mediaPlayer)
     {
         log.info("drain()");
-        
-        try {
-            out.flush();
-            out.close();
-        }
-        catch(IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

@@ -5,8 +5,6 @@ import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -31,31 +29,30 @@ public class ClientTest
             InitialContext ctx = new InitialContext(props);
             
             // Test Get Users
-            UserFacadeRemote userEJB = (UserFacadeRemote) ctx.lookup("UserEJB");
+            /*UserFacadeRemote userEJB = (UserFacadeRemote) ctx.lookup("UserEJB");
             ArrayList<User> users = userEJB.getAllUsers();
             
             for(User usr : users) {
                 System.out.println(usr.getUsername() + " " + usr.getPassword());
-            }
+            }*/
             
             // Test Streaming Start
             StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) ctx.lookup("StreamingEJB");
             
-            Thread thread = new Thread() {
-                public void run(){
-                    try {
-                        Streaming stream = new Streaming(streamingEJB);
-                    } catch (Exception ex) {
-                        Logger.getLogger(ClientTest.class.getName()).log(Level.SEVERE,
-                            null, ex);
-                    }
-                }
-            };
-            thread.start();
+            System.err.println("------- Before Streaming -------");
+            Streaming stream = new Streaming(streamingEJB);
+            stream = null;
+            System.err.println("------- After Streaming -------");
+            ctx.close();
+            System.err.println("------- CLose Context -------");
         }
         catch(NamingException e)
         {
             e.printStackTrace();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
         }
     }
 }

@@ -16,6 +16,7 @@ public class Streaming
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+        System.err.println("------- Launch Media Player -------");
         HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
         mediaPlayer.playMedia(media,
             options,
@@ -25,11 +26,17 @@ public class Streaming
             ":sout-keep"
         );
         
+        System.err.println("------- MRL -------");
         String mrl = new RtspMrl().host("127.0.0.1").port(5555).path("/audio").value();
         
+        System.err.println("------- Start Streaming RMI -------");
         streamingEJB.startStreaming(mrl);
-        Thread.sleep(120000);
+        System.err.println("------- Thread join -------");
+        Thread.currentThread().join(60000l);
+        
+        System.err.println("------- Stop Streaming RMI -------");
         streamingEJB.stopStreaming();
+        System.err.println("------- Stop Media Player -------");
         mediaPlayer.stop();
     }
 
