@@ -29,12 +29,12 @@ public class ClientTest
             InitialContext ctx = new InitialContext(props);
             
             // Test Get Users
-            /*UserFacadeRemote userEJB = (UserFacadeRemote) ctx.lookup("UserEJB");
+            UserFacadeRemote userEJB = (UserFacadeRemote) ctx.lookup("UserEJB");
             ArrayList<User> users = userEJB.getAllUsers();
             
             for(User usr : users) {
                 System.out.println(usr.getUsername() + " " + usr.getPassword());
-            }*/
+            }
             
             // Test Streaming Start
             StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) ctx.lookup("StreamingEJB");
