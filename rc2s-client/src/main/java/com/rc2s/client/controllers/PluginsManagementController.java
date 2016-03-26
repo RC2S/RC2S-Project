@@ -19,8 +19,8 @@ import javafx.stage.Stage;
 
 public class PluginsManagementController
 {
-	private Desktop desktop = Desktop.getDesktop();
 	private Stage stage = null;
+	
 	private final FileChooser fileChooser = new FileChooser();
 			
     @FXML
@@ -55,14 +55,12 @@ public class PluginsManagementController
 	{
 		File file = fileChooser.showOpenDialog(this.stage);
 		
-		if (file != null)
-		{
-			openFile(file);
-		}
+		pluginGridFileButton.setText(file.getName());
     }
 
     @FXML
-    void initialize() {
+    void initialize()
+	{
         assert pluginsAnchorPane != null : "fx:id=\"pluginsAnchorPane\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
         assert anchorGridPane != null : "fx:id=\"anchorGridPane\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
         assert gridTableView != null : "fx:id=\"gridTableView\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
@@ -76,16 +74,4 @@ public class PluginsManagementController
 	{
 		this.stage = stage;
 	}
-	
-	private void openFile(File file)
-	{
-        try
-		{
-            desktop.open(file);
-        }
-		catch (IOException ex)
-		{
-            ex.printStackTrace();
-        }
-    }
 }
