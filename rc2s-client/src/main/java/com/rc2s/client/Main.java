@@ -1,5 +1,6 @@
 package com.rc2s.client;
 
+import com.rc2s.client.controllers.PluginsManagementController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +30,8 @@ public class Main extends Application
         this.stage = stage;
         this.stage.setTitle(Config.APP_NAME);
         
-        loader = Resources.loadFxml("AccessManagementView");
+        loader = Resources.loadFxml("PluginsManagementView");
+		((PluginsManagementController) loader.getController()).setStage(stage);
         scene = new Scene((Parent)loader.getRoot());
         
 		/*StackPane layout = new StackPane();
@@ -44,6 +46,7 @@ public class Main extends Application
         Resources.loadCss(scene, "rc2s-client");
         Resources.loadCss(scene, "musicPlaylist-style");
         Resources.loadCss(scene, "managementAccess-style");
+        Resources.loadCss(scene, "pluginsManagement-style");
         this.stage.show();
     }
 
