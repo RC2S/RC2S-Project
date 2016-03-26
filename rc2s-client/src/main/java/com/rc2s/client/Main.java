@@ -31,10 +31,10 @@ public class Main extends Application
         this.stage.setTitle(Config.APP_NAME);
         
         loader = Resources.loadFxml("PluginsManagementView");
-		((PluginsManagementController) loader.getController()).setStage(stage);
+	((PluginsManagementController) loader.getController()).initView(stage);
         scene = new Scene((Parent)loader.getRoot());
         
-		/*StackPane layout = new StackPane();
+	/*StackPane layout = new StackPane();
         layout.setPrefSize(1280, 720);
         scene = new Scene(layout);
         

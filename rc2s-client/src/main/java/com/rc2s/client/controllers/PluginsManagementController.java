@@ -1,11 +1,8 @@
 package com.rc2s.client.controllers;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,19 +16,13 @@ import javafx.stage.Stage;
 
 public class PluginsManagementController
 {
-	private Stage stage = null;
-	
-	private final FileChooser fileChooser = new FileChooser();
-			
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+    private Stage stage;
+    
+    private final FileChooser fileChooser = new FileChooser();
 
     @FXML
     private AnchorPane pluginsAnchorPane;
-
+    
     @FXML
     private GridPane anchorGridPane;
 
@@ -52,26 +43,16 @@ public class PluginsManagementController
 
     @FXML
     void handleUploadFileButton(ActionEvent event)
-	{
-		File file = fileChooser.showOpenDialog(this.stage);
-		
-		pluginGridFileButton.setText(file.getName());
+    {
+        File file = fileChooser.showOpenDialog(this.stage);
+        pluginGridFileButton.setText(file.getName());
     }
 
     @FXML
-    void initialize()
-	{
-        assert pluginsAnchorPane != null : "fx:id=\"pluginsAnchorPane\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-        assert anchorGridPane != null : "fx:id=\"anchorGridPane\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-        assert gridTableView != null : "fx:id=\"gridTableView\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-        assert gridBorderPane != null : "fx:id=\"gridBorderPane\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-        assert addPluginPaneLabel != null : "fx:id=\"addPluginPaneLabel\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-        assert addPluginPaneGridPane != null : "fx:id=\"addPluginPaneGridPane\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-        assert pluginGridFileButton != null : "fx:id=\"pluginGridFileButton\" was not injected: check your FXML file 'PluginsManagementView.fxml'.";
-    }
+    void initialize(URL location, ResourceBundle resources) {}
 	
-	public void setStage(Stage stage)
-	{
-		this.stage = stage;
-	}
+    public void initView(Stage stage)
+    {
+        this.stage = stage;
+    }
 }
