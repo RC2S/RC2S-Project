@@ -1,6 +1,6 @@
 apply plugin: 'application'
 
-mainClassName = 'com.rc2s.client.test.ClientTest'
+mainClassName = 'com.rc2s.client.Main'
 
 repositories {
     flatDir {
@@ -16,9 +16,9 @@ dependencies {
 
 project.tasks.compileJava.dependsOn(
 	rootProject.getSubprojects().findAll {
-            subproject -> subproject.name != project.name 
+        subproject -> subproject.name != project.name 
 	}.collect { 
-            subproject -> "${subproject.getPath()}:build"
+        subproject -> "${subproject.getPath()}:build"
 	}
 )
 
@@ -34,7 +34,7 @@ sourceSets {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.rc2s.client.test.ClientTest'
+        attributes 'Main-Class': 'com.rc2s.client.Main'
     }
 }
 
@@ -53,12 +53,12 @@ task signAll(dependsOn: [copyLibs]) << {
     def libFiles = files { file('build/jnlp/lib').listFiles() }
     libFiles.each {
         ant.signjar(
-                destDir: 'build/jws/signed',
-                alias: 'RC2S',
-                jar: it,
-                keystore: 'src/main/jnlp/keys/rc2s.key',
-                storepass: 'P@ssword1234',
-                preservelastmodified: 'true'
+            destDir: 'build/jws/signed',
+            alias: 'RC2S',
+            jar: it,
+            keystore: 'src/main/jnlp/keys/rc2s.key',
+            storepass: 'P@ssword1234',
+            preservelastmodified: 'true'
         )
     }
 }

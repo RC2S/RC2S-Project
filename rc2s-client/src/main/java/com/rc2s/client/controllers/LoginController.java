@@ -6,16 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import com.rc2s.client.Config;
-import com.rc2s.client.utils.Dialog;
+import com.rc2s.client.Main;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.client.utils.Tools;
 import com.rc2s.common.vo.User;
@@ -80,26 +76,16 @@ public class LoginController implements Initializable
             // TODO : remplacer par un appel à l'EJB d'authentification
             if(user.getUsername().equals("mathieu") && user.getPassword().equals("azeaze"))
             {
-                Stage       stage;
                 Scene       scene;
                 FXMLLoader  loader;
 
-                if(Dialog.confirm("test", "1234") == ButtonType.OK)
-                {
-                    // A simplifier ! Cache la première window
-                    ((Node)event.getSource()).getScene().getWindow().hide();
-
-                    loader  = Resources.loadFxml("HomeView");
-                    scene   = new Scene((Parent) loader.getRoot());
-                    HomeController controller = loader.getController();
-                    controller.initView("Passing Data Test");
-                    // Ou directement loader.<LoginController>getController().initView("Passing Data Test");
-
-                    stage   = new Stage();
-                    stage.setScene(scene);
-                    stage.setTitle(Config.APP_NAME);
-                    stage.show();
-                }
+                loader  = Resources.loadFxml("PluginsManagementView");
+                scene   = new Scene((Parent) loader.getRoot());
+                
+                Main.getStage().setScene(scene);
+                Main.getStage().setMinWidth(scene.getWidth());
+                Main.getStage().setMinHeight(scene.getHeight());
+                Main.getStage().show();
             }
             else
                 errorLabel.setText("Authentication failed");

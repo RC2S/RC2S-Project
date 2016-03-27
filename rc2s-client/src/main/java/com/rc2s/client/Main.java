@@ -29,7 +29,7 @@ public class Main extends Application
         this.stage = stage;
         this.stage.setTitle(Config.APP_NAME);
         
-        loader = Resources.loadFxml("PluginsManagementView");
+        loader = Resources.loadFxml("LoginView");
         scene = new Scene((Parent)loader.getRoot());
         
 	/*StackPane layout = new StackPane();

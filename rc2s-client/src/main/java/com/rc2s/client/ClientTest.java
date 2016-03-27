@@ -1,4 +1,4 @@
-package com.rc2s.client.test;
+package com.rc2s.client;
 
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.user.UserFacadeRemote;
