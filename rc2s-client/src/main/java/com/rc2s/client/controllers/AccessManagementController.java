@@ -3,6 +3,7 @@ package com.rc2s.client.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -11,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class AccessManagementController
+public class AccessManagementController implements Initializable
 {
     @FXML
     private AnchorPane accessAnchorPane;
@@ -82,6 +83,6 @@ public class AccessManagementController
     @FXML
     private Button gridButton;
 
-    @FXML
-    void initialize(URL location, ResourceBundle resources) {}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {}
 }

@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -16,7 +17,7 @@ import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PluginsManagementController
+public class PluginsManagementController implements Initializable
 {
     private static final Logger log = LogManager.getLogger(PluginsManagementController.class);
     
@@ -43,14 +44,14 @@ public class PluginsManagementController
     @FXML
     private Button pluginGridFileButton;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {}
+    
     @FXML
-    void handleUploadFileButton(ActionEvent event)
+    public void handleUploadFileButton(ActionEvent event)
     {
         log.info("test logger");
         File file = fileChooser.showOpenDialog(Main.getStage());
         pluginGridFileButton.setText(file.getName());
     }
-
-    @FXML
-    void initialize(URL location, ResourceBundle resources) {}
 }

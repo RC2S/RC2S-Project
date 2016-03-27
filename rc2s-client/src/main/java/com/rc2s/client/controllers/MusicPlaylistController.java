@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -12,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class MusicPlaylistController
+public class MusicPlaylistController implements Initializable
 {
     @FXML
     private AnchorPane musicAnchorPane;
@@ -65,18 +66,18 @@ public class MusicPlaylistController
     @FXML
     private Label borderPaneLabel;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {}
+    
+    @FXML
+    public void handlePlayPauseButton(ActionEvent event)
+    {
+        System.out.println("ClickOnPlayPause o/");
+    }
+    
     @FXML
     void anchor1TableViewSort(ActionEvent event)
     {
     
     }
-
-    @FXML
-    void handlePlayPauseButton(ActionEvent event)
-    {
-        System.out.println("ClickOnPlayPause o/");
-    }
-
-    @FXML
-    void initialize(URL url, ResourceBundle rb) {}
 }

@@ -79,7 +79,7 @@ public class LoginController implements Initializable
                 Scene       scene;
                 FXMLLoader  loader;
 
-                loader  = Resources.loadFxml("PluginsManagementView");
+                loader  = Resources.loadFxml("HomeView");
                 scene   = new Scene((Parent) loader.getRoot());
                 
                 Main.getStage().setScene(scene);
