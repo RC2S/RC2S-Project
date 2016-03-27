@@ -1,9 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'ear'
-
-task autodeploy(type: Exec, dependsOn: [ear]) << {
-  executable "asadmin"
-  args "deploy", "--force=true", "rc2s-ear-${version}.ear"
-}
 
 dependencies {
     deploy project(':rc2s-ejb')
@@ -19,4 +15,18 @@ ear {
         displayName = "RC2S Server"
         description = "JEE Server for RC2S project"
     }
+	
+	doLast {
+		tasks.autodeploy.execute();
+	}
+}
+
+task autodeploy(type: Exec) {
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+        executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
+	}
+	else {
+		executable "asadmin"
+	}
+	args "--user", "admin", "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
 }
