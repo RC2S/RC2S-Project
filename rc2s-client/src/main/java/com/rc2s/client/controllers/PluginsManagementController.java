@@ -13,9 +13,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PluginsManagementController
-{  
+{
+    private static final Logger log = LogManager.getLogger(PluginsManagementController.class);
+    
     private final FileChooser fileChooser = new FileChooser();
 
     @FXML
@@ -42,6 +46,7 @@ public class PluginsManagementController
     @FXML
     void handleUploadFileButton(ActionEvent event)
     {
+        log.info("test logger");
         File file = fileChooser.showOpenDialog(Main.stage);
         pluginGridFileButton.setText(file.getName());
     }
