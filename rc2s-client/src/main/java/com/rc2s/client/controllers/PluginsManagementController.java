@@ -1,5 +1,6 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.client.Main;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,12 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class PluginsManagementController
-{
-    private Stage stage;
-    
+{  
     private final FileChooser fileChooser = new FileChooser();
 
     @FXML
@@ -44,15 +42,10 @@ public class PluginsManagementController
     @FXML
     void handleUploadFileButton(ActionEvent event)
     {
-        File file = fileChooser.showOpenDialog(this.stage);
+        File file = fileChooser.showOpenDialog(Main.stage);
         pluginGridFileButton.setText(file.getName());
     }
 
     @FXML
     void initialize(URL location, ResourceBundle resources) {}
-	
-    public void initView(Stage stage)
-    {
-        this.stage = stage;
-    }
 }

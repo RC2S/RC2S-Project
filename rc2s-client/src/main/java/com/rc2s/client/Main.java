@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 
 public class Main extends Application
 {
-    private Stage stage;
+    public static Stage stage;
     
     public static void main(String[] args)
     {
@@ -31,7 +31,6 @@ public class Main extends Application
         this.stage.setTitle(Config.APP_NAME);
         
         loader = Resources.loadFxml("PluginsManagementView");
-	((PluginsManagementController) loader.getController()).initView(stage);
         scene = new Scene((Parent)loader.getRoot());
         
 	/*StackPane layout = new StackPane();
