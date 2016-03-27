@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
-public class HomeViewController implements Initializable
+public class HomeController implements Initializable
 {
     @FXML
     private TabPane tabPane;
