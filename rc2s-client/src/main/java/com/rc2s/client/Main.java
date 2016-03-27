@@ -1,6 +1,5 @@
 package com.rc2s.client;
 
-import com.rc2s.client.controllers.PluginsManagementController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,7 +9,7 @@ import javafx.scene.Parent;
 
 public class Main extends Application
 {
-    public static Stage stage;
+    private static Stage stage;
     
     public static void main(String[] args)
     {
@@ -55,7 +54,7 @@ public class Main extends Application
         super.stop();
     }
     
-    public Stage getStage()
+    public static Stage getStage()
     {
         return stage;
     }

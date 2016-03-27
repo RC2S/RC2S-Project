@@ -17,20 +17,25 @@ import javafx.stage.Stage;
 import com.rc2s.client.Config;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.vo.User;
-import java.util.regex.Pattern;
 import javafx.event.Event;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class LoginController implements Initializable
-{
-    private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+{    
+    @FXML
+    private TextField ipaddr;
     
-    @FXML private TextField	ipaddr;
-    @FXML private TextField username;
-    @FXML private PasswordField password;
-    @FXML private Label errorLabel;
+    @FXML
+    private TextField username;
+    
+    @FXML
+    private PasswordField password;
+    
+    @FXML
+    private Label errorLabel;
     
     private User user;
     
@@ -54,7 +59,7 @@ public class LoginController implements Initializable
     @FXML
     private boolean validateIpAddress(KeyEvent event)
     {
-        if(!IP_PATTERN.matcher(ipaddr.getText()).matches())
+        if(!Tools.matchIP(ipaddr.getText()))
         {
             errorLabel.setText("Invalid IP address");
             return false;

@@ -22,7 +22,7 @@ public class AccessManagementController
     @FXML
     private TableView<?> gridTableView;
 
-    @FXML
+    @FXML  
     private TableColumn<?, ?> usernameTableCol;
 
     @FXML

@@ -11,10 +11,10 @@ import javafx.scene.transform.Rotate;
 
 public class LedCube extends Group
 {
-	private static final double MIN_SIZE = 8.;
-	private static final double MAX_SIZE = 20.;
-	
-	private final Parent parent;
+    private static final double MIN_SIZE = 8.;
+    private static final double MAX_SIZE = 20.;
+
+    private final Parent parent;
 	
     private double mx, my;
     private double x, y, z;
@@ -25,75 +25,75 @@ public class LedCube extends Group
     
     public LedCube(Parent parent, double x, double y, double z, double size, Color color)
     {
-		this.parent = parent;
+        this.parent = parent;
         drawCube(x, y, z, size, color);
 		
         this.setOnMouseDragged((MouseEvent e) -> {
-			if(e.isPrimaryButtonDown())
+            if(e.isPrimaryButtonDown())
             {
-				double oldx = mx;
-				double oldy = my;
-				mx = e.getX();
-				my = e.getY();
+                double oldx = mx;
+                double oldy = my;
+                mx = e.getX();
+                my = e.getY();
 
-				double dx = mx - oldx;
-				double dy = my - oldy;
-				double nx = this.rx.getAngle() - Math.toRadians(dy) * 2.;
-				double ny = this.ry.getAngle() + Math.toRadians(dx) * 2.;
+                double dx = mx - oldx;
+                double dy = my - oldy;
+                double nx = this.rx.getAngle() - Math.toRadians(dy) * 2.;
+                double ny = this.ry.getAngle() + Math.toRadians(dx) * 2.;
 				
                 this.rx.setAngle(nx);
                 this.ry.setAngle(ny);
             }
         });
 		
-		this.parent.setOnScroll((ScrollEvent e) -> {
-			if(e.getDeltaY() == 0
-			|| (this.size <= LedCube.MIN_SIZE && e.getDeltaY() < 0)
-			|| (this.size >= LedCube.MAX_SIZE && e.getDeltaY() > 0))
-				return;
-			
-			double delta = e.getDeltaY() > 0 ? 1. : -1.;
-			this.setSize(this.size + delta);
-		});
+        this.parent.setOnScroll((ScrollEvent e) -> {
+            if(e.getDeltaY() == 0
+            || (this.size <= LedCube.MIN_SIZE && e.getDeltaY() < 0)
+            || (this.size >= LedCube.MAX_SIZE && e.getDeltaY() > 0))
+                return;
+
+            double delta = e.getDeltaY() > 0 ? 1. : -1.;
+            this.setSize(this.size + delta);
+        });
 		
         this.setCursor(Cursor.HAND);
     }
 	
-	private void drawCube(double x, double y, double z, double size, Color color)
-	{
-		this.x = x;
+    private void drawCube(double x, double y, double z, double size, Color color)
+    {
+        this.x = x;
         this.y = y;
         this.z = z;
         
-		if(this.getTransforms().isEmpty())
-		{
-			this.rx = new Rotate(
-				0.,
-				((x-1) * size * Led.SIZE_MODIFIER) / 2,
-				((y-1) * size * Led.SIZE_MODIFIER) / 2,
-				((z-1) * size * Led.SIZE_MODIFIER) / 2,
-				Rotate.X_AXIS
-			);
-			this.ry = new Rotate(
-				0.,
-				((x-1) * size * Led.SIZE_MODIFIER) / 2,
-				((y-1) * size * Led.SIZE_MODIFIER) / 2,
-				((z-1) * size * Led.SIZE_MODIFIER) / 2,
-				Rotate.Y_AXIS
-			);
-			this.rz = new Rotate(
-				0.,
-				((x-1) * size * Led.SIZE_MODIFIER) / 2,
-				((y-1) * size * Led.SIZE_MODIFIER) / 2,
-				((z-1) * size * Led.SIZE_MODIFIER) / 2,
-				Rotate.Z_AXIS
-			);
-			this.getTransforms().addAll(rx, ry, rz);
-		}
-		else
-		{
-			updateAxis();
-		}
+        if(this.getTransforms().isEmpty())
+        {
+            this.rx = new Rotate(
+                0.,
+                ((x-1) * size * Led.SIZE_MODIFIER) / 2,
+                ((y-1) * size * Led.SIZE_MODIFIER) / 2,
+                ((z-1) * size * Led.SIZE_MODIFIER) / 2,
+                Rotate.X_AXIS
+            );
+            this.ry = new Rotate(
+                0.,
+                ((x-1) * size * Led.SIZE_MODIFIER) / 2,
+                ((y-1) * size * Led.SIZE_MODIFIER) / 2,
+                ((z-1) * size * Led.SIZE_MODIFIER) / 2,
+                Rotate.Y_AXIS
+            );
+            this.rz = new Rotate(
+                0.,
+                ((x-1) * size * Led.SIZE_MODIFIER) / 2,
+                ((y-1) * size * Led.SIZE_MODIFIER) / 2,
+                ((z-1) * size * Led.SIZE_MODIFIER) / 2,
+                Rotate.Z_AXIS
+            );
+            this.getTransforms().addAll(rx, ry, rz);
+        }
+        else
+        {
+            updateAxis();
+        }
         
         this.size = size;
         this.color = color;
@@ -109,7 +109,7 @@ public class LedCube extends Group
                 }
             }
         }
-	}
+    }
 
     public double getX()
     {
@@ -174,16 +174,16 @@ public class LedCube extends Group
         getTransforms().set(2, rz);
     }
 	
-	public void updateAxis()
-	{
-		for(int i = 0 ; i < 3 ; i++)
-		{
-			Rotate axis = (Rotate)this.getTransforms().get(i);
-			axis.setPivotX(((x-1) * size * Led.SIZE_MODIFIER) / 2);
-			axis.setPivotY(((y-1) * size * Led.SIZE_MODIFIER) / 2);
-			axis.setPivotZ(((z-1) * size * Led.SIZE_MODIFIER) / 2);
-		}
-	}
+    public void updateAxis()
+    {
+        for(int i = 0 ; i < 3 ; i++)
+        {
+            Rotate axis = (Rotate)this.getTransforms().get(i);
+            axis.setPivotX(((x-1) * size * Led.SIZE_MODIFIER) / 2);
+            axis.setPivotY(((y-1) * size * Led.SIZE_MODIFIER) / 2);
+            axis.setPivotZ(((z-1) * size * Led.SIZE_MODIFIER) / 2);
+        }
+    }
 
     public double getSize()
     {
@@ -193,12 +193,12 @@ public class LedCube extends Group
     public void setSize(double size)
     {
         this.size = size;
-		
-		for(Node n : this.getChildren())
-		{
-			Led l = (Led)n;
-			l.setSize(this.size);
-		}
-		updateAxis();
+
+        for(Node n : this.getChildren())
+        {
+            Led l = (Led)n;
+            l.setSize(this.size);
+        }
+        updateAxis();
     }
 }

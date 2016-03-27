@@ -47,7 +47,7 @@ public class PluginsManagementController
     void handleUploadFileButton(ActionEvent event)
     {
         log.info("test logger");
-        File file = fileChooser.showOpenDialog(Main.stage);
+        File file = fileChooser.showOpenDialog(Main.getStage());
         pluginGridFileButton.setText(file.getName());
     }
 
