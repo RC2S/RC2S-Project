@@ -2,7 +2,7 @@ package com.rc2s.client.test;
 
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.user.UserFacadeRemote;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -30,7 +30,7 @@ public class ClientTest
 			/* END AUTHENTICATE TEST */
 			
 			/* BEGIN USER TEST */
-            ArrayList<User> tst = test.getAllUsers();
+            List<User> tst = test.getAllUsers();
             
             for(User usr : tst) {
                 System.out.println(usr.getUsername() + " " + usr.getPassword() + " " + usr.getCreated());

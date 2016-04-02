@@ -1,22 +1,23 @@
 package com.rc2s.ejb.user;
 
 import com.rc2s.common.vo.User;
-import java.util.ArrayList;
 import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 import com.rc2s.application.services.user.IUserService;
+import java.util.List;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 
 @Stateless(mappedName = "UserEJB")
-@Interceptors(SpringBeanAutowiringInterceptor.class)
+@DeclareRoles("Admin")
 public class UserFacadeBean  implements UserFacadeRemote
 {	
-    @Autowired
+    @Inject
     private IUserService userService;
     
     @Override
-    public ArrayList<User> getAllUsers()
+    //@RolesAllowed("Admin")
+    public List<User> getAllUsers()
     {
         return userService.getAllUsers();
     }

@@ -2,13 +2,7 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "user")
 public class User implements Serializable
 {
     private int id;
@@ -45,9 +39,7 @@ public class User implements Serializable
         this.created    = created;
         this.updated    = updated;
     }
-
-    @Id
-    @Column(name = "id", unique = true, nullable = false)
+    
     public int getId() {
         return id;
     }
@@ -57,7 +49,6 @@ public class User implements Serializable
         this.id = id;
     }
 
-    @Column(name = "username", nullable = false, length = 40)
     public String getUsername()
     {
         return username;
@@ -68,7 +59,6 @@ public class User implements Serializable
         this.username = username;
     }
     
-    @Column(name = "password", nullable = false, length = 40)
     public String getPassword()
     {
         return password;
@@ -79,7 +69,6 @@ public class User implements Serializable
         this.password = password;
     }
 
-    @Column(name = "role", nullable = false, length = 10) // Enum
     public String getRole()
     {
         return role;
@@ -90,7 +79,6 @@ public class User implements Serializable
         this.role = role;
     }
 
-    @Column(name = "token", nullable = true, length = 40)
     public String getToken()
     {
         return token;
@@ -101,7 +89,6 @@ public class User implements Serializable
         this.token = token;
     }
 
-    @Column(name = "activated", nullable = false)
     public boolean isActivated()
     {
         return activated;
@@ -112,7 +99,6 @@ public class User implements Serializable
         this.activated = activated;
     }
 
-    @Column(name = "lock", nullable = false)
     public boolean isLock()
     {
         return lock;
@@ -123,7 +109,6 @@ public class User implements Serializable
         this.lock = lock;
     }
 
-    @Column(name = "lastip", nullable = true, length = 255)
     public String getLastIp()
     {
         return lastIp;
@@ -134,7 +119,6 @@ public class User implements Serializable
         this.lastIp = lastIp;
     }
 
-    @Column(name = "created", nullable = false)
     public Date getCreated()
     {
         return created;
@@ -145,7 +129,6 @@ public class User implements Serializable
         this.created = created;
     }
     
-    @Column(name = "updated", nullable = false)
     public Date getUpdated()
     {
         return updated;

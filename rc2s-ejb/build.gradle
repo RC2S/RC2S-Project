@@ -1,5 +1,8 @@
 dependencies {
     compile project(':rc2s-application')
-	compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.0.4.RELEASE'
     compile group: 'javax', name: 'javaee-api', version: '7.0'
+    //compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.0.4.RELEASE'
+    //compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.0.4.RELEASE'
+    //compile group: 'org.springframework.security', name:'spring-security-aspects', version: '4.0.4.RELEASE'
+    //compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.9'
 }

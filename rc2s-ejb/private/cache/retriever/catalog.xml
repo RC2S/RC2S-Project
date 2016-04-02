@@ -17,11 +17,13 @@
     <system systemId="http://www.springframework.org/schema/aop/spring-aop-4.0.xsd" uri="www.springframework.org/schema/aop/spring-aop-4.0.xsd"/>
     <system systemId="http://www.springframework.org/schema/beans/spring-beans-4.0.xsd" uri="www.springframework.org/schema/beans/spring-beans-4.0.xsd"/>
     <system systemId="http://www.springframework.org/schema/tool/spring-tool-4.0.xsd" uri="www.springframework.org/schema/tool/spring-tool-4.0.xsd"/>
-    <system systemId="http://www.springframework.org/schema/tx/spring-tx-4.2.xsd" uri="www.springframework.org/schema/tx/spring-tx-4.2.xsd"/>
-    <system systemId="http://www.springframework.org/schema/aop/spring-aop-4.2.xsd" uri="www.springframework.org/schema/aop/spring-aop-4.2.xsd"/>
     <system systemId="http://www.springframework.org/schema/jee" uri="www.springframework.org/schema/jee/index"/>
     <system systemId="http://www.springframework.org/schema/jee/" uri="www.springframework.org/schema/jee/index"/>
+    <system systemId="http://www.springframework.org/schema/tx/spring-tx-4.2.xsd" uri="www.springframework.org/schema/tx/spring-tx-4.2.xsd"/>
+    <system systemId="http://www.springframework.org/schema/aop/spring-aop-4.2.xsd" uri="www.springframework.org/schema/aop/spring-aop-4.2.xsd"/>
     <system systemId="http://www.springframework.org/schema/jee/spring-jee-4.2.xsd" uri="www.springframework.org/schema/jee/spring-jee-4.2.xsd"/>
     <system systemId="http://www.springframework.org/schema/beans/spring-beans-4.2.xsd" uri="www.springframework.org/schema/beans/spring-beans-4.2.xsd"/>
     <system systemId="http://www.springframework.org/schema/tool/spring-tool-4.2.xsd" uri="www.springframework.org/schema/tool/spring-tool-4.2.xsd"/>
+    <system systemId="http://www.springframework.org/schema/security/spring-security-3.2.xsd" uri="www.springframework.org/schema/security/spring-security-3.2.xsd"/>
+    <system systemId="http://www.springframework.org/schema/security/spring-security-4.0.xsd" uri="www.springframework.org/schema/security/spring-security-4.0.xsd"/>
 </catalog>

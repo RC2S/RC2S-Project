@@ -1,9 +1,9 @@
 package com.rc2s.application.services.user;
 
 import com.rc2s.common.vo.User;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IUserService
 {
-    public ArrayList<User> getAllUsers();
+    public List<User> getAllUsers();
 }
