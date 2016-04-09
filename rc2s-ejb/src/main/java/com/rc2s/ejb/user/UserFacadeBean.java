@@ -9,14 +9,14 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 
 @Stateless(mappedName = "UserEJB")
-@DeclareRoles("Admin")
+@DeclareRoles({"admin"})
 public class UserFacadeBean  implements UserFacadeRemote
 {	
     @Inject
     private IUserService userService;
     
     @Override
-    //@RolesAllowed("Admin")
+    @RolesAllowed({"admin"})
     public List<User> getAllUsers()
     {
         return userService.getAllUsers();
