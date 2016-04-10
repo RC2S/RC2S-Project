@@ -2,16 +2,24 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "user")
 public class User implements Serializable
 {
+    @Id
+    @GeneratedValue
     private int id;
+    
     private String username;
     private String password;
-    private String role;
     private String token;
     private boolean activated;
-    private boolean lock;
+    private boolean locked;
     private String lastIp;
     private Date created;
     private Date updated;
@@ -25,16 +33,15 @@ public class User implements Serializable
     }
 
     public User(int id, String username, String password,
-        String role, String token, boolean activated,
-        boolean lock, String lastIp, Date created, Date updated)
+        String token, boolean activated, boolean locked,
+        String lastIp, Date created, Date updated)
     {
         this.id         = id;
         this.username   = username;
         this.password   = password;
-        this.role       = role;
         this.token      = token;
         this.activated  = activated;
-        this.lock       = lock;
+        this.locked     = locked;
         this.lastIp     = lastIp;
         this.created    = created;
         this.updated    = updated;
@@ -68,17 +75,7 @@ public class User implements Serializable
     {
         this.password = password;
     }
-
-    public String getRole()
-    {
-        return role;
-    }
-
-    public void setRole(String role)
-    {
-        this.role = role;
-    }
-
+    
     public String getToken()
     {
         return token;
@@ -99,14 +96,14 @@ public class User implements Serializable
         this.activated = activated;
     }
 
-    public boolean isLock()
+    public boolean isLocked()
     {
-        return lock;
+        return locked;
     }
 
-    public void setLock(boolean lock)
+    public void setLockrd(boolean locked)
     {
-        this.lock = lock;
+        this.locked = locked;
     }
 
     public String getLastIp()
