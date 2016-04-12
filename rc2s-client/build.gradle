@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compile project(':rc2s-common')
+    compile project(':rc2s-annotations')
     compile name: "interfaces-$version"
     compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 }

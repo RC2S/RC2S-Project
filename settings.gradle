@@ -1,5 +1,6 @@
 rootProject.name = 'RC2S-Project'
 
+include 'rc2s-annotations'
 include 'rc2s-application'
 include 'rc2s-client'
 include 'rc2s-common'
