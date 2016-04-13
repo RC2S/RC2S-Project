@@ -2,28 +2,22 @@ package com.rc2s.dao;
 
 import com.rc2s.common.vo.User;
 import java.util.List;
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Dependent
+@Stateless
 public class UserDAO implements IUserDAO
 {  
-    @PersistenceContext(unitName = "rc2s")
-    private EntityManager entityManager;
+    private EntityManager em = JPAUtility.getEntityManager();
     
     @Override
     public List<User> getUsers()
     {
-        if(entityManager == null){
-            System.out.println("************** FAIL **************");
+        if(em == null) {
+           System.out.println("************** FAIL DAO **************");
         }
-        Query query = entityManager.createQuery("SELECT u from User as u");
+        Query query = em.createQuery("SELECT u from User as u");
         return query.getResultList();
-        
-        /*List<User> users = new ArrayList();
-        users.add(new User("mathieu", "azeaze"));
-        return users;*/
     }
 }
