@@ -15,9 +15,6 @@ public class UserDAO implements IUserDAO
     
     public List<User> getUsers()
     {
-        if(em == null) {
-           System.out.println("************** FAIL DAO **************");
-        }
         Query query = em.createQuery("SELECT u from User as u");
         return query.getResultList();
     }
