@@ -4,12 +4,14 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
 public class UserDAO implements IUserDAO
 {  
-    private EntityManager em = JPAUtility.getEntityManager();
+    @PersistenceContext
+    private EntityManager em;
     
     @Override
     public List<User> getUsers()

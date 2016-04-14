@@ -3,13 +3,13 @@ package com.rc2s.application.services.user;
 import com.rc2s.common.vo.User;
 import com.rc2s.dao.IUserDAO;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 @Stateless
 public class UserService implements IUserService
 {
-    @Inject
+    @EJB
     private IUserDAO userDAO;
     
     @Override

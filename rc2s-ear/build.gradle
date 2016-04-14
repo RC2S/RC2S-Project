@@ -3,6 +3,7 @@ apply plugin: 'ear'
 dependencies {
     deploy project(':rc2s-ejb')
     earlib project(path: ':rc2s-ejb', configuration: 'compile')
+    // To-Do : Reussir à exclude dao et application de earlib et ajouter deploy dao application
 }
 
 ear {
@@ -13,5 +14,7 @@ ear {
         initializeInOrder = true
         displayName = "RC2S Server"
         description = "JEE Server for RC2S project"
+        module("APP-INF/lib/rc2s-application-1.0.jar", "ejb")
+        module("APP-INF/lib/rc2s-dao-1.0.jar", "ejb")
     }
 }

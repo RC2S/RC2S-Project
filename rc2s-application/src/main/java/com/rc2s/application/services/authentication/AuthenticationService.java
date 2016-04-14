@@ -2,12 +2,12 @@ package com.rc2s.application.services.authentication;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateless;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-@Dependent
+@Stateless
 public class AuthenticationService implements IAuthenticationService
 {
     @Override

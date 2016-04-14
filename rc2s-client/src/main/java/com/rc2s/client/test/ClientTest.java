@@ -26,6 +26,7 @@ public class ClientTest
             InitialContext ctx = new InitialContext(props);
             
             // Test UsersEJB
+            System.out.println("Client Context" + ctx);
             UserFacadeRemote userEJB = (UserFacadeRemote) ctx.lookup("UserEJB");
 			
             List<User> users = userEJB.getAllUsers();
@@ -35,7 +36,7 @@ public class ClientTest
             }
             
             // Test AuthenticationEJB
-            AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote) ctx.lookup("AuthenticationEJB");
+            //AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote) ctx.lookup("AuthenticationEJB");
             //boolean auth = authenticationEJB.login();
         }
         catch(NamingException e)

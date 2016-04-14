@@ -1,7 +1,6 @@
 apply plugin: 'base' // To add "clean" task to the root project.
 
 allprojects {
-    
     group = 'com.rc2sproject'
     version = '1.0'
 }

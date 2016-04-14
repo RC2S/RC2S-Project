@@ -4,12 +4,12 @@ import com.rc2s.common.vo.User;
 import javax.ejb.Stateless;
 import com.rc2s.application.services.user.IUserService;
 import java.util.List;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 
 @Stateless(mappedName = "UserEJB")
 public class UserFacadeBean  implements UserFacadeRemote
 {	
-    @Inject
+    @EJB
     private IUserService userService;
     
     @Override
