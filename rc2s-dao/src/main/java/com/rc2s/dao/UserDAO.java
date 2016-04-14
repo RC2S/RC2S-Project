@@ -1,26 +1,24 @@
 package com.rc2s.dao;
 
 import com.rc2s.common.vo.User;
-import java.util.ArrayList;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-@Repository
+@Stateless
 public class UserDAO implements IUserDAO
 {  
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory)
-    {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager em;
     
-    @Override
-	@SuppressWarnings("unchecked")
-    public ArrayList<User> getUsers()
+    public List<User> getUsers()
     {
-        return (ArrayList<User>) sessionFactory.getCurrentSession().createQuery("from User").list();
+        if(em == null) {
+           System.out.println("************** FAIL DAO **************");
+        }
+        Query query = em.createQuery("SELECT u from User as u");
+        return query.getResultList();
     }
 }

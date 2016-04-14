@@ -2,8 +2,8 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,13 +11,15 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User implements Serializable
 {
+    @Id
+    @GeneratedValue
     private int id;
+    
     private String username;
     private String password;
-    private String role;
     private String token;
     private boolean activated;
-    private boolean lock;
+    private boolean locked;
     private String lastIp;
     private Date created;
     private Date updated;
@@ -31,23 +33,20 @@ public class User implements Serializable
     }
 
     public User(int id, String username, String password,
-        String role, String token, boolean activated,
-        boolean lock, String lastIp, Date created, Date updated)
+        String token, boolean activated, boolean locked,
+        String lastIp, Date created, Date updated)
     {
         this.id         = id;
         this.username   = username;
         this.password   = password;
-        this.role       = role;
         this.token      = token;
         this.activated  = activated;
-        this.lock       = lock;
+        this.locked     = locked;
         this.lastIp     = lastIp;
         this.created    = created;
         this.updated    = updated;
     }
-
-    @Id
-    @Column(name = "id", unique = true, nullable = false)
+    
     public int getId() {
         return id;
     }
@@ -57,7 +56,6 @@ public class User implements Serializable
         this.id = id;
     }
 
-    @Column(name = "username", nullable = false, length = 40)
     public String getUsername()
     {
         return username;
@@ -68,7 +66,6 @@ public class User implements Serializable
         this.username = username;
     }
     
-    @Column(name = "password", nullable = false, length = 40)
     public String getPassword()
     {
         return password;
@@ -78,19 +75,7 @@ public class User implements Serializable
     {
         this.password = password;
     }
-
-    @Column(name = "role", nullable = false, length = 10) // Enum
-    public String getRole()
-    {
-        return role;
-    }
-
-    public void setRole(String role)
-    {
-        this.role = role;
-    }
-
-    @Column(name = "token", nullable = true, length = 40)
+    
     public String getToken()
     {
         return token;
@@ -101,7 +86,6 @@ public class User implements Serializable
         this.token = token;
     }
 
-    @Column(name = "activated", nullable = false)
     public boolean isActivated()
     {
         return activated;
@@ -112,18 +96,16 @@ public class User implements Serializable
         this.activated = activated;
     }
 
-    @Column(name = "lock", nullable = false)
-    public boolean isLock()
+    public boolean isLocked()
     {
-        return lock;
+        return locked;
     }
 
-    public void setLock(boolean lock)
+    public void setLockrd(boolean locked)
     {
-        this.lock = lock;
+        this.locked = locked;
     }
 
-    @Column(name = "lastip", nullable = true, length = 255)
     public String getLastIp()
     {
         return lastIp;
@@ -134,7 +116,6 @@ public class User implements Serializable
         this.lastIp = lastIp;
     }
 
-    @Column(name = "created", nullable = false)
     public Date getCreated()
     {
         return created;
@@ -145,7 +126,6 @@ public class User implements Serializable
         this.created = created;
     }
     
-    @Column(name = "updated", nullable = false)
     public Date getUpdated()
     {
         return updated;

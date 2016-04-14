@@ -2,5 +2,4 @@ dependencies {
     compile project(':rc2s-common')
     compile project(':rc2s-dao')
     compile group: 'javax', name: 'javaee-api', version: '7.0'
-    compile group: 'org.springframework', name: 'spring-context', version: '4.2.4.RELEASE'
 }
