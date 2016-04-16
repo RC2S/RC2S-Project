@@ -1,15 +1,6 @@
 var fs = require("fs");
 
-var writeData = function(datas, log) {
-	datas += JSON.stringify(log) + "\n";
-
-	fs.writeFile("logs.json", datas, (err) => {
-		if (err)
-			throw err;
-
-		console.log("[+] Wrote log !");
-	});
-}
+var writeData = require("./logUtils").WriteData;
 
 module.exports = function(app) {
 
@@ -25,7 +16,7 @@ module.exports = function(app) {
 			body : req.body,
 			query : req.query,
 			date : Date.now()
-		}
+		};
 
 		try {
 			var stat = fs.statSync("logs.json");
