@@ -1,6 +1,6 @@
 package com.rc2s.annotations.processors;
 
-import com.rc2s.annotations.Lookup;
+import com.rc2s.annotations.SourceControl;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
@@ -15,7 +15,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
-public class LookupProcessor extends AbstractProcessor
+public class SourceControlProcessor extends AbstractProcessor
 {
     private Types       typeUtils;
     private Elements    elementUtils;
@@ -32,7 +32,6 @@ public class LookupProcessor extends AbstractProcessor
         messager        = processingEnv.getMessager();
     }
     
-    
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)
     {
@@ -46,12 +45,12 @@ public class LookupProcessor extends AbstractProcessor
         
         return true;
     }
-
+    
     @Override
     public Set<String> getSupportedAnnotationTypes()
     {
         Set<String> annotations = new HashSet<>();
-        annotations.add(Lookup.class.getCanonicalName());
+        annotations.add(SourceControl.class.getCanonicalName());
         return annotations;
     }
     

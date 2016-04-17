@@ -1,5 +1,7 @@
 package com.rc2s.client;
 
+import com.rc2s.annotations.Lookup;
+import com.rc2s.annotations.SourceControl;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.util.List;
@@ -8,8 +10,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+@SourceControl
 public class ClientTest
 {    
+    @Lookup(remoteEJB = "TestEJB")
+    private boolean testAnnotation;
+    
     public static void main(String[] args)
     {
         try
