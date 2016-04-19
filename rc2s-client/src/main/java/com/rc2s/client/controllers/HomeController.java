@@ -18,6 +18,7 @@ import javafx.scene.control.TabPane;
 public class HomeController implements Initializable
 {
     @FXML
+    @Knowledge
     private TabPane tabPane;
 
     @Override

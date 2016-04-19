@@ -7,11 +7,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({
+    ElementType.METHOD,
+    ElementType.TYPE,
+    ElementType.FIELD,
+    ElementType.CONSTRUCTOR
+})
 @Retention(RetentionPolicy.SOURCE)
 public @interface Knowledge
 {
-    String name() default "coucouknow";
-    String description() default "njkjhk";
-    String[] parameters() default {"test", "ted2"};
+    String name() default "";
+    String description() default "";
+    String[] parameters() default {};
 }
