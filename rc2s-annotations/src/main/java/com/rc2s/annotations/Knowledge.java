@@ -11,5 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Knowledge
 {
-    
+    String name() default "coucouknow";
+    String description() default "njkjhk";
+    String[] parameters() default {"test", "ted2"};
 }

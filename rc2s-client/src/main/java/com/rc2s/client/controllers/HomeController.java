@@ -5,6 +5,7 @@
  */
 package com.rc2s.client.controllers;
 
+import com.rc2s.annotations.Knowledge;
 import com.rc2s.client.utils.Resources;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+@Knowledge(name="testknowledge")
 public class HomeController implements Initializable
 {
     @FXML
