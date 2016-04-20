@@ -71,9 +71,10 @@ public class KnowledgeProcessor extends AbstractProcessor
                             el.getKind(),
                             el.getSimpleName().toString());
                         
+                        enclosed.setDescription(getAnnotationValue(el, "description()"));
+                        
                         if(el.getKind() == ElementKind.FIELD)
                         {
-                            enclosed.setDescription(getAnnotationValue(el, "description()"));
                             enclosed.setReturnType(el.asType().toString());
                             fields.add(enclosed);
                         }
