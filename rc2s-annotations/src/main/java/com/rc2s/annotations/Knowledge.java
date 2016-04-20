@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 public @interface Knowledge
 {
     String description() default "";
-    String[] parametersDescription() default {};
+    String[] parametersDescription() default {""};
 }

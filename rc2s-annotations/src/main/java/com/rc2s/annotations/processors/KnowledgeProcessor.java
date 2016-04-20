@@ -38,11 +38,11 @@ public class KnowledgeProcessor extends AbstractProcessor
         filer           = processingEnv.getFiler();
         messager        = processingEnv.getMessager();
     }
-    
-    
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)
     {
+        Object description;
         ElementMapper mainClass             = null;
         List<ElementMapper> fields          = new ArrayList();
         List<ElementMapper> constructors    = new ArrayList();
@@ -61,7 +61,7 @@ public class KnowledgeProcessor extends AbstractProcessor
                         ElementKind.CLASS,
                         annotated.getSimpleName().toString()
                     );
-                    mainClass.setDescription(getAnnotationValue(annotated, "description()"));
+                    mainClass.setDescription(((description = getAnnotationValue(annotated, "description()")) != null) ? description.toString() : null);
                     
                     for(Element el : annotated.getEnclosedElements())
                     {
@@ -71,7 +71,7 @@ public class KnowledgeProcessor extends AbstractProcessor
                             el.getKind(),
                             el.getSimpleName().toString());
                         
-                        enclosed.setDescription(getAnnotationValue(el, "description()"));
+                        enclosed.setDescription(((description = getAnnotationValue(el, "description()")) != null) ? description.toString() : null);
                         
                         if(el.getKind() == ElementKind.FIELD)
                         {
@@ -81,13 +81,20 @@ public class KnowledgeProcessor extends AbstractProcessor
                         else if(el.getKind() == ElementKind.CONSTRUCTOR)
                         {
                             ExecutableElement constructorElement = (ExecutableElement) el;
+                            String[] paramsDescription = (String[]) getAnnotationValue(el, "parametersDescription()");
+                            int i = 0;
                             List<Parameter> params = new ArrayList();
                             
                             for(Element param : constructorElement.getParameters())
                             {
+                                String desc = null;
+                                if(paramsDescription != null && i < paramsDescription.length)
+                                    desc = paramsDescription[i++];
+                                
                                 params.add(new Parameter(
                                     param.getSimpleName().toString(),
-                                    param.asType().toString()
+                                    param.asType().toString(),
+                                    desc
                                 ));
                             }
                             enclosed.setParameters(params);
@@ -96,13 +103,20 @@ public class KnowledgeProcessor extends AbstractProcessor
                         else if(el.getKind() == ElementKind.METHOD)
                         {
                             ExecutableElement methodElement = (ExecutableElement) el;
+                            String[] paramsDescription = (String[]) getAnnotationValue(el, "parametersDescription()");
+                            int i = 0;
                             List<Parameter> params = new ArrayList();
                             
                             for(Element param : methodElement.getParameters())
                             {
+                                String desc = null;
+                                if(paramsDescription != null && i < paramsDescription.length)
+                                    desc = paramsDescription[i++];
+                                
                                 params.add(new Parameter(
                                     param.getSimpleName().toString(),
-                                    param.asType().toString()
+                                    param.asType().toString(),
+                                    desc
                                 ));
                             }
                             enclosed.setParameters(params);
@@ -146,7 +160,7 @@ public class KnowledgeProcessor extends AbstractProcessor
         return SourceVersion.latestSupported();
     }
     
-    private String getAnnotationValue(Element element, String key)
+    private Object getAnnotationValue(Element element, String key)
     {
         for (AnnotationMirror annotationMirror : element.getAnnotationMirrors())
         {
@@ -156,7 +170,7 @@ public class KnowledgeProcessor extends AbstractProcessor
             for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> param : properties.entrySet())
             {
                 if(param.getKey().toString().equals(key))
-                    return param.getValue().toString();
+                    return param.getValue();
             }
         }
         return null;

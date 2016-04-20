@@ -39,6 +39,7 @@ public class LoginController implements Initializable
     private User user;
     
     @Override
+    @Knowledge(description="init method", parametersDescription = {"mothafucka url", "modafucka bundle"})
     public void initialize(URL url, ResourceBundle rb) {}
 
     @FXML

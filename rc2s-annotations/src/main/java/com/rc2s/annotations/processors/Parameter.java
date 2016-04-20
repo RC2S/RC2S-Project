@@ -6,12 +6,13 @@ public class Parameter
     
     private final String type;
     
-    private String description;
+    private final String description;
 
-    public Parameter(String name, String type)
+    public Parameter(String name, String type, String description)
     {
         this.name = name;
         this.type = type;
+        this.description = description;
     }
 
     public String getName()
@@ -27,11 +28,6 @@ public class Parameter
     public String getDescription()
     {
         return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
     }
 
     @Override
