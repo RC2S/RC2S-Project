@@ -1,5 +1,6 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.annotations.Knowledge;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,12 +20,14 @@ import javafx.event.Event;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+@Knowledge(description="lololo")
 public class LoginController implements Initializable
 {    
     @FXML
     private TextField ipaddr;
     
     @FXML
+    @Knowledge(description="cdqsfqs")
     private TextField username;
     
     @FXML

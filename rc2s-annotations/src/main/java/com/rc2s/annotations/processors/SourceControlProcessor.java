@@ -2,6 +2,8 @@ package com.rc2s.annotations.processors;
 
 import com.rc2s.annotations.SourceControl;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -9,7 +11,10 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
@@ -39,7 +44,38 @@ public class SourceControlProcessor extends AbstractProcessor
         {
             for(Element annotated : roundEnv.getElementsAnnotatedWith(te))
             {
+                // Get the name of annotated element
                 messager.printMessage(Diagnostic.Kind.NOTE, annotated.getSimpleName());
+                
+                // Get the type of annotated element
+                messager.printMessage(Diagnostic.Kind.NOTE, "type : " + annotated.getKind().toString());
+                
+                // Get the full name of annotated element
+                messager.printMessage(Diagnostic.Kind.NOTE, "full name with package : " + annotated.asType().toString());
+                
+                // Get all elements into the annotated element (ex : methods, fields, constructors in the annotated class)
+                List<? extends Element> el = annotated.getEnclosedElements();
+                for(Element e : el) {
+                    messager.printMessage(Diagnostic.Kind.NOTE, "test : " + e.getSimpleName().toString());
+                }
+                
+                // Get the parent element of the annotated element 
+                // (package name if annotated element is a class, class name if annotated element is field, constructor, method)
+                messager.printMessage(Diagnostic.Kind.NOTE, "enclosing : " + annotated.getEnclosingElement().getSimpleName().toString());
+
+                // Get the Package of annotated element
+                messager.printMessage(Diagnostic.Kind.NOTE,elementUtils.getPackageOf(annotated).toString());
+                
+                // Get the annotation properties for annotated element
+                for (AnnotationMirror annotationMirror : annotated.getAnnotationMirrors())
+                {
+                    Map<? extends ExecutableElement, ? extends AnnotationValue> properties = elementUtils.getElementValuesWithDefaults(annotationMirror);
+                    for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> param : properties.entrySet())
+                    {
+                        AnnotationValue val = param.getValue();
+                        messager.printMessage(Diagnostic.Kind.NOTE, val.toString());
+                    }
+                } 
             }
         }
         

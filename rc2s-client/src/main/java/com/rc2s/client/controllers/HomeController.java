@@ -14,11 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
-@Knowledge(name="testknowledge")
 public class HomeController implements Initializable
 {
     @FXML
-    @Knowledge
     private TabPane tabPane;
 
     @Override
