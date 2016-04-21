@@ -1,5 +1,8 @@
 package com.rc2s.annotations.processors;
 
+import com.rc2s.annotations.utils.HtmlFile;
+import com.rc2s.annotations.mappers.ElementMapper;
+import com.rc2s.annotations.mappers.ParameterMapper;
 import com.rc2s.annotations.Knowledge;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +31,9 @@ public class KnowledgeProcessor extends AbstractProcessor
     private Elements    elementUtils;
     private Filer       filer;      // Création dynamique de classe, package, res, ...
     private Messager    messager;   // Message lors de la compilation
-
+	
+	public static List<String> processedClasses = new ArrayList();
+	
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv)
     {
@@ -42,105 +47,15 @@ public class KnowledgeProcessor extends AbstractProcessor
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)
     {
-        Object description;
-        ElementMapper mainClass             = null;
-        List<ElementMapper> fields          = new ArrayList();
-        List<ElementMapper> constructors    = new ArrayList();
-        List<ElementMapper> methods         = new ArrayList();
-        
         for(TypeElement te : annotations)
         {           
             for(Element annotated : roundEnv.getElementsAnnotatedWith(te))
             {
-                // Annotated element is the class
                 if(annotated.getKind() == ElementKind.CLASS)
-                {
-                    mainClass = new ElementMapper(
-                        elementUtils.getPackageOf(annotated).toString(),
-                        annotated.getModifiers(),
-                        ElementKind.CLASS,
-                        annotated.getSimpleName().toString()
-                    );
-                    mainClass.setDescription(((description = getAnnotationValue(annotated, "description()")) != null) ? description.toString() : null);
-                    
-                    for(Element el : annotated.getEnclosedElements())
-                    {
-                        ElementMapper enclosed = new ElementMapper(
-                            elementUtils.getPackageOf(el).toString(),
-                            el.getModifiers(),
-                            el.getKind(),
-                            el.getSimpleName().toString());
-                        
-                        enclosed.setDescription(((description = getAnnotationValue(el, "description()")) != null) ? description.toString() : null);
-                        
-                        if(el.getKind() == ElementKind.FIELD)
-                        {
-                            enclosed.setReturnType(el.asType().toString());
-                            fields.add(enclosed);
-                        }
-                        else if(el.getKind() == ElementKind.CONSTRUCTOR)
-                        {
-                            ExecutableElement constructorElement = (ExecutableElement) el;
-                            String[] paramsDescription = (String[]) getAnnotationValue(el, "parametersDescription()");
-                            int i = 0;
-                            List<Parameter> params = new ArrayList();
-                            
-                            for(Element param : constructorElement.getParameters())
-                            {
-                                String desc = null;
-                                if(paramsDescription != null && i < paramsDescription.length)
-                                    desc = paramsDescription[i++];
-                                
-                                params.add(new Parameter(
-                                    param.getSimpleName().toString(),
-                                    param.asType().toString(),
-                                    desc
-                                ));
-                            }
-                            enclosed.setParameters(params);
-                            constructors.add(enclosed);
-                        }
-                        else if(el.getKind() == ElementKind.METHOD)
-                        {
-                            ExecutableElement methodElement = (ExecutableElement) el;
-                            String[] paramsDescription = (String[]) getAnnotationValue(el, "parametersDescription()");
-                            int i = 0;
-                            List<Parameter> params = new ArrayList();
-                            
-                            for(Element param : methodElement.getParameters())
-                            {
-                                String desc = null;
-                                if(paramsDescription != null && i < paramsDescription.length)
-                                    desc = paramsDescription[i++];
-                                
-                                params.add(new Parameter(
-                                    param.getSimpleName().toString(),
-                                    param.asType().toString(),
-                                    desc
-                                ));
-                            }
-                            enclosed.setParameters(params);
-                            enclosed.setReturnType(methodElement.getReturnType().toString());
-                            methods.add(enclosed);
-                        }
-                    }
-                }
+                	classAnalysor(annotated);
+                else
+                	classAnalysor(annotated.getEnclosingElement());
             }
-            
-            messager.printMessage(Diagnostic.Kind.NOTE, "Main Class");
-            messager.printMessage(Diagnostic.Kind.NOTE, mainClass.toString());
-
-            messager.printMessage(Diagnostic.Kind.NOTE, "Fields");
-            for(ElementMapper el : fields)
-                messager.printMessage(Diagnostic.Kind.NOTE, el.toString());
-
-            messager.printMessage(Diagnostic.Kind.NOTE, "Constructors");
-            for(ElementMapper el : constructors)
-                messager.printMessage(Diagnostic.Kind.NOTE, el.toString());
-
-            messager.printMessage(Diagnostic.Kind.NOTE, "Methods");
-            for(ElementMapper el : methods)
-                messager.printMessage(Diagnostic.Kind.NOTE, el.toString());
         }
         
         return true;
@@ -160,12 +75,73 @@ public class KnowledgeProcessor extends AbstractProcessor
         return SourceVersion.latestSupported();
     }
     
+    private void classAnalysor(Element mainElement)
+    {
+    	ElementMapper mainClass;
+        List<ElementMapper> fields          = new ArrayList();
+        List<ElementMapper> constructors    = new ArrayList();
+        List<ElementMapper> methods         = new ArrayList();
+        
+        if(mainElement.getKind() != ElementKind.CLASS
+        || processedClasses.contains(mainElement.getSimpleName().toString()))
+        	return;
+        
+        mainClass = new ElementMapper(
+            elementUtils.getPackageOf(mainElement).toString(),
+            mainElement.getModifiers(),
+            ElementKind.CLASS,
+            mainElement.getSimpleName().toString()
+        );
+        
+        processedClasses.add(mainElement.getSimpleName().toString());
+        
+        // Get Annotation Description for the class
+        if(getAnnotationValue(mainElement, "description()") != null)
+    		mainClass.setDescription(getAnnotationValue(mainElement, "description()").toString());
+        
+        // Get elements in the class (fields, constructors, methods)
+        for(Element el : mainElement.getEnclosedElements())
+        {
+            ElementMapper enclosed = new ElementMapper(
+                elementUtils.getPackageOf(el).toString(),
+                el.getModifiers(),
+                el.getKind(),
+                el.getSimpleName().toString()
+            );
+            
+            // Get Annotation Description for the current element
+            if(getAnnotationValue(el, "description()") != null)
+            	enclosed.setDescription(getAnnotationValue(el, "description()").toString());
+            
+            if(el.getKind() == ElementKind.FIELD)
+            {
+                enclosed.setReturnType(el.asType().toString());
+                fields.add(enclosed);
+            }
+            else if(el.getKind() == ElementKind.CONSTRUCTOR)
+            {
+                enclosed.setParameters(getElementParameters(el));
+                constructors.add(enclosed);
+            }
+            else if(el.getKind() == ElementKind.METHOD)
+            {
+                enclosed.setParameters(getElementParameters(el));
+                enclosed.setReturnType(((ExecutableElement)el).getReturnType().toString());
+                methods.add(enclosed);
+            }
+        }
+        
+        HtmlFile.createJavaDocFile(mainClass, fields, constructors, methods);
+        
+        messager.printMessage(Diagnostic.Kind.NOTE, "Documentation for the " + mainClass.getName() + " class created.");
+    }
+    
     private Object getAnnotationValue(Element element, String key)
     {
-        for (AnnotationMirror annotationMirror : element.getAnnotationMirrors())
+        Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
+        
+	    for (AnnotationMirror annotationMirror : element.getAnnotationMirrors())
         {
-            Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
-            
             properties = elementUtils.getElementValuesWithDefaults(annotationMirror);
             for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> param : properties.entrySet())
             {
@@ -174,5 +150,34 @@ public class KnowledgeProcessor extends AbstractProcessor
             }
         }
         return null;
+    }
+    
+    private List<ParameterMapper> getElementParameters(Element el)
+    {
+    	ExecutableElement execElement           = (ExecutableElement) el;
+        List<ParameterMapper> params            = new ArrayList();
+        List<AnnotationValue> paramsAnnoDesc    = null;
+        int i = 0;
+        
+        if(getAnnotationValue(el, "parametersDescription()") != null)
+        {
+            AnnotationValue val = (AnnotationValue) getAnnotationValue(el, "parametersDescription()");
+            paramsAnnoDesc = (List<AnnotationValue>)val.getValue();
+        }
+        
+        for(Element param : execElement.getParameters())
+        {
+            String desc = null;
+            if(paramsAnnoDesc != null && i < paramsAnnoDesc.size())
+                desc = (String) paramsAnnoDesc.get(i++).getValue();
+            
+            params.add(new ParameterMapper(
+                param.getSimpleName().toString(),
+                param.asType().toString(),
+                desc
+            ));
+        }
+        
+        return params;
     }
 }

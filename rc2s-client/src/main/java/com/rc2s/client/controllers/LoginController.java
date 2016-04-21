@@ -20,7 +20,6 @@ import javafx.event.Event;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-@Knowledge(description="lololo")
 public class LoginController implements Initializable
 {    
     @FXML
@@ -39,7 +38,6 @@ public class LoginController implements Initializable
     private User user;
     
     @Override
-    @Knowledge(description="init method", parametersDescription = {"mothafucka url", "modafucka bundle"})
     public void initialize(URL url, ResourceBundle rb) {}
 
     @FXML

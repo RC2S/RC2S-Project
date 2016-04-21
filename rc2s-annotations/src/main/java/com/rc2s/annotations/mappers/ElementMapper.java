@@ -1,4 +1,4 @@
-package com.rc2s.annotations.processors;
+package com.rc2s.annotations.mappers;
 
 import java.util.List;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class ElementMapper
     private final String name;
     
     // Element parameters
-    private List<Parameter> parameters;
+    private List<ParameterMapper> parameters;
     
     // Annotated element description
     private String description;
@@ -31,10 +31,10 @@ public class ElementMapper
     public ElementMapper(String packageName, Set<Modifier> modifiers,
         ElementKind kind, String name)
     {
-        this.packageName = packageName;
-        this.modifiers = modifiers;
-        this.kind = kind;
-        this.name = name;
+        this.packageName    = packageName;
+        this.modifiers      = modifiers;
+        this.kind           = kind;
+        this.name           = name;
     }
 
     public String getPackageName()
@@ -67,7 +67,7 @@ public class ElementMapper
         return name;
     }
 
-    public List<Parameter> getParameters()
+    public List<ParameterMapper> getParameters()
     {
         return parameters;
     }
@@ -77,7 +77,7 @@ public class ElementMapper
         return description;
     }
 
-    public void setParameters(List<Parameter> parameters)
+    public void setParameters(List<ParameterMapper> parameters)
     {
         this.parameters = parameters;
     }
@@ -85,11 +85,5 @@ public class ElementMapper
     public void setDescription(String description)
     {
         this.description = description;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "ElementMapper{" + "packageName=" + packageName + ", modifiers=" + modifiers + ", returnType=" + returnType + ", kind=" + kind + ", name=" + name + ", parameters=" + parameters + ", description=" + description + '}';
     }
 }
