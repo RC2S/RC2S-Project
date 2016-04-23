@@ -19,19 +19,19 @@ ear {
         module("APP-INF/lib/rc2s-dao-1.0.jar", "ejb")
     }
 	
-	doLast {
-		tasks.autodeploy.execute();
+	if(!project.hasProperty('skipAutodeploy')) {
+		doLast {
+			tasks.autodeploy.execute();
+		}
 	}
 }
 
 task autodeploy(type: Exec) {
-	if(!project.hasProperty('skipAutodeploy')) {
-		if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-			executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
-		}
-		else {
-			executable "/home/esp010/Bureau/payara41/bin/asadmin"
-		}
-		args "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
 	}
+	else {
+		executable "/home/esp010/Bureau/payara41/bin/asadmin"
+	}
+	args "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
 }
