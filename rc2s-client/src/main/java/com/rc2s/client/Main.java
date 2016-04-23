@@ -1,5 +1,6 @@
 package com.rc2s.client;
 
+import com.rc2s.annotations.Knowledge;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
 import javafx.scene.Parent;
 
+@Knowledge
 public class Main extends Application
 {
     private static Stage stage;
@@ -16,7 +18,7 @@ public class Main extends Application
         Resources.setViewsPackage(Config.VIEWS_PACKAGE);
         Resources.setCssPackage(Config.CSS_PACKAGE);
         Resources.setResourcesPackage(Config.RESOURCES_PACKAGE);
-
+        
         launch(args);
     }
     

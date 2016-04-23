@@ -7,7 +7,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 public class ClientTest
-{    
+{
     public static void main(String[] args)
     {
         try

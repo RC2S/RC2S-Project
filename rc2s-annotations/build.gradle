@@ -1,3 +1,4 @@
-dependencies {
-    
+dependencies
+{
+    compile group:'javax.enterprise', name:'cdi-api', version:'2.0-EDR1'
 }
