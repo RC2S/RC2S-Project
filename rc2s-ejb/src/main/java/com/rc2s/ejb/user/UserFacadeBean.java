@@ -7,7 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 
 @Stateless(mappedName = "UserEJB")
-public class UserFacadeBean  implements UserFacadeRemote
+public class UserFacadeBean implements UserFacadeRemote
 {	
     @EJB
     private IUserService userService;

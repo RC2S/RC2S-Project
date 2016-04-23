@@ -25,11 +25,13 @@ ear {
 }
 
 task autodeploy(type: Exec) {
-	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-        executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
+	if(!project.hasProperty('skipAutodeploy')) {
+		if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+			executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
+		}
+		else {
+			executable "/home/esp010/Bureau/payara41/bin/asadmin"
+		}
+		args "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
 	}
-	else {
-		executable "/home/esp010/Bureau/payara41/bin/asadmin"
-	}
-	args "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
 }
