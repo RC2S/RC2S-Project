@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Lookup
 {
-    String remoteEJB();
+    String value();
     String hostIP() default "127.0.0.1";
     String hostPort() default "3700";
 }

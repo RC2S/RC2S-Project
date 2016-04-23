@@ -1,6 +1,5 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.annotations.Knowledge;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,7 +25,6 @@ public class LoginController implements Initializable
     private TextField ipaddr;
     
     @FXML
-    @Knowledge(description="cdqsfqs")
     private TextField username;
     
     @FXML

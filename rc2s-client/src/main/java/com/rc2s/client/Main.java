@@ -18,7 +18,7 @@ public class Main extends Application
         Resources.setViewsPackage(Config.VIEWS_PACKAGE);
         Resources.setCssPackage(Config.CSS_PACKAGE);
         Resources.setResourcesPackage(Config.RESOURCES_PACKAGE);
-
+        
         launch(args);
     }
     
