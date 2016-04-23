@@ -9,7 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class ClientTest
-{    
+{
     public static void main(String[] args)
     {
         try

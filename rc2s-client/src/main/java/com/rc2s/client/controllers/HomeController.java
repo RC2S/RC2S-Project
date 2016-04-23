@@ -5,6 +5,7 @@
  */
 package com.rc2s.client.controllers;
 
+import com.rc2s.annotations.Knowledge;
 import com.rc2s.client.utils.Resources;
 import java.net.URL;
 import java.util.ResourceBundle;

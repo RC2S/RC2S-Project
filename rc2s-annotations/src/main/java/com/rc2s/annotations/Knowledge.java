@@ -7,11 +7,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Target(ElementType.FIELD)
+@Target({
+    ElementType.METHOD,
+    ElementType.TYPE,
+    ElementType.FIELD,
+    ElementType.CONSTRUCTOR
+})
 @Retention(RetentionPolicy.SOURCE)
-public @interface Lookup
+public @interface Knowledge
 {
-    String value();
-    String hostIP() default "127.0.0.1";
-    String hostPort() default "3700";
+    String description() default "";
+    String[] parametersDescription() default {""};
 }

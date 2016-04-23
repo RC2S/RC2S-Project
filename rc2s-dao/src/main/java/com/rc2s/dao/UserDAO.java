@@ -13,6 +13,7 @@ public class UserDAO implements IUserDAO
     @PersistenceContext
     private EntityManager em;
     
+    @Override
     public List<User> getUsers()
     {
         Query query = em.createQuery("SELECT u from User as u");
