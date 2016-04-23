@@ -1,6 +1,5 @@
 package com.rc2s.client;
 
-import com.rc2s.annotations.Lookup;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.util.List;
