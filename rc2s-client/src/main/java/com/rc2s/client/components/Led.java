@@ -1,4 +1,4 @@
-package com.rc2s.client.models;
+package com.rc2s.client.components;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
