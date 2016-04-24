@@ -9,8 +9,8 @@ var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	var ctxErrors = errorsMap[method][errorsMapSerial];
 
 	console.log();
-	logger.info("*** Accessing HTTP ***");
-	logger.info(method + " on " + apiPath);
+	logger.trace("*** Che HTTP log ***");
+	logger.trace(method + " on " + apiPath);
 	logger.warn(ctxErrors[statusCode]);
 };
 
@@ -21,8 +21,16 @@ var writeHttpErrorLog = (errorsMapSerial, message) => {
 	logger.error("Message : " + message);
 };
 
+var writeAuthAccess = (originalUrl, token) => {
+
+	console.log();
+	logger.trace("Entity [" + token + "] accessing Url '" + originalUrl + "'");
+}
+
 module.exports = {
 
 	"writeHttpLog" : writeHttpLog,
-	"writeHttpErrorLog" : writeHttpErrorLog
+	"writeHttpErrorLog" : writeHttpErrorLog,
+
+	"writeAuthAccess" : writeAuthAccess
 };

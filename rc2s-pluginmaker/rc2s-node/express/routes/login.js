@@ -1,4 +1,6 @@
-var mysql = require("mysql");
+var mysql = require('mysql');
+
+var sha1 = require('sha1');
 
 module.exports = (app) => {
 
@@ -23,8 +25,8 @@ module.exports = (app) => {
 
 	app.post('/login', (req, res, next) => {
 
-		var username = req.body.username;
-		var passwd = req.body.passwd;
+		var username 	= req.body.username;
+		var passwd 		= req.body.passwd;
 
 		var conn = mysql.createConnection({
 			host : "localhost",
@@ -37,10 +39,8 @@ module.exports = (app) => {
 			if (err)
 				console.error(err);
 
-			console.log("Connection OK");
+			// log("Connection OK");
 		});
-
-		console.log("User : " + username + ", pass : " + passwd);
 
 		conn.query("SELECT u.* FROM user u WHERE username = ? AND password = ?", 
 			[username, passwd],
@@ -48,23 +48,29 @@ module.exports = (app) => {
 			if (err)
 				console.error(err);
 
-			console.log(rows.length + " => " + rows);
-
 			if (rows.length == 0) {
 
-				console.log("NOT FOUND!");
+				// log("NOT FOUND!");
+
 				res.redirect("/login");
 			} else {
 
-				var token = req.cookies.token;
-				token = "NEWTOKEN";
+				var token = sha1(rows[0]["username"] + rows[0]["password"]);
 
-				console.log("Creating new token : " + token);
+				// log("Creating new token : " + token);
 
 				res.cookie("token", token, { maxAge : 900000 });		
 
-				res.redirect("/login");
+				res.redirect("/workspaces");
 			}
 		});
+	});
+
+	app.get('/logout', (req, res, next) => {
+
+		req.cookies.token = undefined;
+		res.cookie("token", req.cookies.token, { maxAge : 0 });
+
+		res.redirect("/login");
 	});
 };
