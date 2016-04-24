@@ -1,19 +1,11 @@
 package com.rc2s.daemon;
 
-import com.rc2s.daemon.hardware.Hardware;
-import com.rc2s.daemon.network.Packet;
-import com.rc2s.daemon.network.Stage;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 public class StatesProcessorTest
 {
-    @InjectMocks
+    /*@InjectMocks
     private StatesProcessor processor;
 
     @Mock
@@ -37,7 +29,7 @@ public class StatesProcessorTest
     public void initMocks()
     {
         MockitoAnnotations.initMocks(this);
-    }
+    }*/
 
     @Test
     public void levelSupportsGreaterValues()
