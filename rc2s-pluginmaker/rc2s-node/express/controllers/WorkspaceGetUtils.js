@@ -47,7 +47,7 @@ WorkspaceGetUtils.prototype.FindByName = (wsName, callback) => {
 
 	var apiPath = '/api/workspace/name/' + wsName;
 
-	var options = createOptions(apiPath, 'GET');
+	var options = createOptions(apiPath, method);
 
 	var content;
 
@@ -58,6 +58,39 @@ WorkspaceGetUtils.prototype.FindByName = (wsName, callback) => {
 			method, res.statusCode);
 
 	 	res.setEncoding('utf8');
+
+	 	res.on('data', (chunk) => {
+	  		content = chunk;
+	 	});
+		res.on('end', () => {
+			callback(res.statusCode, res.headers, content);
+		});
+	});
+
+	req.on('error', (e) => {
+  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
+	});
+
+	req.end();
+};
+
+WorkspaceGetUtils.prototype.FindAllRuntime = (callback) => {
+
+	var errorsMapSerial = 'GETFAR1';
+
+	var apiPath = '/api/workspace/runtime?skipCount=0&maxItems=30';
+
+	var options = createOptions(apiPath, method);
+
+	var content;
+
+	var req = http.request(options, (res) => {
+
+		// Errors to manage
+		logger.writeHttpLog(errorsMapSerial, apiPath, 
+			method, res.statusCode);
+
+		res.setEncoding('utf8');
 
 	 	res.on('data', (chunk) => {
 	  		content = chunk;

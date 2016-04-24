@@ -2,7 +2,7 @@ var controllers = require("../controllers");
 
 module.exports = (app) => {
 
-	app.get("/workspace", (req, res, next) => {
+	app.get("/workspaces", (req, res, next) => {
 
 		controllers.WorkspaceGetUtils.FindAll((statusCode, header, body) => {
 
@@ -11,14 +11,8 @@ module.exports = (app) => {
 			//console.log("CB status : " + statusCode);
 			//console.log("CB header : " + header);
 			//console.log("CB body   : " + body);
-/*
-			for (datas in header)
-	  			console.log(datas + ' : ' + header[datas]);
-
-			for(datas in body)
-	  			console.log(datas + ' : ' + body[datas]);
-
-*/			console.log("END CALLBACK");
+		
+			console.log("END CALLBACK");
 		});
 	});
 
@@ -28,18 +22,17 @@ module.exports = (app) => {
 			(statusCode, header, body) => {
 
 			console.log("IN THE CALLBACK");
+			console.log("END CALLBACK");
+		});
+	});
 
-			//console.log("CB status : " + statusCode);
-			//console.log("CB header : " + header);
-			//console.log("CB body   : " + body);
-/*
-			for (datas in header)
-	  			console.log(datas + ' : ' + header[datas]);
+	app.get("/workspaces/runtime", (req, res, next) => {
 
-			for(datas in body)
-	  			console.log(datas + ' : ' + body[datas]);
+		controllers.WorkspaceGetUtils.FindAllRuntime(
+			(statusCode, header, body) => {
 
-*/			console.log("END CALLBACK");
+			console.log("IN THE CALLBACK");
+			console.log("END CALLBACK");
 		});
 	});
 };

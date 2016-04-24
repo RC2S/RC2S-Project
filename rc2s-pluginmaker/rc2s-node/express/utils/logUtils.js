@@ -3,12 +3,15 @@ var logger = log4js.getLogger();
 
 var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	
-	var errorsMap = require("../models").errorsMaps[errorsMapSerial];
+	// Access errors map
+	var errorsMap = require("../models").errorsMaps;
+	// Obtain context errors
+	var ctxErrors = errorsMap[method][errorsMapSerial];
 
 	console.log();
 	logger.info("*** Accessing HTTP ***");
 	logger.info(method + " on " + apiPath);
-	logger.warn(errorsMap[statusCode] + "\n");
+	logger.warn(ctxErrors[statusCode] + "\n");
 	console.log();
 };
 
