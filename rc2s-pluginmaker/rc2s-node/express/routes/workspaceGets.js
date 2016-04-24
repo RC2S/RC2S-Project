@@ -6,11 +6,11 @@ module.exports = (app) => {
 
 		controllers.WorkspaceGetUtils.FindAll((statusCode, header, body) => {
 
-			console.log("\n\nIN THE CALLBACK");
+			console.log("IN THE CALLBACK");
 
-			console.log("CB status : " + statusCode);
-			console.log("CB header : " + header);
-			console.log("CB body   : " + body);
+			//console.log("CB status : " + statusCode);
+			//console.log("CB header : " + header);
+			//console.log("CB body   : " + body);
 /*
 			for (datas in header)
 	  			console.log(datas + ' : ' + header[datas]);
@@ -27,11 +27,11 @@ module.exports = (app) => {
 		controllers.WorkspaceGetUtils.FindByName(req.params.name || "", 
 			(statusCode, header, body) => {
 
-			console.log("\n\nIN THE CALLBACK");
+			console.log("IN THE CALLBACK");
 
-			console.log("CB status : " + statusCode);
-			console.log("CB header : " + header);
-			console.log("CB body   : " + body);
+			//console.log("CB status : " + statusCode);
+			//console.log("CB header : " + header);
+			//console.log("CB body   : " + body);
 /*
 			for (datas in header)
 	  			console.log(datas + ' : ' + header[datas]);

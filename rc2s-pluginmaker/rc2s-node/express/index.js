@@ -7,7 +7,6 @@ module.exports = () => {
 
 	app.use(bodyParser.json());
 
-	//require("./loggers")(app);
 	require("./routes")(app);
 
 	app.listen(8080, () => {

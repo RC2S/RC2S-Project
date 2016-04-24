@@ -14,5 +14,6 @@ var createOptions = (path, method) => {
 };
 
 module.exports = {
+
 	"createOptions": createOptions
-}
+};
