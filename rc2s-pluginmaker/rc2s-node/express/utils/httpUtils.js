@@ -20,14 +20,18 @@ var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {
 	 	res.setEncoding('utf8');
 
 	 	res.on('data', (chunk) => {
+
 	  		content = chunk;
 	 	});
+	 	
 		res.on('end', () => {
+
 			callback(res.statusCode, res.headers, content);
 		});
 	});
 
 	req.on('error', (e) => {
+
 		// Write error log
   		logger.writeHttpErrorLog(errorsMapSerial, e.message);
 	});

@@ -50,7 +50,7 @@ module.exports = (app) => {
 		});
 	});
 
-	app.get(".workspace/snapshot/:id", (req, res, next) => {
+	app.get("/workspace/snapshot/:id", (req, res, next) => {
 
 		controllers.WorkspaceGetUtils.FindSnapshotByID(req.params.id || "",
 			(statusCode, header, body) => {
