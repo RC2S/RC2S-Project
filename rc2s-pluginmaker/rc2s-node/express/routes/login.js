@@ -2,6 +2,8 @@ var mysql = require('mysql');
 
 var sha1 = require('sha1');
 
+var logger = require("./logUtils");
+
 module.exports = (app) => {
 
 	app.get('/login', (req, res, next) => {
@@ -28,36 +30,38 @@ module.exports = (app) => {
 		var username 	= req.body.username;
 		var passwd 		= req.body.passwd;
 
-		var conn = mysql.createConnection({
+		var credentials = {
 			host : "localhost",
 			user : "root",
 			password : "root",
 			database : "RC2S"
-		});
+		};
+
+		var conn = mysql.createConnection(credentials);
 
 		conn.connect((err) => {
 			if (err)
-				console.error(err);
+				logger.writeConnectionLog(err, credentials);
 
-			// log("Connection OK");
+			logger.writeConnectionLog("Connection OK", credentials);
 		});
 
-		conn.query("SELECT u.* FROM user u WHERE username = ? AND password = ?", 
-			[username, passwd],
-			(err, rows, fields) => {
+		var query = 'SELECT u.* FROM user u WHERE username = ? AND password = ?';
+
+		conn.query(query, [username, passwd], (err, rows, fields) => {
 			if (err)
-				console.error(err);
+				log.writeQueryLog(err, query);
 
 			if (rows.length == 0) {
 
-				// log("NOT FOUND!");
+				log.writeQueryLog("User not found !", query);
 
 				res.redirect("/login");
 			} else {
 
 				var token = sha1(rows[0]["username"] + rows[0]["password"]);
 
-				// log("Creating new token : " + token);
+				log.writeQueryLog("User found. Creating new token : " + token);
 
 				res.cookie("token", token, { maxAge : 900000 });		
 
