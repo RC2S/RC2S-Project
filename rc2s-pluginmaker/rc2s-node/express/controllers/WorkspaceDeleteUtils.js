@@ -1,10 +1,6 @@
-var http = require("http");
-
 var method = 'DELETE';
 
-var logger = require("../utils/logUtils");
-
-var createOptions = require("../utils/httpUtils").createOptions;
+var buildRequest = require("../utils/httpUtils").buildRequestFromParams;
 
 var WorkspaceDeleteUtils = function() {};
 
@@ -14,31 +10,7 @@ WorkspaceDeleteUtils.prototype.DeleteWSByID = (wsID, callback) => {
 
 	var apiPath = '/api/workspace/' + wsID;
 
-	var options = createOptions(apiPath, method);
-
-	var content;
-
-	var req = http.request(options, (res) => {
-
-		// Errors to manage
-		logger.writeHttpLog(errorsMapSerial, apiPath, 
-			method, res.statusCode);
-
-	 	res.setEncoding('utf8');
-
-	 	res.on('data', (chunk) => {
-	  		content = chunk;
-	 	});
-		res.on('end', () => {
-			callback(res.statusCode, res.headers, content);
-		});
-	});
-
-	req.on('error', (e) => {
-  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
-	});
-
-	req.end();
+	buildRequest(errorsMapSerial, apiPath, method, callback);
 };
 
 WorkspaceDeleteUtils.prototype.RemoveProjectFromWS = (wsID, pjName, callback) => {
@@ -47,31 +19,7 @@ WorkspaceDeleteUtils.prototype.RemoveProjectFromWS = (wsID, pjName, callback) =>
 
 	var apiPath = '/api/workspace/' + wsID + '/project/' + pjName;
 
-	var options = createOptions(apiPath, method);
-
-	var content;
-
-	var req = http.request(options, (res) => {
-
-		// Errors to manage
-		logger.writeHttpLog(errorsMapSerial, apiPath, 
-			method, res.statusCode);
-
-	 	res.setEncoding('utf8');
-
-	 	res.on('data', (chunk) => {
-	  		content = chunk;
-	 	});
-		res.on('end', () => {
-			callback(res.statusCode, res.headers, content);
-		});
-	});
-
-	req.on('error', (e) => {
-  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
-	});
-
-	req.end();
+	buildRequest(errorsMapSerial, apiPath, method, callback);
 };
 
 WorkspaceDeleteUtils.prototype.StopWorkspace = (wsID, callback) => {
@@ -80,31 +28,7 @@ WorkspaceDeleteUtils.prototype.StopWorkspace = (wsID, callback) => {
 
 	var apiPath = '/api/workspace/' + wsID + '/runtime';
 
-	var options = createOptions(apiPath, method);
-
-	var content;
-
-	var req = http.request(options, (res) => {
-
-		// Errors to manage
-		logger.writeHttpLog(errorsMapSerial, apiPath, 
-			method, res.statusCode);
-
-	 	res.setEncoding('utf8');
-
-	 	res.on('data', (chunk) => {
-	  		content = chunk;
-	 	});
-		res.on('end', () => {
-			callback(res.statusCode, res.headers, content);
-		});
-	});
-
-	req.on('error', (e) => {
-  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
-	});
-
-	req.end();
+	buildRequest(errorsMapSerial, apiPath, method, callback);
 };
 
 module.exports = WorkspaceDeleteUtils;

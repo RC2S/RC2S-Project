@@ -1,4 +1,5 @@
 module.exports = {
+	
 	"GET" : {
 		"GETFA1" : {
 			200 : 'The workspace successfully fetched',

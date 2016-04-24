@@ -6,13 +6,11 @@ module.exports = (app) => {
 
 		controllers.WorkspaceGetUtils.FindAll((statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
+			console.log("CALLBACK");
 
 			//console.log("CB status : " + statusCode);
 			//console.log("CB header : " + header);
 			//console.log("CB body   : " + body);
-		
-			console.log("END CALLBACK");
 		});
 	});
 
@@ -21,8 +19,7 @@ module.exports = (app) => {
 		controllers.WorkspaceGetUtils.FindByName(req.params.name || "", 
 			(statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		});
 	});
 
@@ -31,8 +28,7 @@ module.exports = (app) => {
 		controllers.WorkspaceGetUtils.FindByID(req.params.id || "",
 			(statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		});
 	});
 
@@ -41,8 +37,7 @@ module.exports = (app) => {
 		controllers.WorkspaceGetUtils.FindAllRuntime(
 			(statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		});
 	});
 
@@ -51,8 +46,7 @@ module.exports = (app) => {
 		controllers.WorkspaceGetUtils.FindRuntimeByID(req.params.id || "",
 			(statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		});
 	});
 };

@@ -7,8 +7,7 @@ module.exports = (app) => {
 		controllers.WorkspaceDeleteUtils.DeleteWSByID(req.params.id || "", 
 			(statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		})
 	});
 
@@ -19,8 +18,7 @@ module.exports = (app) => {
 			req.params.name || "",
 			(statusCode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		});
 	});
 
@@ -29,8 +27,7 @@ module.exports = (app) => {
 		controllers.WorkspaceDeleteUtils.StopWorkspace(req.params.id || "",
 			(statuscode, header, body) => {
 
-			console.log("IN THE CALLBACK");
-			console.log("END CALLBACK");
+			console.log("CALLBACK");
 		});
 	});
 };
