@@ -1,5 +1,5 @@
 var cheHost = '192.168.209.128';
-var chePost = 8080;
+var chePort = 8080;
 
 var createOptions = (path, method) => {
 	

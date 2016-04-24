@@ -1,10 +1,10 @@
 USED:
 
-GET /workspace
+GET /workspace => /workspace
+GET /workspace/name/{name} => /workspace/:name
 
 FUNCTIONAL:
 
-GET /workspace/name/{name}
 GET /workspace/runtime
 DELETE /workspace/{id}
 GET /workspace/{id}
