@@ -1,5 +1,5 @@
 module.exports = {
-	
+
 	"GET" : {
 		"GETFA1" : {
 			200 : 'The workspace successfully fetched',
@@ -25,10 +25,37 @@ module.exports = {
 			403 : 'The user is not workspace owner',
 			404 : 'Workspace is not running',
 			500 : 'Internal server error occurred'
+		},
+		"GETFSBID1" : {
+			200 : 'Snapshots successfully fetched',
+			403 : 'The user is not workspace owner',
+			404 : "The workspace with specified id doesn't exist or the snapshot doesn't exist for the workspace",
+			500 : 'Internal server error occurred'
 		}
 	},
 	"POST" : {
-
+		"POSTSWS1" : {
+			200 : 'The workspace is starting',
+			403 : 'The user is not workspace owner or the operation is not allowed for the user',
+			404 : "The workspace with specified id doesn't exist",
+			409 : 'Any conflict occurs during the workspace start',
+			500 : 'Internal server error occurred'
+		},
+		"POSTSWSBN1" : {
+			200 : 'The workspace is starting',
+			400 : 'The workspace name is not valid',
+			403 : 'The user is not workspace owner or the operation is not allowed for the user',
+			404 : "The workspace with specified id doesn't exist",
+			409 : 'Any conflict occurs during the workspace start',
+			500 : 'Internal server error occurred'
+		},
+		"POSTCS1" : {
+			200 : 'The snapshot successfully created',
+			403 : 'The user is not workspace owner or the operation is not allowed for the user',
+			404 : "The workspace with specified id doesn't exist.",
+			409 : 'Any conflict occurs during the snapshot creation',
+			500 : 'Internal server error occurred'
+		}
 	},
 	"PUT" : {
 

@@ -49,4 +49,13 @@ WorkspaceGetUtils.prototype.FindRuntimeByID = (wsID, callback) => {
 	buildRequest(errorsMapSerial, apiPath, method, callback);
 };
 
+WorkspaceGetUtils.prototype.FindSnapshotByID = (wsID, callback) => {
+
+	var errorsMapSerial = 'GETFSBID1';
+
+	var apiPath = '/api/workspace/' + wsID + '/snapshot';
+
+	buildRequest(errorsMapSerial, apiPath, method, callback);
+};
+
 module.exports = WorkspaceGetUtils;

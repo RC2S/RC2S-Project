@@ -13,7 +13,7 @@ var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {
 
 	var req = http.request(options, (res) => {
 
-		// Errors to manage
+		// Write basic log
 		logger.writeHttpLog(errorsMapSerial, apiPath, 
 			method, res.statusCode);
 
@@ -28,6 +28,7 @@ var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {
 	});
 
 	req.on('error', (e) => {
+		// Write error log
   		logger.writeHttpErrorLog(errorsMapSerial, e.message);
 	});
 
