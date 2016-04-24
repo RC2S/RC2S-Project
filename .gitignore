@@ -2,3 +2,4 @@
 /.nb-gradle/
 /rc2s-*/build/
 /rc2s-*/private/
+/rc2s-pluginmaker/node_modules/
