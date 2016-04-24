@@ -74,6 +74,39 @@ WorkspaceGetUtils.prototype.FindByName = (wsName, callback) => {
 	req.end();
 };
 
+WorkspaceGetUtils.prototype.FindByID = (wsID, callback) => {
+
+	var errorsMapSerial = 'GETFBID1';
+
+	var apiPath = '/api/workspace/' + wsID;
+
+	var options = createOptions(apiPath, method);
+
+	var content;
+
+	var req = http.request(options, (res) => {
+
+		// Errors to manage
+		logger.writeHttpLog(errorsMapSerial, apiPath, 
+			method, res.statusCode);
+
+	 	res.setEncoding('utf8');
+
+	 	res.on('data', (chunk) => {
+	  		content = chunk;
+	 	});
+		res.on('end', () => {
+			callback(res.statusCode, res.headers, content);
+		});
+	});
+
+	req.on('error', (e) => {
+  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
+	});
+
+	req.end();
+};
+
 WorkspaceGetUtils.prototype.FindAllRuntime = (callback) => {
 
 	var errorsMapSerial = 'GETFAR1';
@@ -91,6 +124,39 @@ WorkspaceGetUtils.prototype.FindAllRuntime = (callback) => {
 			method, res.statusCode);
 
 		res.setEncoding('utf8');
+
+	 	res.on('data', (chunk) => {
+	  		content = chunk;
+	 	});
+		res.on('end', () => {
+			callback(res.statusCode, res.headers, content);
+		});
+	});
+
+	req.on('error', (e) => {
+  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
+	});
+
+	req.end();
+};
+
+WorkspaceGetUtils.prototype.FindRuntimeByID = (wsID, callback) => {
+
+	var errorsMapSerial = 'GETFRBID1';
+
+	var apiPath = '/api/workspace/' + wsID + '/runtime';
+
+	var options = createOptions(apiPath, method);
+
+	var content;
+
+	var req = http.request(options, (res) => {
+
+		// Errors to manage
+		logger.writeHttpLog(errorsMapSerial, apiPath, 
+			method, res.statusCode);
+
+	 	res.setEncoding('utf8');
 
 	 	res.on('data', (chunk) => {
 	  		content = chunk;

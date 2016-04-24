@@ -3,14 +3,13 @@ USED:
 GET /workspace => /workspace
 GET /workspace/name/{name} => /workspace/:name
 GET /workspace/runtime
-
-FUNCTIONAL:
-
 DELETE /workspace/{id}
 GET /workspace/{id}
 DELETE /workspace/{id}/project/{name}
 DELETE /workspace/{id}/runtime
 GET /workspace/{id}/runtime
+
+FUNCTIONAL:
 
 TO BE USED:
 

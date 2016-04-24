@@ -11,8 +11,7 @@ var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	console.log();
 	logger.info("*** Accessing HTTP ***");
 	logger.info(method + " on " + apiPath);
-	logger.warn(ctxErrors[statusCode] + "\n");
-	console.log();
+	logger.warn(ctxErrors[statusCode]);
 };
 
 var writeHttpErrorLog = (errorsMapSerial, message) => {
@@ -20,7 +19,6 @@ var writeHttpErrorLog = (errorsMapSerial, message) => {
 	console.log();
 	logger.error("Failed HTTP operation " + errorsMapSerial);
 	logger.error("Message : " + message);
-	console.log();
 };
 
 module.exports = {

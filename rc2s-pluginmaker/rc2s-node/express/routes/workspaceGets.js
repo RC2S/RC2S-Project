@@ -16,9 +16,19 @@ module.exports = (app) => {
 		});
 	});
 
-	app.get("/workspace/:name", (req, res, next) => {
+	app.get("/workspace/name/:name", (req, res, next) => {
 
 		controllers.WorkspaceGetUtils.FindByName(req.params.name || "", 
+			(statusCode, header, body) => {
+
+			console.log("IN THE CALLBACK");
+			console.log("END CALLBACK");
+		});
+	});
+
+	app.get("/workspace/:id", (req, res, next) => {
+
+		controllers.WorkspaceGetUtils.FindByID(req.params.id || "",
 			(statusCode, header, body) => {
 
 			console.log("IN THE CALLBACK");
@@ -29,6 +39,16 @@ module.exports = (app) => {
 	app.get("/workspaces/runtime", (req, res, next) => {
 
 		controllers.WorkspaceGetUtils.FindAllRuntime(
+			(statusCode, header, body) => {
+
+			console.log("IN THE CALLBACK");
+			console.log("END CALLBACK");
+		});
+	});
+
+	app.get("/workspace/runtime/:id", (req, res, next) => {
+
+		controllers.WorkspaceGetUtils.FindRuntimeByID(req.params.id || "",
 			(statusCode, header, body) => {
 
 			console.log("IN THE CALLBACK");
