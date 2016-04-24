@@ -20,11 +20,11 @@ public class Size implements Serializable
 	private int y;
 	private int z;
 	private Date created;
-	private Date upated;
+	private Date updated;
 	
 	public Size() {}
 
-	public Size(int id, String name, int x, int y, int z, Date created, Date upated)
+	public Size(int id, String name, int x, int y, int z, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -32,7 +32,7 @@ public class Size implements Serializable
 		this.y = y;
 		this.z = z;
 		this.created = created;
-		this.upated = upated;
+		this.updated = updated;
 	}
 
 	public int getId()
@@ -95,13 +95,13 @@ public class Size implements Serializable
 		this.created = created;
 	}
 
-	public Date getUpated()
+	public Date getUpdated()
 	{
-		return upated;
+		return updated;
 	}
 
-	public void setUpated(Date upated)
+	public void setUpdated(Date upated)
 	{
-		this.upated = upated;
+		this.updated = upated;
 	}
 }

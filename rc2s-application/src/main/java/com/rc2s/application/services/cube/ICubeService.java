@@ -8,4 +8,5 @@ import javax.ejb.Local;
 public interface ICubeService
 {
 	public List<Cube> getCubes();
+	public boolean getStatus(Cube c);
 }

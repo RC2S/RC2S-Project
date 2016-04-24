@@ -31,7 +31,7 @@ public class Main extends Application
         this.stage = stage;
         this.stage.setTitle(Config.APP_NAME);
         
-        loader = Resources.loadFxml("LoginView");
+        loader = Resources.loadFxml("HomeView");
         scene = new Scene((Parent)loader.getRoot());
         
         this.stage.setScene(scene);

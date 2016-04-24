@@ -8,4 +8,5 @@ import javax.ejb.Remote;
 public interface CubeFacadeRemote
 {
 	public List<Cube> getAllCubes();
+	public boolean getStatus(Cube c);
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,6 +22,7 @@ public class Cube implements Serializable
 	private String color;
 	
 	@ManyToOne
+	@JoinColumn(name = "size")
 	private Size size;
 	private Date created;
 	private Date updated;

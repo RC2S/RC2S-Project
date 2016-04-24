@@ -13,8 +13,14 @@ public class Led extends Sphere
     private double size;
     private boolean activated;
     private Color color;
+	private boolean actionEvents;
     
-    public Led(double x, double y, double z, double size, boolean activated, Color color)
+	public Led(double x, double y, double z, double size, boolean activated, Color color)
+	{
+		this(x, y, z, size, activated, color, true);
+	}
+	
+    public Led(double x, double y, double z, double size, boolean activated, Color color, boolean actionEvents)
     {
         super(size);
         
@@ -24,6 +30,7 @@ public class Led extends Sphere
         this.size = size;
         this.activated = activated;
         this.color = color;
+		this.actionEvents = actionEvents;
         
         this.setTranslateX(x * size * SIZE_MODIFIER);
         this.setTranslateY(y * size * SIZE_MODIFIER);
@@ -34,14 +41,17 @@ public class Led extends Sphere
         material.setSpecularColor(Color.BLACK);
         this.setMaterial(material);
 		
-        this.setOnMouseClicked((MouseEvent e) -> {
-            PhongMaterial newColor = new PhongMaterial();
-            newColor.setSpecularColor(Color.BLACK);
-            newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
+		if(this.actionEvents)
+		{
+			this.setOnMouseClicked((MouseEvent e) -> {
+				PhongMaterial newColor = new PhongMaterial();
+				newColor.setSpecularColor(Color.BLACK);
+				newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
 
-            this.setMaterial(newColor);
-            this.activated = !this.activated;
-        });
+				this.setMaterial(newColor);
+				this.activated = !this.activated;
+			});
+		}
     }
 
     public double getX()
