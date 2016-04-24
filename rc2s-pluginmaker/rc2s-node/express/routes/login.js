@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 var sha1 = require('sha1');
 
-var logger = require("./logUtils");
+var logger = require("../utils/logUtils");
 
 module.exports = (app) => {
 
@@ -49,19 +49,20 @@ module.exports = (app) => {
 		var query = 'SELECT u.* FROM user u WHERE username = ? AND password = ?';
 
 		conn.query(query, [username, passwd], (err, rows, fields) => {
+
 			if (err)
-				log.writeQueryLog(err, query);
+				logger.writeQueryLog(err, query);
 
 			if (rows.length == 0) {
 
-				log.writeQueryLog("User not found !", query);
+				logger.writeQueryLog("User not found !", query);
 
 				res.redirect("/login");
 			} else {
 
 				var token = sha1(rows[0]["username"] + rows[0]["password"]);
 
-				log.writeQueryLog("User found. Creating new token : " + token);
+				logger.writeQueryLog("User found. Creating new token : " + token, query);
 
 				res.cookie("token", token, { maxAge : 900000 });		
 

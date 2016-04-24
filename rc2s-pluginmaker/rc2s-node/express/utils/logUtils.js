@@ -10,8 +10,7 @@ var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	var ctxErrors = errorsMap[method][errorsMapSerial];
 
 	console.log();
-	logger.trace("*** Che HTTP log ***");
-	logger.trace(method + " on " + apiPath);
+	logger.trace("*** Che HTTP " + method + " on " + apiPath);
 	logger.warn(ctxErrors[statusCode]);
 };
 
@@ -19,7 +18,7 @@ var writeHttpErrorLog = (errorsMapSerial, message) => {
 
 	console.log();
 	logger.error("Failed HTTP operation " + errorsMapSerial);
-	logger.error("Message : " + message);
+	logger.error(message);
 };
 // End HTTP
 
@@ -35,7 +34,7 @@ var writeAuthAccess = (originalUrl, token) => {
 var writeConnectionLog = (message, credentials) => {
 
 	console.log();
-	logger.info("Tried to create MySQL connection with credentials :");
+	logger.trace("Tried to create MySQL connection with credentials :");
 	logger.info("-> Host : " + credentials["host"]);
 	logger.info("-> User : " + credentials["user"]);
 	logger.info("-> Database : " + credentials["database"]);
@@ -46,9 +45,8 @@ var writeConnectionLog = (message, credentials) => {
 var writeQueryLog = (message, query) => {
 
 	console.log();
-	logger.info("Tried to query database :");
-	logger.info("'" + query + "'");
-	logger.info("Message : " + message);
+	logger.trace("Queryied : '" + query + "'");
+	logger.info(message);
 };
 // End Database Logs
 
