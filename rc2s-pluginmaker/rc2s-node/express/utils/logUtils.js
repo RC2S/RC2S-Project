@@ -5,12 +5,23 @@ var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	
 	var errorsMap = require("../models").errorsMaps[errorsMapSerial];
 
-	logger.info("*** Accessing HTTP");
+	console.log();
+	logger.info("*** Accessing HTTP ***");
 	logger.info(method + " on " + apiPath);
 	logger.warn(errorsMap[statusCode] + "\n");
+	console.log();
+};
+
+var writeHttpErrorLog = (errorsMapSerial, message) => {
+
+	console.log();
+	logger.error("Failed HTTP operation " + errorsMapSerial);
+	logger.error("Message : " + message);
+	console.log();
 };
 
 module.exports = {
 
-	"writeHttpLog" : writeHttpLog
+	"writeHttpLog" : writeHttpLog,
+	"writeHttpErrorLog" : writeHttpErrorLog
 };

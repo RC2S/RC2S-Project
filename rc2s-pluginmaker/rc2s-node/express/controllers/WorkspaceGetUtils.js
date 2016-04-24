@@ -2,9 +2,9 @@ var http = require("http");
 
 var method = 'GET';
 
-var createOptions = require("../utils/httpUtils").createOptions;
+var logger = require("../utils/logUtils");
 
-var writeHttpLog = require("../utils/logUtils").writeHttpLog;
+var createOptions = require("../utils/httpUtils").createOptions;
 
 var WorkspaceGetUtils = function() {};
 
@@ -21,7 +21,8 @@ WorkspaceGetUtils.prototype.FindAll = (callback) => {
 	var req = http.request(options, (res) => {
 
 		// Errors to manage
-		writeHttpLog(errorsMapSerial, apiPath, method, res.statusCode);
+		logger.writeHttpLog(errorsMapSerial, apiPath, 
+			method, res.statusCode);
 
 		res.setEncoding('utf8');
 
@@ -34,7 +35,7 @@ WorkspaceGetUtils.prototype.FindAll = (callback) => {
 	});
 
 	req.on('error', (e) => {
-  		console.log('Problem with request: ' + e.message);
+  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
 	});
 
 	req.end();
@@ -46,8 +47,6 @@ WorkspaceGetUtils.prototype.FindByName = (wsName, callback) => {
 
 	var apiPath = '/api/workspace/name/' + wsName;
 
-	console.log("FindByName apiPath : " + apiPath);
-
 	var options = createOptions(apiPath, 'GET');
 
 	var content;
@@ -55,7 +54,8 @@ WorkspaceGetUtils.prototype.FindByName = (wsName, callback) => {
 	var req = http.request(options, (res) => {
 
 		// Errors to manage
-		writeHttpLog(errorsMapSerial, apiPath, method, res.statusCode);
+		logger.writeHttpLog(errorsMapSerial, apiPath, 
+			method, res.statusCode);
 
 	 	res.setEncoding('utf8');
 
@@ -68,7 +68,7 @@ WorkspaceGetUtils.prototype.FindByName = (wsName, callback) => {
 	});
 
 	req.on('error', (e) => {
-  		console.log('Problem with request: ' + e.message);
+  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
 	});
 
 	req.end();
