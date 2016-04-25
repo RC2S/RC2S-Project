@@ -11,14 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 public class CubicItemController implements Initializable
 {
@@ -36,16 +34,17 @@ public class CubicItemController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
 	{
 		root.setOnMouseClicked((MouseEvent e) -> {
-			Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-			
-			if(cube != null)
+			Node root = ((Node)e.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(0);
+		
+			if(root instanceof TabPane && cube != null)
 			{
+				TabPane tabPane = (TabPane)root;
+				
 				FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
-				Scene scene = new Scene((Parent)loader.getRoot());
 				CubicDetailsController controller = loader.getController();
 				controller.update(cube);
 				
-				stage.setScene(scene);
+				tabPane.getTabs().get(0).setContent(loader.getRoot());
 			}
 		});
 	}

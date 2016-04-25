@@ -102,6 +102,7 @@
                   </BorderPane>
                </center>
             </BorderPane>
+            <Button fx:id="backButton" alignment="TOP_LEFT" mnemonicParsing="false" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>

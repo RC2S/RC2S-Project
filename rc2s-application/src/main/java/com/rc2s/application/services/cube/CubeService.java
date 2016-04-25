@@ -1,5 +1,7 @@
 package com.rc2s.application.services.cube;
 
+import com.rc2s.common.exceptions.DAOException;
+import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.dao.cube.ICubeDAO;
 import java.util.List;
@@ -13,9 +15,16 @@ public class CubeService implements ICubeService
     private ICubeDAO cubeDAO;
     
     @Override
-    public List<Cube> getCubes()
+    public List<Cube> getCubes() throws ServiceException
     {
-        return cubeDAO.getCubes();
+		try
+		{
+			return cubeDAO.getCubes();
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
     }
 	
 	@Override

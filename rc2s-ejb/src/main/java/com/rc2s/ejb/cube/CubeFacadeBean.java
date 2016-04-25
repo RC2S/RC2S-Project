@@ -1,6 +1,7 @@
 package com.rc2s.ejb.cube;
 
 import com.rc2s.application.services.cube.ICubeService;
+import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
 import java.util.List;
 import javax.ejb.EJB;
@@ -15,7 +16,14 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	@Override
 	public List<Cube> getAllCubes()
 	{
-		return cubeService.getCubes();
+		try
+		{
+			return cubeService.getCubes();
+		}
+		catch(ServiceException e)
+		{
+			return null;
+		}
 	}
 	
 	@Override

@@ -2,16 +2,21 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.components.LedCube;
 import com.rc2s.client.utils.EJB;
+import com.rc2s.client.utils.Resources;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
@@ -24,6 +29,7 @@ public class CubicDetailsController implements Initializable
 	private Cube cube;
 	
 	@FXML private HBox display;
+	@FXML private Button backButton;
 	
 	// Status
 	@FXML private Label nameLabel;
@@ -50,7 +56,20 @@ public class CubicDetailsController implements Initializable
 	@FXML private TextField synchronizedField;
 	
 	@Override
-	public void initialize(URL url, ResourceBundle rb) {}
+	public void initialize(URL url, ResourceBundle rb)
+	{
+		backButton.setOnAction((ActionEvent e) -> {
+			Node root = ((Node)e.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(0);
+		
+			if(root instanceof TabPane)
+			{
+				TabPane tabPane = (TabPane)root;
+				
+				FXMLLoader loader = Resources.loadFxml("CubicListView");				
+				tabPane.getTabs().get(0).setContent(loader.getRoot());
+			}
+		});
+	}
 	
 	public void update(Cube cube)
 	{
