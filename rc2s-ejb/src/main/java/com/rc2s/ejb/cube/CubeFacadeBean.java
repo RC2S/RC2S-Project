@@ -17,4 +17,10 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	{
 		return cubeService.getCubes();
 	}
+	
+	@Override
+	public boolean getStatus(Cube c)
+	{
+		return cubeService.getStatus(c);
+	}
 }

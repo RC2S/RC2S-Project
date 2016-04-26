@@ -11,7 +11,7 @@ import javafx.scene.transform.Rotate;
 
 public class LedCube extends Group
 {
-    private static final double MIN_SIZE = 8.;
+    private static final double MIN_SIZE = 3.;
     private static final double MAX_SIZE = 20.;
 
     private final Parent parent;
@@ -22,13 +22,20 @@ public class LedCube extends Group
     private double size;
     
     private Color color;
+	private boolean actionEvents;
+	
+	public LedCube(Parent parent, double x, double y, double z, double size, Color color)
+	{
+		this(parent, x, y, z, size, color, true);
+	}
     
-    public LedCube(Parent parent, double x, double y, double z, double size, Color color)
+    public LedCube(Parent parent, double x, double y, double z, double size, Color color, boolean actionEvents)
     {
         this.parent = parent;
+		this.actionEvents = actionEvents;
         drawCube(x, y, z, size, color);
 		
-        this.setOnMouseDragged((MouseEvent e) -> {
+        this.parent.setOnMouseDragged((MouseEvent e) -> {
             if(e.isPrimaryButtonDown())
             {
                 double oldx = mx;
@@ -46,15 +53,18 @@ public class LedCube extends Group
             }
         });
 		
-        this.parent.setOnScroll((ScrollEvent e) -> {
-            if(e.getDeltaY() == 0
-            || (this.size <= LedCube.MIN_SIZE && e.getDeltaY() < 0)
-            || (this.size >= LedCube.MAX_SIZE && e.getDeltaY() > 0))
-                return;
+		if(actionEvents)
+		{
+			this.parent.setOnScroll((ScrollEvent e) -> {
+				if(e.getDeltaY() == 0
+				|| (this.size <= LedCube.MIN_SIZE && e.getDeltaY() < 0)
+				|| (this.size >= LedCube.MAX_SIZE && e.getDeltaY() > 0))
+					return;
 
-            double delta = e.getDeltaY() > 0 ? 1. : -1.;
-            this.setSize(this.size + delta);
-        });
+				double delta = e.getDeltaY() > 0 ? 1. : -1.;
+				this.setSize(this.size + delta);
+			});
+		}
 		
         this.setCursor(Cursor.HAND);
     }
@@ -104,7 +114,7 @@ public class LedCube extends Group
             {
                 for(int k = 0 ; k < z ; k++)
                 {
-                    Led led = new Led(i, j, k, size, true, color);
+                    Led led = new Led(i, j, k, size, true, color, this.actionEvents);
                     this.getChildren().add(led);
                 }
             }

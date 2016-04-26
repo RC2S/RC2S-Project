@@ -3,9 +3,13 @@
   <persistence-unit name="rc2s" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>rc2s-ds</jta-data-source>
+	
+    <class>com.rc2s.common.vo.User</class>
+    <class>com.rc2s.common.vo.Role</class>
+    <class>com.rc2s.common.vo.Synchronization</class>
     <class>com.rc2s.common.vo.Cube</class>
     <class>com.rc2s.common.vo.Size</class>
-    <class>com.rc2s.common.vo.User</class>
+    <class>com.rc2s.common.vo.Plugin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
     </properties>

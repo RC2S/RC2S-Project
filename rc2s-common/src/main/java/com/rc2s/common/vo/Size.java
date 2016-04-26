@@ -2,9 +2,12 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,12 +22,16 @@ public class Size implements Serializable
 	private int x;
 	private int y;
 	private int z;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Cube> cubes;
+	
 	private Date created;
-	private Date upated;
+	private Date updated;
 	
 	public Size() {}
 
-	public Size(int id, String name, int x, int y, int z, Date created, Date upated)
+	public Size(int id, String name, int x, int y, int z, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -32,7 +39,7 @@ public class Size implements Serializable
 		this.y = y;
 		this.z = z;
 		this.created = created;
-		this.upated = upated;
+		this.updated = updated;
 	}
 
 	public int getId()
@@ -95,13 +102,23 @@ public class Size implements Serializable
 		this.created = created;
 	}
 
-	public Date getUpated()
+	public Date getUpdated()
 	{
-		return upated;
+		return updated;
 	}
 
-	public void setUpated(Date upated)
+	public void setUpdated(Date upated)
 	{
-		this.upated = upated;
+		this.updated = upated;
+	}
+
+	public List<Cube> getCubes()
+	{
+		return cubes;
+	}
+
+	public void setCubes(List<Cube> cubes)
+	{
+		this.cubes = cubes;
 	}
 }

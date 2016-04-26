@@ -17,4 +17,10 @@ public class CubeService implements ICubeService
     {
         return cubeDAO.getCubes();
     }
+	
+	@Override
+	public boolean getStatus(Cube c)
+	{
+		return false;
+	}
 }

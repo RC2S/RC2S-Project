@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@css/cubicDetails-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller=".CubicDetailsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/cubicDetails-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.CubicDetailsController">
    <children>
       <GridPane layoutX="8.0" layoutY="7.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>
@@ -20,7 +20,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox fx:id="display" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" />
+            <HBox fx:id="display" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="display" stylesheets="@css/cubicDetails-style.css" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" />
             <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="borderpane-border" GridPane.rowIndex="1">
                <top>
                   <Label alignment="TOP_LEFT" styleClass="borderpane-label" text="Status" BorderPane.alignment="TOP_LEFT" />

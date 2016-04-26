@@ -8,41 +8,44 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cube")
-public class Cube implements Serializable
+@Table(name = "synchronization")
+public class Synchronization implements Serializable
 {
 	@Id
 	@GeneratedValue
 	private int id;
-	
 	private String name;
-	private String ip;
-	private String color;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "size")
-	private Size size;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "link_cube_synchronization",
+		joinColumns = @JoinColumn(name = "synchronization", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "cube", referencedColumnName = "id")
+	)
+	private List<Cube> cubes;
 	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "cubes")
-	private List<Synchronization> synchronizations;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "link_user_synchronization",
+		joinColumns = @JoinColumn(name = "synchronization", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "user", referencedColumnName = "id")
+	)
+	private List<User> users;
 	
 	private Date created;
 	private Date updated;
-	
-	public Cube() {}
 
-	public Cube(int id, String name, String ip, String color, Size size, Date created, Date updated)
+	public Synchronization() {}
+	
+	public Synchronization(int id, String name, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
-		this.ip = ip;
-		this.color = color;
-		this.size = size;
 		this.created = created;
 		this.updated = updated;
 	}
@@ -67,34 +70,24 @@ public class Cube implements Serializable
 		this.name = name;
 	}
 
-	public String getIp()
+	public List<Cube> getCubes()
 	{
-		return ip;
+		return cubes;
 	}
 
-	public void setIp(String ip)
+	public void setCubes(List<Cube> cubes)
 	{
-		this.ip = ip;
+		this.cubes = cubes;
 	}
 
-	public String getColor()
+	public List<User> getUsers()
 	{
-		return color;
+		return users;
 	}
 
-	public void setColor(String color)
+	public void setUsers(List<User> users)
 	{
-		this.color = color;
-	}
-
-	public Size getSize()
-	{
-		return size;
-	}
-
-	public void setSize(Size size)
-	{
-		this.size = size;
+		this.users = users;
 	}
 
 	public Date getCreated()
@@ -115,5 +108,5 @@ public class Cube implements Serializable
 	public void setUpdated(Date updated)
 	{
 		this.updated = updated;
-	}	
+	}
 }
