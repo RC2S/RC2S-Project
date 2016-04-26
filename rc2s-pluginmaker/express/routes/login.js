@@ -58,7 +58,7 @@ module.exports = (app) => {
 				logger.writeQueryLog("User not found !", query);
 
 				res.redirect("/login");
-			} else {
+			} else if (rows[0]["role"] == "admin") {
 
 				var token = sha1(rows[0]["username"] + rows[0]["password"]);
 
@@ -67,6 +67,11 @@ module.exports = (app) => {
 				res.cookie("token", token, { maxAge : 900000 });		
 
 				res.redirect("/workspaces");
+			} else {
+
+				logger.writeQueryLog("User not Admin !", query);
+
+				res.redirect("/login");
 			}
 		});
 	});
