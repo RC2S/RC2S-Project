@@ -17,6 +17,7 @@ import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.RC2SException;
 import com.rc2s.common.utils.EJB;
+import com.rc2s.common.utils.Hash;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import javafx.event.Event;
@@ -66,7 +67,7 @@ public class LoginController implements Initializable
     {
 		String ip = ipField.getText();
         String username = usernameField.getText();
-        String password = passwordField.getText();
+        String password = Hash.sha1(passwordField.getText());
 		
 		disable(true);
 
