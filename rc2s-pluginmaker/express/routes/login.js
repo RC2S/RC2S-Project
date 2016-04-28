@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 var mysql = require('mysql');
-
-var sha1 = require('sha1');
 
 var logger = require("../utils/logUtils");
 
@@ -61,11 +58,24 @@ module.exports = (app) => {
 				res.redirect("/login");
 			} else if (rows[0]["role"] == "admin") {
 
-				var token = sha1(rows[0]["username"] + rows[0]["password"]);
+				// Crypto node module
+				const crypto = require('crypto');
 
-				logger.writeQueryLog("User found. Creating new token : " + token, query);
+				// Ensure hash uniqueness
+				var currentDate = (new Date()).valueOf().toString();
+				var random = Math.random().toString();
 
-				res.cookie("token", token, { maxAge : 900000 });		
+				// Token base
+				const secret = rows[0]["username"] + rows[0]["password"];
+				
+				// Hash creation
+				const hmacToken = crypto.createHmac('sha1', secret)
+                   .update(currentDate + random)
+                   .digest('hex');
+                   
+				logger.writeQueryLog("User found. Creating new token : " + hmacToken, query);
+
+				res.cookie("token", hmacToken, { maxAge : 900000 });		
 
 				res.redirect("/workspaces");
 			} else {
