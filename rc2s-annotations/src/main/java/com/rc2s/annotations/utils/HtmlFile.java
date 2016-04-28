@@ -13,34 +13,31 @@ import java.util.logging.Logger;
 
 public class HtmlFile
 {
-	public static boolean createPluginInfosFile()
-	{
-		return false;
-	}
-	
-	public static boolean createJavaDocFile(ElementMapper mainClass, List<ElementMapper> fields, 
-		List<ElementMapper> constructors, List<ElementMapper> methods)
+	public static boolean createJavaDocFile(ElementMapper mainClass)
 	{
 		Path path                       = Paths.get("rc2s-doc/" + mainClass.getName() + ".html");
         StringBuilder builder 			= new StringBuilder();
 		List<ElementMapper> mergedList 	= new ArrayList();
 		
-		mergedList.addAll(constructors);
-		mergedList.addAll(methods);
+		mergedList.addAll(mainClass.getConstructors());
+		mergedList.addAll(mainClass.getMethods());
 		
 		builder.append("<html><head>");
 		builder.append("<title>" + mainClass.getName() + " Documentation</title>");
 		builder.append("</head><body>");
 		builder.append(generateClassInfos(mainClass));
-		builder.append(generateFieldsSummary(fields));
+		builder.append(generateFieldsSummary(mainClass.getFields()));
 		builder.append(generateMethodsSummary(mergedList));
 		builder.append(generateDetails(mergedList));
 		builder.append("</body></html>");
         
-        try {
+        try
+		{
             Files.createDirectories(path.getParent());
             Files.write(path, String.valueOf(builder).getBytes());
-        } catch (IOException ex) {
+        }
+		catch (IOException ex)
+		{
             Logger.getLogger(HtmlFile.class.getName()).log(Level.SEVERE, null,
                 ex);
             return false;
