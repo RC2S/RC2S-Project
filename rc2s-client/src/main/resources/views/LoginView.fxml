@@ -33,7 +33,7 @@
                   <Image url="@images/rc2s_logo.png" />
                </image>
             </ImageView>
-			<TextField id="ipaddr" fx:id="ipField" onKeyReleased="#validateIpAddress" promptText="IP address" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+			<TextField id="ipaddr" fx:id="ipField" onKeyReleased="#validateIpAddress" promptText="IP address" text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField id="username" fx:id="usernameField" onKeyPressed="#handleReturnPressed" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <PasswordField id="password" fx:id="passwordField" onKeyPressed="#handleReturnPressed" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Button fx:id="connectButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleConnectButton" text="Connection" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />

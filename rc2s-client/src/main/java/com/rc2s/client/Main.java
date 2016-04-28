@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.common.vo.User;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 
 @Knowledge
 public class Main extends Application
@@ -32,6 +33,7 @@ public class Main extends Application
         
         Main.stage = stage;
         Main.stage.setTitle(Config.APP_NAME);
+		Main.stage.getIcons().add(new Image(Resources.loadResource("views/images/rc2s_icon.png")));
         
         loader = Resources.loadFxml("LoginView");
         scene = new Scene((Parent)loader.getRoot());
