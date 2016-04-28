@@ -1,8 +1,9 @@
 
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.utils.EJB;
+import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
@@ -29,23 +30,30 @@ public class CubicListController implements Initializable
 		this.scroller.setFitToHeight(true);
 		this.scroller.setFitToWidth(true);
 		
-		List<Cube> cubes = cubeEJB.getAllCubes();
-		
-		int i = 0, j = 0;
-		for(Cube cube : cubes)
+		try
 		{
-			FXMLLoader loader = Resources.loadFxml("CubicItemView");
-			CubicItemController controller = loader.getController();
-			controller.update(cube);
+			List<Cube> cubes = cubeEJB.getAllCubes();
 
-			this.grid.add(loader.getRoot(), i, j);
-			
-			if(++i == MAX_COLUMNS)
+			int i = 0, j = 0;
+			for(Cube cube : cubes)
 			{
-				i = 0;
-				grid.addRow(1);
-				j++;
+				FXMLLoader loader = Resources.loadFxml("CubicItemView");
+				CubicItemController controller = loader.getController();
+				controller.update(cube);
+
+				this.grid.add(loader.getRoot(), i, j);
+
+				if(++i == MAX_COLUMNS)
+				{
+					i = 0;
+					grid.addRow(1);
+					j++;
+				}
 			}
+		}
+		catch(EJBException e)
+		{
+			System.err.println(e.getMessage());
 		}
 	}
 }

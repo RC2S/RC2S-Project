@@ -3,6 +3,7 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,9 @@ public class User implements Serializable
     private String token;
     private boolean activated;
     private boolean locked;
-    private String lastIp;
+	
+	@Column(name = "last_login")
+    private Date lastLogin;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
 	private List<Synchronization> synchronizations;
@@ -51,7 +54,7 @@ public class User implements Serializable
 
     public User(int id, String username, String password,
         String token, boolean activated, boolean locked,
-        String lastIp, Date created, Date updated)
+        Date lastLogin, Date created, Date updated)
     {
         this.id         = id;
         this.username   = username;
@@ -59,7 +62,7 @@ public class User implements Serializable
         this.token      = token;
         this.activated  = activated;
         this.locked     = locked;
-        this.lastIp     = lastIp;
+        this.lastLogin  = lastLogin;
         this.created    = created;
         this.updated    = updated;
     }
@@ -123,14 +126,14 @@ public class User implements Serializable
         this.locked = locked;
     }
 
-    public String getLastIp()
+    public Date getLastLogin()
     {
-        return lastIp;
+        return lastLogin;
     }
 
-    public void setLastIp(String lastIp)
+    public void setLastLogin(Date lastLogin)
     {
-        this.lastIp = lastIp;
+        this.lastLogin = lastLogin;
     }
 
     public Date getCreated()

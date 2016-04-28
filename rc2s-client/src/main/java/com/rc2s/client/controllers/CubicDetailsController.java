@@ -1,8 +1,9 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.components.LedCube;
-import com.rc2s.client.utils.EJB;
+import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
@@ -88,6 +89,15 @@ public class CubicDetailsController implements Initializable
 		
 		sizeLabel.setText(cube.getSize().getName());
 		
-		statusLabel.setText(cubeEJB.getStatus(cube) ? "Online" : "Offline");
+		try
+		{
+			boolean status = cubeEJB.getStatus(cube);
+			statusLabel.setText(status ? "Online" : "Offline");
+		}
+		catch(EJBException e)
+		{
+			System.err.println(e.getMessage());
+			statusLabel.setText("Offline");
+		}
 	}
 }

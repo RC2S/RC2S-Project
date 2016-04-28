@@ -1,8 +1,9 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.components.LedCube;
-import com.rc2s.client.utils.EJB;
+import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
@@ -58,6 +59,16 @@ public class CubicItemController implements Initializable
 		
 		this.name.setText(cube.getName());
 		this.ip.setText(cube.getIp());
-		this.status.setText(cubeEJB.getStatus(cube) ? "Online" : "Offline");
+		
+		try
+		{
+			boolean state = cubeEJB.getStatus(cube);
+			this.status.setText(state ? "Online" : "Offline");
+		}
+		catch(EJBException e)
+		{
+			System.err.println(e.getMessage());
+			this.status.setText("Offline");
+		}
 	}
 }
