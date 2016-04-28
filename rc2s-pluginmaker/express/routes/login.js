@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var mysql = require('mysql');
 
 var sha1 = require('sha1');
