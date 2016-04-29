@@ -70,8 +70,8 @@ module.exports = (app) => {
 				
 				// Hash creation
 				const hmacToken = crypto.createHmac('sha1', secret)
-                   .update(currentDate + random)
-                   .digest('hex');
+                	.update(currentDate + random)
+                	.digest('hex');
                    
 				logger.writeQueryLog("User found. Creating new token : " + hmacToken, query);
 
