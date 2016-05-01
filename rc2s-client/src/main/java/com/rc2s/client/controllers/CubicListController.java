@@ -9,10 +9,14 @@ import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 
 public class CubicListController implements Initializable
@@ -23,6 +27,7 @@ public class CubicListController implements Initializable
 	
 	@FXML private ScrollPane scroller;
 	@FXML private GridPane grid;
+	@FXML private Button addButton;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb)
@@ -54,6 +59,20 @@ public class CubicListController implements Initializable
 		catch(EJBException e)
 		{
 			System.err.println(e.getMessage());
+		}
+	}
+	
+	@FXML
+	private void showAddView(ActionEvent e)
+	{
+		Node root = ((Node)e.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(0);
+		
+		if(root instanceof TabPane)
+		{
+			TabPane tabPane = (TabPane)root;
+
+			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");				
+			tabPane.getTabs().get(0).setContent(loader.getRoot());
 		}
 	}
 }

@@ -30,5 +30,6 @@
             </AnchorPane>
         </content>
       </ScrollPane>
+      <Button fx:id="addButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showAddView" text="Add a Cube" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="1.0" />
    </children>
 </AnchorPane>
