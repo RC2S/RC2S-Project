@@ -1,4 +1,3 @@
-
 package com.rc2s.client.controllers;
 
 import com.rc2s.common.utils.EJB;
@@ -71,7 +70,10 @@ public class CubicListController implements Initializable
 		{
 			TabPane tabPane = (TabPane)root;
 
-			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");				
+			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
+			CubicDetailsController controller = loader.getController();
+			
+			controller.initEmpty();
 			tabPane.getTabs().get(0).setContent(loader.getRoot());
 		}
 	}

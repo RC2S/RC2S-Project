@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "size")
@@ -18,9 +20,16 @@ public class Size implements Serializable
 	@GeneratedValue
 	private int id;
 	
+	@NotNull
 	private String name;
+	
+	@Min(1)
 	private int x;
+	
+	@Min(1)
 	private int y;
+	
+	@Min(1)
 	private int z;
 	
 	@OneToMany(fetch = FetchType.LAZY)

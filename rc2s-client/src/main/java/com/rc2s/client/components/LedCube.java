@@ -211,4 +211,15 @@ public class LedCube extends Group
         }
         updateAxis();
     }
+
+    public void setColor(Color color)
+    {
+        this.color = color;
+
+        for(Node n : this.getChildren())
+        {
+            Led l = (Led)n;
+            l.setColor(this.color);
+        }
+    }
 }

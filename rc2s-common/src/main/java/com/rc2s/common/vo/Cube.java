@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "cube")
@@ -20,12 +21,18 @@ public class Cube implements Serializable
 	@GeneratedValue
 	private int id;
 	
+	@NotNull
 	private String name;
+	
+	@NotNull
 	private String ip;
+	
+	@NotNull
 	private String color;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "size")
+	@NotNull
 	private Size size;
 	
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "cubes")
@@ -115,5 +122,15 @@ public class Cube implements Serializable
 	public void setUpdated(Date updated)
 	{
 		this.updated = updated;
-	}	
+	}
+
+	public List<Synchronization> getSynchronizations()
+	{
+		return synchronizations;
+	}
+
+	public void setSynchronizations(List<Synchronization> synchronizations)
+	{
+		this.synchronizations = synchronizations;
+	}
 }

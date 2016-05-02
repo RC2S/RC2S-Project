@@ -58,7 +58,7 @@ public class Main extends Application
 		Main.user = user;
 	}
 	
-	public static User getAUthenticatedUser()
+	public static User getAuthenticatedUser()
 	{
 		return Main.user;
 	}

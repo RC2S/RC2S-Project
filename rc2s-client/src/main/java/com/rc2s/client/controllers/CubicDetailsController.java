@@ -1,38 +1,52 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.client.Main;
 import com.rc2s.client.components.LedCube;
+import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
+import com.rc2s.common.vo.Size;
+import com.rc2s.common.vo.Synchronization;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javax.validation.ConstraintViolation;
 
 public class CubicDetailsController implements Initializable
 {
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	
+	private Synchronization synchronization;
 	private Cube cube;
+	private LedCube ledCube;
 	
 	@FXML private HBox display;
 	@FXML private Button backButton;
+	@FXML private Label errorLabel;
 	
-	// Status
+	// Cube
 	@FXML private Label nameLabel;
 	@FXML private TextField nameField;
 	
@@ -43,11 +57,24 @@ public class CubicDetailsController implements Initializable
 	@FXML private ComboBox colorBox;
 	
 	@FXML private Label sizeLabel;
+	
+	// Size
+	@FXML private HBox chooseSizeHbox;
 	@FXML private ComboBox sizeBox;
+	@FXML private Button addSizeButton;
+	
+	@FXML private HBox newSizeBox;
+	@FXML private TextField newSizeName;
+	@FXML private TextField newSizeX;
+	@FXML private TextField newSizeY;
+	@FXML private TextField newSizeZ;
 	
 	@FXML private Label statusLabel;
 	
+	// Controls
 	@FXML ToggleButton editButton;
+	@FXML Button addButton;
+	@FXML Button removeButton;
 	
 	// Synchronization
 	@FXML private ComboBox cubesBox;
@@ -59,24 +86,38 @@ public class CubicDetailsController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle rb)
 	{
-		backButton.setOnAction((ActionEvent e) -> {
-			Node root = ((Node)e.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(0);
+		// Gather sizes
 		
-			if(root instanceof TabPane)
-			{
-				TabPane tabPane = (TabPane)root;
-				
-				FXMLLoader loader = Resources.loadFxml("CubicListView");				
-				tabPane.getTabs().get(0).setContent(loader.getRoot());
-			}
-		});
+		// Init colors
+		colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
+		
+		// Gather cubes (all, only available for this user... ?)
 	}
 	
-	public void update(Cube cube)
+	public void initEmpty()
+	{
+		editButton.setVisible(false);
+		removeButton.setVisible(false);
+		addButton.setVisible(true);
+		
+		synchronization = new Synchronization();
+		cube = new Cube();
+		
+		synchronization.getUsers().add(Main.getAuthenticatedUser());
+		synchronization.getCubes().add(cube);
+		cube.getSynchronizations().add(synchronization);
+		
+		ledCube = new LedCube(this.display, 4., 4., 4., 10., Color.BLACK, false);
+		display.getChildren().add(ledCube);
+		
+		toggleEditCube();
+	}
+	
+	public void render(Cube cube)
 	{
 		this.cube = cube;
 		
-		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 10., Color.web(cube.getColor()), false);
+		ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 10., Color.web(cube.getColor()), false);
 		display.getChildren().add(ledCube);
 		
 		nameLabel.setText(cube.getName());
@@ -98,6 +139,202 @@ public class CubicDetailsController implements Initializable
 		{
 			System.err.println(e.getMessage());
 			statusLabel.setText("Offline");
+		}
+	}
+	
+	private void toggleEditCube()
+	{
+		nameLabel.setVisible(!nameLabel.isVisible());
+		nameField.setVisible(!nameField.isVisible());
+				
+		ipLabel.setVisible(!ipLabel.isVisible());
+		ipField.setVisible(!ipField.isVisible());
+	
+		colorLabel.setVisible(!colorLabel.isVisible());
+		colorBox.setVisible(!colorBox.isVisible());
+	
+		sizeLabel.setVisible(!sizeLabel.isVisible());
+		chooseSizeHbox.setVisible(!chooseSizeHbox.isVisible());
+	}
+	
+	private void toggleEditSize()
+	{
+		newSizeName.setVisible(!newSizeName.isVisible());
+		newSizeBox.setVisible(!newSizeBox.isVisible());
+	}
+	
+	@FXML
+	private void onBackEvent(ActionEvent e)
+	{
+		Node root = backButton.getScene().getRoot().getChildrenUnmodifiable().get(0);
+		
+		if(root instanceof TabPane)
+		{
+			TabPane tabPane = (TabPane)root;
+
+			FXMLLoader loader = Resources.loadFxml("CubicListView");				
+			tabPane.getTabs().get(0).setContent(loader.getRoot());
+		}
+	}
+	
+	private boolean update()
+	{
+		synchronization.setName(synchronizedField.getText().isEmpty()
+							  ? nameField.getText()
+							  : synchronizedField.getText());
+		
+		cube.setName(nameField.getText());
+		cube.setIp(ipField.getText());
+		
+		String color = (String)colorBox.getSelectionModel().getSelectedItem();
+		if(color != null)
+			cube.setColor(color);
+		
+		if(newSizeBox.isVisible())
+		{
+			Size size = new Size();
+			size.setName(newSizeName.getText());
+			
+			try
+			{
+				size.setX(Integer.parseInt(newSizeX.getText()));
+				size.setY(Integer.parseInt(newSizeY.getText()));
+				size.setZ(Integer.parseInt(newSizeZ.getText()));
+				
+				Set<ConstraintViolation<Size>> violations = Tools.validate(size);
+				
+				if(!violations.isEmpty())
+				{
+					for(ConstraintViolation<Size> v : violations)
+					{
+						errorLabel.setText(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
+						break;
+					}
+					
+					cube.setSize(null);
+					return false;
+				}
+			}
+			catch(NumberFormatException e)
+			{
+				errorLabel.setText(e.getMessage());
+				cube.setSize(null);
+				return false;
+			}
+			
+			cube.setSize(size);
+		}
+		else
+		{
+			Size size = (Size)sizeBox.getSelectionModel().getSelectedItem();
+			if(size != null)
+				cube.setSize(size);
+		}
+		
+		return true;
+	}
+	
+	@FXML
+	private void onEditEvent(ActionEvent e)
+	{
+		ToggleButton btn = (ToggleButton)e.getSource();
+			
+		if(btn.isSelected())
+		{
+			update();
+			//cubeEJB.update(cube);
+			render(cube);
+		}
+		
+		toggleEditCube();
+	}
+	
+	@FXML
+	private void onAddEvent(ActionEvent e)
+	{
+		boolean update = update();
+		
+		if(update)
+		{
+			Set<ConstraintViolation<Cube>> violations = Tools.validate(cube);
+
+			if(violations.isEmpty())
+			{
+				//cubeEJB.add(cube);
+				onBackEvent(null);
+			}
+			else
+			{
+				for(ConstraintViolation<Cube> v : violations)
+				{
+					errorLabel.setText(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
+					break;
+				}
+			}
+		}
+	}
+	
+	@FXML
+	private void onRemoveEvent(ActionEvent e)
+	{
+		ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this cube from the RC2S Server?");
+		
+		if(answer == ButtonType.OK)
+		{
+			System.out.println("REMOVE");
+		}
+	}
+	
+	@FXML
+	private void onColorChanged(ActionEvent e)
+	{
+		ComboBox box = (ComboBox)e.getSource();
+		Object o = box.getSelectionModel().getSelectedItem();
+		
+		if(o != null)
+		{
+			Color color = Color.web((String)o.toString());
+			ledCube.setColor(color);
+		}
+	}
+	
+	@FXML
+	private void onAddSizeEvent(ActionEvent e)
+	{
+		toggleEditSize();
+	}
+	
+	@FXML
+	private void onCancelSizeEvent(ActionEvent e)
+	{
+		toggleEditSize();
+	}
+	
+	@FXML
+	private void onAddCubeEvent(ActionEvent e)
+	{
+		Cube c = (Cube)cubesBox.getSelectionModel().getSelectedItem();
+		
+		if(c != null)
+		{
+			synchronizedList.getItems().add(c);
+		}
+	}
+	
+	@FXML
+	private void onListKeyEvent(KeyEvent e)
+	{
+		if(e.getEventType() == KeyEvent.KEY_TYPED)
+		{
+			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
+			{
+				ObservableList<Cube> cubes = synchronizedList.getSelectionModel().getSelectedItems();
+				
+				for(Cube c : cubes)
+				{
+					System.err.println(c.getName() + ": " + c.getIp());
+				}
+			}
 		}
 	}
 }

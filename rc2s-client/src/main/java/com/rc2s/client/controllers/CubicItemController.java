@@ -43,7 +43,7 @@ public class CubicItemController implements Initializable
 				
 				FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
 				CubicDetailsController controller = loader.getController();
-				controller.update(cube);
+				controller.render(cube);
 				
 				tabPane.getTabs().get(0).setContent(loader.getRoot());
 			}
