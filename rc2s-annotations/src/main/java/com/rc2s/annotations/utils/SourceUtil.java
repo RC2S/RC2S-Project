@@ -12,7 +12,7 @@ public class SourceUtil
 		System.err.println("Package parts :");
 		for (String part : packageParts)
 		{
-			System.err.println("  -> " + part.toString());
+			System.err.println("  -> " + part);
 		}
 		
 		/*
