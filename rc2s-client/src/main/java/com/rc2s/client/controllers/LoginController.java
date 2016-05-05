@@ -12,26 +12,23 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.rc2s.client.Main;
+import com.rc2s.client.utils.EJB;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.client.utils.Tools;
 import com.rc2s.common.vo.User;
+import com.rc2s.ejb.authentication.AuthenticationFacadeRemote;
 import javafx.event.Event;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class LoginController implements Initializable
 {    
-    @FXML
-    private TextField ipaddr;
+    private final AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote)EJB.lookup("AuthenticationEJB");
     
-    @FXML
-    private TextField username;
-    
-    @FXML
-    private PasswordField password;
-    
-    @FXML
-    private Label errorLabel;
+    @FXML private TextField ipaddr;
+    @FXML private TextField username;
+    @FXML private PasswordField password;
+    @FXML private Label errorLabel;
     
     private User user;
     
@@ -73,6 +70,8 @@ public class LoginController implements Initializable
 
         if(validateIpAddress(null))
         {
+            authenticationEJB.login(user);
+
             // TODO : remplacer par un appel à l'EJB d'authentification
             if(user.getUsername().equals("mathieu") && user.getPassword().equals("azeaze"))
             {

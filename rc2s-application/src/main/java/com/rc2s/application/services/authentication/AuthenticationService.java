@@ -14,8 +14,8 @@ public class AuthenticationService implements IAuthenticationService
     @Override
     public boolean login(User user)
     {
-        System.setProperty("java.security.auth.login.config", "jaas.config");
-        
+        System.setProperty("java.security.auth.login.config", AuthenticationService.class.getResource("/jaas.config").toString());
+
         try {
             LoginContext lc = new LoginContext(
                 "JDBCLoginModule",
@@ -33,3 +33,13 @@ public class AuthenticationService implements IAuthenticationService
         return false;
     }
 }
+
+
+/*
+https://www.javacodegeeks.com/2012/06/java-jaas-form-based-authentication.html
+http://www.javaworld.com/article/2074873/java-web-development/all-that-jaas.html?page=2
+http://www.radcortez.com/custom-principal-and-loginmodule-for-wildfly/
+http://byorns.blogspot.fr/2015/01/how-to-setup-custom-jaas-login-module.html
+http://www.edc4it.com/blog/java/understanding-java-security-and-jaas-part-3-a-custom-login-module.html
+https://github.com/martijnblankestijn/glassfish-jdbc-realm
+*/

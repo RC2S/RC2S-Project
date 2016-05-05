@@ -88,6 +88,7 @@ public class JDBCLoginModule implements LoginModule
     @Override
     public boolean logout() throws LoginException
     {
+        
         return false;
     }
 }
