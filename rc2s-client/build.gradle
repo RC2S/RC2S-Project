@@ -29,7 +29,7 @@ jar {
             "Implementation-Title" : project.name,
             "Implementation-Version" : version,
             "Main-Class" : mainClassName,
-            "Class-Path" : configurations.compile.collect{it.getName()}.join(' '),
+            //"Class-Path" : configurations.compile.collect{it.getName()}.join(' '),
             "Permissions": "all-permissions",
             "Application-Name" : project.name
         )
