@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,12 +19,11 @@ import javax.persistence.Table;
 public class User implements Serializable
 {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     
     private String username;
     private String password;
-    private String token;
     private boolean activated;
     private boolean locked;
 	
@@ -52,14 +52,13 @@ public class User implements Serializable
         this.password   = password;
     }
 
-    public User(int id, String username, String password,
-        String token, boolean activated, boolean locked,
+    public User(Integer id, String username, String password,
+        boolean activated, boolean locked,
         Date lastLogin, Date created, Date updated)
     {
         this.id         = id;
         this.username   = username;
         this.password   = password;
-        this.token      = token;
         this.activated  = activated;
         this.locked     = locked;
         this.lastLogin  = lastLogin;
@@ -67,11 +66,11 @@ public class User implements Serializable
         this.updated    = updated;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
@@ -96,16 +95,6 @@ public class User implements Serializable
         this.password = password;
     }
     
-    public String getToken()
-    {
-        return token;
-    }
-
-    public void setToken(String token)
-    {
-        this.token = token;
-    }
-
     public boolean isActivated()
     {
         return activated;

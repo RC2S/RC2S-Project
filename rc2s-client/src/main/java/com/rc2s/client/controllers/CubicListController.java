@@ -1,5 +1,6 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.client.Main;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.common.exceptions.EJBException;
@@ -36,7 +37,7 @@ public class CubicListController implements Initializable
 		
 		try
 		{
-			List<Cube> cubes = cubeEJB.getAllCubes();
+			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
 
 			int i = 0, j = 0;
 			for(Cube cube : cubes)

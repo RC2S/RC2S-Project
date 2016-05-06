@@ -10,8 +10,13 @@ import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.Size;
 import com.rc2s.common.vo.Synchronization;
+import com.rc2s.common.vo.User;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
+import com.rc2s.ejb.size.SizeFacadeRemote;
+import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.ObservableList;
@@ -37,8 +42,9 @@ import javax.validation.ConstraintViolation;
 public class CubicDetailsController implements Initializable
 {
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
+	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote)EJB.lookup("SizeEJB");
+	private final SynchronizationFacadeRemote synchronizationEJB = (SynchronizationFacadeRemote)EJB.lookup("SynchronizationEJB");
 	
-	private Synchronization synchronization;
 	private Cube cube;
 	private LedCube ledCube;
 	
@@ -86,12 +92,22 @@ public class CubicDetailsController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle rb)
 	{
-		// Gather sizes
-		
-		// Init colors
-		colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
-		
-		// Gather cubes (all, only available for this user... ?)
+		try
+		{
+			// Gather sizes
+			sizeBox.getItems().addAll(sizeEJB.getAll());
+
+			// Init colors
+			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
+
+			// Gather cubes (all, only available for this user... ?)
+			cubesBox.getItems().addAll(cubeEJB.getAllCubes());
+		}
+		catch(EJBException e)
+		{
+			System.err.println(e.getMessage());
+			errorLabel.setText(e.getMessage());
+		}
 	}
 	
 	public void initEmpty()
@@ -100,12 +116,14 @@ public class CubicDetailsController implements Initializable
 		removeButton.setVisible(false);
 		addButton.setVisible(true);
 		
-		synchronization = new Synchronization();
 		cube = new Cube();
+		cube.setSynchronization(new Synchronization());
+		cube.setSynchronizations(Arrays.asList(new Synchronization[] {cube.getSynchronization()}));
+		cube.getSynchronization().setCubes(Arrays.asList(new Cube[] {cube}));
+		cube.getSynchronization().setUsers(Arrays.asList(new User[] {Main.getAuthenticatedUser()}));
 		
-		synchronization.getUsers().add(Main.getAuthenticatedUser());
-		synchronization.getCubes().add(cube);
-		cube.getSynchronizations().add(synchronization);
+		cube.setCreated(new Date());
+		cube.getSynchronization().setCreated(new Date());
 		
 		ledCube = new LedCube(this.display, 4., 4., 4., 10., Color.BLACK, false);
 		display.getChildren().add(ledCube);
@@ -118,6 +136,7 @@ public class CubicDetailsController implements Initializable
 		this.cube = cube;
 		
 		ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 10., Color.web(cube.getColor()), false);
+		display.getChildren().clear();
 		display.getChildren().add(ledCube);
 		
 		nameLabel.setText(cube.getName());
@@ -140,6 +159,10 @@ public class CubicDetailsController implements Initializable
 			System.err.println(e.getMessage());
 			statusLabel.setText("Offline");
 		}
+		
+		synchronizedField.setText(cube.getSynchronization().getName());
+		synchronizedList.getItems().clear();
+		//synchronizedList.getItems().addAll(cube.getSynchronization().getCubes());
 	}
 	
 	private void toggleEditCube()
@@ -179,17 +202,18 @@ public class CubicDetailsController implements Initializable
 	
 	private boolean update()
 	{
-		synchronization.setName(synchronizedField.getText().isEmpty()
-							  ? nameField.getText()
-							  : synchronizedField.getText());
-		
 		cube.setName(nameField.getText());
 		cube.setIp(ipField.getText());
+		
+		cube.getSynchronization().setName(synchronizedField.getText().isEmpty()
+										? nameField.getText()
+										: synchronizedField.getText());
 		
 		String color = (String)colorBox.getSelectionModel().getSelectedItem();
 		if(color != null)
 			cube.setColor(color);
 		
+		// If we created a new Size value
 		if(newSizeBox.isVisible())
 		{
 			Size size = new Size();
@@ -200,6 +224,7 @@ public class CubicDetailsController implements Initializable
 				size.setX(Integer.parseInt(newSizeX.getText()));
 				size.setY(Integer.parseInt(newSizeY.getText()));
 				size.setZ(Integer.parseInt(newSizeZ.getText()));
+				size.setCreated(new Date());
 				
 				Set<ConstraintViolation<Size>> violations = Tools.validate(size);
 				
@@ -224,6 +249,7 @@ public class CubicDetailsController implements Initializable
 			
 			cube.setSize(size);
 		}
+		// Using an existing Size
 		else
 		{
 			Size size = (Size)sizeBox.getSelectionModel().getSelectedItem();
@@ -260,8 +286,22 @@ public class CubicDetailsController implements Initializable
 
 			if(violations.isEmpty())
 			{
-				//cubeEJB.add(cube);
-				onBackEvent(null);
+				try
+				{
+					if(newSizeBox.isVisible())
+					{
+						int id = sizeEJB.add(cube.getSize());
+						cube.getSize().setId(id);
+					}
+					cubeEJB.add(cube);
+					
+					onBackEvent(null);
+				}
+				catch(EJBException ex)
+				{
+					System.err.println(ex.getMessage());
+					errorLabel.setText(ex.getMessage());
+				}
 			}
 			else
 			{
@@ -281,7 +321,16 @@ public class CubicDetailsController implements Initializable
 		
 		if(answer == ButtonType.OK)
 		{
-			System.out.println("REMOVE");
+			try
+			{
+				cubeEJB.remove(cube);
+				onBackEvent(null);
+			}
+			catch(EJBException ex)
+			{
+				System.err.println(ex.getMessage());
+				errorLabel.setText(ex.getMessage());
+			}
 		}
 	}
 	
@@ -318,23 +367,28 @@ public class CubicDetailsController implements Initializable
 		if(c != null)
 		{
 			synchronizedList.getItems().add(c);
+			cube.getSynchronization().getCubes().add(c);
 		}
 	}
 	
 	@FXML
 	private void onListKeyEvent(KeyEvent e)
 	{
-		if(e.getEventType() == KeyEvent.KEY_TYPED)
+		if(e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
 			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
+				System.out.println("REMOVING...");
 				ObservableList<Cube> cubes = synchronizedList.getSelectionModel().getSelectedItems();
 				
 				for(Cube c : cubes)
 				{
-					System.err.println(c.getName() + ": " + c.getIp());
+					synchronizedList.getItems().remove(c);
+					cube.getSynchronization().getCubes().remove(c);
 				}
 			}
+			
+			e.consume();
 		}
 	}
 }

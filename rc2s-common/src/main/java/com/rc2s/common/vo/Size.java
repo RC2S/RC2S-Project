@@ -3,9 +3,11 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,20 +19,20 @@ import javax.validation.constraints.NotNull;
 public class Size implements Serializable
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
 	@NotNull
 	private String name;
 	
 	@Min(1)
-	private int x;
+	private Integer x;
 	
 	@Min(1)
-	private int y;
+	private Integer y;
 	
 	@Min(1)
-	private int z;
+	private Integer z;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Cube> cubes;
@@ -40,7 +42,7 @@ public class Size implements Serializable
 	
 	public Size() {}
 
-	public Size(int id, String name, int x, int y, int z, Date created, Date updated)
+	public Size(Integer id, String name, Integer x, Integer y, Integer z, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -51,12 +53,12 @@ public class Size implements Serializable
 		this.updated = updated;
 	}
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -71,32 +73,32 @@ public class Size implements Serializable
 		this.name = name;
 	}
 
-	public int getX()
+	public Integer getX()
 	{
 		return x;
 	}
 
-	public void setX(int x)
+	public void setX(Integer x)
 	{
 		this.x = x;
 	}
 
-	public int getY()
+	public Integer getY()
 	{
 		return y;
 	}
 
-	public void setY(int y)
+	public void setY(Integer y)
 	{
 		this.y = y;
 	}
 
-	public int getZ()
+	public Integer getZ()
 	{
 		return z;
 	}
 
-	public void setZ(int z)
+	public void setZ(Integer z)
 	{
 		this.z = z;
 	}
@@ -129,5 +131,11 @@ public class Size implements Serializable
 	public void setCubes(List<Cube> cubes)
 	{
 		this.cubes = cubes;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
 	}
 }

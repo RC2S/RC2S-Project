@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,8 +19,8 @@ import javax.validation.constraints.NotNull;
 public class Synchronization implements Serializable
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
 	@NotNull
 	private String name;
@@ -45,7 +46,7 @@ public class Synchronization implements Serializable
 
 	public Synchronization() {}
 	
-	public Synchronization(int id, String name, Date created, Date updated)
+	public Synchronization(Integer id, String name, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -53,12 +54,12 @@ public class Synchronization implements Serializable
 		this.updated = updated;
 	}
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -111,5 +112,11 @@ public class Synchronization implements Serializable
 	public void setUpdated(Date updated)
 	{
 		this.updated = updated;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
 	}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,14 +13,14 @@ import javax.persistence.Table;
 public class Plugin implements Serializable
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
 	private String name;
 	private String version;
 	private String author;
 	private String status;
-	private boolean activated;
+	private Boolean activated;
 	private String access;
 	
 	private Date created;
@@ -27,7 +28,7 @@ public class Plugin implements Serializable
 	
 	public Plugin() {}
 
-	public Plugin(int id, String name, String version, String author, String status, boolean activated, String access, Date created, Date updated)
+	public Plugin(Integer id, String name, String version, String author, String status, Boolean activated, String access, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -40,12 +41,12 @@ public class Plugin implements Serializable
 		this.updated = updated;
 	}
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -90,12 +91,12 @@ public class Plugin implements Serializable
 		this.status = status;
 	}
 
-	public boolean isActivated()
+	public Boolean isActivated()
 	{
 		return activated;
 	}
 
-	public void setActivated(boolean activated)
+	public void setActivated(Boolean activated)
 	{
 		this.activated = activated;
 	}

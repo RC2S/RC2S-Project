@@ -4,6 +4,7 @@ import com.rc2s.application.services.cube.ICubeService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
+import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -20,6 +21,45 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		try
 		{
 			return cubeService.getCubes();
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+	
+	@Override
+	public List<Cube> getCubes(User user) throws EJBException
+	{
+		try
+		{
+			return cubeService.getCubes(user);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+	
+	@Override
+	public void add(Cube c) throws EJBException
+	{
+		try
+		{
+			cubeService.add(c);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+	
+	@Override
+	public void remove(Cube c) throws EJBException
+	{
+		try
+		{
+			cubeService.remove(c);
 		}
 		catch(ServiceException e)
 		{
