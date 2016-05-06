@@ -1,9 +1,14 @@
 module.exports = () => {
 	var express = require("express");
+	var session = require("express-session");
 	var app = express();
 
+	app.use(session({
+		secret: 'ssshhhhh'
+	}));
+
 	var bodyParser = require("body-parser");
-	//app.use(bodyParser.json());
+	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({
 		"extended": false
 	}));
@@ -18,7 +23,7 @@ module.exports = () => {
 	// App routes
 	require("./routes")(app);
 
-	app.listen(8080, () => {
-		console.log("Server running on port 8080...");
+	app.listen(8081, () => {
+		console.log("Server running on port 8081...");
 	});
 };

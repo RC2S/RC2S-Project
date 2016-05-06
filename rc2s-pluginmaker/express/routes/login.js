@@ -2,6 +2,8 @@ var mysql = require('mysql');
 
 var logger = require("../utils/logUtils");
 
+var sess;
+
 module.exports = (app) => {
 
 	app.get('/login', (req, res, next) => {
@@ -44,7 +46,13 @@ module.exports = (app) => {
 			logger.writeConnectionLog("Connection OK", credentials);
 		});
 
-		var query = 'SELECT u.* FROM user u WHERE username = ? AND password = ?';
+		var query = "\
+			SELECT r.name \
+			FROM role r \
+			INNER JOIN user_role ur ON ur.role_id = r.id \
+			INNER JOIN user u ON u.id = ur.user_id \
+			AND u.username = ? AND u.password = ? \
+		";
 
 		conn.query(query, [username, passwd], (err, rows, fields) => {
 
@@ -56,7 +64,7 @@ module.exports = (app) => {
 				logger.writeQueryLog("User not found !", query);
 
 				res.redirect("/login");
-			} else if (rows[0]["role"] == "admin") {
+			} else if (rows[0]["name"] == "ROLE_ADMIN") {
 
 				// Crypto node module
 				const crypto = require('crypto');
@@ -67,15 +75,15 @@ module.exports = (app) => {
 
 				// Token base
 				const secret = rows[0]["username"] + rows[0]["password"];
-				
-				// Hash creation
-				const hmacToken = crypto.createHmac('sha1', secret)
-                	.update(currentDate + random)
-                	.digest('hex');
-                   
-				logger.writeQueryLog("User found. Creating new token : " + hmacToken, query);
 
-				res.cookie("token", hmacToken, { maxAge : 900000 });		
+				const shaToken = crypto.createHmac('sha1', 'secret')
+					.update(currentDate + random)
+					.digest('hex');
+                   
+                logger.writeQueryLog("User found. Creating new token : " + shaToken, query);
+
+				sess = req.session;
+				sess.token = shaToken;		
 
 				res.redirect("/workspaces");
 			} else {
@@ -89,9 +97,17 @@ module.exports = (app) => {
 
 	app.get('/logout', (req, res, next) => {
 
-		req.cookies.token = undefined;
-		res.cookie("token", req.cookies.token, { maxAge : 0 });
+		if (req.session) {
 
-		res.redirect("/login");
+			req.session.token = undefined;
+
+			req.session.destroy(function(err) {
+
+				if(err)
+			   		console.log(err);
+				else
+					res.redirect("/login");
+			});
+		}
 	});
 };
