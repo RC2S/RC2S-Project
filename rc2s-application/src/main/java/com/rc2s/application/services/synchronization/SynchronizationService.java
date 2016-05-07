@@ -34,7 +34,7 @@ public class SynchronizationService implements ISynchronizationService
 		try
 		{
 			synchronization.setCreated(new Date());
-			synchronizationDAO.add(synchronization);
+			synchronizationDAO.save(synchronization);
 		}
 		catch(DAOException e)
 		{

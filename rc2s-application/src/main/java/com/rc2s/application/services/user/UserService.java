@@ -23,7 +23,7 @@ public class UserService implements IUserService
     {
 		try
 		{
-			return userDAO.getUsers();
+			return userDAO.getAll();
 		}
 		catch(DAOException e)
 		{

@@ -29,12 +29,12 @@ public class SizeService implements ISizeService
 	}
 
 	@Override
-	public Integer add(Size size) throws ServiceException
+	public Size add(Size size) throws ServiceException
 	{
 		try
 		{
 			size.setCreated(new Date());
-			return sizeDAO.add(size);
+			return sizeDAO.save(size);
 		}
 		catch(DAOException e)
 		{

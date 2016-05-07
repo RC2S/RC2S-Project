@@ -9,5 +9,5 @@ import javax.ejb.Local;
 public interface ISizeService
 {
 	public List<Size> getAll() throws ServiceException;
-	public Integer add(Size size) throws ServiceException;
+	public Size add(Size size) throws ServiceException;
 }

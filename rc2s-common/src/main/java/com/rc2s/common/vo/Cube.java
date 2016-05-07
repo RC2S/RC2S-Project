@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "cube")
@@ -24,10 +25,10 @@ public class Cube implements Serializable
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull
+	@javax.validation.constraints.Size(min = 1, message = "You must specify a name")
 	private String name;
 	
-	@NotNull
+	@Pattern(regexp = "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$", message = "Invalid IP address")
 	private String ip;
 	
 	@NotNull
@@ -38,7 +39,7 @@ public class Cube implements Serializable
 	@NotNull
 	private Size size;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "synchronization")
 	@NotNull
 	private Synchronization synchronization;

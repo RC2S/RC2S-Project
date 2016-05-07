@@ -9,5 +9,5 @@ import javax.ejb.Remote;
 public interface SizeFacadeRemote
 {
 	public List<Size> getAll() throws EJBException;
-	public Integer add(Size size) throws EJBException;
+	public Size add(Size size) throws EJBException;
 }

@@ -135,9 +135,7 @@ public class CubicDetailsController implements Initializable
 	{
 		this.cube = cube;
 		
-		ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 10., Color.web(cube.getColor()), false);
-		display.getChildren().clear();
-		display.getChildren().add(ledCube);
+		updateDisplay();
 		
 		nameLabel.setText(cube.getName());
 		nameField.setText(cube.getName());
@@ -146,8 +144,10 @@ public class CubicDetailsController implements Initializable
 		ipField.setText(cube.getIp());
 		
 		colorLabel.setText(cube.getColor());
+		colorBox.getSelectionModel().select(cube.getColor().toUpperCase());
 		
 		sizeLabel.setText(cube.getSize().getName());
+		sizeBox.getSelectionModel().select(cube.getSize());
 		
 		try
 		{
@@ -163,6 +163,15 @@ public class CubicDetailsController implements Initializable
 		synchronizedField.setText(cube.getSynchronization().getName());
 		synchronizedList.getItems().clear();
 		//synchronizedList.getItems().addAll(cube.getSynchronization().getCubes());
+	}
+	
+	private void updateDisplay()
+	{
+		Color color = (cube.getColor() != null) ? Color.web(cube.getColor()) : null;
+		
+		ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 10., color, false);
+		display.getChildren().clear();
+		display.getChildren().add(ledCube);
 	}
 	
 	private void toggleEditCube()
@@ -200,7 +209,7 @@ public class CubicDetailsController implements Initializable
 		}
 	}
 	
-	private boolean update()
+	private boolean updateCube()
 	{
 		cube.setName(nameField.getText());
 		cube.setIp(ipField.getText());
@@ -264,21 +273,53 @@ public class CubicDetailsController implements Initializable
 	private void onEditEvent(ActionEvent e)
 	{
 		ToggleButton btn = (ToggleButton)e.getSource();
+		errorLabel.setText("");
 			
-		if(btn.isSelected())
+		if(!btn.isSelected())
 		{
-			update();
-			//cubeEJB.update(cube);
-			render(cube);
+			boolean update = updateCube();
+			
+			if(update)
+			{
+				Set<ConstraintViolation<Cube>> violations = Tools.validate(cube);
+
+				if(violations.isEmpty())
+				{
+					try
+					{
+						cube = cubeEJB.update(cube);
+						toggleEditCube();
+					}
+					catch(EJBException ex)
+					{
+						System.err.println(ex.getMessage());
+						errorLabel.setText(ex.getMessage());
+					}
+				}
+				else
+				{
+					btn.setSelected(true);
+					for(ConstraintViolation<Cube> v : violations)
+					{
+						errorLabel.setText(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
+						break;
+					}
+				}
+				
+				// Update the UI
+				render(cube);
+			}
 		}
-		
-		toggleEditCube();
+		else
+		{
+			toggleEditCube();
+		}
 	}
 	
 	@FXML
 	private void onAddEvent(ActionEvent e)
 	{
-		boolean update = update();
+		boolean update = updateCube();
 		
 		if(update)
 		{
@@ -290,8 +331,8 @@ public class CubicDetailsController implements Initializable
 				{
 					if(newSizeBox.isVisible())
 					{
-						int id = sizeEJB.add(cube.getSize());
-						cube.getSize().setId(id);
+						Size newSize = sizeEJB.add(cube.getSize());
+						cube.setSize(newSize);
 					}
 					cubeEJB.add(cube);
 					
@@ -340,10 +381,23 @@ public class CubicDetailsController implements Initializable
 		ComboBox box = (ComboBox)e.getSource();
 		Object o = box.getSelectionModel().getSelectedItem();
 		
-		if(o != null)
+		if(o != null && o instanceof String)
 		{
-			Color color = Color.web((String)o.toString());
-			ledCube.setColor(color);
+			cube.setColor((String)o.toString());
+			updateDisplay();
+		}
+	}
+	
+	@FXML
+	private void onSizeChanged(ActionEvent e)
+	{
+		ComboBox box = (ComboBox)e.getSource();
+		Object o = box.getSelectionModel().getSelectedItem();
+		
+		if(o != null && o instanceof Size)
+		{
+			cube.setSize((Size)o);
+			updateDisplay();
 		}
 	}
 	
@@ -378,7 +432,6 @@ public class CubicDetailsController implements Initializable
 		{
 			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
-				System.out.println("REMOVING...");
 				ObservableList<Cube> cubes = synchronizedList.getSelectionModel().getSelectedItems();
 				
 				for(Cube c : cubes)

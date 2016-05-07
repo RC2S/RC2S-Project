@@ -21,7 +21,7 @@ public class CubeService implements ICubeService
     {
 		try
 		{
-			return cubeDAO.getCubes();
+			return cubeDAO.getAll();
 		}
 		catch(DAOException e)
 		{
@@ -48,7 +48,7 @@ public class CubeService implements ICubeService
 		try
 		{
 			c.setCreated(new Date());
-			cubeDAO.add(c);
+			cubeDAO.save(c);
 		}
 		catch(DAOException e)
 		{
@@ -61,7 +61,20 @@ public class CubeService implements ICubeService
 	{
 		try
 		{
-			cubeDAO.remove(c);
+			cubeDAO.delete(c.getId());
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public Cube update(Cube cube) throws ServiceException
+	{
+		try
+		{
+			return cubeDAO.update(cube);
 		}
 		catch(DAOException e)
 		{

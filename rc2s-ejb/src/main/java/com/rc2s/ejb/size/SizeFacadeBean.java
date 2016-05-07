@@ -28,7 +28,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	}
 
 	@Override
-	public Integer add(Size size) throws EJBException
+	public Size add(Size size) throws EJBException
 	{
 		try
 		{
