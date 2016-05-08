@@ -10,7 +10,7 @@ import javax.persistence.Query;
 @Stateless
 public class UserDAO implements IUserDAO
 {  
-    @PersistenceContext
+    @PersistenceContext(unitName="rc2s")
     private EntityManager em;
     
 	@Override

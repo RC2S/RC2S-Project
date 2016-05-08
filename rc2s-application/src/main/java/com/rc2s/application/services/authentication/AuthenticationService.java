@@ -24,12 +24,15 @@ public class AuthenticationService implements IAuthenticationService
             
             lc.login();
             
-            Subject subject = lc.getSubject();
-            
-        } catch (LoginException ex) {
-            Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE,
-                null, ex);
+            Subject subject = lc.getSubject(); 
+            //LoginContext lc = new LoginContext();
+            //lc.login(user.getUsername(), user.getPassword());
         }
+        catch (LoginException ex)
+        {
+            Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return false;
     }
 }
