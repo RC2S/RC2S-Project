@@ -69,7 +69,6 @@ public class SourceControlProcessor extends AbstractProcessor
             }
         }
 		
-		
         return true;
     }
     
