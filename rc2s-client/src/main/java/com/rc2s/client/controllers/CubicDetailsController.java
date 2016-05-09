@@ -17,6 +17,8 @@ import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.ObservableList;
@@ -162,14 +164,34 @@ public class CubicDetailsController implements Initializable
 		
 		synchronizedField.setText(cube.getSynchronization().getName());
 		synchronizedList.getItems().clear();
-		//synchronizedList.getItems().addAll(cube.getSynchronization().getCubes());
+		synchronizedList.getItems().addAll(cube.getSynchronization().getCubes());
+		
+		if(cube.getId() != null)
+		{
+			cubesBox.getItems().remove(cube);
+			synchronizedList.getItems().remove(cube);
+		}
+
+		for(Cube sync : cube.getSynchronization().getCubes())
+		{
+			cubesBox.getItems().remove(sync);
+		}
 	}
 	
 	private void updateDisplay()
 	{
 		Color color = (cube.getColor() != null) ? Color.web(cube.getColor()) : null;
+		Size size = cube.getSize();
 		
-		ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 10., color, false);
+		ledCube = new LedCube(
+			this.display,
+			(size != null) ? size.getX() : 4.,
+			(size != null) ? size.getY() : 4.,
+			(size != null) ? size.getZ() : 4.,
+			10.,
+			color,
+			false
+		);
 		display.getChildren().clear();
 		display.getChildren().add(ledCube);
 	}
@@ -420,8 +442,19 @@ public class CubicDetailsController implements Initializable
 		
 		if(c != null)
 		{
-			synchronizedList.getItems().add(c);
-			cube.getSynchronization().getCubes().add(c);
+			try
+			{
+				synchronizedList.getItems().add(c);
+				cubesBox.getItems().remove(c);
+				cube.getSynchronization().getCubes().add(c);
+				
+				cubeEJB.update(cube);
+			}
+			catch(EJBException ex)
+			{
+				System.err.println(ex.getMessage());
+				errorLabel.setText(ex.getMessage());
+			}
 		}
 	}
 	
@@ -432,12 +465,23 @@ public class CubicDetailsController implements Initializable
 		{
 			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
-				ObservableList<Cube> cubes = synchronizedList.getSelectionModel().getSelectedItems();
-				
-				for(Cube c : cubes)
+				try
 				{
-					synchronizedList.getItems().remove(c);
-					cube.getSynchronization().getCubes().remove(c);
+					ObservableList<Cube> cubes = synchronizedList.getSelectionModel().getSelectedItems();
+
+					for(Cube c : cubes)
+					{
+						synchronizedList.getItems().remove(c);
+						cubesBox.getItems().add(c);
+						cube.getSynchronization().getCubes().remove(c);
+					}
+
+					cubeEJB.update(cube);
+				}
+				catch(EJBException ex)
+				{
+					System.err.println(ex.getMessage());
+					errorLabel.setText(ex.getMessage());
 				}
 			}
 			

@@ -18,7 +18,16 @@ public class CubeDAO extends GenericDAO<Cube> implements ICubeDAO
 		{
 			Query query = em().createQuery("SELECT c FROM Cube AS c JOIN c.synchronization AS s JOIN s.users AS u ON u.id = :userId")
 							  .setParameter("userId", user.getId());
-			return query.getResultList();
+			List<Cube> cubes = query.getResultList();
+			
+			// Lazy loading
+			for(Cube c : cubes)
+			{
+				c.getSynchronization() // Get the Cube's Synchronization
+				 .getCubes().size(); // Get the Synchroniszation's Cubes
+			}
+			
+			return cubes; 
 		}
 		catch(Exception e)
 		{

@@ -3,6 +3,7 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class Cube implements Serializable
 	@NotNull
 	private Size size;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "synchronization")
 	@NotNull
 	private Synchronization synchronization;
@@ -157,5 +158,32 @@ public class Cube implements Serializable
 	public String toString()
 	{
 		return name + " (" + ip + ")";
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 5;
+		hash = 11 * hash + Objects.hashCode(this.id);
+		hash = 11 * hash + Objects.hashCode(this.name);
+		hash = 11 * hash + Objects.hashCode(this.ip);
+		hash = 11 * hash + Objects.hashCode(this.color);
+		hash = 11 * hash + Objects.hashCode(this.size);
+		hash = 11 * hash + Objects.hashCode(this.created);
+		hash = 11 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Cube)
+		{
+			Cube c = (Cube)o;
+			
+			return Objects.equals(c.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }
