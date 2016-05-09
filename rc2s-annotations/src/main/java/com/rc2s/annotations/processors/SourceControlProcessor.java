@@ -47,11 +47,11 @@ public class SourceControlProcessor extends AbstractProcessor
 		Analysor analysor = new Analysor(elementUtils, messager);
 		ElementMapper mainClass = null;
 		
-        for(TypeElement te : annotations)
+        for (TypeElement te : annotations)
         {
-            for(Element annotated : roundEnv.getElementsAnnotatedWith(te))
+            for (Element annotated : roundEnv.getElementsAnnotatedWith(te))
             {
-				if(annotated.getKind() == ElementKind.CLASS)
+				if (annotated.getKind() == ElementKind.CLASS)
 				{
 					mainClass = analysor.classAnalysor(annotated);
 					
@@ -99,7 +99,7 @@ public class SourceControlProcessor extends AbstractProcessor
 
 		// Get all elements into the annotated element (ex : methods, fields, constructors in the annotated class)
 		List<? extends Element> el = annotated.getEnclosedElements();
-		for(Element e : el) {
+		for (Element e : el) {
 			messager.printMessage(Diagnostic.Kind.NOTE, "test : " + e.getSimpleName().toString()); // <init>, stage, main, start, stop
 		}
 

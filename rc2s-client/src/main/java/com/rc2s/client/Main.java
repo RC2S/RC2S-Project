@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
 import javafx.scene.Parent;
 
-@SourceControl
 public class Main extends Application
 {
     private static Stage stage;
