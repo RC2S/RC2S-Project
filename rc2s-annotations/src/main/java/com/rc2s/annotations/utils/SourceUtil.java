@@ -155,15 +155,15 @@ public class SourceUtil
 	}
 
 	/**
-	* pn.ejb.entityName			-> shall be 'NameFacadeRemote' & 'NameFacadeBean'
+	* pn.ejb.entityName			OK -> shall be 'NameFacadeRemote' & 'NameFacadeBean'
 	*							-> annotation @Stateless or @Stateful for 'NameFacadeBean' 
 	*							-> annotation @Remote for 'NameFacadeRemote'
 	*
-	* pn.application.entityName	-> shall be 'INameService' & 'NameService'
+	* pn.application.entityName	OK -> shall be 'INameService' & 'NameService'
 	*							-> annotation @Stateless or @Stateful for 'NameService'
 	*							-> annotation @Local for 'INameService'
 	*
-	* pn.dao.entityName			-> shall be 'INameDao' & 'NameDao'
+	* pn.dao.entityName			OK -> shall be 'INameDao' & 'NameDao'
 	*							-> annotation @Stateless or @Stateful for 'NameDao'
 	*							-> annotation @Local for 'INameDao'
 	* 
@@ -184,46 +184,112 @@ public class SourceUtil
 			switch (cne)
 			{
 				case EJB:
-					System.err.println("MainClass : " + mainClass.getName() + ", Built entity : " + entityName + "Facade(...)");
-					if (!mainClass.getName().equals(entityName + "FacadeRemote") && !mainClass.getName().equals(entityName + "FacadeBean"))
-					{
-						throw new SourceControlException("Not supported yet - Invalid Application class name");
-					}
-					else
-					{
-						System.err.println("CLASS NAME : " + mainClass.getName());
-					}
+					verifyEjbStandards(mainClass, cne, entityName);
 					break;
 
 				case APPLICATION:
-					System.err.println("MainClass : " + mainClass.getName() + ", Built entity : " + entityName + "Service");
-					if (!mainClass.getName().equals("I" + entityName + "Service") && !mainClass.getName().equals(entityName + "Service"))
-					{
-						throw new SourceControlException("Not supported yet - Invalid DAO class name");
-					}
-					else
-					{
-						System.err.println("CLASS NAME : " + mainClass.getName());
-					}
+					verifyApplicationStandards(mainClass, cne, entityName);
 					break;
 
 				case DAO:
-					System.err.println("MainClass : " + mainClass.getName() + ", Built entity : " + entityName + "Dao");
-					if (!mainClass.getName().equals("I" + entityName + "Dao") && !mainClass.getName().equals(entityName + "Dao"))
-					{
-						throw new SourceControlException("Not supported yet - Invalid EJB class name");
-					}
-					else
-					{
-						System.err.println("CLASS NAME : " + mainClass.getName());
-					}
+					verifyDaoStandards(mainClass, cne, entityName);
+					break;
+					
+				case VO:
+					verifyVoStandards(mainClass, cne, entityName);
 					break;
 
+				case SQL:
+					verifySqlStandards(mainClass, cne, entityName);
+					break;
+						
+				case CONTROLLERS:
+					verifyControllersStandards(mainClass, cne, entityName);
+					break;
+						
+				case VIEWS:
+					verifyViewsStandards(mainClass, cne, entityName);
+					break;
+						
+				case UTILS:		//void - utils only need @SourceControl
+				case CSS:		//void
+				case IMAGES:		//void
 				default:
 					break;
 			}
 		}
 		
 		System.err.println("");
+	}
+
+	private static void verifyEjbStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
+	{
+		if (mainClass.getName().equals(entityName + "FacadeRemote"))
+		{
+			System.err.println("CLASS NAME : " + mainClass.getName());
+		}
+		else if (mainClass.getName().equals(entityName + "FacadeBean"))
+		{
+			System.err.println("CLASS NAME : " + mainClass.getName());
+		}
+		else
+		{
+			throw new SourceControlException("Invalid class name - "
+				+ "Expected '" + entityName + "FacadeRemote' or '" + entityName + "FacadeBean', got '" + mainClass.getName() + "'");
+		}
+	}
+
+	private static void verifyApplicationStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
+	{
+		if (mainClass.getName().equals("I" + entityName + "Service"))
+		{
+			System.err.println("CLASS NAME : " + mainClass.getName());
+		}
+		else if (mainClass.getName().equals(entityName + "Service"))
+		{
+			System.err.println("CLASS NAME : " + mainClass.getName());
+		}
+		else
+		{
+			throw new SourceControlException("Invalid class name - "
+				+ "Expected 'I" + entityName + "Service' or '" + entityName + "Service', got '" + mainClass.getName() + "'");
+		}
+	}
+
+	private static void verifyDaoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
+	{
+		if (mainClass.getName().equals("I" + entityName + "Dao"))
+		{
+			System.err.println("CLASS NAME : " + mainClass.getName());
+		}
+		else if (mainClass.getName().equals(entityName + "Dao"))
+		{
+			System.err.println("CLASS NAME : " + mainClass.getName());
+		}
+		else
+		{
+			throw new SourceControlException("Invalid class name - "
+				+ "Expected 'I" + entityName + "Dao' or '" + entityName + "Dao', got '" + mainClass.getName() + "'");
+		}
+	}
+
+	private static void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	private static void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	private static void verifyControllersStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	private static void verifyViewsStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 }
