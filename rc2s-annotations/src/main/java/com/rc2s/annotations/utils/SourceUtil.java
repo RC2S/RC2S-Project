@@ -2,7 +2,6 @@ package com.rc2s.annotations.utils;
 
 import com.rc2s.annotations.mappers.ElementMapper;
 import javax.annotation.processing.Messager;
-import javax.tools.Diagnostic;
 
 public class SourceUtil
 {	
@@ -21,17 +20,11 @@ public class SourceUtil
 			
 			System.err.println("PLUGIN NAME : " + pluginName);
 			
-			//if (pluginName != null)
-			//	messager.printMessage(Diagnostic.Kind.NOTE, "PluginName found : " + pluginName);
-
 			// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
 			ClassNamesEnum cne = findClassName(packageParts);
 			
 			System.err.println("CLASS TYPE : " + cne.name());
 			
-			//if (cne.name() != null)
-			//	messager.printMessage(Diagnostic.Kind.NOTE, "Class type found : " + cne.name());
-		
 			/**
 			 * Then verify remaining package parts depending on ClassNamesEnum retrieved
 			 * Those parts shall be :
@@ -47,45 +40,44 @@ public class SourceUtil
 				entityName = verifyPackageEnd(packageParts);
 				
 				System.err.println("ENTITY : " + entityName);
-				
-				//messager.printMessage(Diagnostic.Kind.NOTE, "Entity found : " + entityName);
 			}
 			
 			// Then verify class compulsorys' (name, annotations..)
 			verifyClassStandards(mainClass, cne, entityName);
 		}
-		catch (Exception ex)
+		catch (SourceControlException scex)
 		{
-			ex.printStackTrace();
+			System.err.println(scex.getMessage());
 		}
 	}
 
-	private static void verifyRoot(String[] packageParts)
+	private static void verifyRoot(String[] packageParts) throws SourceControlException
 	{
 		String name = null;
 		
 		if (packageParts.length < 3)
-			throw new UnsupportedOperationException("Not supported yet - verifyRoot() - packageParts.length < 3");
+			throw new SourceControlException("Invalid package naming - Too short (expected : more than 2 parts)");
 		
-		if (packageParts[0].equals("com") && packageParts[1].equals("rc2s"))
-		{
-			boolean hasUppers = !packageParts[2].equals(packageParts[2].toLowerCase()); 
-			
-			if (hasUppers)
-				throw new UnsupportedOperationException("Not supported yet - verifyRoot() - plugin name shall be lowercase");
-			else if (null == pluginName)
-				pluginName = packageParts[2];
-			else if (!pluginName.equals(packageParts[2]))
-				throw new UnsupportedOperationException("Not supported yet - verifyRoot() - plugin name found differs from origin");
-		}
-		else
-			throw new UnsupportedOperationException("Not supported yet - verifyRoot() - package not com rc2s");
+		if (!packageParts[0].equals("com"))
+			throw new SourceControlException("Invalid package naming - Should begin with 'com', have '" + packageParts[0] + "'");
+		
+		if (!packageParts[1].equals("rc2s"))
+			throw new SourceControlException("Invalid package naming - Should begin with 'com.rc2s', have 'com." + packageParts[1] + "'");
+		
+		boolean hasUppers = !packageParts[2].equals(packageParts[2].toLowerCase()); 
+
+		if (hasUppers)
+			throw new SourceControlException("Invalid plugin naming - Should be lowercase");
+		else if (null == pluginName)
+			pluginName = packageParts[2];
+		else if (!pluginName.equals(packageParts[2]))
+			throw new SourceControlException("Invalid plugin naming - Already retrieved '" + pluginName + "' and found '" + packageParts[2] + "' in this class");
 	}
 
-	private static ClassNamesEnum findClassName(String[] packageParts)
+	private static ClassNamesEnum findClassName(String[] packageParts) throws SourceControlException
 	{
 		if (packageParts.length < 5)
-			throw new UnsupportedOperationException("Not supported yet - findClassName() - packageParts.length < 5");
+			throw new SourceControlException("Invalid package naming - Too short (expected : more than 4 parts)");
 		
 		switch (packageParts[3]) 
 		{
@@ -105,11 +97,11 @@ public class SourceUtil
 				return clientClassNameFromPackage(packageParts[4]);
 				
 			default:
-				throw new UnsupportedOperationException("Not supported yet - findClassName() - package naming incorrect");
+				throw new SourceControlException("Invalid package naming after plugin name - Expected (ejb|application|dao|common|client), got '" + packageParts[3] + "'");
 		}
 	}
 	
-	private static ClassNamesEnum commonClassNameFromPackage(String packagePart)
+	private static ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
 	{
 		switch (packagePart) 
 		{
@@ -120,11 +112,11 @@ public class SourceUtil
 				return ClassNamesEnum.SQL;
 				
 			default:
-				throw new UnsupportedOperationException("Not supported yet - commonClassNameFromPackage() - package naming incorrect");
+				throw new SourceControlException("Invalid common package naming - Expected (vo|sql), got '" + packagePart + "'");
 		}
 	}
 
-	private static ClassNamesEnum clientClassNameFromPackage(String packagePart)
+	private static ClassNamesEnum clientClassNameFromPackage(String packagePart) throws SourceControlException
 	{
 		switch (packagePart) 
 		{
@@ -144,18 +136,18 @@ public class SourceUtil
 				return ClassNamesEnum.UTILS;
 				
 			default:
-				throw new UnsupportedOperationException("Not supported yet - clientClassNameFromPackage() - package naming incorrect");
+				throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packagePart + "'");
 		}
 	}
 	
-	private static String verifyPackageEnd(String[] packageParts)
+	private static String verifyPackageEnd(String[] packageParts) throws SourceControlException
 	{
 		boolean hasUppers = !packageParts[4].equals(packageParts[4].toLowerCase());
 		
 		if (packageParts.length < 5)
-			throw new UnsupportedOperationException("Not supported yet - verifyPackageEnd() - packageParts.length < 5");
+			throw new SourceControlException("Invalid package naming - Too short (expected : more than 4 parts)");
 		else if (hasUppers)
-			throw new UnsupportedOperationException("Not supported yet - verifyPackageEnd() - classname in package shall be lowercase");
+			throw new SourceControlException("Invalid " + packageParts[3] + " package naming - Shall be lowercase");
 		else
 			packageParts[4] = Character.toUpperCase(packageParts[4].charAt(0)) + packageParts[4].substring(1);
 		
@@ -185,7 +177,7 @@ public class SourceUtil
 	* pn.client.css				-> void
 	* pn.client.images			-> void
 	*/
-	private static void verifyClassStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	private static void verifyClassStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{	
 		if (cne != null)
 		{
@@ -195,13 +187,11 @@ public class SourceUtil
 					System.err.println("MainClass : " + mainClass.getName() + ", Built entity : " + entityName + "Facade(...)");
 					if (!mainClass.getName().equals(entityName + "FacadeRemote") && !mainClass.getName().equals(entityName + "FacadeBean"))
 					{
-						throw new UnsupportedOperationException("Not supported yet - Invalid Application class name");
+						throw new SourceControlException("Not supported yet - Invalid Application class name");
 					}
 					else
 					{
 						System.err.println("CLASS NAME : " + mainClass.getName());
-						
-						//messager.printMessage(Diagnostic.Kind.NOTE, "Class name found : " + mainClass.getName());
 					}
 					break;
 
@@ -209,13 +199,11 @@ public class SourceUtil
 					System.err.println("MainClass : " + mainClass.getName() + ", Built entity : " + entityName + "Service");
 					if (!mainClass.getName().equals("I" + entityName + "Service") && !mainClass.getName().equals(entityName + "Service"))
 					{
-						throw new UnsupportedOperationException("Not supported yet - Invalid DAO class name");
+						throw new SourceControlException("Not supported yet - Invalid DAO class name");
 					}
 					else
 					{
 						System.err.println("CLASS NAME : " + mainClass.getName());
-						
-						//messager.printMessage(Diagnostic.Kind.NOTE, "Class name found : " + mainClass.getName());
 					}
 					break;
 
@@ -223,13 +211,11 @@ public class SourceUtil
 					System.err.println("MainClass : " + mainClass.getName() + ", Built entity : " + entityName + "Dao");
 					if (!mainClass.getName().equals("I" + entityName + "Dao") && !mainClass.getName().equals(entityName + "Dao"))
 					{
-						throw new UnsupportedOperationException("Not supported yet - Invalid EJB class name");
+						throw new SourceControlException("Not supported yet - Invalid EJB class name");
 					}
 					else
 					{
 						System.err.println("CLASS NAME : " + mainClass.getName());
-						
-						//messager.printMessage(Diagnostic.Kind.NOTE, "Class name found : " + mainClass.getName());
 					}
 					break;
 
