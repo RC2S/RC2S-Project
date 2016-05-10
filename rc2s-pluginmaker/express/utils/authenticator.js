@@ -7,7 +7,7 @@ module.exports = (app) => {
 		if (req.session.token) {
 
 			// Log every access to /workspace*
-			logger.writeAuthAccess(req.originalUrl, sess.token);
+			logger.writeAuthAccess(req.originalUrl, req.session.token);
 			
 			next();
 		} else {

@@ -2,3 +2,5 @@
 [2016-05-10 19:19:42.442] [ERROR] http_watcher - connect ETIMEDOUT 192.168.209.128:8080
 [2016-05-10 19:20:46.709] [TRACE] http_watcher - *** Che HTTP GET on /api/workspace?skipCount=0&maxItems=30
 [2016-05-10 19:20:46.710] [WARN] http_watcher - The workspace successfully fetched
+[2016-05-10 19:27:16.336] [TRACE] http_watcher - *** Che HTTP GET on /api/workspace?skipCount=0&maxItems=30
+[2016-05-10 19:27:16.337] [WARN] http_watcher - The workspace successfully fetched
