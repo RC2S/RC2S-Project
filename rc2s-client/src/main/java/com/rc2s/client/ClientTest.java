@@ -19,7 +19,7 @@ public class ClientTest
 			
 			try
 			{
-				List<User> users = userEJB.getAllUsers();
+				List<User> users = userEJB.getAll();
 				for(User user : users) {
 					System.out.println(user.getId() + " " + user.getUsername() 
 						+ " " + user.getPassword() + " " + user.getCreated());

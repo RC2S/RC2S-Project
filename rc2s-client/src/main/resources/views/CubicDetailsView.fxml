@@ -101,9 +101,6 @@
                </top>
                <center>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <bottom>
-                        <TextField fx:id="synchronizedField" promptText="Synchronized list name" BorderPane.alignment="CENTER" />
-                     </bottom>
                      <center>
                         <ListView fx:id="synchronizedList" onKeyPressed="#onListKeyEvent" BorderPane.alignment="CENTER" />
                      </center>
@@ -115,6 +112,14 @@
                            </children>
                         </HBox>
                      </top>
+                     <bottom>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <children>
+                              <TextField fx:id="synchronizedField" promptText="Synchronized list name" visible="false" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                              <Label fx:id="synchronizedLabel" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                           </children>
+                        </AnchorPane>
+                     </bottom>
                   </BorderPane>
                </center>
             </BorderPane>

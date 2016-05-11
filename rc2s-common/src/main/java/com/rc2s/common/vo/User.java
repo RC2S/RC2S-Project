@@ -35,9 +35,9 @@ public class User implements Serializable
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-		name = "user_role",
-		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+		name = "link_user_role",
+		joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
 	)
 	private List<Role> roles;
 	
@@ -144,4 +144,24 @@ public class User implements Serializable
     {
         this.updated = updated;
     }
+
+	public List<Synchronization> getSynchronizations()
+	{
+		return synchronizations;
+	}
+
+	public void setSynchronizations(List<Synchronization> synchronizations)
+	{
+		this.synchronizations = synchronizations;
+	}
+
+	public List<Role> getRoles()
+	{
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles)
+	{
+		this.roles = roles;
+	}
 }

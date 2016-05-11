@@ -17,8 +17,6 @@ import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.ObservableList;
@@ -40,9 +38,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javax.validation.ConstraintViolation;
+import org.apache.log4j.Logger;
 
 public class CubicDetailsController implements Initializable
 {
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote)EJB.lookup("SizeEJB");
 	private final SynchronizationFacadeRemote synchronizationEJB = (SynchronizationFacadeRemote)EJB.lookup("SynchronizationEJB");
@@ -89,6 +90,7 @@ public class CubicDetailsController implements Initializable
 	@FXML private Button addCubeButton;
 	
 	@FXML private ListView synchronizedList;
+	@FXML private Label synchronizedLabel;
 	@FXML private TextField synchronizedField;
 	
 	@Override
@@ -107,8 +109,7 @@ public class CubicDetailsController implements Initializable
 		}
 		catch(EJBException e)
 		{
-			System.err.println(e.getMessage());
-			errorLabel.setText(e.getMessage());
+			error(e.getMessage());
 		}
 	}
 	
@@ -158,10 +159,11 @@ public class CubicDetailsController implements Initializable
 		}
 		catch(EJBException e)
 		{
-			System.err.println(e.getMessage());
+			error(e.getMessage());
 			statusLabel.setText("Offline");
 		}
 		
+		synchronizedLabel.setText(cube.getSynchronization().getName());
 		synchronizedField.setText(cube.getSynchronization().getName());
 		synchronizedList.getItems().clear();
 		synchronizedList.getItems().addAll(cube.getSynchronization().getCubes());
@@ -209,6 +211,9 @@ public class CubicDetailsController implements Initializable
 	
 		sizeLabel.setVisible(!sizeLabel.isVisible());
 		chooseSizeHbox.setVisible(!chooseSizeHbox.isVisible());
+		
+		synchronizedLabel.setVisible(!synchronizedLabel.isVisible());
+		synchronizedField.setVisible(!synchronizedField.isVisible());
 	}
 	
 	private void toggleEditSize()
@@ -314,8 +319,7 @@ public class CubicDetailsController implements Initializable
 					}
 					catch(EJBException ex)
 					{
-						System.err.println(ex.getMessage());
-						errorLabel.setText(ex.getMessage());
+						error(ex.getMessage());
 					}
 				}
 				else
@@ -362,8 +366,7 @@ public class CubicDetailsController implements Initializable
 				}
 				catch(EJBException ex)
 				{
-					System.err.println(ex.getMessage());
-					errorLabel.setText(ex.getMessage());
+					error(ex.getMessage());
 				}
 			}
 			else
@@ -391,8 +394,7 @@ public class CubicDetailsController implements Initializable
 			}
 			catch(EJBException ex)
 			{
-				System.err.println(ex.getMessage());
-				errorLabel.setText(ex.getMessage());
+				error(ex.getMessage());
 			}
 		}
 	}
@@ -452,8 +454,7 @@ public class CubicDetailsController implements Initializable
 			}
 			catch(EJBException ex)
 			{
-				System.err.println(ex.getMessage());
-				errorLabel.setText(ex.getMessage());
+				error(ex.getMessage());
 			}
 		}
 	}
@@ -480,12 +481,17 @@ public class CubicDetailsController implements Initializable
 				}
 				catch(EJBException ex)
 				{
-					System.err.println(ex.getMessage());
-					errorLabel.setText(ex.getMessage());
+					error(ex.getMessage());
 				}
 			}
 			
 			e.consume();
 		}
+	}
+	
+	private void error(String err)
+	{
+		logger.error(err);
+		errorLabel.setText(err);
 	}
 }

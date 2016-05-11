@@ -19,7 +19,7 @@ public class UserService implements IUserService
 	private static final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
     
     @Override
-    public List<User> getAllUsers() throws ServiceException
+    public List<User> getAll() throws ServiceException
     {
 		try
 		{

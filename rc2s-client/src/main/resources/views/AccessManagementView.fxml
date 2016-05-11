@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="accessAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/accessManagement-style.css" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.AccessManagementController">
+<AnchorPane fx:id="accessAnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/accessManagement-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.AccessManagementController">
    <children>
       <GridPane fx:id="anchorGridPane" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>
@@ -61,14 +64,14 @@
                         <Label fx:id="gridLabelUsername" alignment="CENTER" contentDisplay="CENTER" text="Username" GridPane.halignment="CENTER" />
                         <Label fx:id="gridLabelPassword" text="Password" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Label fx:id="gridLabelConfirmPass" text="Confirm Pass." GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <TextField fx:id="gridTextFieldUsername" GridPane.columnIndex="1" />
-                        <PasswordField fx:id="gridPasswordFieldPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <PasswordField fx:id="gridPasswordFieldConfirmPass" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="usernameField" GridPane.columnIndex="1" />
+                        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <PasswordField fx:id="confirmPassField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="gridLabelRole" text="Role" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                         <Label fx:id="gridLabelCubicAccess" text="Cubic Access" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="gridComboBoxRole" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" />
-                        <ComboBox fx:id="gridComboBoxCubicAccess" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Button fx:id="gridButton" mnemonicParsing="false" text="Add !" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="rolesBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" />
+                        <ComboBox fx:id="cubicAccessBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddEvent" text="Add!" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </center>

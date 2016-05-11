@@ -15,11 +15,11 @@ public class UserFacadeBean implements UserFacadeRemote
     private IUserService userService;
     
     @Override
-    public List<User> getAllUsers() throws EJBException
+    public List<User> getAll() throws EJBException
     {
 		try
 		{
-			return userService.getAllUsers();
+			return userService.getAll();
 		}
 		catch(ServiceException e)
 		{
