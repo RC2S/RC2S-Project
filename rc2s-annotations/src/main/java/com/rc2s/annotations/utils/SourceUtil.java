@@ -9,6 +9,11 @@ public class SourceUtil
 	
 	private static String pluginName = null;
 	
+	private static final String statelessPackage = "javax.ejb.Stateless";
+	private static final String statefulPackage = "javax.ejb.Stateful";
+	private static final String remotePackage = "javax.ejb.Remote";
+	private static final String localPackage = "javax.ejb.Local";
+	
 	public static void verifySource(ElementMapper mainClass)
 	{
 		String[] packageParts = mainClass.getPackageName().split("\\.");
@@ -158,16 +163,16 @@ public class SourceUtil
 	* void verifyClassStandards(mainClass, cne, entityName)
 	* 
 	* pn.ejb.entityName			OK -> shall be 'NameFacadeRemote' & 'NameFacadeBean'
-	*							-> annotation @Stateless or @Stateful for 'NameFacadeBean' 
-	*							-> annotation @Remote for 'NameFacadeRemote'
+	*							OK -> annotation @Stateless or @Stateful for 'NameFacadeBean' 
+	*							OK -> annotation @Remote for 'NameFacadeRemote'
 	*
 	* pn.application.entityName	OK -> shall be 'INameService' & 'NameService'
-	*							-> annotation @Stateless or @Stateful for 'NameService'
-	*							-> annotation @Local for 'INameService'
+	*							OK -> annotation @Stateless or @Stateful for 'NameService'
+	*							OK -> annotation @Local for 'INameService'
 	*
-	* pn.dao.entityName			OK -> shall be 'INameDao' & 'NameDao'
-	*							-> annotation @Stateless or @Stateful for 'NameDao'
-	*							-> annotation @Local for 'INameDao'
+	* pn.dao.entityName			OK -> shall be 'INameDAO' & 'NameDAO'
+	*							OK -> annotation @Stateless or @Stateful for 'NameDAO'
+	*							OK -> annotation @Local for 'INameDAO'
 	* 
 	* pn.common.vo				-> shall be 'Name' & annotation @Entity
 	* pn.common.sql				-> pluginname.sql - different analysis because it's a file and not a class
@@ -229,10 +234,15 @@ public class SourceUtil
 		if (mainClass.getName().equals(entityName + "FacadeRemote"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
+			
+			if (!mainClass.getAnnotations().contains(remotePackage))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + remotePackage + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "FacadeBean"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
+			
+			checkClassHasStatelessOrStatefulAnnotation(mainClass);
 		}
 		else
 		{
@@ -249,10 +259,15 @@ public class SourceUtil
 		if (mainClass.getName().equals("I" + entityName + "Service"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
+			
+			if (!mainClass.getAnnotations().contains(localPackage))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + localPackage + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "Service"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
+			
+			checkClassHasStatelessOrStatefulAnnotation(mainClass);
 		}
 		else
 		{
@@ -269,10 +284,15 @@ public class SourceUtil
 		if (mainClass.getName().equals("I" + entityName + "DAO"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
+			
+			if (!mainClass.getAnnotations().contains(localPackage))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + localPackage + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "DAO"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
+			
+			checkClassHasStatelessOrStatefulAnnotation(mainClass);
 		}
 		else
 		{
@@ -282,6 +302,24 @@ public class SourceUtil
 		
 		for (String annotation : mainClass.getAnnotations())
 			System.err.println("Anno on dao : " + annotation);
+	}
+	
+	private static void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
+	{
+		Boolean isStateless = mainClass.getAnnotations().contains(statelessPackage);
+		Boolean isStateful	= mainClass.getAnnotations().contains(statefulPackage);
+		Boolean isBoth		= isStateless && isStateful;
+		Boolean isNone		= !isStateless && !isStateful;
+
+		if (isBoth)
+		{
+			throw new SourceControlException("Class " + mainClass.getName() + 
+				" has both " + statelessPackage + " & " + statefulPackage + " annotations : it should only contain one");
+		}
+		else if (isNone)
+		{
+			throw new SourceControlException("Class " + mainClass.getName() + " requires " + statelessPackage + " or " + statefulPackage + " annotation");
+		}
 	}
 
 	private static void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
