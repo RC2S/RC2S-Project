@@ -1,4 +1,1 @@
-[2016-05-10 19:17:35.247] [TRACE] auth_watcher - Entity [60fa3f54b20bb1e632eb173fd0dbecba2c6569d0] accessing Url '/workspaces'
-[2016-05-10 19:19:23.168] [TRACE] auth_watcher - Entity [60fa3f54b20bb1e632eb173fd0dbecba2c6569d0] accessing Url '/workspaces'
-[2016-05-10 19:20:46.682] [TRACE] auth_watcher - Entity [18519ca9359e083062fd7ff1fcb7aa42e0c353ff] accessing Url '/workspaces'
-[2016-05-10 19:27:16.319] [TRACE] auth_watcher - Entity [969515ecae30c815265f886f3d73e294e338d042] accessing Url '/workspaces'
+[2016-05-16 18:58:06.546] [TRACE] auth_watcher - Entity [54d758c193010ae77a466f2b3541c1af0c599be2] accessing Url '/workspaces'
