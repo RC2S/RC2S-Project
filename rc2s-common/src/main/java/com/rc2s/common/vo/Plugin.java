@@ -2,6 +2,7 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -129,5 +130,41 @@ public class Plugin implements Serializable
 	public void setUpdated(Date updated)
 	{
 		this.updated = updated;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return name + " (" + author + ")";
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 5;
+		hash = 29 * hash + Objects.hashCode(this.id);
+		hash = 29 * hash + Objects.hashCode(this.name);
+		hash = 29 * hash + Objects.hashCode(this.version);
+		hash = 29 * hash + Objects.hashCode(this.author);
+		hash = 29 * hash + Objects.hashCode(this.status);
+		hash = 29 * hash + Objects.hashCode(this.activated);
+		hash = 29 * hash + Objects.hashCode(this.access);
+		hash = 29 * hash + Objects.hashCode(this.created);
+		hash = 29 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Plugin)
+		{
+			Plugin p = (Plugin)o;
+			
+			if(p.getId() != null && this.getId() != null)
+				return Objects.equals(p.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }

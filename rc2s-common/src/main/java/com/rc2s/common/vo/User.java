@@ -3,6 +3,7 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user")
@@ -22,8 +24,12 @@ public class User implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+	@javax.validation.constraints.Size(min = 3)
     private String username;
+	
+	@javax.validation.constraints.Size(min = 8)
     private String password;
+	
     private boolean activated;
     private boolean locked;
 	
@@ -110,7 +116,7 @@ public class User implements Serializable
         return locked;
     }
 
-    public void setLockrd(boolean locked)
+    public void setLocked(boolean locked)
     {
         this.locked = locked;
     }
@@ -163,5 +169,40 @@ public class User implements Serializable
 	public void setRoles(List<Role> roles)
 	{
 		this.roles = roles;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return username;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 17 * hash + Objects.hashCode(this.id);
+		hash = 17 * hash + Objects.hashCode(this.username);
+		hash = 17 * hash + Objects.hashCode(this.password);
+		hash = 17 * hash + (this.activated ? 1 : 0);
+		hash = 17 * hash + (this.locked ? 1 : 0);
+		hash = 17 * hash + Objects.hashCode(this.lastLogin);
+		hash = 17 * hash + Objects.hashCode(this.created);
+		hash = 17 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof User)
+		{
+			User u = (User)o;
+			
+			if(u.getId() != null && this.getId() != null)
+				return Objects.equals(u.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }

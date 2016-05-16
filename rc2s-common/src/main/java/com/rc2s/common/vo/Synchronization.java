@@ -3,6 +3,7 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -118,5 +119,30 @@ public class Synchronization implements Serializable
 	public String toString()
 	{
 		return name;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 3;
+		hash = 71 * hash + Objects.hashCode(this.id);
+		hash = 71 * hash + Objects.hashCode(this.name);
+		hash = 71 * hash + Objects.hashCode(this.created);
+		hash = 71 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Synchronization)
+		{
+			Synchronization s = (Synchronization)o;
+			
+			if(s.getId() != null && this.getId() != null)
+				return Objects.equals(s.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }

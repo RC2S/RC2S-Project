@@ -3,7 +3,7 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -136,6 +136,41 @@ public class Size implements Serializable
 	@Override
 	public String toString()
 	{
-		return name;
+		return new StringBuilder(name).append(" (")
+									  .append(x)
+									  .append("x")
+									  .append(y)
+									  .append("x")
+									  .append(z)
+									  .append(")")
+									  .toString();
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 37 * hash + Objects.hashCode(this.id);
+		hash = 37 * hash + Objects.hashCode(this.name);
+		hash = 37 * hash + Objects.hashCode(this.x);
+		hash = 37 * hash + Objects.hashCode(this.y);
+		hash = 37 * hash + Objects.hashCode(this.z);
+		hash = 37 * hash + Objects.hashCode(this.created);
+		hash = 37 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Size)
+		{
+			Size s = (Size)o;
+			
+			if(s.getId() != null && this.getId() != null)
+				return Objects.equals(s.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }

@@ -24,9 +24,12 @@ import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.log4j.Logger;
 
 public class LoginController implements Initializable
 {
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
     @FXML private TextField ipField; 
     @FXML private TextField usernameField; 
     @FXML private PasswordField passwordField;
@@ -103,13 +106,13 @@ public class LoginController implements Initializable
 				}
 				catch(EJBException e)
 				{
-					System.err.println(e.getMessage());
+					logger.error(e.getMessage());
 					errorLabel.setText("Authentication failed");
 				}
 			}
-			catch(RC2SException e)
+			catch(Exception e)
 			{
-				System.err.println(e.getMessage());
+				e.printStackTrace();
 				errorLabel.setText("Unable to connect to the server");
 			}
         }

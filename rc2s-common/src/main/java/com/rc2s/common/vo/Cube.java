@@ -181,7 +181,8 @@ public class Cube implements Serializable
 		{
 			Cube c = (Cube)o;
 			
-			return Objects.equals(c.getId(), this.getId());
+			if(c.getId() != null && this.getId() != null)
+				return Objects.equals(c.getId(), this.getId());
 		}
 		
 		return false;

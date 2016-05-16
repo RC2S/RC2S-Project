@@ -5,6 +5,7 @@ import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.utils.Hash;
 import com.rc2s.common.vo.User;
 import com.rc2s.dao.user.IUserDAO;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -55,6 +56,20 @@ public class UserService implements IUserService
 			}
 			
 			return user;
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public User add(User user) throws ServiceException
+	{
+		try
+		{
+			user.setCreated(new Date());
+			return userDAO.save(user);
 		}
 		catch(DAOException e)
 		{

@@ -2,6 +2,7 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -58,5 +59,34 @@ public class Role implements Serializable
 	public void setUsers(List<User> users)
 	{
 		this.users = users;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 17 * hash + Objects.hashCode(this.id);
+		hash = 17 * hash + Objects.hashCode(this.name);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Role)
+		{
+			Role r = (Role)o;
+			
+			if(r.getId() != null && this.getId() != null)
+				return Objects.equals(r.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }
