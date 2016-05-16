@@ -3,6 +3,7 @@ package com.rc2s.annotations.processors;
 import com.rc2s.annotations.SourceControl;
 import com.rc2s.annotations.mappers.ElementMapper;
 import com.rc2s.annotations.utils.Analysor;
+import com.rc2s.annotations.utils.NewSourceUtil;
 import com.rc2s.annotations.utils.SourceUtil;
 import java.util.HashSet;
 import java.util.List;
@@ -58,6 +59,11 @@ public class SourceControlProcessor extends AbstractProcessor
 					try
 					{
 						SourceUtil.verifySource(mainClass);
+						/* 
+						// With a non-static SourceUtil
+						NewSourceUtil nsu = new NewSourceUtil(mainClass);
+						nsu.verifySource();
+						*/
 					}
 					catch (Exception ex)
 					{
