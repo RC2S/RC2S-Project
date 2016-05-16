@@ -64,8 +64,6 @@ public class SourceControlProcessor extends AbstractProcessor
 						ex.printStackTrace();
 					}
 				}
-				
-				//this.tests(annotated);
             }
         }
 		

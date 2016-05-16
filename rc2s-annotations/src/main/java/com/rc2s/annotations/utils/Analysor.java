@@ -110,8 +110,6 @@ public class Analysor
 		
 	    for (AnnotationMirror annotationMirror : element.getAnnotationMirrors())
         {
-			//System.err.println("Anno type  : " + annotationMirror.getAnnotationType());
-        
 			if (!annotations.contains(annotationMirror.getAnnotationType().toString()))
 				annotations.add(annotationMirror.getAnnotationType().toString());
 		}

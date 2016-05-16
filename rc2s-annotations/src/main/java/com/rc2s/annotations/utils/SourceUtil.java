@@ -1,18 +1,19 @@
 package com.rc2s.annotations.utils;
 
 import com.rc2s.annotations.mappers.ElementMapper;
-import javax.annotation.processing.Messager;
+import java.util.ArrayList;
 
 public class SourceUtil
 {	
-	private static Messager messager;
+	private static final ArrayList<String> controllersList = null;
 	
 	private static String pluginName = null;
 	
-	private static final String statelessPackage = "javax.ejb.Stateless";
-	private static final String statefulPackage = "javax.ejb.Stateful";
-	private static final String remotePackage = "javax.ejb.Remote";
-	private static final String localPackage = "javax.ejb.Local";
+	private static final String statelessPackage	= "javax.ejb.Stateless";
+	private static final String statefulPackage		= "javax.ejb.Stateful";
+	private static final String remotePackage		= "javax.ejb.Remote";
+	private static final String localPackage		= "javax.ejb.Local";
+	private static final String entityPackage		= "javax.persistence.Entity";
 	
 	public static void verifySource(ElementMapper mainClass)
 	{
@@ -174,18 +175,18 @@ public class SourceUtil
 	*							OK -> annotation @Stateless or @Stateful for 'NameDAO'
 	*							OK -> annotation @Local for 'INameDAO'
 	* 
-	* pn.common.vo				-> shall be 'Name' & annotation @Entity
+	* pn.common.vo				OK -> shall be 'Name' & annotation @Entity
 	* pn.common.sql				-> pluginname.sql - different analysis because it's a file and not a class
 	* 
 	* pn.client.controllers		-> shall be 'NameController' (shall have an initialize() method with parameters url & rb)
-	*							-> save controller's name to verify later whether he has a linked view
+	*							OK -> save controller's name to verify later whether he has a linked view
 	* pn.client.views			-> analysing the controller, check in package views if NameView.fxml exists
-	* pn.client.utils			-> void (utils for plugin creation, shall only have annotation @SourceControl)
-	* pn.client.css				-> void
-	* pn.client.images			-> void
+	* pn.client.utils			OK -> void (utils for plugin creation, shall only have annotation @SourceControl)
+	* pn.client.css				OK -> void
+	* pn.client.images			OK -> void
 	*/
 	private static void verifyClassStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
-	{	
+	{
 		if (cne != null)
 		{
 			switch (cne)
@@ -249,9 +250,6 @@ public class SourceUtil
 			throw new SourceControlException("Invalid class name - "
 				+ "Expected '" + entityName + "FacadeRemote' or '" + entityName + "FacadeBean', got '" + mainClass.getName() + "'");
 		}
-		
-		for (String annotation : mainClass.getAnnotations())
-			System.err.println("Anno on ejb : " + annotation);
 	}
 
 	private static void verifyApplicationStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
@@ -274,9 +272,6 @@ public class SourceUtil
 			throw new SourceControlException("Invalid class name - "
 				+ "Expected 'I" + entityName + "Service' or '" + entityName + "Service', got '" + mainClass.getName() + "'");
 		}
-		
-		for (String annotation : mainClass.getAnnotations())
-			System.err.println("Anno on app : " + annotation);
 	}
 
 	private static void verifyDaoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
@@ -299,46 +294,51 @@ public class SourceUtil
 			throw new SourceControlException("Invalid class name - "
 				+ "Expected 'I" + entityName + "DAO' or '" + entityName + "DAO', got '" + mainClass.getName() + "'");
 		}
-		
-		for (String annotation : mainClass.getAnnotations())
-			System.err.println("Anno on dao : " + annotation);
 	}
 	
 	private static void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
 	{
-		Boolean isStateless = mainClass.getAnnotations().contains(statelessPackage);
-		Boolean isStateful	= mainClass.getAnnotations().contains(statefulPackage);
-		Boolean isBoth		= isStateless && isStateful;
-		Boolean isNone		= !isStateless && !isStateful;
+		Boolean hasStateless	= mainClass.getAnnotations().contains(statelessPackage);
+		Boolean hasStateful		= mainClass.getAnnotations().contains(statefulPackage);
+		Boolean hasBoth		= hasStateless && hasStateful;
+		Boolean hasNone		= !hasStateless && !hasStateful;
 
-		if (isBoth)
+		if (hasBoth)
 		{
 			throw new SourceControlException("Class " + mainClass.getName() + 
-				" has both " + statelessPackage + " & " + statefulPackage + " annotations : it should only contain one");
+				" has both " + statelessPackage + " & " + statefulPackage + " annotations : it should only have one");
 		}
-		else if (isNone)
+		else if (hasNone)
 		{
 			throw new SourceControlException("Class " + mainClass.getName() + " requires " + statelessPackage + " or " + statefulPackage + " annotation");
 		}
 	}
 
-	private static void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	private static void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		// Regex for name ? [A-Z]([a-z])+
+		System.err.println("CLASS NAME : " + mainClass.getName());
+		
+		if (!mainClass.getAnnotations().contains(entityPackage))
+			throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + entityPackage + "'");
 	}
 
-	private static void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	private static void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) 
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		// SHEAA WATTODO HERE ??
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	private static void verifyControllersStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	private static void verifyControllersStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (controllersList.contains(mainClass.getName()))
+			throw new SourceControlException("Controller " + mainClass.getName() + " already in controllers list. You might have added two times the same controller.");
+		
+		controllersList.add(mainClass.getName());
 	}
 
 	private static void verifyViewsStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
