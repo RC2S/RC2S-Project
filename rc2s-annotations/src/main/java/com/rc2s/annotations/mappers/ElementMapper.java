@@ -33,6 +33,9 @@ public class ElementMapper
 	private final List<ElementMapper> fields;
 	private final List<ElementMapper> constructors;
 	private final List<ElementMapper> methods;
+	
+	// Class Annotations
+	private final List<String> annotations;
 
     public ElementMapper(String packageName, Set<Modifier> modifiers,
         ElementKind kind, String name)
@@ -45,6 +48,8 @@ public class ElementMapper
 		this.fields			= new ArrayList<>();
 		this.constructors	= new ArrayList<>();
 		this.methods		= new ArrayList<>();
+		
+		this.annotations	= new ArrayList<>();
     }
 
     public String getPackageName()
@@ -110,5 +115,10 @@ public class ElementMapper
 	public List<ElementMapper> getMethods()
 	{
 		return methods;
+	}
+	
+	public List<String> getAnnotations()
+	{
+		return annotations;
 	}
 }

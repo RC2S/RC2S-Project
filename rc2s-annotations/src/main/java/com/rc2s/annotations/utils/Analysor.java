@@ -47,6 +47,10 @@ public class Analysor
         if (getAnnotationValue(mainElement, "description()") != null)
     		mainClass.setDescription(getAnnotationValue(mainElement, "description()").toString());
         
+		// Get all Annotations on class
+		if (getClassAnnotations(mainElement) != null)
+			mainClass.getAnnotations().addAll(getClassAnnotations(mainElement));
+		
         // Get elements in the class (fields, constructors, methods)
         for (Element el : mainElement.getEnclosedElements())
         {
@@ -88,15 +92,35 @@ public class Analysor
         
 	    for (AnnotationMirror annotationMirror : element.getAnnotationMirrors())
         {
-            properties = elementUtils.getElementValuesWithDefaults(annotationMirror);
+			properties = elementUtils.getElementValuesWithDefaults(annotationMirror);
+			
             for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> param : properties.entrySet())
             {
-                if(param.getKey().toString().equals(key))
+				if(param.getKey().toString().equals(key))
                     return param.getValue();
             }
         }
         return null;
     }
+	
+	private List<String> getClassAnnotations(Element element)
+	{
+		Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
+        List<String> annotations = new ArrayList<>();
+		
+	    for (AnnotationMirror annotationMirror : element.getAnnotationMirrors())
+        {
+			//System.err.println("Anno type  : " + annotationMirror.getAnnotationType());
+        
+			if (!annotations.contains(annotationMirror.getAnnotationType().toString()))
+				annotations.add(annotationMirror.getAnnotationType().toString());
+		}
+		
+		if (annotations.isEmpty())
+			return null;
+		
+		return annotations;
+	}
     
     private List<ParameterMapper> getElementParameters(Element el)
     {

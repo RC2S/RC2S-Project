@@ -18,7 +18,7 @@ public class SourceUtil
 			// Verify root - shall be com.rc2s.{plugin_name}
 			verifyRoot(packageParts);
 			
-			System.err.println("PLUGIN NAME : " + pluginName);
+			System.err.println("\nPLUGIN NAME : " + pluginName);
 			
 			// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
 			ClassNamesEnum cne = findClassName(packageParts);
@@ -155,6 +155,8 @@ public class SourceUtil
 	}
 
 	/**
+	* void verifyClassStandards(mainClass, cne, entityName)
+	* 
 	* pn.ejb.entityName			OK -> shall be 'NameFacadeRemote' & 'NameFacadeBean'
 	*							-> annotation @Stateless or @Stateful for 'NameFacadeBean' 
 	*							-> annotation @Remote for 'NameFacadeRemote'
@@ -237,6 +239,9 @@ public class SourceUtil
 			throw new SourceControlException("Invalid class name - "
 				+ "Expected '" + entityName + "FacadeRemote' or '" + entityName + "FacadeBean', got '" + mainClass.getName() + "'");
 		}
+		
+		for (String annotation : mainClass.getAnnotations())
+			System.err.println("Anno on ejb : " + annotation);
 	}
 
 	private static void verifyApplicationStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
@@ -254,23 +259,29 @@ public class SourceUtil
 			throw new SourceControlException("Invalid class name - "
 				+ "Expected 'I" + entityName + "Service' or '" + entityName + "Service', got '" + mainClass.getName() + "'");
 		}
+		
+		for (String annotation : mainClass.getAnnotations())
+			System.err.println("Anno on app : " + annotation);
 	}
 
 	private static void verifyDaoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
-		if (mainClass.getName().equals("I" + entityName + "Dao"))
+		if (mainClass.getName().equals("I" + entityName + "DAO"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
 		}
-		else if (mainClass.getName().equals(entityName + "Dao"))
+		else if (mainClass.getName().equals(entityName + "DAO"))
 		{
 			System.err.println("CLASS NAME : " + mainClass.getName());
 		}
 		else
 		{
 			throw new SourceControlException("Invalid class name - "
-				+ "Expected 'I" + entityName + "Dao' or '" + entityName + "Dao', got '" + mainClass.getName() + "'");
+				+ "Expected 'I" + entityName + "DAO' or '" + entityName + "DAO', got '" + mainClass.getName() + "'");
 		}
+		
+		for (String annotation : mainClass.getAnnotations())
+			System.err.println("Anno on dao : " + annotation);
 	}
 
 	private static void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
