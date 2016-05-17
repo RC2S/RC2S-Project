@@ -8,4 +8,5 @@ import javax.ejb.Local;
 public interface IUserDAO
 {
     public List<User> getUsers();
+    public User getUserByNameAndPassword(String username, String password);
 }

@@ -3,14 +3,7 @@ apply plugin: 'ear'
 
 dependencies {
     deploy project(':rc2s-ejb')
-    //deploy project(':rc2s-application')
-    //deploy project(':rc2s-dao')
-    /*add ('earlib', project(path: ':rc2s-ejb', configuration: 'compile')) {
-        exclude group: 'fish.payara.extras', module: 'payara-embedded-all'
-        // exclude module: 'rc2s-application'
-        // exclude module: 'rc2s-dao'
-    }*/
-    earlib project(path: ':rc2s-dao', configuration: 'compile')
+    earlib project(path: ':rc2s-ejb', configuration: 'compile')
     // To-Do : Reussir à exclude dao et application de earlib et ajouter deploy dao application
 }
 
