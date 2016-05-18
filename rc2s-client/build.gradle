@@ -35,11 +35,11 @@ jar {
         )
     }
     
-    doLast {
+    /*doLast {
         tasks.copyLibs.execute();
         tasks.signAll.execute();
         tasks.generateJnlp.execute();
-    }
+    }*/
 }
 
 /**
