@@ -78,8 +78,8 @@ task generateJnlp(dependsOn: [signAll]) << {
     // Setting values in the jnlp template
     
     // Racine
-    root.@codebase = 'file://' + new File("${project.buildDir}/jnlp").absolutePath
-    //root.@codebase = 'https://someserver.com/some/path'
+    //root.@codebase = 'file://' + new File("${project.buildDir}/jnlp").absolutePath
+    root.@codebase = 'http://192.168.1.108' // Prod Server IP Address
     root.@href = jnlpFileName
     
     // Initialisation des informations
