@@ -25,52 +25,61 @@ project.tasks.compileJava.dependsOn(
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.rc2s.client.Main'
+        attributes(
+            "Implementation-Title" : project.name,
+            "Implementation-Version" : version,
+            "Main-Class" : mainClassName,
+            //"Class-Path" : configurations.compile.collect{it.getName()}.join(' '),
+            "Permissions": "all-permissions",
+            "Application-Name" : project.name
+        )
     }
+    
+    /*doLast {
+        tasks.copyLibs.execute();
+        tasks.signAll.execute();
+        tasks.generateJnlp.execute();
+    }*/
 }
 
 /**
  * JNLP
  */
-task copyLibs(type: Copy, dependsOn: [jar]) {
+task copyLibs(type: Copy) {
+    from("${project.buildDir}/libs")
     from configurations.runtime
-    from("build/libs")
-    into("build/jws/lib")
+    into("${project.buildDir}/jnlp/build")
     include('*.jar')
 }
 
 task signAll(dependsOn: [copyLibs]) << {
-    new File('build/jws/signed').mkdirs()
-    def libFiles = files { file('build/jnlp/lib').listFiles() }
+    println("Signing Libs")
+    new File("${project.buildDir}/jnlp/libs").mkdirs()
+    def libFiles = files { file("${project.buildDir}/jnlp/build").listFiles() }
     libFiles.each {
         ant.signjar(
-            destDir: 'build/jws/signed',
+            destDir: "${project.buildDir}/jnlp/libs",
             alias: 'RC2S',
             jar: it,
-            keystore: 'src/main/jnlp/keys/rc2s.key',
+            keystore: "${project.projectDir}/src/main/jnlp/keys/RC2S.jks",
             storepass: 'P@ssword1234',
             preservelastmodified: 'true'
         )
     }
+    delete "${project.buildDir}/jnlp/build"
 }
 
-/*task copyJnlp(type: Copy, dependsOn: [signAll]) << {
-    from configurations.runtime
-    from("src/main/jnlp/descriptors/")
-    into("build/jws/signed")
-    include("rc2s-${env}.jnlp")
-}*/
-
 task generateJnlp(dependsOn: [signAll]) << {
-    File jnlpTemplateFile = new File("src/main/jnlp/descriptors/rc2s-${env}.jnlp")
+    println("Generating JNLP")
+    File jnlpTemplateFile = new File("${project.projectDir}/src/main/jnlp/descriptors/rc2s-${env}.jnlp")
     def root = new XmlParser().parse(jnlpTemplateFile)
     def jnlpFileName = "rc2s-client-${env}-${version}.jnlp"
     
     // Setting values in the jnlp template
     
     // Racine
-    root.@codebase = 'file:/' + new File('build/jws/signed').absolutePath
-    //root.@codebase = 'https://someserver.com/some/path'
+    //root.@codebase = 'file://' + new File("${project.buildDir}/jnlp").absolutePath
+    root.@codebase = 'http://192.168.1.108' // Prod Server IP Address
     root.@href = jnlpFileName
     
     // Initialisation des informations
@@ -86,24 +95,20 @@ task generateJnlp(dependsOn: [signAll]) << {
     j2se.@version = "1.8+"
     
     def mainJar = "rc2s-client-${version}.jar"
-    def libs = files { file('build/jws/lib').listFiles() }
+    def libs = files { file("${project.buildDir}/jnlp/libs").listFiles() }
     libs.each {
-        def resourceValues = [href: it.name]
+        def resourceValues = [href: "libs/" + it.name]
         if (mainJar == it.name) {
-            resourceValues = [href: it.name, main: 'true']
+            resourceValues = [href: "libs/" + it.name, main: 'true']
         }
         resource.appendNode('jar', resourceValues)
     }
     
     // On définit la class principale
     def applicationDesc = root.'application-desc'[0]
-    applicationDesc.'@main-class' = ${mainClass}
+    applicationDesc.'@main-class' = mainClassName
     
     // Écriture du nouveau contenu dans un nouveau fichier JNLP
-    File jnlpFile = new File('build/jws/signed/' + jnlpFileName)
+    File jnlpFile = new File("${project.buildDir}/jnlp/" + jnlpFileName)
     new XmlNodePrinter(new PrintWriter(jnlpFile)).print(root)
-}
-
-task generateJws (dependsOn: [generateJnlp]) << {
-    println("Generating JWS files in: build/jws/signed")
 }
