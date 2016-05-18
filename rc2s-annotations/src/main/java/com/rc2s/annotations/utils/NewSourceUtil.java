@@ -323,7 +323,7 @@ public class NewSourceUtil
 
 	private void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
-		// Regex for name ? [A-Z]([a-z])+
+		// Regex for name ? (([A-Z]+)([a-z]*))+
 		System.err.println("CLASS NAME : " + mainClass.getName());
 		
 		if (!mainClass.getAnnotations().contains(entityPackage))
