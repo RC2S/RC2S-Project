@@ -23,16 +23,6 @@ project.tasks.compileJava.dependsOn(
 	}
 )
 
-sourceSets {
-    main {
-        resources {
-            // On ajoute toutes les ressources du répertoire views quelque soit
-            // le profile de compilation
-            //include 'src/main/resources/views/**'
-        }
-    }
-}
-
 jar {
     manifest {
         attributes 'Main-Class': 'com.rc2s.client.Main'

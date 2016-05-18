@@ -1,0 +1,9 @@
+.item-panel {
+	-fx-border-insets: 10px 10px 10px 10px;
+	-fx-background-color: white;
+	-fx-border-color: black;
+	-fx-border-width: 1px;
+	-fx-padding: 15px;
+	-fx-margin: 10px;
+	-fx-cursor: hand;
+}

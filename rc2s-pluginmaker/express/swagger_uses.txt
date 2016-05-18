@@ -1,0 +1,31 @@
+USED:
+
+GET 	/workspace
+GET 	/workspace/name/{name}
+POST 	/workspace/name/{name}/runtime
+DELETE 	/workspace/{id}
+GET 	/workspace/{id}
+DELETE 	/workspace/{id}/project/{name}
+GET 	/workspace/runtime
+DELETE 	/workspace/{id}/runtime
+POST 	/workspace/{id}/runtime 
+GET 	/workspace/{id}/runtime
+GET 	/workspace/{id}/snapshot
+POST 	/workspace/{id}/snapshot
+
+FUNCTIONAL:
+
+TO BE USED:
+
+POST 	/workspace
+POST 	/workspace/runtime (?)
+PUT 	/workspace/{id}
+POST 	/workspace/{id}/project
+PUT 	/workspace/{id}/project
+
+NOT SUPPORTED YET:
+
+/command
+/machine
+/snapshot ~ 
+/environment

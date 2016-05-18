@@ -1,3 +1,2 @@
-com.rc2s.annotations.processors.LookupProcessor
-com.rc2s.annotations.processors.SourceControlProcessor
 com.rc2s.annotations.processors.KnowledgeProcessor
+com.rc2s.annotations.processors.SourceControlProcessor
