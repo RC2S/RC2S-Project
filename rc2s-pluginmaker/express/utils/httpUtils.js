@@ -2,7 +2,7 @@ var http = require("http");
 
 var logger = require("./logUtils");
 
-var cheHost = '192.168.209.128';
+var cheHost = '192.168.1.108';
 var chePort = 8080;
 
 var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {

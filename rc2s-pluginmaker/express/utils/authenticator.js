@@ -4,10 +4,10 @@ module.exports = (app) => {
 
 	app.use('/workspace\*', (req, res, next) => {
 
-		if (req.cookies.token) {
+		if (req.session.token) {
 
 			// Log every access to /workspace*
-			logger.writeAuthAccess(req.originalUrl, req.cookies.token);
+			logger.writeAuthAccess(req.originalUrl, req.session.token);
 			
 			next();
 		} else {

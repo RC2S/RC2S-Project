@@ -1,9 +1,11 @@
-var log4js = require('log4js');
-var logger = log4js.getLogger();
+var loggersList = require('./logFilesUtils');
+var logger;
 
 // Begin HTTP Zone
 var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	
+	logger = loggersList.HttpLogger;
+
 	// Access errors map
 	var errorsMap = require("../models").errorsMaps;
 	// Obtain context errors
@@ -16,6 +18,8 @@ var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 
 var writeHttpErrorLog = (errorsMapSerial, message) => {
 
+	logger = loggersList.HttpLogger;
+	
 	console.log();
 	logger.error("Failed HTTP operation " + errorsMapSerial);
 	logger.error(message);
@@ -25,6 +29,8 @@ var writeHttpErrorLog = (errorsMapSerial, message) => {
 // Begin Authentication Zone
 var writeAuthAccess = (originalUrl, token) => {
 
+	logger = loggersList.AuthLogger;
+
 	console.log();
 	logger.trace("Entity [" + token + "] accessing Url '" + originalUrl + "'");
 }
@@ -32,6 +38,8 @@ var writeAuthAccess = (originalUrl, token) => {
 
 // Begin Database Logs Zone
 var writeConnectionLog = (message, credentials) => {
+
+	logger = loggersList.DBLogger;
 
 	console.log();
 	logger.trace("Tried to create MySQL connection with credentials :");
@@ -44,6 +52,8 @@ var writeConnectionLog = (message, credentials) => {
 
 var writeQueryLog = (message, query) => {
 
+	logger = loggersList.DBLogger;
+	
 	console.log();
 	logger.trace("Queryied : '" + query + "'");
 	logger.info(message);

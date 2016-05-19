@@ -8,6 +8,16 @@ module.exports = (app) => {
 
 			console.log("CALLBACK");
 
+			var html = "<!DOCTYPE html>\n";
+			html += "<html>\n";
+			html += "	<body>\n";
+			html += "		WORKSPACES !!\n";
+			html += "	</body>\n";
+			html += "</html>\n";
+
+			res.type("html");
+			res.send(html);
+
 			//console.log("CB status : " + statusCode);
 			//console.log("CB header : " + header);
 			//console.log("CB body   : " + body);
