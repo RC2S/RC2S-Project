@@ -1,17 +1,26 @@
-var http = require("http");
+var http 	= require("http");
+var logger	= require("./logUtils");
 
-var logger = require("./logUtils");
+var buildRequestFromParams = function(errorsMapSerial, apiPath, method, data, callback) {
 
-var cheHost = '192.168.1.108';
-var chePort = 8080;
+	if(!config.api.authMethods.includes(method))
+		return;
 
-var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {
+	var options = {
+		host 	: config.che.host,
+		port 	: config.che.port,
+		path 	: config.che.mainPath + path,
+		method 	: method,
+		headers : {
+			'Content-Type' : config.che.contentType
+		}
+	}
 
-	var options = createOptions(apiPath, method);
+	if(data != undefined)
+		options.headers['Content-Length'] = Buffer.byteLength(data);
 
-	var content;
-
-	var req = http.request(options, (res) => {
+	var req = http.request(options, function(res) {
+		var content = '';
 
 		// Write basic log
 		logger.writeHttpLog(errorsMapSerial, apiPath, 
@@ -19,19 +28,19 @@ var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {
 
 	 	res.setEncoding('utf8');
 
-	 	res.on('data', (chunk) => {
-
-	  		content = chunk;
+	 	res.on('data', function(chunk) {
+	  		content += chunk;
 	 	});
 	 	
-		res.on('end', () => {
-
+		res.on('end', function() {
 			callback(res.statusCode, res.headers, content);
 		});
 	});
 
-	req.on('error', (e) => {
+	if(data != undefined)
+		request.write(JSON.stringify(data));
 
+	req.on('error', function(e) {
 		// Write error log
   		logger.writeHttpErrorLog(errorsMapSerial, e.message);
 	});
@@ -39,20 +48,6 @@ var buildRequestFromParams = (errorsMapSerial, apiPath, method, callback) => {
 	req.end();
 }
 
-var createOptions = (path, method) => {
-	
-	var options = {
-		host: cheHost,
-		port: chePort,
-		path: path,
-		method: method
-	};
-
-	return options;
-};
-
 module.exports = {
-	
-	"buildRequestFromParams" : buildRequestFromParams,
-	"createOptions" : createOptions
+	buildRequestFromParams : buildRequestFromParams
 };

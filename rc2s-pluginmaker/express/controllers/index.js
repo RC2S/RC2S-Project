@@ -7,5 +7,7 @@ module.exports = {
 	"WorkspaceGetUtils" 	: new WorkspaceGetUtils(),
 	"WorkspacePostUtils" 	: new WorkspacePostUtils(),
 	"WorkspacePutUtils" 	: new WorkspacePutUtils(),
-	"WorkspaceDeleteUtils" 	: new WorkspaceDeleteUtils()
+	"WorkspaceDeleteUtils" 	: new WorkspaceDeleteUtils(),
+	UserController			: require('./UserController'),
+	PluginsController		: require('./PluginsController')
 };

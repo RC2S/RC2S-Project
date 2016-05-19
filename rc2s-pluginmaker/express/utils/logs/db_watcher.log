@@ -14,3 +14,166 @@
 [2016-05-16 18:58:06.526] [INFO] db_watcher - Message : 'Connection OK'
 [2016-05-16 18:58:06.528] [TRACE] db_watcher - Queryied : '			SELECT r.name 			FROM role r 			INNER JOIN user_role ur ON ur.role_id = r.id 			INNER JOIN user u ON u.id = ur.user_id 			AND u.username = ? AND u.password = ? 		'
 [2016-05-16 18:58:06.528] [INFO] db_watcher - User found. Creating new token : 54d758c193010ae77a466f2b3541c1af0c599be2
+[2016-05-19 23:27:57.267] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:27:57.268] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:27:57.269] [INFO] db_watcher - -> User : root
+[2016-05-19 23:27:57.269] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:27:57.269] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:27:57.269] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:28:27.348] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:28:27.351] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:28:27.351] [INFO] db_watcher - -> User : root
+[2016-05-19 23:28:27.351] [INFO] db_watcher - -> Database : null
+[2016-05-19 23:28:27.351] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:28:27.352] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:28:45.425] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:28:45.425] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:28:45.426] [INFO] db_watcher - -> User : root
+[2016-05-19 23:28:45.426] [INFO] db_watcher - -> Database : null
+[2016-05-19 23:28:45.426] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:28:45.426] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:28:45.644] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:28:45.644] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:28:45.644] [INFO] db_watcher - -> User : root
+[2016-05-19 23:28:45.644] [INFO] db_watcher - -> Database : null
+[2016-05-19 23:28:45.645] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:28:45.645] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:29:14.306] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:29:14.309] [INFO] db_watcher - -> Host : null
+[2016-05-19 23:29:14.309] [INFO] db_watcher - -> User : root
+[2016-05-19 23:29:14.309] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:29:14.309] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:29:14.309] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:34:44.133] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:34:44.135] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:34:44.135] [INFO] db_watcher - -> User : root
+[2016-05-19 23:34:44.135] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:34:44.135] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:34:44.135] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:34:44.138] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:34:44.138] [INFO] db_watcher - User not found !
+[2016-05-19 23:35:44.567] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:35:44.569] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:35:44.569] [INFO] db_watcher - -> User : root
+[2016-05-19 23:35:44.569] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:35:44.569] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:35:44.569] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:35:44.571] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:35:44.571] [INFO] db_watcher - User not found !
+[2016-05-19 23:36:05.884] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:36:05.886] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:36:05.887] [INFO] db_watcher - -> User : root
+[2016-05-19 23:36:05.887] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:36:05.887] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:36:05.887] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:36:05.890] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:36:05.890] [INFO] db_watcher - User not found !
+[2016-05-19 23:38:03.471] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:38:03.473] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:38:03.473] [INFO] db_watcher - -> User : root
+[2016-05-19 23:38:03.473] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:38:03.473] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:38:03.473] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:38:03.476] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:38:03.477] [INFO] db_watcher - User not found !
+[2016-05-19 23:38:21.226] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:38:21.228] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:38:21.228] [INFO] db_watcher - -> User : root
+[2016-05-19 23:38:21.228] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:38:21.228] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:38:21.228] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:38:21.231] [TRACE] db_watcher - Queryied : '		SELECT r.nam 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:38:21.231] [INFO] db_watcher - { Error: ER_BAD_FIELD_ERROR: Unknown column 'r.nam' in 'field list'
+    at Query.Sequence._packetToError (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/sequences/Sequence.js:48:14)
+    at Query.ErrorPacket (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/sequences/Query.js:83:18)
+    at Protocol._parsePacket (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Parser.js:73:12)
+    at Protocol.write (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/Connection.js:96:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:172:18)
+    at Socket.Readable.push (_stream_readable.js:130:10)
+    at TCP.onread (net.js:535:20)
+    --------------------
+    at Protocol._enqueue (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at Connection.query (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/Connection.js:201:25)
+    at UserController.login (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/express/controllers/UserController.js:43:7)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/express/routes/UserRoute.js:18:18
+    at Layer.handle [as handle_request] (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/layer.js:95:5)
+    at next (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/layer.js:95:5)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:330:12)
+    at next (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:271:10)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express-validator/lib/express_validator.js:291:5
+    at Layer.handle [as handle_request] (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:312:13)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:280:7
+    at Function.process_params (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:330:12)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+Error: ER_BAD_FIELD_ERROR: Unknown column 'r.nam' in 'field list'
+    at Query.Sequence._packetToError (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/sequences/Sequence.js:48:14)
+    at Query.ErrorPacket (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/sequences/Query.js:83:18)
+    at Protocol._parsePacket (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Parser.js:73:12)
+    at Protocol.write (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/Connection.js:96:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:172:18)
+    at Socket.Readable.push (_stream_readable.js:130:10)
+    at TCP.onread (net.js:535:20)
+    --------------------
+    at Protocol._enqueue (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at Connection.query (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/mysql/lib/Connection.js:201:25)
+    at UserController.login (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/express/controllers/UserController.js:43:7)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/express/routes/UserRoute.js:18:18
+    at Layer.handle [as handle_request] (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/layer.js:95:5)
+    at next (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/layer.js:95:5)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:330:12)
+    at next (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:271:10)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express-validator/lib/express_validator.js:291:5
+    at Layer.handle [as handle_request] (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:312:13)
+    at /media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:280:7
+    at Function.process_params (/media/Data/Mes Documents/DATA/01 ESGI/3a/Cours/Projet Annuel/RC2S/rc2s-project/rc2s-pluginmaker/node_modules/express/lib/router/index.js:330:12)
+[2016-05-19 23:46:49.633] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:46:49.636] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:46:49.636] [INFO] db_watcher - -> User : root
+[2016-05-19 23:46:49.636] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:46:49.636] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:46:49.636] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:46:49.639] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:46:49.639] [INFO] db_watcher - User found. Creating new token : 459ad931d9ff27ed2c3381386bef4f3557a9245c
+[2016-05-19 23:47:19.921] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:47:19.923] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:47:19.923] [INFO] db_watcher - -> User : root
+[2016-05-19 23:47:19.923] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:47:19.923] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:47:19.923] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:47:19.925] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:47:19.925] [INFO] db_watcher - User found. Creating new token : ecf556d57e0213cd4e4cf5a8b01d24cbc5786306
+[2016-05-19 23:57:48.462] [TRACE] db_watcher - Tried to create MySQL connection with credentials :
+[2016-05-19 23:57:48.464] [INFO] db_watcher - -> Host : localhost
+[2016-05-19 23:57:48.464] [INFO] db_watcher - -> User : root
+[2016-05-19 23:57:48.464] [INFO] db_watcher - -> Database : RC2S
+[2016-05-19 23:57:48.464] [INFO] db_watcher - -> Password : root
+[2016-05-19 23:57:48.464] [INFO] db_watcher - Message : 'Connection OK'
+[2016-05-19 23:57:48.467] [TRACE] db_watcher - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-19 23:57:48.467] [INFO] db_watcher - User found. Creating new token : 42d779700eec96e54befe8cb25aef9ed1112a13e
+[2016-05-20 00:18:16.684] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-20 00:18:16.685] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-20 00:18:16.686] [INFO] db_watcher.log - -> User : root
+[2016-05-20 00:18:16.686] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-20 00:18:16.686] [INFO] db_watcher.log - -> Password : root
+[2016-05-20 00:18:16.686] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-20 00:18:16.688] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-20 00:18:16.689] [INFO] db_watcher.log - User not found !

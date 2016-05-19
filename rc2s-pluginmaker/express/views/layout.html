@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/img/favicon.ico" type="image/x-icon" rel="icon" />
+
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+		{{# css }}
+			<link rel="stylesheet" type="text/css" href="/css/{{.}}.css" />
+		{{/ css }}
+	</head>
+	<body>
+		{{# flash }}
+			{{> flash }}
+		{{/ flash }}
+
+		{{{ body }}}
+
+		
+		<script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+		{{# js }}
+			<script type="text/javascript" src="/js/{{.}}.js"></script>
+		{{/ js }}
+	</body>
+</html>

@@ -1,8 +1,8 @@
 var logger = require("./logUtils");
 
-module.exports = (app) => {
+module.exports = function(app) {
 
-	app.use('/workspace\*', (req, res, next) => {
+	app.use('/workspace\*', function(req, res, next) {
 
 		if (req.session.token) {
 
@@ -11,7 +11,7 @@ module.exports = (app) => {
 			
 			next();
 		} else {
-			res.redirect('/login');
+			res.redirect('/');
 		}
 	});
 };
