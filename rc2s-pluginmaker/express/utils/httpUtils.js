@@ -1,9 +1,10 @@
-var http 	= require("http");
-var logger	= require("./logUtils");
+var http 	= require('http');
+var logger	= require('./logUtils');
+var config	= require('./config');
 
-var buildRequestFromParams = function(errorsMapSerial, apiPath, method, data, callback) {
+module.exports = function(errorsMapSerial, path, method, data, callback) {
 
-	if(!config.api.authMethods.includes(method))
+	if(!config.che.authMethods.includes(method))
 		return;
 
 	var options = {
@@ -23,7 +24,7 @@ var buildRequestFromParams = function(errorsMapSerial, apiPath, method, data, ca
 		var content = '';
 
 		// Write basic log
-		logger.writeHttpLog(errorsMapSerial, apiPath, 
+		logger.writeHttpLog(errorsMapSerial, path, 
 			method, res.statusCode);
 
 	 	res.setEncoding('utf8');
@@ -33,7 +34,7 @@ var buildRequestFromParams = function(errorsMapSerial, apiPath, method, data, ca
 	 	});
 	 	
 		res.on('end', function() {
-			callback(res.statusCode, res.headers, content);
+			callback(JSON.parse(content));
 		});
 	});
 
@@ -47,7 +48,3 @@ var buildRequestFromParams = function(errorsMapSerial, apiPath, method, data, ca
 
 	req.end();
 }
-
-module.exports = {
-	buildRequestFromParams : buildRequestFromParams
-};

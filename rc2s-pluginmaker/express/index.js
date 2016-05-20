@@ -24,7 +24,6 @@ module.exports = function() {
 	}));
 
 	// BodyParser
-	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({
 		"extended": false
 	}));
@@ -35,8 +34,8 @@ module.exports = function() {
 	// Express Validator
 	app.use(validator());
 
-	// Authentication middleware
-	require('./utils/authenticator')(app);
+	// Authentication Middleware
+	require('./utils/AuthenticationUtils')(app);
 
 	// App routes
 	require('./routes')(app);

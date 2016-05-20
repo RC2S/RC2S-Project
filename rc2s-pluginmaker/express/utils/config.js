@@ -18,7 +18,8 @@ module.exports = {
 		port		: 8080,
 		contentType : 'application/json',
 		mainPath 	: '/api/',
-		authMethods : ['GET', 'POST', 'PUT', 'DELETE']
+		authMethods : ['GET', 'POST', 'PUT', 'DELETE'],
+		workspace	: 'rc2s'
 	},
 	log4js : {
 		dirname 	: __dirname + '/logs/',

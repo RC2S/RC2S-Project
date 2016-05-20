@@ -6,6 +6,9 @@ CommonUtils.prototype.formatFormErrors = function(errors) {
 	if (errors) {
 		errorsString = '';
 		
+		if (!Array.isArray(errors))
+			return '<div>' + errors + '</div>';
+
 		errors.forEach(function(err) {
 			if (err.param && err.msg)
 				errorsString += '<div>' + err.param + ' : ' + err.msg + '</div>';

@@ -5,6 +5,9 @@ module.exports = function(app) {
 	var errors;
 
 	app.get('/', function(req, res, next) {
+		if (req.session.token)
+			return res.redirect('/plugins');
+
 		res.render('login', {
 			title 	: 'Connexion | RC2S-PluginMaker',
 			css 	: ['login'],
