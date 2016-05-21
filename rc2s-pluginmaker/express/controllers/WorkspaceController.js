@@ -42,6 +42,28 @@ WorkspaceController.prototype.DeleteWSByID = function(wsID, callback) {
 	requestApi('DELWSBID1', 'workspace/' + wsID, 'DELETE', undefined, callback);
 };
 
+WorkspaceController.prototype.AddProjectToWS = function(wsID, plugin, callback) {
+	var data = {
+		name 		: plugin.name,
+		description : plugin.description,
+		type 		: 'java',
+		attributes 	: {
+			language : ['java']
+		},
+		links 		: [],	
+		source 	: {
+			location 	: null,
+			type 		: null,
+			parameters 	: {}
+		},
+		path 		: null,
+		problems 	: [],
+		mixins 		: []
+	};
+
+	requestApi('POSTAPFWS', 'workspace/' + wsID + '/project/', 'POST', data, callback);
+};
+
 WorkspaceController.prototype.RemoveProjectFromWS = function(wsID, pjName, callback) {
 	requestApi('DELRPFWS', 'workspace/' + wsID + '/project/' + pjName, 'DELETE', undefined, callback);
 };

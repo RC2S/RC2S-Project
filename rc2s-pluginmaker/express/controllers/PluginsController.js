@@ -12,13 +12,14 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 		else if (workspace.message)
 			return callback(undefined, workspace.message);
 		else {
-			workspace.config.projects.forEach(function(project) {
-				projects.push({
-					name 		: project.name,
-					description : project.description,
-					path 		: 'http://' + config.che.host + ':' + config.che.port + '/ide/' + workspace.config.name + project.path
+			if (workspace.config.projects)
+				workspace.config.projects.forEach(function(project) {
+					projects.push({
+						name 		: project.name,
+						description : project.description,
+						path 		: 'http://' + config.che.host + ':' + config.che.port + '/ide/' + workspace.config.name + project.path
+					});
 				});
-			});
 
 			return callback(projects, undefined);
 		}
@@ -26,7 +27,11 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 };
 
 PluginsController.prototype.addPlugin = function(plugin, callback) {
-
+	WorkspaceController.FindByName(config.che.workspace, function(workspace) {
+		WorkspaceController.AddProjectToWS(workspace.id, plugin, function(res) {
+			console.log(res);
+		});
+	});
 };
 
 PluginsController.prototype.removePlugin = function(plugin, callback) {

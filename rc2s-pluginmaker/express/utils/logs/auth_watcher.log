@@ -14,3 +14,7 @@
 [2016-05-20 22:38:56.708] [TRACE] auth_watcher.log - Entity [6f3c86db2bdf45f6ef108c92ceb072f636575b02] accessing Url '/plugins'
 [2016-05-20 22:39:04.064] [TRACE] auth_watcher.log - Entity [6f3c86db2bdf45f6ef108c92ceb072f636575b02] accessing Url '/plugins'
 [2016-05-20 22:39:07.222] [TRACE] auth_watcher.log - Entity [6f3c86db2bdf45f6ef108c92ceb072f636575b02] accessing Url '/plugins'
+[2016-05-21 12:00:13.073] [TRACE] auth_watcher.log - Entity [cb6a5834e21c1011ff4c4cec10c783cc88f252d0] accessing Url '/plugins'
+[2016-05-21 12:01:55.202] [TRACE] auth_watcher.log - Entity [cb6a5834e21c1011ff4c4cec10c783cc88f252d0] accessing Url '/plugins'
+[2016-05-21 12:02:55.335] [TRACE] auth_watcher.log - Entity [15842253ec98c5b991416997f1a6b0331afc6f8e] accessing Url '/plugins'
+[2016-05-21 12:15:04.532] [TRACE] auth_watcher.log - Entity [0e0ee4603c96f4f4a334a3aec55e94a9541757d4] accessing Url '/plugins'
