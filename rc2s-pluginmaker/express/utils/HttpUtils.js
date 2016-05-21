@@ -18,33 +18,40 @@ module.exports = function(errorsMapSerial, path, method, data, callback) {
 	}
 
 	if(data != undefined)
-		options.headers['Content-Length'] = Buffer.byteLength(data);
+		options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(data));
 
 	var req = http.request(options, function(res) {
 		var content = '';
 
 		// Write basic log
-		logger.writeHttpLog(errorsMapSerial, path, 
-			method, res.statusCode);
+		logger.writeHttpLog(errorsMapSerial, path, method, res.statusCode);
 
-	 	res.setEncoding('utf8');
+		res.setEncoding('utf8');
 
-	 	res.on('data', function(chunk) {
-	  		content += chunk;
-	 	});
-	 	
+		res.on('data', function(chunk) {
+			content += chunk;
+		});
+		
 		res.on('end', function() {
-			callback(JSON.parse(content));
+			callback({
+				statusCode 	: res.statusCode,
+				headers 	: res.headers,
+				content 	: (content ? JSON.parse(content) : null)
+			});
+		});
+	});
+
+	req.on('error', function(e) {
+		// Write error log
+		logger.writeHttpErrorLog(errorsMapSerial, e.message);
+		callback({
+			statusCode 	: 503,
+			content 	: e.message
 		});
 	});
 
 	if(data != undefined)
-		request.write(JSON.stringify(data));
-
-	req.on('error', function(e) {
-		// Write error log
-  		logger.writeHttpErrorLog(errorsMapSerial, e.message);
-	});
+		req.write(JSON.stringify(data));
 
 	req.end();
 }

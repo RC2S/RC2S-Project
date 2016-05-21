@@ -17,7 +17,7 @@ module.exports = function() {
 	app.set('views', __dirname + '/views');
 	app.use(express.static(__dirname + '/public'));
 	app.set('layout', true);
-	
+
 	// Session
 	app.use(session({
 		secret: config.secret

@@ -1,3 +1,45 @@
-{{# plugins }}
-	{{> plugin }}
-{{/ plugins }}
+<div class="row dash-cols">
+	<div class="col-md-12">
+		<div class="block-flat">
+			<div class="header">
+				<h3>Plugins</h3>
+			</div>
+			<div class="content">
+				<div class="table-responsive">
+					<table class="table no-border hover">
+						<thead class="no-border">
+							<tr>
+								<th style="width:30%;">
+									<strong>Nom</strong>
+								</th>
+								<th style="width:30%;">
+									<strong>Descriptions</strong>
+								</th>
+								<th style="width:30%;">
+									<strong>Lien</strong>
+								</th>
+								<th style="width:15%;" class="text-center">
+									<strong>Action</strong>
+								</th>
+							</tr>
+						</thead>
+						<tbody class="no-border-y">
+							{{# plugins }}
+								<tr>
+									<td>{{ name }}</td>
+									<td>{{ description }}</td>
+									<td>{{ path }}</td>
+									<td class="text-center">
+										<a href="/plugins/remove/{{ name }}" class="label label-danger" onclick="return confirm('Etes-vous sur de vouloir supprimer ce plugin ?');">
+											<i class="fa fa-times"></i>
+										</a>
+									</td>
+								</tr>
+							{{/ plugins }}
+						</tbody>
+					</table>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
