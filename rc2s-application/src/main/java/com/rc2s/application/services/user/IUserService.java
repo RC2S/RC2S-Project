@@ -11,4 +11,6 @@ public interface IUserService
     public List<User> getAll() throws ServiceException;
 	public User login(String username, String password) throws ServiceException;
 	public User add(User user) throws ServiceException;
+	public User update(User user) throws ServiceException;
+	public void delete(User user) throws ServiceException;
 }

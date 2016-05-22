@@ -52,4 +52,30 @@ public class UserFacadeBean implements UserFacadeRemote
 			throw new EJBException(e);
 		}
 	}
+
+	@Override
+	public User update(User user) throws EJBException
+	{
+		try
+		{
+			return userService.update(user);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+
+	@Override
+	public void delete(User user) throws EJBException
+	{
+		try
+		{
+			userService.delete(user);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
 }

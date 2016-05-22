@@ -76,4 +76,30 @@ public class UserService implements IUserService
 			throw new ServiceException(e);
 		}
 	}
+	
+	@Override
+	public User update(User user) throws ServiceException
+	{
+		try
+		{
+			return userDAO.update(user);
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public void delete(User user) throws ServiceException
+	{
+		try
+		{
+			userDAO.delete(user.getId());
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
 }
