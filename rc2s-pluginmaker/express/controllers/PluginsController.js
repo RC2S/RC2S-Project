@@ -21,7 +21,15 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 					});
 				});
 
-			return callback(projects, undefined);
+			if(workspace.status == 'STOPPED')
+				WorkspaceController.startWorkspaceByName(workspace.config.name, function(wsState, errStart) {
+					if (errStart != undefined)
+						return callback(undefined, errStart);
+					
+					return callback({ status : wsState.status, projects : projects }, undefined);
+				});
+			else
+				return callback({ status : workspace.status, projects : projects }, undefined);
 		}
 	});
 };
@@ -66,10 +74,6 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 			callback(true, undefined);
 		});
 	});
-};
-
-PluginsController.prototype.viewPlugin = function(plugin, callback) {
-
 };
 
 module.exports = new PluginsController();

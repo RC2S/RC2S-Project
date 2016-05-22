@@ -234,3 +234,10 @@ $(function(){
   //$("body").animate({opacity:1,'margin-left':0},500);
   $("body").css({opacity:1,'margin-left':0});
 });
+
+/*** Popup Alert ***/
+
+// Personnalisation de la popup d'erreur : effet de disparition
+$(".alert").delay(1000).fadeOut(3000, function(){
+  $(".alert").alert('close');
+});

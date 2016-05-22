@@ -31,12 +31,17 @@ WorkspaceController.prototype.findSnapshotByID = function(wsID, callback) {
 	requestApi('GETFSBID1', 'workspace/' + wsID + '/snapshot', 'GET', undefined, callback);
 };
 
-WorkspaceController.prototype.StartWorkspace = function(wsID, callback) {
+WorkspaceController.prototype.startWorkspace = function(wsID, callback) {
 	requestApi('POSTSWS1',' workspace/' + wsID + '/runtime', 'POST', undefined, callback);
 };
 
 WorkspaceController.prototype.startWorkspaceByName = function(wsName, callback) {
-	requestApi('POSTSWSBN1', 'workspace/name/' + wsName + '/runtime', 'POST', undefined, callback);
+	requestApi('POSTSWSBN1', 'workspace/name/' + wsName + '/runtime', 'POST', undefined, function(res) {
+		if (res.statusCode == 200)
+			callback(res.content, undefined);
+		else
+			callback(undefined, res.content);
+	});
 };
 
 WorkspaceController.prototype.createSnapshot = function(wsID, callback) {
@@ -60,11 +65,12 @@ WorkspaceController.prototype.addProjectToWS = function(wsID, plugin, callback) 
 			parameters 	: {}
 		},
 		path 		: '/' + plugin.name,
+		contentRoot	: null,
 		problems 	: [],
 		mixins 		: []
 	};
 
-	requestApi('POSTAPFWS', 'workspace/' + wsID + '/project/', 'POST', data, function(res) {
+	requestApi('POSTAPFWS', 'ext/project/' + wsID + '?name=' + plugin.name, 'POST', data, function(res) {
 		if (res.statusCode == 200)
 			callback(res.content, undefined);
 		else
@@ -73,7 +79,7 @@ WorkspaceController.prototype.addProjectToWS = function(wsID, plugin, callback) 
 };
 
 WorkspaceController.prototype.removeProjectFromWS = function(wsID, pjName, callback) {
-	requestApi('DELRPFWS', 'workspace/' + wsID + '/project/' + pjName, 'DELETE', undefined, function(res) {
+	requestApi('DELRPFWS', 'ext/project/' + wsID + '/' + pjName, 'DELETE', undefined, function(res) {
 		if (res.statusCode == 200)
 			callback(res.content, undefined);
 		else
@@ -83,6 +89,25 @@ WorkspaceController.prototype.removeProjectFromWS = function(wsID, pjName, callb
 
 WorkspaceController.prototype.stopWorkspace = function(wsID, callback) {
 	requestApi('DELSWS1', 'workspace/' + wsID + '/runtime', 'DELETE', undefined, callback);
+};
+
+WorkspaceController.prototype.addFolderToProject = function(wsID, prjName, folderPath, callback) {
+	requestApi('POSTAFTP', 'ext/project/' + wsID + '/folder/' + prjName + '/' + folderPath, 'POST', undefined, function(res) {
+		if (res.statusCode == 200)
+			callback(res.content, undefined);
+		else
+			callback(undefined, res.content);
+	});
+};
+
+// Pb content type url-encoded
+WorkspaceController.prototype.addFileToProject = function(wsID, prjName, folderPath, fileName, content, callback) {
+	requestApi('POSTAFITP', 'ext/project/' + wsID + '/file/' + prjName + '/' + folderPath + '?name=' + fileName, 'POST', content, function(res) {
+		if (res.statusCode == 200)
+			callback(res.content, undefined);
+		else
+			callback(undefined, res.content);
+	});
 };
 
 module.exports = new WorkspaceController();

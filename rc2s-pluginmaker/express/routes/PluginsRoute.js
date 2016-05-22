@@ -5,12 +5,13 @@ module.exports = function(app) {
 	var globalFlash = {};
 
 	app.get('/plugins', function(req, res, next) {
-		PluginsController.getAllPlugins(function(plugins, errors) {
+		PluginsController.getAllPlugins(function(result, errors) {
 			res.render('plugins', {
-				title	: 'Accueil | RC2S-PluginMaker',
-				plugins : plugins,
-				flash	: [{error : CommonUtils.formatFormErrors(errors)}, globalFlash],
-				layout	: 'layoutPlugin'
+				title		: 'Accueil | RC2S-PluginMaker',
+				wsStatus 	: result.status,
+				plugins 	: result.projects,
+				flash		: [{error : CommonUtils.formatFormErrors(errors)}, globalFlash],
+				layout		: 'layoutPlugin'
 			});
 			globalFlash = {};
 		});

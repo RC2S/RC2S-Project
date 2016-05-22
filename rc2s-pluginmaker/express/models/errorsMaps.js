@@ -62,6 +62,20 @@ module.exports = {
 			404 : "The workspace with specified id doesn't exist.",
 			409 : 'Any conflict occurs during the project creation',
 			500 : 'Internal server error occurred'
+		},
+		"POSTAFTP" : {
+			200 : 'The folder successfully created',
+			403 : 'The user is not workspace owner or the operation is not allowed for the user',
+			404 : "The workspace with specified id doesn't exist.",
+			409 : 'Any conflict occurs during the folder creation',
+			500 : 'Internal server error occurred'
+		},
+		"POSTAFITP" : {
+			200 : 'The file successfully created',
+			403 : 'The user is not workspace owner or the operation is not allowed for the user',
+			404 : "The workspace with specified id doesn't exist.",
+			409 : 'Any conflict occurs during the file creation',
+			500 : 'Internal server error occurred'
 		}
 	},
 	"PUT" : {
