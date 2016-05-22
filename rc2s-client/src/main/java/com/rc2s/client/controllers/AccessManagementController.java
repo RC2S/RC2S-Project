@@ -28,7 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 
-public class AccessManagementController implements Initializable
+public class AccessManagementController extends TabController implements Initializable
 {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");
@@ -58,19 +58,15 @@ public class AccessManagementController implements Initializable
 			TableColumn col = (TableColumn)o;
 			col.setCellValueFactory(new PropertyValueFactory<>(col.getText().toLowerCase()));
 		}
-		
+	}
+	
+	@Override
+	public void updateContent()
+	{
 		updateUsers();
 		clearElement();
-		
-		try
-		{
-			rolesBox.getItems().addAll(roleEJB.getAll());
-			cubicAccessBox.getItems().addAll(syncEJB.getAll());
-		}
-		catch(EJBException e)
-		{
-			error(e.getMessage());
-		}
+		updateRoles();
+		updateSync();
 	}
 	
 	private void error(String err)
@@ -88,6 +84,32 @@ public class AccessManagementController implements Initializable
 			users = userEJB.getAll();
 			gridTableView.getItems().clear();
 			gridTableView.getItems().addAll(users);
+		}
+		catch(EJBException e)
+		{
+			error(e.getMessage());
+		}
+	}
+	
+	private void updateRoles()
+	{
+		try
+		{
+			rolesBox.getItems().clear();
+			rolesBox.getItems().addAll(roleEJB.getAll());
+		}
+		catch(EJBException e)
+		{
+			error(e.getMessage());
+		}
+	}
+	
+	private void updateSync()
+	{
+		try
+		{
+			cubicAccessBox.getItems().clear();
+			cubicAccessBox.getItems().addAll(syncEJB.getAll());
 		}
 		catch(EJBException e)
 		{

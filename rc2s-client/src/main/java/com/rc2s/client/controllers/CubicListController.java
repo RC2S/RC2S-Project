@@ -13,13 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 
-public class CubicListController implements Initializable
+public class CubicListController extends TabController implements Initializable
 {
 	private final int MAX_COLUMNS = 3;
 	
@@ -34,7 +32,11 @@ public class CubicListController implements Initializable
 	{
 		this.scroller.setFitToHeight(true);
 		this.scroller.setFitToWidth(true);
-		
+	}
+	
+	@Override
+	public void updateContent()
+	{
 		try
 		{
 			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
@@ -44,6 +46,7 @@ public class CubicListController implements Initializable
 			{
 				FXMLLoader loader = Resources.loadFxml("CubicItemView");
 				CubicItemController controller = loader.getController();
+				controller.setTab(getTab());
 				controller.update(cube);
 
 				this.grid.add(loader.getRoot(), i, j);
@@ -65,17 +68,11 @@ public class CubicListController implements Initializable
 	@FXML
 	private void showAddView(ActionEvent e)
 	{
-		Node root = ((Node)e.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(0);
-		
-		if(root instanceof TabPane)
-		{
-			TabPane tabPane = (TabPane)root;
+		FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
+		CubicDetailsController controller = loader.getController();
+		controller.setTab(getTab());
 
-			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
-			CubicDetailsController controller = loader.getController();
-			
-			controller.initEmpty();
-			tabPane.getTabs().get(0).setContent(loader.getRoot());
-		}
+		controller.initEmpty();
+		getTab().setContent(loader.getRoot());
 	}
 }

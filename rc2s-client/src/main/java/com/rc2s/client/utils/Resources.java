@@ -54,15 +54,16 @@ public class Resources
         return getResource(name) != null;
     }
     
-    public static FXMLLoader loadFxml(String fxml)
+    public static FXMLLoader loadFxml(String customPackage, String fxml)
     {
         StringBuilder   fxmlFile;
         FXMLLoader      loader;
+		String			pkg = (customPackage == null) ? viewsPackage : customPackage;
         
         fxmlFile = new StringBuilder();
         
         if(!fxml.contains(".fxml"))
-            fxmlFile.append(viewsPackage).append(fxml).append(".fxml");   
+            fxmlFile.append(pkg).append(fxml).append(".fxml");   
         else
             fxmlFile.append(fxml);
         
@@ -85,6 +86,11 @@ public class Resources
             throw new IllegalStateException("Cannot load FXML file", e);
         }
     }
+	
+	public static FXMLLoader loadFxml(String fxml)
+	{
+		return Resources.loadFxml(null, fxml);
+	}
     
     public static void loadCss(Scene scene, String css)
     {

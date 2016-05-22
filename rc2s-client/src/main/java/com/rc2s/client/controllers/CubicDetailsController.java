@@ -24,13 +24,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
@@ -40,7 +38,7 @@ import javafx.scene.paint.Color;
 import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 
-public class CubicDetailsController implements Initializable
+public class CubicDetailsController extends TabController implements Initializable
 {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
@@ -112,6 +110,9 @@ public class CubicDetailsController implements Initializable
 			error(e.getMessage());
 		}
 	}
+	
+	@Override
+	public void updateContent() {}
 	
 	public void initEmpty()
 	{
@@ -225,15 +226,11 @@ public class CubicDetailsController implements Initializable
 	@FXML
 	private void onBackEvent(ActionEvent e)
 	{
-		Node root = backButton.getScene().getRoot().getChildrenUnmodifiable().get(0);
-		
-		if(root instanceof TabPane)
-		{
-			TabPane tabPane = (TabPane)root;
-
-			FXMLLoader loader = Resources.loadFxml("CubicListView");				
-			tabPane.getTabs().get(0).setContent(loader.getRoot());
-		}
+		FXMLLoader loader = Resources.loadFxml("CubicListView");
+		CubicListController controller = loader.getController();
+		controller.setTab(getTab());
+		controller.updateContent();
+		getTab().setContent(loader.getRoot());
 	}
 	
 	private boolean updateCube()

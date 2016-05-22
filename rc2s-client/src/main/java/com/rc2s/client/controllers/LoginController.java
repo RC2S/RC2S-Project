@@ -15,7 +15,6 @@ import com.rc2s.client.Main;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
-import com.rc2s.common.exceptions.RC2SException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.utils.Hash;
 import com.rc2s.common.vo.User;

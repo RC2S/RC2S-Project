@@ -11,15 +11,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-public class CubicItemController implements Initializable
+public class CubicItemController extends TabController implements Initializable
 {
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	
@@ -35,20 +33,17 @@ public class CubicItemController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
 	{
 		root.setOnMouseClicked((MouseEvent e) -> {
-			Node root = ((Node)e.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(0);
-		
-			if(root instanceof TabPane && cube != null)
-			{
-				TabPane tabPane = (TabPane)root;
-				
-				FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
-				CubicDetailsController controller = loader.getController();
-				controller.render(cube);
-				
-				tabPane.getTabs().get(0).setContent(loader.getRoot());
-			}
+			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
+			CubicDetailsController controller = loader.getController();
+			controller.setTab(getTab());
+			controller.render(cube);
+
+			getTab().setContent(loader.getRoot());
 		});
 	}
+	
+	@Override
+	public void updateContent() {}
 	
 	public void update(Cube cube)
 	{

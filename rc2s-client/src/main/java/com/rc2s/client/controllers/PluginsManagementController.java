@@ -17,7 +17,7 @@ import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PluginsManagementController implements Initializable
+public class PluginsManagementController extends TabController implements Initializable
 {
     private static final Logger log = LogManager.getLogger(PluginsManagementController.class);
     
@@ -53,5 +53,11 @@ public class PluginsManagementController implements Initializable
         log.info("test logger");
         File file = fileChooser.showOpenDialog(Main.getStage());
         pluginGridFileButton.setText(file.getName());
-    }
+	}
+	
+	@Override
+	public void updateContent()
+	{
+		
+	}
 }
