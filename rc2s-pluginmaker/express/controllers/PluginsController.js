@@ -1,5 +1,7 @@
 var WorkspaceController	= require('./WorkspaceController');
 var config				= require('../utils/config');
+var recursive			= require('recursive-readdir');
+var fs 					= require('fs');
 
 function PluginsController() {};
 
@@ -49,6 +51,8 @@ PluginsController.prototype.addPlugin = function(req, callback) {
 		description : req.body.pluginDesc
 	};
 
+	var self = this;
+
 	WorkspaceController.findByName(config.che.workspace, function(workspace, errWs) {
 		if (errWs)
 			return callback(false, errWs);
@@ -57,7 +61,12 @@ PluginsController.prototype.addPlugin = function(req, callback) {
 			if (errPj)
 				return callback(false, errPj);
 
-			callback(true, undefined);
+			self.importTemplateToProject(workspace.id, plugin.name, function(res, errImport) {
+				if (errImport)
+					return callback(false, errImport);
+
+				callback(true, undefined);
+			});
 		});
 	});
 };
@@ -73,6 +82,58 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 
 			callback(true, undefined);
 		});
+	});
+};
+
+PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
+	
+	recursive(config.che.template, function(err, files) {
+		var folderAlreadyCreated;
+
+		if (files) {
+			files.forEach(function(absoluteFilePath) {
+				var relativeFilePath 	= absoluteFilePath.substr(config.che.template.length, absoluteFilePath.length);
+				var folders 			= relativeFilePath.substr(0, relativeFilePath.lastIndexOf('/'));
+				var file 				= relativeFilePath.substr((folders ? relativeFilePath.lastIndexOf('/') : 0), relativeFilePath.length);
+
+				console.log('--------------------- PATH : ' + relativeFilePath);
+
+				if (folders && folders != folderAlreadyCreated) {
+					console.log('----------------------- IN FOLDER CREATE');
+					WorkspaceController.addFolderToProject(wsID, pluginName, folders, function(res, errFolder) {
+						if (errFolder)
+							return callback(false, errFolder);
+
+						fs.readFile(absoluteFilePath, 'utf-8', function(err, data) {
+							if (err)
+								return callback(false, err);
+
+							WorkspaceController.addFileToProject(wsID, pluginName, folders, file, data, function(res, errFile) {
+								if (errFile)
+									return callback(false, errFile);
+							});
+						});
+					});
+					folderAlreadyCreated = folders;
+				}
+				else {
+					console.log('----------------------- NOT IN FOLDER CREATE');
+					fs.readFile(absoluteFilePath, 'utf-8', function(err, data) {
+						if (err)
+							return callback(false, err);
+						
+						if (!folders)
+							folders = '';
+
+						WorkspaceController.addFileToProject(wsID, pluginName, folders, file, data, function(res, errFile) {
+							if (errFile)
+								return callback(false, errFile);
+						});
+					});
+				}
+			});
+		}
+		callback(true, undefined);
 	});
 };
 

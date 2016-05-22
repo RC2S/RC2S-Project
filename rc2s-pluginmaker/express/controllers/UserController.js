@@ -1,6 +1,6 @@
 var mysql 	= require('mysql');
 var crypto 	= require('crypto');
-var logger 	= require('../utils/logUtils');
+var logger 	= require('../utils/LogUtils');
 var config	= require('../utils/config');
 
 function UserController() {};

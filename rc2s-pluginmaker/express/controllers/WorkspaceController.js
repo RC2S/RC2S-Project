@@ -93,21 +93,20 @@ WorkspaceController.prototype.stopWorkspace = function(wsID, callback) {
 
 WorkspaceController.prototype.addFolderToProject = function(wsID, prjName, folderPath, callback) {
 	requestApi('POSTAFTP', 'ext/project/' + wsID + '/folder/' + prjName + '/' + folderPath, 'POST', undefined, function(res) {
-		if (res.statusCode == 200)
+		if (res.statusCode == 201)
 			callback(res.content, undefined);
 		else
 			callback(undefined, res.content);
 	});
 };
 
-// Pb content type url-encoded
 WorkspaceController.prototype.addFileToProject = function(wsID, prjName, folderPath, fileName, content, callback) {
-	requestApi('POSTAFITP', 'ext/project/' + wsID + '/file/' + prjName + '/' + folderPath + '?name=' + fileName, 'POST', content, function(res) {
-		if (res.statusCode == 200)
+	requestApi('POSTAFITP', 'ext/project/' + wsID + '/file/' + prjName  + '/' + folderPath + '?name=' + fileName, 'POST', content, function(res) {
+		if (res.statusCode == 201)
 			callback(res.content, undefined);
 		else
 			callback(undefined, res.content);
-	});
+	}, 'application/x-www-form-urlencoded');
 };
 
 module.exports = new WorkspaceController();

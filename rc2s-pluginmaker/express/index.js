@@ -1,6 +1,5 @@
 var session 		= require('express-session');
 var bodyParser 		= require('body-parser');
-var cookieParser 	= require('cookie-parser');
 var mustachex 		= require('mustachex');
 var validator		= require('express-validator');
 var config			= require('./utils/config');
@@ -27,9 +26,6 @@ module.exports = function() {
 	app.use(bodyParser.urlencoded({
 		"extended": false
 	}));
-
-	// CookieParser (auth needed)
-	app.use(cookieParser());
 
 	// Express Validator
 	app.use(validator());

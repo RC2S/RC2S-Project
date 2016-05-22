@@ -1,4 +1,4 @@
-var loggersList = require('./logFilesUtils');
+var loggersList = require('./LogFilesUtils');
 var logger;
 
 // Begin HTTP Zone

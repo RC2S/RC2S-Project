@@ -1,8 +1,8 @@
 var http 	= require('http');
-var logger	= require('./logUtils');
+var logger	= require('./LogUtils');
 var config	= require('./config');
 
-module.exports = function(errorsMapSerial, path, method, data, callback) {
+module.exports = function(errorsMapSerial, path, method, data, callback, contentType) {
 
 	if(!config.che.authMethods.includes(method))
 		return;
@@ -13,12 +13,12 @@ module.exports = function(errorsMapSerial, path, method, data, callback) {
 		path 	: config.che.mainPath + path,
 		method 	: method,
 		headers : {
-			'Content-Type' : config.che.contentType
+			'Content-Type' : (contentType ? contentType : config.che.contentType)
 		}
 	}
 
 	if(data != undefined)
-		options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(data));
+		options.headers['Content-Length'] = Buffer.byteLength((contentType ? data : JSON.stringify(data)));
 
 	var req = http.request(options, function(res) {
 		var content = '';
@@ -51,7 +51,7 @@ module.exports = function(errorsMapSerial, path, method, data, callback) {
 	});
 
 	if(data != undefined)
-		req.write(JSON.stringify(data));
+		req.write((contentType ? data : JSON.stringify(data)));
 
 	req.end();
 }

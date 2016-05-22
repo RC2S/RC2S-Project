@@ -19,7 +19,8 @@ module.exports = {
 		contentType : 'application/json',
 		mainPath 	: '/api/',
 		authMethods : ['GET', 'POST', 'PUT', 'DELETE'],
-		workspace	: 'rc2s'
+		workspace	: 'rc2s',
+		template	: __dirname + '/template/'
 	},
 	log4js : {
 		dirname 	: __dirname + '/logs/',

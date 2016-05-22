@@ -1015,3 +1015,299 @@ Error: ER_BAD_FIELD_ERROR: Unknown column 'r.nam' in 'field list'
 [2016-05-22 12:31:34.590] [INFO] db_watcher.log - Message : 'Connection OK'
 [2016-05-22 12:31:34.592] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
 [2016-05-22 12:31:34.592] [INFO] db_watcher.log - User found. Creating new token : 7db4e77965ef5c69c91f98cd7be89ea12ed263d7
+[2016-05-22 12:40:47.078] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:40:47.080] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:40:47.080] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:40:47.080] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:40:47.081] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:40:47.081] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:40:47.083] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:40:47.083] [INFO] db_watcher.log - User found. Creating new token : f638c78a0e656c00ab6e998e03dc5a380811f8b9
+[2016-05-22 12:46:04.216] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:46:04.218] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:46:04.219] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:46:04.219] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:46:04.219] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:46:04.219] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:46:04.221] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:46:04.221] [INFO] db_watcher.log - User found. Creating new token : 6e35307b8c590a3bc8997578a331ae9e9a8d9e05
+[2016-05-22 12:48:05.414] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:48:05.415] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:48:05.416] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:48:05.416] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:48:05.416] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:48:05.416] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:48:05.419] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:48:05.419] [INFO] db_watcher.log - User found. Creating new token : f375aae223653df80bbb0e120347360557096b29
+[2016-05-22 12:49:22.422] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:49:22.424] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:49:22.425] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:49:22.425] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:49:22.425] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:49:22.425] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:49:22.428] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:49:22.428] [INFO] db_watcher.log - User found. Creating new token : 1104beb0c73e462ae42550cf0a2e96f99a6307f6
+[2016-05-22 12:54:24.348] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:54:24.349] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:54:24.350] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:54:24.350] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:54:24.350] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:54:24.350] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:54:24.353] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:54:24.354] [INFO] db_watcher.log - User found. Creating new token : bd1abaf111c8f777f08d66f2a88341150fc5101e
+[2016-05-22 12:55:00.932] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:55:00.934] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:55:00.934] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:55:00.934] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:55:00.934] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:55:00.934] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:55:00.937] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:55:00.937] [INFO] db_watcher.log - User found. Creating new token : 25a40228667c1b1ae49fc651da09e111849461f6
+[2016-05-22 12:56:54.693] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 12:56:54.694] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 12:56:54.695] [INFO] db_watcher.log - -> User : root
+[2016-05-22 12:56:54.695] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 12:56:54.695] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 12:56:54.695] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 12:56:54.697] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 12:56:54.697] [INFO] db_watcher.log - User found. Creating new token : 46acdebea078007d6c7bc04b1ffa437672bf53d2
+[2016-05-22 13:35:23.324] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:35:23.327] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:35:23.327] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:35:23.328] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:35:23.328] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:35:23.328] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:35:23.330] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:35:23.331] [INFO] db_watcher.log - User found. Creating new token : c7a6aadfd3746cef4b601190f6bf1805b6e59c46
+[2016-05-22 13:36:13.512] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:36:13.513] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:36:13.514] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:36:13.514] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:36:13.514] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:36:13.514] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:36:13.517] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:36:13.517] [INFO] db_watcher.log - User found. Creating new token : 024e4a40e558bbab607835e888800577fe1ebd04
+[2016-05-22 13:36:38.199] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:36:38.200] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:36:38.201] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:36:38.201] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:36:38.201] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:36:38.201] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:36:38.203] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:36:38.203] [INFO] db_watcher.log - User found. Creating new token : 0ce8518cdb8357881d1c7ad55f7ef3492b99199b
+[2016-05-22 13:38:25.064] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:38:25.066] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:38:25.067] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:38:25.067] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:38:25.067] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:38:25.067] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:38:25.069] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:38:25.069] [INFO] db_watcher.log - User found. Creating new token : 98887a09d6d1769ec3589308d43018974febb506
+[2016-05-22 13:41:10.744] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:41:10.746] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:41:10.746] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:41:10.746] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:41:10.747] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:41:10.747] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:41:10.749] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:41:10.749] [INFO] db_watcher.log - User found. Creating new token : 30f1b5ba9f5e84f60d3b9ec69c465ddb387cca42
+[2016-05-22 13:45:23.206] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:45:23.209] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:45:23.209] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:45:23.209] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:45:23.209] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:45:23.209] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:45:23.212] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:45:23.212] [INFO] db_watcher.log - User found. Creating new token : 63f5ab219195b3d9f070836de44928f47a03f268
+[2016-05-22 13:45:43.488] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:45:43.490] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:45:43.490] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:45:43.490] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:45:43.490] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:45:43.490] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:45:43.493] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:45:43.494] [INFO] db_watcher.log - User found. Creating new token : 6d263f38a8543b1027193b628ba45853c1855d73
+[2016-05-22 13:46:02.862] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:46:02.865] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:46:02.865] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:46:02.865] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:46:02.865] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:46:02.865] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:46:02.868] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:46:02.868] [INFO] db_watcher.log - User found. Creating new token : 54b076f8582cc1ae90cb947b00d19b38175258ae
+[2016-05-22 13:49:26.836] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 13:49:26.838] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 13:49:26.838] [INFO] db_watcher.log - -> User : root
+[2016-05-22 13:49:26.838] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 13:49:26.838] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 13:49:26.838] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 13:49:26.841] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 13:49:26.841] [INFO] db_watcher.log - User found. Creating new token : f1a1d7972a8fcaf7bb9adc32841e0d948f2cba1f
+[2016-05-22 14:05:38.992] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:05:38.995] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:05:38.995] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:05:38.996] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:05:38.996] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:05:38.996] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:05:38.998] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:05:38.998] [INFO] db_watcher.log - User found. Creating new token : c3f31cadcefa0dc3f21c6478fde1850caa39e28f
+[2016-05-22 14:07:26.539] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:07:26.541] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:07:26.541] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:07:26.541] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:07:26.541] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:07:26.541] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:07:26.543] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:07:26.543] [INFO] db_watcher.log - User found. Creating new token : b9a06222e8180d64714f19e55cef7a6c0bad29da
+[2016-05-22 14:08:50.257] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:08:50.258] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:08:50.259] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:08:50.259] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:08:50.259] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:08:50.259] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:08:50.261] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:08:50.261] [INFO] db_watcher.log - User found. Creating new token : 5dbf59f857bf45038abf46c0750755163ece63e9
+[2016-05-22 14:10:09.548] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:10:09.550] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:10:09.550] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:10:09.550] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:10:09.550] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:10:09.550] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:10:09.552] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:10:09.552] [INFO] db_watcher.log - User found. Creating new token : 48e44d48ef1f57a2628c227e6245ebfc163fa715
+[2016-05-22 14:12:46.898] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:12:46.900] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:12:46.900] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:12:46.900] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:12:46.901] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:12:46.901] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:12:46.903] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:12:46.903] [INFO] db_watcher.log - User found. Creating new token : 6bc5bfa652e76e2ea6d466e32e12d6d60d909c1b
+[2016-05-22 14:14:01.980] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:14:01.982] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:14:01.982] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:14:01.982] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:14:01.983] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:14:01.983] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:14:01.985] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:14:01.985] [INFO] db_watcher.log - User found. Creating new token : 4266a07fac4a13a9a42b930109df1754218ef772
+[2016-05-22 14:14:37.205] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:14:37.207] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:14:37.207] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:14:37.208] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:14:37.208] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:14:37.208] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:14:37.210] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:14:37.210] [INFO] db_watcher.log - User found. Creating new token : 895766a1322098fd210aa9bd360f57e8d3bbbf48
+[2016-05-22 14:18:30.878] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:18:30.880] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:18:30.880] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:18:30.880] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:18:30.880] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:18:30.880] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:18:30.882] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:18:30.883] [INFO] db_watcher.log - User found. Creating new token : f43f4c295221b0cf53748d281cd3b38681823bef
+[2016-05-22 14:20:12.518] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:20:12.520] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:20:12.520] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:20:12.521] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:20:12.521] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:20:12.521] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:20:12.524] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:20:12.524] [INFO] db_watcher.log - User found. Creating new token : 891004ee3c4b7835ba5fdfdf099ec6310aa1554a
+[2016-05-22 14:21:54.444] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:21:54.444] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:21:54.444] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:21:54.445] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:21:54.445] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:21:54.445] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:21:54.446] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:21:54.446] [INFO] db_watcher.log - User found. Creating new token : 54accc912f243f3cd9b0ea729166997e3f4608e6
+[2016-05-22 14:25:14.089] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:25:14.090] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:25:14.091] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:25:14.091] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:25:14.091] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:25:14.091] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:25:14.094] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:25:14.094] [INFO] db_watcher.log - User found. Creating new token : acd6b46eee8b7931fada5c2c8e2d638c8c038db5
+[2016-05-22 14:27:53.883] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:27:53.885] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:27:53.885] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:27:53.885] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:27:53.885] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:27:53.885] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:27:53.888] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:27:53.888] [INFO] db_watcher.log - User found. Creating new token : 9f23a6bcd5a677fd0e307586f7cd5e45e156316f
+[2016-05-22 14:31:58.965] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:31:58.967] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:31:58.968] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:31:58.968] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:31:58.968] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:31:58.968] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:31:58.971] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:31:58.971] [INFO] db_watcher.log - User found. Creating new token : 9ce0fecf85f3c2457607d85b3bd5c01ad1669fed
+[2016-05-22 14:36:44.792] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:36:44.793] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:36:44.794] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:36:44.794] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:36:44.794] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:36:44.794] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:36:44.797] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:36:44.797] [INFO] db_watcher.log - User found. Creating new token : b8122a172fd5c59b41b39f46d95eb98df16f0e7b
+[2016-05-22 14:39:59.436] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:39:59.437] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:39:59.438] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:39:59.438] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:39:59.438] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:39:59.438] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:39:59.441] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:39:59.441] [INFO] db_watcher.log - User found. Creating new token : 56f42bec5f70102c70bc0af129a87d48837374ad
+[2016-05-22 14:43:09.086] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:43:09.088] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:43:09.088] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:43:09.089] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:43:09.089] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:43:09.089] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:43:09.092] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:43:09.092] [INFO] db_watcher.log - User found. Creating new token : ba52a6613cea7a784edfed54d97719146d7564b1
+[2016-05-22 14:43:31.007] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:43:31.010] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:43:31.010] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:43:31.010] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:43:31.011] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:43:31.011] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:43:31.014] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:43:31.015] [INFO] db_watcher.log - User found. Creating new token : b1c53712a443880ee0e020a5e27be8b708c37ebc
+[2016-05-22 14:43:59.256] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:43:59.258] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:43:59.258] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:43:59.258] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:43:59.258] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:43:59.258] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:43:59.261] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:43:59.261] [INFO] db_watcher.log - User found. Creating new token : 4182b2eec52cab17b1576c4d6946a42ca361b2ea
+[2016-05-22 14:45:20.533] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:45:20.535] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:45:20.535] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:45:20.535] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:45:20.535] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:45:20.535] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:45:20.537] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:45:20.537] [INFO] db_watcher.log - User found. Creating new token : 426a58f40b4d31d6da28af3cb9855e335eb4d621
+[2016-05-22 14:47:44.159] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:47:44.161] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:47:44.161] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:47:44.161] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:47:44.161] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:47:44.161] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:47:44.163] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:47:44.164] [INFO] db_watcher.log - User found. Creating new token : 63c3394b7ab2995e3a9d37a5760573e6271e5e27
+[2016-05-22 14:49:11.488] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-22 14:49:11.490] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-22 14:49:11.490] [INFO] db_watcher.log - -> User : root
+[2016-05-22 14:49:11.490] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-22 14:49:11.490] [INFO] db_watcher.log - -> Password : root
+[2016-05-22 14:49:11.490] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-22 14:49:11.492] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-22 14:49:11.493] [INFO] db_watcher.log - User found. Creating new token : 3d5c2885d67f5c0031ca12aee25915856edab7c3

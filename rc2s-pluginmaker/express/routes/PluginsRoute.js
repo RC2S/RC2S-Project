@@ -8,8 +8,8 @@ module.exports = function(app) {
 		PluginsController.getAllPlugins(function(result, errors) {
 			res.render('plugins', {
 				title		: 'Accueil | RC2S-PluginMaker',
-				wsStatus 	: result.status,
-				plugins 	: result.projects,
+				wsStatus 	: (result ? result.status : null),
+				plugins 	: (result ? result.projects : null),
 				flash		: [{error : CommonUtils.formatFormErrors(errors)}, globalFlash],
 				layout		: 'layoutPlugin'
 			});
