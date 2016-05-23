@@ -15,8 +15,8 @@ ear {
         initializeInOrder = true
         displayName = "RC2S Server"
         description = "JEE Server for RC2S project"
-        module("APP-INF/lib/rc2s-application-1.0.jar", "ejb")
-        module("APP-INF/lib/rc2s-dao-1.0.jar", "ejb")
+        module("APP-INF/lib/rc2s-application-${project.version}.jar", "ejb")
+        module("APP-INF/lib/rc2s-dao-${project.version}.jar", "ejb")
     }
 	
 	if(!project.hasProperty('skipAutodeploy')) {
