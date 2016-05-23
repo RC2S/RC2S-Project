@@ -8,7 +8,7 @@ import javax.ejb.EJBException;
 public class ClientTest
 {
     public static void main(String[] args)
-    {		
+    {
 		try
 		{
 			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");

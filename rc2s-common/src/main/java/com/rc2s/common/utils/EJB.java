@@ -10,9 +10,9 @@ public class EJB
 {
 	private static final String DEFAULT_IP = "127.0.0.1";
 	private static final String DEFAULT_PORT = "3700";
-	
+
 	private static InitialContext context;
-	
+
 	public static void initContext(String ip, String port) throws RC2SException
 	{
 		try
@@ -25,26 +25,24 @@ public class EJB
 			props.put("org.omg.CORBA.ORBInitialPort", (port != null ? port : EJB.DEFAULT_PORT)); // Default 
 
 			EJB.context = new InitialContext(props);
-		}
-		catch(NamingException e)
+		} catch (NamingException e)
 		{
 			throw new RC2SException(e);
 		}
 	}
-	
+
 	public static Object lookup(String ejbName)
 	{
 		try
 		{
 			return EJB.context != null ? EJB.context.lookup(ejbName) : null;
-		}
-		catch(NamingException e)
+		} catch (NamingException e)
 		{
 			System.err.println(e.getMessage());
 			return null;
 		}
 	}
-	
+
 	public static InitialContext getContext()
 	{
 		return EJB.context;

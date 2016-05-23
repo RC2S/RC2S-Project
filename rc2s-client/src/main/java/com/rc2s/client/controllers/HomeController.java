@@ -60,9 +60,8 @@ public class HomeController implements Initializable
 			
 			for(String pluginName : pluginNames)
 			{
-				String packageString = pluginName.toLowerCase().replace(" ", "");
-				String customPackage = "/com/rc2s/" + packageString + "/views/";
-				FXMLLoader loader = Resources.loadFxml(customPackage, "MainView.fxml");
+				String mainView = "/com/rc2s/" + pluginName.toLowerCase().replace(" ", "") + "/views/MainView.fxml";
+				FXMLLoader loader = Resources.loadFxml(mainView);
 
 				tabPane.getTabs().add(new Tab(pluginName, loader.getRoot()));
 			}
