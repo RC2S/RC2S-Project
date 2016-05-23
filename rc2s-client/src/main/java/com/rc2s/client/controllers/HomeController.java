@@ -32,7 +32,6 @@ public class HomeController implements Initializable
 		initStaticTabs();
 		initPlugins();
 		initAdminTabs();
-		System.out.println(System.getProperty("java.class.path"));
     }
 	
 	/**

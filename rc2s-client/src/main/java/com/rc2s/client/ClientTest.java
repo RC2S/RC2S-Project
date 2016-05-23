@@ -1,38 +1,27 @@
 package com.rc2s.client;
 
-import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.common.vo.User;
-import com.rc2s.ejb.user.UserFacadeRemote;
+import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
 import java.util.List;
-import javax.naming.NamingException;
+import javax.ejb.EJBException;
 
 public class ClientTest
 {
     public static void main(String[] args)
-    {
-        try
-        {
-            // Test UsersEJB
-            System.out.println("Client Context" + EJB.getContext());
-            UserFacadeRemote userEJB = (UserFacadeRemote)EJB.getContext().lookup("UserEJB");
+    {		
+		try
+		{
+			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+			List<String> users = (List<String>)pluginLoader.invoke("testplugin", "User", "getUsers");
 			
-			try
+			for(String user : users)
 			{
-				List<User> users = userEJB.getAll();
-				for(User user : users) {
-					System.out.println(user.getId() + " " + user.getUsername() 
-						+ " " + user.getPassword() + " " + user.getCreated());
-				}
+				System.out.println(user);
 			}
-			catch(EJBException e)
-			{
-				e.printStackTrace();
-			}
-        }
-        catch(NamingException e)
-        {
-            e.printStackTrace();
-        }
+		}
+		catch(EJBException e)
+		{
+			e.printStackTrace();
+		}
     }
 }
