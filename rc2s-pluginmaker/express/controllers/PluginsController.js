@@ -39,7 +39,7 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 PluginsController.prototype.addPlugin = function(req, callback) {
 	
 	req.checkBody('pluginName', 'Invalid Plugin Name').notEmpty().len(3, 20);
-	req.checkBody('pluginDesc', 'Invalid Plugin Description').notEmpty().len(3, 20);
+	req.checkBody('pluginDesc', 'Invalid Plugin Description').notEmpty().len(3, 100);
 
 	var errors = req.validationErrors();
 
