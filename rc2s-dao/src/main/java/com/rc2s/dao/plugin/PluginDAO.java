@@ -11,11 +11,11 @@ import javax.persistence.Query;
 public class PluginDAO extends GenericDAO<Plugin> implements IPluginDAO
 {
 	@Override
-	public List<String> getNames() throws DAOException
+	public List<String> getAvailables() throws DAOException
 	{
 		try
 		{
-			Query query = em().createQuery("SELECT p.name FROM Plugin AS p");
+			Query query = em().createQuery("SELECT p.name FROM Plugin AS p WHERE p.activated = TRUE");
 			return query.getResultList();
 		}
 		catch(Exception e)

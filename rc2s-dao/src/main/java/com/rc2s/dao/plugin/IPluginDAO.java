@@ -9,5 +9,5 @@ import javax.ejb.Local;
 @Local
 public interface IPluginDAO extends IGenericDAO<Plugin>
 {
-	public List<String> getNames() throws DAOException;
+	public List<String> getAvailables() throws DAOException;
 }

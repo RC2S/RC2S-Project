@@ -15,11 +15,24 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	private IPluginService pluginService;
 
 	@Override
-	public List<String> getNames() throws EJBException
+	public List<Plugin> getAll() throws EJBException
 	{
 		try
 		{
-			return pluginService.getNames();
+			return pluginService.getAll();
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+
+	@Override
+	public List<String> getAvailables() throws EJBException
+	{
+		try
+		{
+			return pluginService.getAvailables();
 		}
 		catch(ServiceException e)
 		{

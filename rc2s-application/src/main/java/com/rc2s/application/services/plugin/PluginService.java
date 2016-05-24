@@ -15,11 +15,24 @@ public class PluginService implements IPluginService
 	private IPluginDAO pluginDAO;
 
 	@Override
-	public List<String> getNames() throws ServiceException
+	public List<Plugin> getAll() throws ServiceException
 	{
 		try
 		{
-			return pluginDAO.getNames();
+			return pluginDAO.getAll();
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public List<String> getAvailables() throws ServiceException
+	{
+		try
+		{
+			return pluginDAO.getAvailables();
 		}
 		catch(DAOException e)
 		{

@@ -8,7 +8,9 @@ import javax.ejb.Remote;
 @Remote
 public interface PluginFacadeRemote
 {
-	public List<String> getNames() throws EJBException;
+	public List<Plugin> getAll() throws EJBException;
+	public List<String> getAvailables() throws EJBException;
+	
 	public Plugin add(Plugin plugin) throws EJBException;
 	public Plugin update(Plugin plugin) throws EJBException;
 	public void delete(Plugin plugin) throws EJBException;

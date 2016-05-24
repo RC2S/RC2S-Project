@@ -56,9 +56,9 @@ public class HomeController implements Initializable
 	{
 		try
 		{
-			List<String> pluginNames = pluginEJB.getNames();
+			List<String> availablePlugins = pluginEJB.getAvailables();
 			
-			for(String pluginName : pluginNames)
+			for(String pluginName : availablePlugins)
 			{
 				String mainView = "/com/rc2s/" + pluginName.toLowerCase().replace(" ", "") + "/views/MainView.fxml";
 				FXMLLoader loader = Resources.loadFxml(mainView);
