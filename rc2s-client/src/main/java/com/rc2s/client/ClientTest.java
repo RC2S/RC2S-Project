@@ -1,7 +1,7 @@
 package com.rc2s.client;
 
 import com.rc2s.client.utils.EJB;
-import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
+import com.rc2s.testplugin.ejb.bot.BotFacadeRemote;
 import java.util.List;
 import javax.ejb.EJBException;
 
@@ -11,12 +11,14 @@ public class ClientTest
     {		
 		try
 		{
-			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
-			List<String> users = (List<String>)pluginLoader.invoke("testplugin", "User", "getUsers");
+			/*PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+			List<String> users = (List<String>)pluginLoader.invoke("testplugin", "User", "getUsers");*/
+            BotFacadeRemote botEJB = (BotFacadeRemote) EJB.lookup("Bot");
+            List<String> bots = botEJB.getBots();
 			
-			for(String user : users)
+			for(String bot : bots)
 			{
-				System.out.println(user);
+				System.out.println(bot);
 			}
 		}
 		catch(EJBException e)
