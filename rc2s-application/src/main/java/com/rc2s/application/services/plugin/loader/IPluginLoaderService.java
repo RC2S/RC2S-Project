@@ -8,11 +8,11 @@ public interface IPluginLoaderService
 {
     public boolean uploadPlugin(String pluginName, byte[] binaryPlugin);
     
-    public void unzipPlugin();
+    public void unzipPlugin(String zipFile);
     
-    public File checkServerPlugin(File tmpEar);
+    public File checkServerPlugin(File tmpDir) throws Exception;
     
-    public void checkClientPlugin();
+    public File checkClientPlugin(File tmpDir) throws Exception;
     
     public boolean deployServerPlugin(String simpleName, File tmpEar);
     
