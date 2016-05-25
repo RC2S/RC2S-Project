@@ -1,15 +1,10 @@
 package com.rc2s.client;
 
-import com.rc2s.common.utils.EJB;
-import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
-import java.util.List;
-import javax.ejb.EJBException;
-
 public class ClientTest
 {
     public static void main(String[] args)
     {
-		try
+		/*try
 		{
 			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
 			List<String> users = (List<String>)pluginLoader.invoke("testplugin", "User", "getUsers");
@@ -22,6 +17,27 @@ public class ClientTest
 		catch(EJBException e)
 		{
 			e.printStackTrace();
+		}*/
+		
+		/*try
+		{
+			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+			boolean uploaded = pluginLoader.uploadPlugin("Test Plugin", Files.readAllBytes(new File("D:\\testplugin.zip").toPath()));
+			
+			if(uploaded)
+			{
+				System.out.println("Upload success!");
+				BotFacadeRemote bot = (BotFacadeRemote)EJB.lookup("BotEJB");
+				
+				for(String b : bot.getBots())
+					System.out.println(b);
+			}
+			else
+				System.out.println("Upload failed...");
 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}*/
     }
 }

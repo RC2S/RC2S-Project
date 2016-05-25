@@ -11,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -110,25 +109,12 @@ public class JnlpService implements IJnlpService
             StreamResult result = new StreamResult(new File(jnlpFilePath));
             transformer.transform(source, result);
         }
-        catch (ParserConfigurationException ex)
+        catch (ParserConfigurationException
+              | SAXException
+              | IOException
+              | TransformerException e)
         {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (SAXException ex)
-        {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (TransformerConfigurationException ex)
-        {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (TransformerException ex)
-        {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, e);
         }
     }   
 }
