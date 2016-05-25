@@ -11,8 +11,8 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
     private IPluginLoaderService pluginLoaderService;
     
     @Override
-    public void uploadPlugin()
+    public boolean uploadPlugin(String pluginName, byte[] binaryPlugin)
     {
-        pluginLoaderService.uploadPlugin();
+        return pluginLoaderService.uploadPlugin(pluginName, binaryPlugin);
     }
 }

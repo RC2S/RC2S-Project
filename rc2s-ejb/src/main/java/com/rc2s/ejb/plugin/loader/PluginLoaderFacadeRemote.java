@@ -5,5 +5,5 @@ import javax.ejb.Remote;
 @Remote
 public interface PluginLoaderFacadeRemote
 {
-    public void uploadPlugin();
+    public boolean uploadPlugin(String pluginName, byte[] binaryPlugin);
 }
