@@ -18,42 +18,51 @@ public class PluginLoaderService implements IPluginLoaderService
     @Override
     public boolean uploadPlugin(String pluginName, byte[] binaryPlugin)
     {
+		File tmpZip = null;
+		File unzipedDir = null;
+		
 		try
 		{
 			String simpleName = pluginName.toLowerCase().replace(" ", "");
-			File tmpPlugin = File.createTempFile(simpleName, ".zip");
-			Files.write(tmpPlugin.toPath(), binaryPlugin);
 			
-			System.out.println(tmpPlugin.getAbsolutePath());
+			tmpZip = File.createTempFile(simpleName, ".zip");
+			Files.write(tmpZip.toPath(), binaryPlugin);
 			
-			/*/
-			if(deployServerPlugin(simpleName, tmpEar))
-			{
-				tmpEar.delete();
-				
-				if(deployClientPlugin(simpleName, tmpJar))
-				{
-					tmpJar.delete();
-				}
-			}
-			//*/
+			unzipedDir = unzipPlugin(tmpZip.getAbsolutePath());
 			
-			tmpPlugin.delete();
-			return true;
+			File tmpEar = checkServerPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
+			File tmpJar = checkClientPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
+			
+			return (tmpEar != null && tmpJar != null
+				&& deployServerPlugin(simpleName, tmpEar)
+				&& deployClientPlugin(simpleName, tmpJar));
 		}
-		catch(IOException e)
+		catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
+		}
+		finally 
+		{
+			if(tmpZip != null)
+				tmpZip.delete();
+			
+			if(unzipedDir != null)
+			{
+				for(File tmp : unzipedDir.listFiles())
+					tmp.delete();
+				unzipedDir.delete();
+			}
 		}
     }
 
     @Override
-    public void unzipPlugin(String zipFile)
+    public File unzipPlugin(String zipFile) throws IOException
     {   	
         try
         {
             Path folderPath = Files.createTempDirectory("plugins");
-            File folder = new File(folderPath.toString());
+            File folder = folderPath.toFile();
             
             if (!folder.exists())
                 folder.mkdir();
@@ -85,19 +94,29 @@ public class PluginLoaderService implements IPluginLoaderService
                 entry = zipIn.getNextEntry();
             }
             zipIn.close();
+			
+			return folderPath.toFile();
         }
         catch(IOException e)
         {
            e.printStackTrace(); 
+		   throw e;
         }
     }
 
     @Override
-    public File checkServerPlugin(File tmpDir) throws Exception
+    public File checkServerPlugin(String simpleName, String tmpDir) throws Exception
     {
         try
 		{
-			return null;
+			File tmpEar = new File(tmpDir + simpleName + "_server.ear");
+			
+			if(!tmpEar.exists())
+				return null;
+			
+			// TODO: Check the EAR content
+			
+			return tmpEar;
 		}
 		catch(Exception e)
 		{
@@ -106,11 +125,18 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public File checkClientPlugin(File tmpDir) throws Exception
+    public File checkClientPlugin(String simpleName, String tmpDir) throws Exception
     {
         try
 		{
-			return null;
+			File tmpJar = new File(tmpDir + simpleName + "_client.jar");
+			
+			if(!tmpJar.exists())
+				return null;
+			
+			// TODO: Check the JAR content
+			
+			return tmpJar;
 		}
 		catch(Exception e)
 		{
@@ -122,9 +148,8 @@ public class PluginLoaderService implements IPluginLoaderService
     public boolean deployServerPlugin(String simpleName, File tmpEar)
     {
 		try
-		{
-			// System.getProperty("com.sun.aas.instanceRootURI") == payara41/glassfish/domains/rc2s-payara/
-			String autodeployDir = System.getProperty("com.sun.aas.instanceRootURI") + "autodeploy/";
+		{			
+			String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
 			File pluginFile = new File(autodeployDir + simpleName + "_server.ear");
 			Files.copy(tmpEar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
@@ -132,6 +157,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
     }
@@ -141,7 +167,7 @@ public class PluginLoaderService implements IPluginLoaderService
     {
 		try
 		{
-			String jnlpLibsDir = System.getProperty("com.sun.aas.instanceRootURI") + "applications/jnlpwar/libs/";
+			String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "jnlpwar" + File.separator + "libs" + File.separator;
 			File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
 			Files.copy(tmpJar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			
@@ -149,7 +175,25 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
     }
+
+	private String getDomainRoot()
+	{
+		String domainRoot = System.getProperty("com.sun.aas.instanceRootURI");
+		
+		if(domainRoot != null)
+		{
+			if(domainRoot.startsWith("file:\\"))
+				domainRoot = domainRoot.replace("file:\\", "");
+			else if(domainRoot.startsWith("file://"))
+				domainRoot = domainRoot.replace("file://", "");
+			else if(domainRoot.startsWith("file:/"))
+				domainRoot = domainRoot.replace("file:/", "");
+		}
+		
+		return domainRoot;
+	}
 }

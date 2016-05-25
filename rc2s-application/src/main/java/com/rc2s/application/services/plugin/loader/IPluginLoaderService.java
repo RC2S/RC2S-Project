@@ -1,6 +1,7 @@
 package com.rc2s.application.services.plugin.loader;
 
 import java.io.File;
+import java.io.IOException;
 import javax.ejb.Local;
 
 @Local
@@ -8,11 +9,11 @@ public interface IPluginLoaderService
 {
     public boolean uploadPlugin(String pluginName, byte[] binaryPlugin);
     
-    public void unzipPlugin(String zipFile);
+    public File unzipPlugin(String zipFile) throws IOException;
     
-    public File checkServerPlugin(File tmpDir) throws Exception;
+    public File checkServerPlugin(String simpleName, String tmpDir) throws Exception;
     
-    public File checkClientPlugin(File tmpDir) throws Exception;
+    public File checkClientPlugin(String simpleName, String tmpDir) throws Exception;
     
     public boolean deployServerPlugin(String simpleName, File tmpEar);
     
