@@ -1,5 +1,8 @@
 package com.rc2s.application.services.plugin.loader;
 
+import javax.ejb.Stateless;
+
+@Stateless
 public class PluginLoaderService implements IPluginLoaderService
 {
     @Override
