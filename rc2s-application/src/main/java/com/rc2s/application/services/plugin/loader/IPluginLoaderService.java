@@ -7,7 +7,7 @@ public interface IPluginLoaderService
 {
     public void uploadPlugin();
     
-    public void unzipPlugin();
+    public void unzipPlugin(String zipFile);
     
     public void checkServerPlugin();
     
