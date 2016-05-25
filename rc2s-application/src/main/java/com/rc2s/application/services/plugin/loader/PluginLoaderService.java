@@ -30,6 +30,7 @@ public class PluginLoaderService implements IPluginLoaderService
     public void deployServerPlugin()
     {
         // Files.copy(source, target, REPLACE_EXISTING);
+        // System.getProperty("com.sun.aas.instanceRootURI")  <- payara41/glassfish/domains/rc2s-payara/
     }
 
     @Override
