@@ -1,0 +1,82 @@
+apply plugin: 'war'
+
+
+war {
+    
+}
+
+/*doLast {
+        tasks.copyLibs.execute();
+        tasks.signAll.execute();
+        tasks.generateJnlp.execute();
+    }*/
+    
+/**
+ * JNLP
+ */
+task copyLibs(type: Copy) {
+    from("${project.buildDir}/libs")
+    from configurations.runtime
+    into("${project.buildDir}/jnlp/build")
+    include('*.jar')
+}
+
+task signAll(dependsOn: [copyLibs]) << {
+    println("Signing Libs")
+    new File("${project.buildDir}/jnlp/libs").mkdirs()
+    def libFiles = files { file("${project.buildDir}/jnlp/build").listFiles() }
+    libFiles.each {
+        ant.signjar(
+            destDir: "${project.buildDir}/jnlp/libs",
+            alias: 'RC2S',
+            jar: it,
+            keystore: "${project.projectDir}/src/main/jnlp/keys/RC2S.jks",
+            storepass: 'P@ssword1234',
+            preservelastmodified: 'true'
+        )
+    }
+    delete "${project.buildDir}/jnlp/build"
+}
+task generateJnlp(dependsOn: [signAll]) << {
+    println("Generating JNLP")
+    File jnlpTemplateFile = new File("${project.projectDir}/src/main/jnlp/descriptors/rc2s-${env}.jnlp")
+    def root = new XmlParser().parse(jnlpTemplateFile)
+    def jnlpFileName = "rc2s-client-${env}-${version}.jnlp"
+    
+    // Setting values in the jnlp template
+    
+    // Racine
+    //root.@codebase = 'file://' + new File("${project.buildDir}/jnlp").absolutePath
+    root.@codebase = 'http://192.168.1.108' // Prod Server IP Address
+    root.@href = jnlpFileName
+    
+    // Initialisation des informations
+    def information = root.information[0]
+    def title = information.title[0]
+    def vendor = information.vendor[0]
+    title.setValue("RC2S-Client")
+    vendor.setValue("RC2S")
+    
+    // Initialisation des ressources (main JAR + libs)
+    def resource = root.resources[0]
+    def j2se = resource.j2se[0]
+    j2se.@version = "1.8+"
+    
+    def mainJar = "rc2s-client-${version}.jar"
+    def libs = files { file("${project.buildDir}/jnlp/libs").listFiles() }
+    libs.each {
+        def resourceValues = [href: "libs/" + it.name]
+        if (mainJar == it.name) {
+            resourceValues = [href: "libs/" + it.name, main: 'true']
+        }
+        resource.appendNode('jar', resourceValues)
+    }
+    
+    // On définit la class principale
+    def applicationDesc = root.'application-desc'[0]
+    applicationDesc.'@main-class' = mainClassName
+    
+    // Écriture du nouveau contenu dans un nouveau fichier JNLP
+    File jnlpFile = new File("${project.buildDir}/jnlp/" + jnlpFileName)
+    new XmlNodePrinter(new PrintWriter(jnlpFile)).print(root)
+}
