@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,7 +39,14 @@ public class AccessManagementController extends TabController implements Initial
 	private List<User> users;
 	private User element;
 	
-	@FXML private TableView gridTableView;
+	@FXML private TableView<User> usersTable;
+	
+	@FXML private TableColumn<User, String> usernameColumn;
+	@FXML private TableColumn<User, String> activatedColumn;
+	@FXML private TableColumn<User, String> lockedColumn;
+	@FXML private TableColumn<User, String> lastLoginColumn;
+	@FXML private TableColumn<User, String> createdColumn;
+	@FXML private TableColumn<User, String> updatedColumn;
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
@@ -53,11 +61,7 @@ public class AccessManagementController extends TabController implements Initial
     @Override
     public void initialize(URL location, ResourceBundle resources)
 	{
-		for(Object o : gridTableView.getColumns())
-		{
-			TableColumn col = (TableColumn)o;
-			col.setCellValueFactory(new PropertyValueFactory<>(col.getText().toLowerCase()));
-		}
+		
 	}
 	
 	@Override
@@ -82,8 +86,8 @@ public class AccessManagementController extends TabController implements Initial
 		try
 		{
 			users = userEJB.getAll();
-			gridTableView.getItems().clear();
-			gridTableView.getItems().addAll(users);
+			usersTable.getItems().clear();
+			usersTable.getItems().addAll(users);
 			
 			usernameField.clear();
 			passwordField.clear();
