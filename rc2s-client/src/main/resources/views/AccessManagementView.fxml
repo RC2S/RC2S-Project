@@ -30,13 +30,13 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="usersTable" prefHeight="353.0" prefWidth="598.0" GridPane.rowSpan="3">
+            <TableView fx:id="usersTable" onKeyPressed="#onKeyPressedEvent" prefHeight="353.0" prefWidth="598.0" GridPane.rowSpan="3">
               <columns>
                   <TableColumn fx:id="usernameColumn" maxWidth="6000.0" prefWidth="75.0" text="Username" />
                 <TableColumn fx:id="activatedColumn" maxWidth="4000.0" prefWidth="75.0" text="Activated" />
                 <TableColumn fx:id="lockedColumn" maxWidth="4000.0" prefWidth="75.0" text="Locked" />
                   <TableColumn fx:id="lastLoginColumn" maxWidth="6000.0" prefWidth="75.0" text="Last Login" />
-                  <TableColumn fx:id="createdCOlumn" maxWidth="1000.0" prefWidth="150.0" text="Created" />
+                  <TableColumn fx:id="createdColumn" maxWidth="1000.0" prefWidth="150.0" text="Created" />
                   <TableColumn fx:id="updatedColumn" maxWidth="1000.0" prefWidth="49.0" text="Updated" />
               </columns>
                <columnResizePolicy>
