@@ -2,23 +2,51 @@ package com.rc2s.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user")
 public class User implements Serializable
 {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
+	@javax.validation.constraints.Size(min = 3)
     private String username;
+	
+	@javax.validation.constraints.Size(min = 8)
     private String password;
-    private String role;
-    private String token;
+	
     private boolean activated;
-    private boolean lock;
-    private String lastIp;
+    private boolean locked;
+	
+	@Column(name = "last_login")
+    private Date lastLogin;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	private List<Synchronization> synchronizations;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+		name = "link_user_role",
+		joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
+	)
+	private List<Role> roles;
+	
     private Date created;
     private Date updated;
 
@@ -30,34 +58,29 @@ public class User implements Serializable
         this.password   = password;
     }
 
-    public User(int id, String username, String password,
-        String role, String token, boolean activated,
-        boolean lock, String lastIp, Date created, Date updated)
+    public User(Integer id, String username, String password,
+        boolean activated, boolean locked,
+        Date lastLogin, Date created, Date updated)
     {
         this.id         = id;
         this.username   = username;
         this.password   = password;
-        this.role       = role;
-        this.token      = token;
         this.activated  = activated;
-        this.lock       = lock;
-        this.lastIp     = lastIp;
+        this.locked     = locked;
+        this.lastLogin  = lastLogin;
         this.created    = created;
         this.updated    = updated;
     }
-
-    @Id
-    @Column(name = "id", unique = true, nullable = false)
-    public int getId() {
+    
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
 
-    @Column(name = "username", nullable = false, length = 40)
     public String getUsername()
     {
         return username;
@@ -68,7 +91,6 @@ public class User implements Serializable
         this.username = username;
     }
     
-    @Column(name = "password", nullable = false, length = 40)
     public String getPassword()
     {
         return password;
@@ -78,30 +100,7 @@ public class User implements Serializable
     {
         this.password = password;
     }
-
-    @Column(name = "role", nullable = false, length = 10) // Enum
-    public String getRole()
-    {
-        return role;
-    }
-
-    public void setRole(String role)
-    {
-        this.role = role;
-    }
-
-    @Column(name = "token", nullable = true, length = 40)
-    public String getToken()
-    {
-        return token;
-    }
-
-    public void setToken(String token)
-    {
-        this.token = token;
-    }
-
-    @Column(name = "activated", nullable = false)
+    
     public boolean isActivated()
     {
         return activated;
@@ -112,29 +111,26 @@ public class User implements Serializable
         this.activated = activated;
     }
 
-    @Column(name = "lock", nullable = false)
-    public boolean isLock()
+    public boolean isLocked()
     {
-        return lock;
+        return locked;
     }
 
-    public void setLock(boolean lock)
+    public void setLocked(boolean locked)
     {
-        this.lock = lock;
+        this.locked = locked;
     }
 
-    @Column(name = "lastip", nullable = true, length = 255)
-    public String getLastIp()
+    public Date getLastLogin()
     {
-        return lastIp;
+        return lastLogin;
     }
 
-    public void setLastIp(String lastIp)
+    public void setLastLogin(Date lastLogin)
     {
-        this.lastIp = lastIp;
+        this.lastLogin = lastLogin;
     }
 
-    @Column(name = "created", nullable = false)
     public Date getCreated()
     {
         return created;
@@ -145,7 +141,6 @@ public class User implements Serializable
         this.created = created;
     }
     
-    @Column(name = "updated", nullable = false)
     public Date getUpdated()
     {
         return updated;
@@ -155,4 +150,59 @@ public class User implements Serializable
     {
         this.updated = updated;
     }
+
+	public List<Synchronization> getSynchronizations()
+	{
+		return synchronizations;
+	}
+
+	public void setSynchronizations(List<Synchronization> synchronizations)
+	{
+		this.synchronizations = synchronizations;
+	}
+
+	public List<Role> getRoles()
+	{
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles)
+	{
+		this.roles = roles;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return username;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 17 * hash + Objects.hashCode(this.id);
+		hash = 17 * hash + Objects.hashCode(this.username);
+		hash = 17 * hash + Objects.hashCode(this.password);
+		hash = 17 * hash + (this.activated ? 1 : 0);
+		hash = 17 * hash + (this.locked ? 1 : 0);
+		hash = 17 * hash + Objects.hashCode(this.lastLogin);
+		hash = 17 * hash + Objects.hashCode(this.created);
+		hash = 17 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof User)
+		{
+			User u = (User)o;
+			
+			if(u.getId() != null && this.getId() != null)
+				return Objects.equals(u.getId(), this.getId());
+		}
+		
+		return false;
+	}
 }

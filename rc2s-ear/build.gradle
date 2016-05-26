@@ -1,8 +1,11 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'ear'
 
 dependencies {
     deploy project(':rc2s-ejb')
-    earlib project(path: ':rc2s-ejb', configuration: 'compile')
+    deploy project(':rc2s-dao')
+    deploy project(':rc2s-application')
+    //earlib project(path: ':rc2s-ejb', configuration: 'compile')
 }
 
 ear {
@@ -14,4 +17,20 @@ ear {
         displayName = "RC2S Server"
         description = "JEE Server for RC2S project"
     }
+	
+	if(!project.hasProperty('skipAutodeploy')) {
+		doLast {
+			tasks.autodeploy.execute();
+		}
+	}
+}
+
+task autodeploy(type: Exec) {
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
+	}
+	else {
+		executable "/home/esp010/Bureau/payara41/bin/asadmin"
+	}
+	args "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
 }

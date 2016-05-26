@@ -2,3 +2,12 @@ dependencies {
     compile project(':rc2s-application')
     compile group: 'javax', name: 'javaee-api', version: '7.0'
 }
+
+task generateApi(type: Jar, dependsOn: jar) {
+	baseName = 'interfaces'
+	from fileTree(dir: "$buildDir/classes/main/", include: '**/*Remote.class')
+}
+
+artifacts {
+	archives generateApi
+}

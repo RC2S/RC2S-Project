@@ -1,16 +1,13 @@
 package com.rc2s.ejb.streaming;
 
 import com.rc2s.application.services.streaming.IStreamingService;
-import javax.ejb.Stateful;
-import javax.interceptor.Interceptors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
-@Stateful(mappedName = "StreamingEJB")
-@Interceptors(SpringBeanAutowiringInterceptor.class)
+@Stateless(mappedName = "StreamingEJB")
 public class StreamingFacadeBean implements StreamingFacadeRemote
 {
-    @Autowired
+    @EJB
     private IStreamingService streamingService;
     
     @Override

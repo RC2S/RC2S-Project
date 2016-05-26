@@ -1,14 +1,20 @@
 apply plugin: 'base' // To add "clean" task to the root project.
+apply from: 'profiles.gradle'
+
+loadProfile()
+def loadProfile() {
+    def env = project.hasProperty('env') ? project.env : 'dev'
+    project.ext.set 'env', env
+}
 
 allprojects {
-    
     group = 'com.rc2sproject'
     version = '1.0'
 }
 
 subprojects {
-    
     apply plugin: 'java'
+    processResources.dependsOn initProfile
     
     repositories {
         mavenCentral();
@@ -23,5 +29,13 @@ subprojects {
         
         testCompile group: 'junit', name: 'junit', version: '4.12'
         testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+    }
+    
+    sourceSets {
+        main {
+            resources {
+                srcDir "src/main/resources/${env}"
+            }
+        }
     }
 }

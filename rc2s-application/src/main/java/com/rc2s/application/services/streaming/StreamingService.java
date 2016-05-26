@@ -1,14 +1,15 @@
 package com.rc2s.application.services.streaming;
 
 import java.util.concurrent.Semaphore;
+import javafx.scene.media.MediaPlayer;
+import javax.ejb.Stateless;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Service;
-import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
-@Service
+@Stateless
 public class StreamingService implements IStreamingService
 {
     private static final Logger log = LogManager.getLogger(StreamingService.class);
@@ -18,7 +19,7 @@ public class StreamingService implements IStreamingService
     
     private MediaPlayerFactory factory;
     
-    private MediaPlayer audioPlayer;
+    private DirectAudioPlayer audioPlayer;
     
     public StreamingService()
     {
@@ -28,12 +29,10 @@ public class StreamingService implements IStreamingService
         audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, new CallbackAdapter(4));
         
         audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-            @Override
             public void playing(MediaPlayer mediaPlayer) {
                 log.info("playing()");
             }
-
-            @Override
+            
             public void finished(MediaPlayer mediaPlayer) {
                 log.info("finished()");
                 log.info("Release waiter...");
@@ -41,7 +40,6 @@ public class StreamingService implements IStreamingService
                 log.info("After release waiter");
             }
 
-            @Override
             public void error(MediaPlayer mediaPlayer) {
                 log.info("error()");
             }
