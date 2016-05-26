@@ -11,6 +11,7 @@ public class ClientTest
         try
         {
             // Test Streaming Start
+            EJB.initContext("127.0.0.1", null);
             StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
             
             System.err.println("------- Before Streaming -------");
