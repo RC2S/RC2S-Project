@@ -84,6 +84,12 @@ public class AccessManagementController extends TabController implements Initial
 			users = userEJB.getAll();
 			gridTableView.getItems().clear();
 			gridTableView.getItems().addAll(users);
+			
+			usernameField.clear();
+			passwordField.clear();
+			confirmPassField.clear();
+			rolesBox.getSelectionModel().select(null);
+			cubicAccessBox.getSelectionModel().select(null);
 		}
 		catch(EJBException e)
 		{

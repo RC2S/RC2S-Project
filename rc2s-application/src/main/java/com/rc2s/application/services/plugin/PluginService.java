@@ -4,6 +4,7 @@ import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.dao.plugin.IPluginDAO;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -45,6 +46,7 @@ public class PluginService implements IPluginService
 	{
 		try
 		{
+			plugin.setCreated(new Date());
 			return pluginDAO.save(plugin);
 		}
 		catch(DAOException e)
@@ -58,6 +60,7 @@ public class PluginService implements IPluginService
 	{
 		try
 		{
+			plugin.setUpdated(new Date());
 			return pluginDAO.update(plugin);
 		}
 		catch(DAOException e)

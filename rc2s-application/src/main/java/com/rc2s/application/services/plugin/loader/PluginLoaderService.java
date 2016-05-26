@@ -1,5 +1,11 @@
 package com.rc2s.application.services.plugin.loader;
 
+import com.rc2s.application.services.plugin.IPluginService;
+import com.rc2s.common.exceptions.DAOException;
+import com.rc2s.common.exceptions.ServiceException;
+import com.rc2s.common.vo.Plugin;
+import com.rc2s.common.vo.Role;
+import com.rc2s.dao.plugin.IPluginDAO;
 import java.nio.file.StandardCopyOption;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -8,15 +14,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
 public class PluginLoaderService implements IPluginLoaderService
 {
+	@EJB
+	private IPluginService pluginService;
+	
+	@EJB 
+	private IPluginDAO pluginDAO;
+	
     @Override
-    public boolean uploadPlugin(String pluginName, byte[] binaryPlugin)
+    public boolean uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException
     {
 		File tmpZip = null;
 		File unzipedDir = null;
@@ -35,12 +49,12 @@ public class PluginLoaderService implements IPluginLoaderService
 			
 			return (tmpEar != null && tmpJar != null
 				&& deployServerPlugin(simpleName, tmpEar)
-				&& deployClientPlugin(simpleName, tmpJar));
+				&& deployClientPlugin(simpleName, tmpJar)
+				&& persistPlugin(pluginName, accessRole) != null);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			return false;
+			throw new ServiceException(e);
 		}
 		finally 
 		{
@@ -99,7 +113,6 @@ public class PluginLoaderService implements IPluginLoaderService
         }
         catch(IOException e)
         {
-           e.printStackTrace(); 
 		   throw e;
         }
     }
@@ -157,7 +170,6 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			return false;
 		}
     }
@@ -175,10 +187,64 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			return false;
 		}
     }
+	
+	@Override
+	public Plugin persistPlugin(String pluginName, Role role) throws ServiceException
+	{
+		boolean update = false;
+		Plugin plugin;
+		
+		try
+		{
+			plugin = pluginDAO.getByName(pluginName);
+			update = true;
+		}
+		catch(DAOException e)
+		{
+			plugin = new Plugin();
+		}
+		
+		try
+		{
+			plugin.setName(pluginName);
+			plugin.setAccess(role.getName());
+			
+			plugin.setVersion("1.0");
+			plugin.setAuthor("John Doe");
+			plugin.setActivated(true);
+			
+			return (update ? pluginService.update(plugin) : pluginService.add(plugin));
+		}
+		catch(ServiceException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public void deletePlugin(Plugin plugin) throws ServiceException
+	{
+		String simpleName = plugin.getName().toLowerCase().replace(" ", "");
+		
+		// Remove Client Plugin
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "jnlpwar" + File.separator + "libs" + File.separator;
+		File pluginClient = new File(jnlpLibsDir + simpleName + "_client.jar");
+		
+		if(pluginClient.exists())
+			pluginClient.delete();
+		
+		// Remove Server Plugin
+		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
+		File pluginServer = new File(autodeployDir + simpleName + "_server.ear");
+		
+		if(pluginServer.exists())
+			pluginServer.delete();
+		
+		pluginService.delete(plugin);
+	}
 
 	private String getDomainRoot()
 	{

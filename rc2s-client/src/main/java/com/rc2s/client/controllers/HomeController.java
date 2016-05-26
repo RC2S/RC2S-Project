@@ -63,7 +63,8 @@ public class HomeController implements Initializable
 				String mainView = "/com/rc2s/" + pluginName.toLowerCase().replace(" ", "") + "/views/MainView.fxml";
 				FXMLLoader loader = Resources.loadFxml(mainView);
 
-				tabPane.getTabs().add(new Tab(pluginName, loader.getRoot()));
+				if(loader != null)
+					tabPane.getTabs().add(new Tab(pluginName, loader.getRoot()));
 			}
 		}
 		catch(EJBException e)

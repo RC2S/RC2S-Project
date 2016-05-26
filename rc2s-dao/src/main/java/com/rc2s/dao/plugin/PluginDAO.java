@@ -23,4 +23,20 @@ public class PluginDAO extends GenericDAO<Plugin> implements IPluginDAO
 			throw new DAOException(e);
 		}
 	}
+	
+	@Override
+	public Plugin getByName(String name) throws DAOException
+	{
+		try
+		{
+			Query query = em().createQuery("SELECT p FROM Plugin AS p WHERE p.name = :name")
+							  .setParameter("name", name);
+			
+			return (Plugin)query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			throw new DAOException(e);
+		}
+	}
 }

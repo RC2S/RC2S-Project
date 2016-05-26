@@ -28,16 +28,18 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="gridTableView" prefHeight="330.0" prefWidth="598.0" GridPane.rowSpan="3">
+            <TableView fx:id="pluginsTable" onKeyPressed="#onKeyPressedEvent" prefHeight="330.0" prefWidth="598.0" GridPane.rowSpan="3">
               <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
               </columnResizePolicy>
               <columns>
-                <TableColumn prefWidth="75.0" text="Plugin" />
-                <TableColumn prefWidth="75.0" text="Status" />
-                  <TableColumn prefWidth="75.0" text="Role Access" />
-                  <TableColumn maxWidth="1000.0" prefWidth="75.0" text="U" />
-                  <TableColumn maxWidth="1000.0" prefWidth="75.0" text="D" />
+                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+                  <TableColumn fx:id="versionColumn" prefWidth="75.0" text="Version" />
+                <TableColumn fx:id="authorColumn" prefWidth="75.0" text="Author" />
+                  <TableColumn fx:id="activatedColumn" prefWidth="69.0" text="Activated" />
+                  <TableColumn fx:id="accessColumn" prefWidth="146.0" text="Access" />
+                  <TableColumn fx:id="createdColumn" maxWidth="1000.0" prefWidth="75.0" text="Created" />
+                  <TableColumn fx:id="updatedColumn" maxWidth="1000.0" prefWidth="75.0" text="Updated" />
               </columns>
             </TableView>
             <BorderPane fx:id="gridBorderPane" prefHeight="200.0" prefWidth="200.0" styleClass="borderpane-border" GridPane.rowIndex="3" GridPane.rowSpan="2">
@@ -59,11 +61,11 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="pluginGridFileButton" mnemonicParsing="false" onAction="#handleUploadFileButton" prefHeight="26.0" prefWidth="180.0" text="Pick a File" GridPane.columnSpan="3" GridPane.halignment="CENTER" />
+                        <Button fx:id="explorerButton" mnemonicParsing="false" onAction="#handleUploadFileButton" prefHeight="26.0" prefWidth="180.0" text="Pick a file..." GridPane.columnSpan="3" GridPane.halignment="CENTER" />
                         <Label text="Role" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-                        <Label text="Uploaded / Check / Failed..." GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Add !" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="rolesBox" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                        <Label fx:id="statusLabel" textFill="RED" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddEvent" text="Add !" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </center>

@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user")
@@ -27,7 +26,7 @@ public class User implements Serializable
 	@javax.validation.constraints.Size(min = 3)
     private String username;
 	
-	@javax.validation.constraints.Size(min = 8)
+	@javax.validation.constraints.Size(min = 8, max = 250)
     private String password;
 	
     private boolean activated;
