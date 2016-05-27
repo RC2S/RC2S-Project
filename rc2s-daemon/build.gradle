@@ -1,3 +1,35 @@
+apply plugin: 'application'
+
+configurations {
+    sshAntTask
+}
+
+mainClassName = 'com.rc2s.daemon.Daemon'
+
 dependencies {
-    compile group: 'com.pi4j', name: 'pi4j-core', version: '0.0.5'
+    compile group: 'com.pi4j', name: 'pi4j-core', version: '1.0'
+    sshAntTask 'org.apache.ant:ant-jsch:1.7.1', 'jsch:jsch:0.1.29'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.rc2s.daemon.Daemon'
+    }
+}
+
+ant.taskdef(
+    name: 'scp',
+    classname: 'org.apache.tools.ant.taskdefs.optional.ssh.Scp',
+    classpath: configurations.sshAntTask.asPath
+)
+
+task autodeploy() << {
+    doLast {
+        ant.scp(
+            file: "build/libs/rc2s-daemon-${version}.jar",
+            todir: "rc2s@192.168.1.42:/home/rc2s/",
+            keyfile: "${user.home}/.ssh/rsa-id",
+            verbose: true
+        )
+    }
 }

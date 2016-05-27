@@ -1,0 +1,1163 @@
+[2016-05-16 18:58:06.560] [TRACE] http_watcher - *** Che HTTP GET on /api/workspace?skipCount=0&maxItems=30
+[2016-05-16 18:58:06.561] [WARN] http_watcher - The workspace successfully fetched
+[2016-05-20 21:18:45.293] [TRACE] http_watcher.log - *** Che HTTP GET on workspace?skipCount=0&maxItems=30
+[2016-05-20 21:18:45.296] [WARN] http_watcher.log - The workspace successfully fetched
+[2016-05-20 21:21:08.220] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:21:08.223] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:23:49.130] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:23:49.133] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:26:06.572] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:26:06.574] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:26:21.732] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:26:21.734] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:26:42.531] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:26:42.533] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:26:53.524] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:26:53.526] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:27:09.371] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:27:09.373] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:28:00.008] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:28:00.011] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:28:12.546] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:28:12.548] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:28:21.414] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:28:21.419] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:28:35.599] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:28:35.602] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:29:04.593] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:29:04.596] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:30:58.769] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:30:58.772] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:31:09.713] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:31:09.716] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:32:09.876] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:32:09.880] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:32:21.198] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc3s
+[2016-05-20 21:32:21.201] [WARN] http_watcher.log - The workspace with specified name does not exist for current user
+[2016-05-20 21:32:31.831] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:32:31.833] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:48:37.488] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:48:37.491] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:48:56.654] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:48:56.659] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:55:29.987] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:55:29.989] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:56:51.030] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:56:51.030] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:56:55.022] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:56:55.022] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:56:58.196] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:56:58.197] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:57:02.358] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:57:02.358] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 21:57:06.007] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 21:57:06.007] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:07:51.719] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:07:51.721] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:08:27.518] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:08:27.521] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:08:38.126] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:08:38.126] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:11:57.612] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:11:57.613] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:14:34.401] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:14:34.402] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:29:44.943] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:29:44.944] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:07.607] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:07.608] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:43.026] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:43.026] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:45.037] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:45.040] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:48.584] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:48.585] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:50.297] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:50.298] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:51.968] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:51.968] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:31:54.166] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:31:54.167] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:38:56.718] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:38:56.719] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:39:04.069] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:39:04.069] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-20 22:39:07.229] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-20 22:39:07.230] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 12:00:13.106] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 12:00:13.106] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 12:01:55.215] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 12:01:55.215] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 12:02:55.350] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 12:02:55.351] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 12:15:04.543] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 12:15:04.544] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 20:57:33.957] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 20:57:33.957] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-21 20:58:46.286] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:00:00.785] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:03:03.946] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:03:49.341] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:05:34.937] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:05:34.937] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-21 21:06:12.957] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:06:12.957] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-21 21:10:20.349] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:10:20.349] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-21 21:10:31.772] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-21 21:10:31.772] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-21 21:28:55.150] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:28:55.150] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:42:27.683] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:42:27.683] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:44:11.651] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:44:11.652] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:44:14.374] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:46:04.036] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:46:04.036] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:46:06.840] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:47:19.965] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:47:19.965] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:47:23.334] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:47:23.335] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:47:23.340] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 21:50:33.828] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:50:33.828] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:50:35.886] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:50:35.886] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:50:35.890] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 21:51:42.524] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:51:42.524] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:51:44.419] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:51:44.420] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:51:44.424] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 21:52:42.202] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:52:42.202] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:52:43.700] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:52:43.701] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:52:44.314] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:52:44.314] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:52:51.123] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:52:51.123] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:53:03.707] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 21:55:54.857] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:55:54.857] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:56:00.869] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:56:00.869] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:56:00.886] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 21:56:00.886] [WARN] http_watcher.log - Internal server error occurred
+[2016-05-21 21:58:40.066] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:58:40.067] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:58:41.604] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 21:58:41.604] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 21:58:41.622] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:00:10.016] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:00:10.016] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:00:12.064] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:00:41.414] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:00:41.414] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:00:44.956] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:00:44.956] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:00:44.976] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:01:27.735] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:01:27.736] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:01:29.206] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:01:29.206] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:01:29.223] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:01:29.224] [WARN] http_watcher.log - Internal server error occurred
+[2016-05-21 22:02:56.466] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:02:56.466] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:02:57.952] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:02:57.952] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:02:58.810] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:02:58.811] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:08:17.161] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:08:17.161] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:08:19.327] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:08:19.327] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:08:19.345] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:08:19.345] [WARN] http_watcher.log - Internal server error occurred
+[2016-05-21 22:10:07.407] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:10:07.407] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:10:09.472] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:10:09.472] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:10:09.479] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:10:09.480] [WARN] http_watcher.log - The project successfully created
+[2016-05-21 22:10:10.209] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:10:10.209] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:10:10.217] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:10:10.218] [WARN] http_watcher.log - The project successfully created
+[2016-05-21 22:10:36.981] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:10:36.981] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:15:57.830] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:15:57.830] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:16:00.109] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:16:00.110] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:16:00.127] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-21 22:16:00.127] [WARN] http_watcher.log - The project successfully created
+[2016-05-21 22:16:04.126] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:16:04.126] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:23:46.241] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:23:46.241] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 22:25:33.954] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 22:25:33.954] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:00:03.223] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:00:03.225] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:30:42.691] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:30:42.691] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:38:12.652] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:38:12.652] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:38:20.587] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:38:20.587] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:40:50.469] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:40:50.469] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:41:30.149] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:41:30.150] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:41:48.303] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:41:48.303] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:42:45.824] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:42:45.824] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:48:33.951] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:48:33.951] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:48:55.391] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:48:55.391] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:49:04.924] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:49:04.924] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:49:37.524] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:49:37.524] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:49:38.934] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:49:38.934] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:50:49.370] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:50:49.370] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:50:51.096] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:50:51.096] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:51:07.045] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:51:07.045] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:51:15.643] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:51:15.643] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:52:07.086] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:52:07.087] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:52:11.609] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:52:11.609] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:54:36.550] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:54:36.551] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:54:42.433] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:54:42.433] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:55:19.770] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:55:19.770] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:55:27.240] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:55:27.240] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:56:13.434] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:56:13.434] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:56:15.461] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:56:15.461] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:56:30.645] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:56:30.646] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:57:51.445] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:57:51.446] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:59:03.431] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:59:03.431] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:59:11.679] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:59:11.679] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:59:49.811] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:59:49.811] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-21 23:59:54.308] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-21 23:59:54.312] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:01:16.990] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:01:16.990] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:01:21.702] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:01:21.702] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:02:09.399] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:02:09.400] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:02:23.394] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:02:23.394] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:02:23.423] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 00:02:23.424] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 00:02:23.460] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:02:23.460] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:02:52.961] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:02:52.961] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:04:49.282] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:04:49.282] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:05:35.131] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:05:35.131] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:06:33.926] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:06:33.927] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:07:05.885] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:07:05.885] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:07:24.907] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:07:24.907] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:08:30.209] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:08:30.209] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:10:55.981] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:10:55.981] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:11:14.581] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:11:14.581] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:11:39.960] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:11:39.961] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:13:04.223] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:13:04.223] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:13:35.495] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:13:35.496] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:13:44.994] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:13:44.994] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:13:45.001] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 00:13:45.001] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 00:13:45.040] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:13:45.041] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:21:38.884] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:21:38.885] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:22:04.968] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:22:04.968] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:25:14.889] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:25:14.889] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:25:18.216] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:25:43.972] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:25:43.972] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:25:46.748] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:25:46.748] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:25:46.758] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/test2
+[2016-05-22 00:27:15.470] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:27:15.470] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:27:18.544] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:27:18.544] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:27:18.549] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/azeaze
+[2016-05-22 00:27:58.851] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:27:58.851] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:28:06.109] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:28:06.109] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:28:06.128] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 00:28:06.130] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 00:28:06.143] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:28:06.146] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:30:29.649] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:30:29.649] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:30:37.662] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:30:37.663] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:30:37.669] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 00:30:37.669] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 00:30:37.686] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:30:37.686] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:30:43.350] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:30:43.352] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:30:43.360] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/azeaze
+[2016-05-22 00:30:43.362] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 00:30:43.374] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:30:43.375] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:30:59.354] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:30:59.354] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:02.582] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:02.582] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:04.269] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:04.269] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:05.910] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:05.910] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:33.570] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:33.571] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:34.783] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:34.783] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:37.172] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:37.172] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:31:49.043] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:31:49.043] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:32:20.064] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:32:20.064] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:32:25.654] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:32:25.654] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:32:25.662] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 00:32:25.662] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 00:32:25.675] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:32:25.675] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:32:30.567] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:32:30.567] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:32:30.573] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/azeaze
+[2016-05-22 00:32:30.573] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 00:32:30.589] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:32:30.590] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:36:00.196] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:36:00.196] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:36:05.747] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:36:05.747] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 00:36:05.754] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 00:36:05.754] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 00:36:05.771] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 00:36:05.772] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 10:45:26.568] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 10:45:26.569] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 10:56:31.956] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 10:56:31.956] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 10:56:31.973] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 10:56:59.728] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 10:56:59.729] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 10:57:18.547] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 10:57:18.547] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 10:57:18.555] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 10:57:18.555] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 10:57:33.049] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 10:57:33.050] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:01:20.850] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:01:20.850] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:01:20.861] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 11:01:20.862] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 11:04:02.996] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:04:02.996] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:04:03.004] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 11:04:03.004] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 11:04:27.483] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:04:27.483] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:04:27.490] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 11:10:35.397] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:10:35.397] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:10:35.407] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 11:10:35.407] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 11:10:38.045] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:10:38.046] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:10:39.329] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:10:39.330] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:10:40.539] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:10:40.539] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:11:45.290] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:11:45.290] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:11:45.300] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 11:11:45.300] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 11:12:40.271] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:12:40.272] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:12:40.280] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 11:12:40.280] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 11:12:49.978] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:12:49.979] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:12:53.740] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:12:53.740] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:15:22.043] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:15:22.044] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:16:28.624] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:16:28.624] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:16:28.641] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/azeaze
+[2016-05-22 11:16:28.641] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 11:16:28.653] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:16:28.653] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:17:26.688] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:17:26.688] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:17:34.611] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:17:34.611] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:17:34.623] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 11:17:34.624] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 11:17:34.638] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:17:34.639] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:18:46.507] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:18:46.507] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:18:49.669] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:18:49.669] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:18:49.677] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/azeazeaze
+[2016-05-22 11:18:49.677] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 11:18:49.690] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:18:49.690] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:19:03.025] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:19:03.026] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:19:38.658] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:19:38.658] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:19:53.143] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:19:53.143] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:19:53.150] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 11:19:53.152] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 11:19:53.162] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:19:53.162] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:20:43.852] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:20:43.852] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:20:44.381] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:20:44.382] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:44:05.877] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:44:05.877] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:44:11.182] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:44:11.183] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:44:11.187] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/r2cs-plugin1
+[2016-05-22 11:44:11.187] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 11:44:11.197] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:44:11.197] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:44:17.337] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:44:17.338] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:44:23.494] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:44:23.495] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:44:23.510] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 11:44:23.510] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 11:44:23.521] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:44:23.522] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:45:03.712] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:45:03.712] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:45:03.722] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/qsdfqsd
+[2016-05-22 11:45:03.722] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 11:45:03.732] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:45:03.733] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:45:17.342] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:45:17.342] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:45:17.354] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 11:45:17.354] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 11:45:17.364] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:45:17.364] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:48:17.309] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:48:17.309] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:48:17.311] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/test-plugin
+[2016-05-22 11:48:17.312] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 11:48:17.325] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:48:17.326] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:48:19.497] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:48:19.497] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:48:19.501] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/rc2s-test
+[2016-05-22 11:48:19.501] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 11:48:19.510] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:48:19.510] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:49:32.573] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:49:32.574] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:49:34.652] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:49:34.653] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:49:36.700] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:49:36.701] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:57:59.438] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:57:59.438] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:58:09.791] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:58:09.791] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 11:58:09.798] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/workspacewhssarcb6b3evv2y/project/
+[2016-05-22 11:58:09.799] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 11:58:09.810] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 11:58:09.814] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:01:38.137] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:01:38.137] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:01:44.061] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:01:44.062] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:01:44.067] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/testRoot
+[2016-05-22 12:01:44.068] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:01:44.079] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:01:44.079] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:02:05.103] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:02:05.103] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:02:05.135] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=testex
+[2016-05-22 12:02:05.135] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:02:05.155] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:02:05.156] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:23:31.567] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:23:31.568] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:23:50.159] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:23:50.159] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:23:50.188] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=mathieu
+[2016-05-22 12:23:50.189] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:23:50.200] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:23:50.200] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:24:12.465] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:24:12.465] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:24:12.471] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/testex
+[2016-05-22 12:24:12.475] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:24:12.488] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:24:12.490] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:24:42.250] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:24:42.250] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:24:44.364] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:24:44.364] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:25:46.705] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:25:46.705] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:25:48.095] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:25:48.095] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:26:32.808] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:26:32.808] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:26:34.950] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:26:34.951] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:26:46.100] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:26:46.101] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:04.760] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:04.760] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:04.764] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 12:27:04.765] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 12:27:08.032] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:08.032] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:09.714] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:09.715] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:11.258] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:11.258] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:13.008] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:13.009] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:14.297] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:14.298] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:18.541] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:18.541] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:24.348] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:24.348] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:24.353] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/testex
+[2016-05-22 12:27:24.354] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:27:24.363] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:24.363] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:32.469] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:32.470] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:32.485] [TRACE] http_watcher.log - *** Che HTTP DELETE on workspace/workspacewhssarcb6b3evv2y/project/mathieu
+[2016-05-22 12:27:32.485] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:27:32.494] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:32.495] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:47.166] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:47.167] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:47.170] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 12:27:47.170] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 12:27:52.430] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:52.430] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:54.502] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:54.503] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:27:56.877] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:27:56.877] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:29:49.029] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:29:49.029] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:29:57.028] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:29:57.029] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:29:57.072] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=qsdqsd
+[2016-05-22 12:29:57.072] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:29:57.085] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:29:57.085] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:20.531] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:20.531] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:20.537] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 12:30:20.537] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 12:30:25.958] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:25.960] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:28.953] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:28.953] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:30.058] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:30.058] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:32.272] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:32.274] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:34.371] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:34.372] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:37.397] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:37.397] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:37.595] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/qsdqsd
+[2016-05-22 12:30:37.595] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:30:37.608] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:37.608] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:30:39.786] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:30:39.786] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:31:08.160] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:31:08.160] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:31:09.768] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:31:09.768] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:31:34.601] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:31:34.601] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:31:34.605] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 12:31:34.605] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 12:31:48.500] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:31:48.500] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:40:47.100] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:40:47.100] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:40:59.073] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:40:59.073] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:40:59.284] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=testafterchange
+[2016-05-22 12:40:59.284] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:40:59.296] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:40:59.301] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:46:04.240] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:46:04.240] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:46:20.610] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:46:20.610] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:46:20.661] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=ultimatetest
+[2016-05-22 12:46:20.661] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:46:21.041] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/ultimatetest?name=index.html
+[2016-05-22 12:46:21.041] [WARN] http_watcher.log - undefined
+[2016-05-22 12:46:21.051] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:46:21.051] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:48:05.432] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:48:05.432] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:48:14.101] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:48:14.102] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:48:14.138] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=wxcwxc
+[2016-05-22 12:48:14.139] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:48:14.311] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/wxcwxc?name=index.html
+[2016-05-22 12:48:14.311] [WARN] http_watcher.log - undefined
+[2016-05-22 12:48:14.330] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:48:14.330] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:22.446] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:22.446] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:24.883] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:24.883] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:24.940] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/testafterchange
+[2016-05-22 12:49:24.940] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:49:24.949] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:24.949] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:26.688] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:26.688] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:26.710] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/ultimatetest
+[2016-05-22 12:49:26.710] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:49:26.720] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:26.720] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:28.553] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:28.554] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:28.570] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/wxcwxc
+[2016-05-22 12:49:28.570] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:49:28.582] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:28.583] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:45.380] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:45.380] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:49:45.405] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=wxcwxc
+[2016-05-22 12:49:45.405] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:49:45.435] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/wxcwxc?name=index.html
+[2016-05-22 12:49:45.435] [WARN] http_watcher.log - undefined
+[2016-05-22 12:49:45.445] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:49:45.445] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:54:24.374] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:54:24.374] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:54:33.974] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:54:33.977] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:54:34.020] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=yoloyloolo
+[2016-05-22 12:54:34.021] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:54:34.035] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:54:34.036] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:54:34.053] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/yoloyloolo/?name=index.html
+[2016-05-22 12:55:00.956] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:00.956] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:03.122] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:03.122] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:03.136] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/yoloyloolo
+[2016-05-22 12:55:03.136] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:55:03.145] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:03.146] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:04.360] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:04.360] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:04.381] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/wxcwxc
+[2016-05-22 12:55:04.381] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:55:04.393] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:04.393] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:11.445] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:11.447] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:11.482] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=cocuocucocu
+[2016-05-22 12:55:11.482] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:55:11.505] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/cocuocucocu/?name=index.html
+[2016-05-22 12:55:11.506] [WARN] http_watcher.log - undefined
+[2016-05-22 12:55:11.516] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:11.517] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:30.077] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:30.078] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:55:30.121] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/cocuocucocu
+[2016-05-22 12:55:30.122] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 12:55:30.137] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:55:30.138] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:56:54.712] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:56:54.712] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:57:00.405] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:57:00.406] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 12:57:00.434] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=testfolder
+[2016-05-22 12:57:00.434] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 12:57:00.448] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/testfolder//mathieu/yolo/it/works
+[2016-05-22 12:57:00.449] [WARN] http_watcher.log - undefined
+[2016-05-22 12:57:00.459] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 12:57:00.459] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 13:35:23.347] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:36:13.533] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:36:38.218] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:38:25.085] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:38:25.085] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 13:41:10.765] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:41:10.765] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 13:45:23.236] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:45:23.236] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 13:45:43.511] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:45:43.512] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 13:46:02.882] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:46:02.883] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 13:49:26.856] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 13:49:26.856] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:05:39.017] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:05:39.018] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:05:39.068] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/test/test1/test2
+[2016-05-22 14:05:39.068] [WARN] http_watcher.log - undefined
+[2016-05-22 14:05:51.071] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:05:51.072] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:05:51.104] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=testimport
+[2016-05-22 14:07:26.560] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:07:26.561] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:07:35.686] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:07:35.686] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:07:35.712] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=testimport
+[2016-05-22 14:07:35.713] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:07:35.739] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:07:35.739] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:07:35.744] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/testimport/test1/test2
+[2016-05-22 14:07:35.744] [WARN] http_watcher.log - undefined
+[2016-05-22 14:08:50.287] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:08:50.287] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:08:57.069] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:08:57.070] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:08:57.101] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=azeaze
+[2016-05-22 14:08:57.101] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:08:57.115] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:08:57.115] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:08:57.131] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/azeaze/test1/test2
+[2016-05-22 14:08:57.131] [WARN] http_watcher.log - undefined
+[2016-05-22 14:10:09.568] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:09.568] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:11.536] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:11.536] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:11.551] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/testimport
+[2016-05-22 14:10:11.551] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:10:11.558] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:11.559] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:12.958] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:12.958] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:12.971] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/azeaze
+[2016-05-22 14:10:12.971] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:10:12.983] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:12.984] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:19.792] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:19.795] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:19.818] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=qsdqsd
+[2016-05-22 14:10:19.819] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:10:19.837] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:10:19.837] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:10:19.852] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/qsdqsd/test1/test2
+[2016-05-22 14:10:19.852] [WARN] http_watcher.log - undefined
+[2016-05-22 14:12:46.918] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:12:46.918] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:12:57.427] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:12:57.427] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:12:57.462] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=fghj
+[2016-05-22 14:12:57.462] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:12:57.482] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:12:57.483] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:12:57.496] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/fghj/test1/test2
+[2016-05-22 14:12:57.496] [WARN] http_watcher.log - undefined
+[2016-05-22 14:14:01.999] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:02.000] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:03.960] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:03.962] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:03.976] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/fghj
+[2016-05-22 14:14:03.976] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:14:03.989] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:03.990] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:08.515] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:08.517] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:08.557] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=qsdfqsd
+[2016-05-22 14:14:08.557] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:14:08.578] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:08.579] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:08.589] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/qsdfqsd/test1/test2
+[2016-05-22 14:14:08.590] [WARN] http_watcher.log - undefined
+[2016-05-22 14:14:37.224] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:37.224] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:38.686] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:38.686] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:38.702] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/qsdfqsd
+[2016-05-22 14:14:38.703] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:14:38.715] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:38.715] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:46.926] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:46.927] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:46.958] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=testimport
+[2016-05-22 14:14:46.960] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:14:46.973] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:14:46.974] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:14:46.978] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/testimport/test1/test2
+[2016-05-22 14:14:46.979] [WARN] http_watcher.log - undefined
+[2016-05-22 14:14:47.008] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/testimport/test1/test2?name=/testfile.txt
+[2016-05-22 14:14:47.008] [WARN] http_watcher.log - undefined
+[2016-05-22 14:18:30.898] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:18:30.899] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:18:33.686] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:18:33.686] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:18:33.708] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/testimport
+[2016-05-22 14:18:33.708] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:18:33.722] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:18:33.722] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:18:39.485] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:18:39.486] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:18:39.507] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv2
+[2016-05-22 14:18:39.507] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:18:39.524] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:18:39.524] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:18:39.551] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv2/test1/test2
+[2016-05-22 14:18:39.552] [WARN] http_watcher.log - undefined
+[2016-05-22 14:18:39.578] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv2/test1/test2?name=/testfile.txt
+[2016-05-22 14:18:39.578] [WARN] http_watcher.log - undefined
+[2016-05-22 14:18:39.591] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv2/?name=l
+[2016-05-22 14:18:39.592] [WARN] http_watcher.log - undefined
+[2016-05-22 14:20:12.538] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:20:12.539] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:20:15.001] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:20:15.001] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:20:15.014] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv2
+[2016-05-22 14:20:15.018] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:20:15.031] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:20:15.035] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:20:20.359] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:20:20.359] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:20:20.389] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv3
+[2016-05-22 14:20:20.389] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:20:20.406] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:20:20.406] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:20:20.421] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv3/test1/test2
+[2016-05-22 14:20:20.422] [WARN] http_watcher.log - undefined
+[2016-05-22 14:20:20.431] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv3/?name=index.html
+[2016-05-22 14:20:20.432] [WARN] http_watcher.log - undefined
+[2016-05-22 14:20:20.440] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv3/test1/test2?name=/testfile.txt
+[2016-05-22 14:20:20.440] [WARN] http_watcher.log - undefined
+[2016-05-22 14:21:45.757] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:21:45.757] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:21:54.454] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:21:54.455] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:21:57.104] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:21:57.104] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:21:57.125] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv3
+[2016-05-22 14:21:57.126] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:21:57.140] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:21:57.140] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:03.013] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:22:03.015] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:03.044] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv4
+[2016-05-22 14:22:03.044] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:22:03.060] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:22:03.061] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:03.074] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv4/test1/test2
+[2016-05-22 14:22:03.080] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:03.137] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv4/test1/troll/yolo
+[2016-05-22 14:22:03.137] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:03.149] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv4/test1/test2?name=/testbizarre.txt
+[2016-05-22 14:22:03.149] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:03.164] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv4/test1/test2?name=/testfile.txt
+[2016-05-22 14:22:03.164] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:03.173] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv4/?name=index.html
+[2016-05-22 14:22:03.173] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:03.187] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv4/test1/troll/yolo?name=/swag.txt
+[2016-05-22 14:22:03.187] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:40.758] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:22:40.758] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:40.772] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv4
+[2016-05-22 14:22:40.772] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:22:40.784] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:22:40.784] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:48.455] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:22:48.455] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:48.488] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv5
+[2016-05-22 14:22:48.488] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:22:48.505] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:22:48.505] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:22:48.518] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv5/test1/test2
+[2016-05-22 14:22:48.518] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:48.537] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv5/test1/troll/yolo
+[2016-05-22 14:22:48.537] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:48.539] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv5/test1/test2?name=/testbizarre.txt
+[2016-05-22 14:22:48.539] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:48.560] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv5/test1/test2?name=/testfile.txt
+[2016-05-22 14:22:48.560] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:48.578] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv5/?name=index.html
+[2016-05-22 14:22:48.578] [WARN] http_watcher.log - undefined
+[2016-05-22 14:22:48.591] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv5/test1/troll/yolo?name=/swag.txt
+[2016-05-22 14:22:48.591] [WARN] http_watcher.log - undefined
+[2016-05-22 14:25:14.110] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:25:14.110] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:25:16.312] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:25:16.312] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:25:16.338] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv5
+[2016-05-22 14:25:16.338] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:25:16.349] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:25:16.349] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:25:22.621] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:25:22.621] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:25:22.651] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv6
+[2016-05-22 14:25:22.651] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:25:22.668] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:25:22.668] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:25:22.684] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv6/test1/test2?name=testfile.txt
+[2016-05-22 14:27:53.901] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:27:53.901] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:27:56.125] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:27:56.126] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:27:56.148] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv6
+[2016-05-22 14:27:56.149] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:27:56.168] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:27:56.169] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:28:02.286] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:28:02.286] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:28:02.324] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv7
+[2016-05-22 14:28:02.324] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:28:02.347] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:28:02.348] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:28:02.374] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv7/test1/test2
+[2016-05-22 14:28:02.376] [WARN] http_watcher.log - undefined
+[2016-05-22 14:28:02.395] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv7/test1/troll/yolo
+[2016-05-22 14:28:02.395] [WARN] http_watcher.log - undefined
+[2016-05-22 14:28:02.406] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv7/test1/test2?name=/testbizarre.txt
+[2016-05-22 14:28:02.411] [WARN] http_watcher.log - undefined
+[2016-05-22 14:28:02.425] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv7/test1/test2?name=/testfile.txt
+[2016-05-22 14:28:02.426] [WARN] http_watcher.log - undefined
+[2016-05-22 14:28:02.439] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv7/?name=index.html
+[2016-05-22 14:28:02.439] [WARN] http_watcher.log - undefined
+[2016-05-22 14:28:02.440] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv7/test1/troll/yolo?name=/swag.txt
+[2016-05-22 14:28:02.440] [WARN] http_watcher.log - undefined
+[2016-05-22 14:31:58.987] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:31:58.987] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:32:00.810] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:32:00.810] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:32:00.832] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv7
+[2016-05-22 14:32:00.832] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:32:00.842] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:32:00.842] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:32:06.482] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:32:06.483] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:32:06.514] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv8
+[2016-05-22 14:32:06.516] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:32:06.535] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:32:06.535] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:32:06.549] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv8/testdir/testdir2?name=/f2.txt
+[2016-05-22 14:36:44.816] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:36:44.816] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:36:47.346] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:36:47.346] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:36:47.365] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/importv8
+[2016-05-22 14:36:47.366] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:36:47.380] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:36:47.380] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:36:53.349] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:36:53.350] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:36:53.374] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv9
+[2016-05-22 14:36:53.375] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:36:53.400] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:36:53.400] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:36:53.421] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/importv9/testdir/testdir2
+[2016-05-22 14:36:53.421] [WARN] http_watcher.log - undefined
+[2016-05-22 14:36:53.426] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv9/testdir/testdir2?name=/f2.txt
+[2016-05-22 14:36:53.426] [WARN] http_watcher.log - undefined
+[2016-05-22 14:36:53.439] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv9/?name=index.html
+[2016-05-22 14:36:53.440] [WARN] http_watcher.log - undefined
+[2016-05-22 14:36:53.443] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv9/testdir/testdir2?name=/f1.txt
+[2016-05-22 14:36:53.444] [WARN] http_watcher.log - undefined
+[2016-05-22 14:37:58.125] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:37:58.125] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:37:58.156] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=importv10
+[2016-05-22 14:37:58.157] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:37:58.179] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/importv10/testdir/testdir2?name=/f1.txt
+[2016-05-22 14:39:59.460] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:39:59.460] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:40:04.366] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:40:04.366] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:40:04.391] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=sdfgsdg
+[2016-05-22 14:40:04.392] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 14:40:04.411] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:40:04.413] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:40:04.435] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/sdfgsdg/?name=index.html
+[2016-05-22 14:40:04.436] [WARN] http_watcher.log - undefined
+[2016-05-22 14:40:04.438] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/sdfgsdg/testdir/testdir2
+[2016-05-22 14:40:04.438] [WARN] http_watcher.log - undefined
+[2016-05-22 14:40:04.454] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/sdfgsdg/testdir/testdir2?name=/f1.txt
+[2016-05-22 14:40:04.454] [WARN] http_watcher.log - undefined
+[2016-05-22 14:40:20.490] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:40:20.491] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:40:20.502] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/sdfgsdg
+[2016-05-22 14:40:20.502] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 14:40:20.514] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:40:20.514] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:40:28.586] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:40:28.586] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:09.119] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:09.119] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:11.307] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:11.307] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:13.078] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:13.079] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:14.226] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:14.226] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:15.713] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:15.713] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:17.363] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:17.363] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:18.998] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:18.999] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:31.030] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:31.030] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:32.880] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:32.880] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:34.530] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:34.530] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:35.810] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:35.810] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:36.947] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:36.947] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:37.972] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:37.972] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:43.089] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:43.090] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:43:59.277] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:43:59.277] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:44:01.016] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:44:01.016] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:44:02.215] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:44:02.215] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:44:03.118] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:44:03.118] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:44:05.039] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:44:05.039] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:45:20.556] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:45:20.556] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:45:22.842] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:45:22.842] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:45:26.479] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 14:45:26.479] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 14:48:02.204] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-22 14:49:14.505] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-22 14:49:14.505] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-22 14:49:27.315] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-22 14:49:27.315] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-22 14:49:27.316] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-22 14:49:27.316] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-22 14:49:27.317] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-22 14:49:27.318] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-22 21:22:19.872] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:22:19.872] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:22:25.841] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:22:25.841] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:22:32.379] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/azeaze
+[2016-05-22 21:22:32.379] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 21:22:32.437] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:22:32.437] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:29:33.690] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:29:33.691] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:29:33.704] [TRACE] http_watcher.log - *** Che HTTP POST on workspace/name/rc2s/runtime
+[2016-05-22 21:29:33.704] [WARN] http_watcher.log - The workspace is starting
+[2016-05-22 21:29:42.256] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:29:42.257] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:29:45.679] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:29:45.679] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:29:46.703] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:29:46.704] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:29:47.782] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:29:47.782] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:30:07.835] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:30:07.835] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:30:19.621] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:30:19.621] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:30:20.174] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=milano
+[2016-05-22 21:30:20.174] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 21:30:20.197] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:30:20.198] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:30:20.397] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/milano/testdir/testdir2
+[2016-05-22 21:30:20.398] [WARN] http_watcher.log - undefined
+[2016-05-22 21:30:20.924] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/milano/testdir/testdir2?name=/f1.txt
+[2016-05-22 21:30:20.924] [WARN] http_watcher.log - undefined
+[2016-05-22 21:30:20.949] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/milano/?name=index.html
+[2016-05-22 21:30:20.951] [WARN] http_watcher.log - undefined
+[2016-05-22 21:31:09.150] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:31:09.155] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 21:31:09.212] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/milano
+[2016-05-22 21:31:09.212] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 21:31:09.225] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 21:31:09.225] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 22:29:23.845] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 22:29:23.845] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 22:29:45.873] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 22:29:45.873] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 22:29:45.967] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y?name=valentin
+[2016-05-22 22:29:45.967] [WARN] http_watcher.log - The project successfully created
+[2016-05-22 22:29:45.999] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 22:29:46.000] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 22:29:46.055] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/folder/valentin/testdir/testdir2
+[2016-05-22 22:29:46.055] [WARN] http_watcher.log - undefined
+[2016-05-22 22:29:46.062] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/valentin/?name=index.html
+[2016-05-22 22:29:46.063] [WARN] http_watcher.log - undefined
+[2016-05-22 22:29:46.088] [TRACE] http_watcher.log - *** Che HTTP POST on ext/project/workspacewhssarcb6b3evv2y/file/valentin/testdir/testdir2?name=/f1.txt
+[2016-05-22 22:29:46.088] [WARN] http_watcher.log - undefined
+[2016-05-22 22:30:17.564] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 22:30:17.576] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-22 22:30:17.591] [TRACE] http_watcher.log - *** Che HTTP DELETE on ext/project/workspacewhssarcb6b3evv2y/valentin
+[2016-05-22 22:30:17.591] [WARN] http_watcher.log - The project successfully removed
+[2016-05-22 22:30:17.606] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
+[2016-05-22 22:30:17.607] [WARN] http_watcher.log - The response contains requested workspace entity
