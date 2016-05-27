@@ -68,6 +68,9 @@ public class UserService implements IUserService
 	{
 		try
 		{
+			user.setPassword(Hash.sha1(UserService.SALT + user.getPassword() + UserService.PEPPER));
+			System.out.println(user.getPassword());
+			
 			user.setCreated(new Date());
 			return userDAO.save(user);
 		}
@@ -78,10 +81,14 @@ public class UserService implements IUserService
 	}
 	
 	@Override
-	public User update(User user) throws ServiceException
+	public User update(User user, boolean passwordUpdated) throws ServiceException
 	{
 		try
 		{
+			if(passwordUpdated)
+				user.setPassword(Hash.sha1(UserService.SALT + user.getPassword() + UserService.PEPPER));
+			
+			user.setUpdated(new Date());
 			return userDAO.update(user);
 		}
 		catch(DAOException e)

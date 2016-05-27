@@ -54,11 +54,11 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
-	public User update(User user) throws EJBException
+	public User update(User user, boolean passwordUpdated) throws EJBException
 	{
 		try
 		{
-			return userService.update(user);
+			return userService.update(user, passwordUpdated);
 		}
 		catch(ServiceException e)
 		{
