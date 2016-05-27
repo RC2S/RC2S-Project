@@ -14,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.ejb.EJB;
@@ -23,14 +22,11 @@ import javax.ejb.Stateless;
 @Stateless
 public class PluginLoaderService implements IPluginLoaderService
 {
-	@EJB
-	private IPluginService pluginService;
-	
-	@EJB 
-	private IPluginDAO pluginDAO;
+	@EJB private IPluginService pluginService;
+	@EJB private IPluginDAO pluginDAO;
 	
     @Override
-    public boolean uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException
+    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException
     {
 		File tmpZip = null;
 		File unzipedDir = null;
@@ -47,10 +43,12 @@ public class PluginLoaderService implements IPluginLoaderService
 			File tmpEar = checkServerPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
 			File tmpJar = checkClientPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
 			
-			return (tmpEar != null && tmpJar != null
-				&& deployServerPlugin(simpleName, tmpEar)
-				&& deployClientPlugin(simpleName, tmpJar)
-				&& persistPlugin(pluginName, accessRole) != null);
+			if(tmpEar != null && tmpJar != null)
+			{
+				deployServerPlugin(simpleName, tmpEar);
+				deployClientPlugin(simpleName, tmpJar);
+				persistPlugin(pluginName, accessRole);
+			}
 		}
 		catch(Exception e)
 		{
@@ -157,38 +155,20 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
     }
 
-    @Override
-    public boolean deployServerPlugin(String simpleName, File tmpEar)
-    {
-		try
-		{			
-			String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
-			File pluginFile = new File(autodeployDir + simpleName + "_server.ear");
-			Files.copy(tmpEar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-			return true;
-		}
-		catch(Exception e)
-		{
-			return false;
-		}
+	@Override
+    public void deployServerPlugin(String simpleName, File tmpEar) throws IOException
+    {		
+		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
+		File pluginFile = new File(autodeployDir + simpleName + "_server.ear");
+		Files.copy(tmpEar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
-    public boolean deployClientPlugin(String simpleName, File tmpJar)
+    public void deployClientPlugin(String simpleName, File tmpJar) throws IOException
     {
-		try
-		{
-			String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "jnlpwar" + File.separator + "libs" + File.separator;
-			File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
-			Files.copy(tmpJar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			
-			return true;
-		}
-		catch(Exception e)
-		{
-			return false;
-		}
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "jnlpwar" + File.separator + "libs" + File.separator;
+		File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
+		Files.copy(tmpJar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 	
 	@Override
@@ -207,21 +187,14 @@ public class PluginLoaderService implements IPluginLoaderService
 			plugin = new Plugin();
 		}
 		
-		try
-		{
-			plugin.setName(pluginName);
-			plugin.setAccess(role.getName());
-			
-			plugin.setVersion("1.0");
-			plugin.setAuthor("John Doe");
-			plugin.setActivated(true);
-			
-			return (update ? pluginService.update(plugin) : pluginService.add(plugin));
-		}
-		catch(ServiceException e)
-		{
-			throw new ServiceException(e);
-		}
+		plugin.setName(pluginName);
+		plugin.setAccess(role.getName());
+
+		plugin.setVersion("1.0");
+		plugin.setAuthor("John Doe");
+		plugin.setActivated(true);
+
+		return (update ? pluginService.update(plugin) : pluginService.add(plugin));
 	}
 	
 	@Override

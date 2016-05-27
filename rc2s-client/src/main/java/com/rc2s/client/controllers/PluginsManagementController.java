@@ -128,19 +128,11 @@ public class PluginsManagementController extends TabController implements Initia
 			{
 				try
 				{
-					boolean uploaded = pluginLoaderEJB.uploadPlugin("Test Plugin", role, Files.readAllBytes(pluginFile.toPath()));
-					
-					if(uploaded)
-					{
-						ButtonType confirm = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Would you wish to restart you client now?");
+					pluginLoaderEJB.uploadPlugin("Test Plugin", role, Files.readAllBytes(pluginFile.toPath()));
+					ButtonType confirm = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Would you wish to restart your client now?");
 						
-						if(confirm == ButtonType.OK)
-							Platform.exit();
-					}
-					else
-					{
-						error("An unexpected error occured while uploading your plugin");
-					}
+					if(confirm == ButtonType.OK)
+						Platform.exit();
 				}
 				catch(EJBException | IOException ex)
 				{

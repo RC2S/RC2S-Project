@@ -8,6 +8,6 @@ import javax.ejb.Remote;
 @Remote
 public interface PluginLoaderFacadeRemote
 {
-    public boolean uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException;
+    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException;
 	public void deletePlugin(Plugin plugin) throws EJBException;
 }

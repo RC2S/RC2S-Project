@@ -15,11 +15,11 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
     private IPluginLoaderService pluginLoaderService;
     
     @Override
-    public boolean uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException
+    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException
     {
 		try
 		{
-			return pluginLoaderService.uploadPlugin(pluginName, accessRole, binaryPlugin);
+			pluginLoaderService.uploadPlugin(pluginName, accessRole, binaryPlugin);
 		}
 		catch(ServiceException e)
 		{
