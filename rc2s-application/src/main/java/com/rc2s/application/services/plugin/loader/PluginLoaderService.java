@@ -230,7 +230,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			else if(domainRoot.startsWith("file://"))
 				domainRoot = domainRoot.replace("file://", "");
 			else if(domainRoot.startsWith("file:/"))
-				domainRoot = domainRoot.replace("file:/", "");
+				domainRoot = domainRoot.replace("file:", "");
 		}
 		
 		return domainRoot;
