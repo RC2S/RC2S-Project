@@ -1335,3 +1335,11 @@ Error: ER_BAD_FIELD_ERROR: Unknown column 'r.nam' in 'field list'
 [2016-05-22 22:29:23.803] [INFO] db_watcher.log - Message : 'Connection OK'
 [2016-05-22 22:29:23.807] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
 [2016-05-22 22:29:23.807] [INFO] db_watcher.log - User found. Creating new token : b12b6e63184fe6902447fc553441aae83312a380
+[2016-05-26 23:17:20.903] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-05-26 23:17:20.906] [INFO] db_watcher.log - -> Host : localhost
+[2016-05-26 23:17:20.907] [INFO] db_watcher.log - -> User : root
+[2016-05-26 23:17:20.907] [INFO] db_watcher.log - -> Database : RC2S
+[2016-05-26 23:17:20.907] [INFO] db_watcher.log - -> Password : root
+[2016-05-26 23:17:20.907] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-05-26 23:17:20.910] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN user_role ur ON ur.role_id = r.id 		INNER JOIN user u ON u.id = ur.user_id 		AND u.username = ? AND u.password = ? 	'
+[2016-05-26 23:17:20.910] [INFO] db_watcher.log - User found. Creating new token : a14b7c498b9d8a77a950ea5c9921a333d010e310
