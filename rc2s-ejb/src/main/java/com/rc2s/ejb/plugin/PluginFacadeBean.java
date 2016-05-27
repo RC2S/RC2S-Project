@@ -28,7 +28,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public List<String> getAvailables() throws EJBException
+	public List<Plugin> getAvailables() throws EJBException
 	{
 		try
 		{

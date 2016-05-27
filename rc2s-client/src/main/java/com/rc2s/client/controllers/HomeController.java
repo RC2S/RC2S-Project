@@ -4,6 +4,7 @@ import com.rc2s.client.Main;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
+import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Role;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.plugin.PluginFacadeRemote;
@@ -56,15 +57,19 @@ public class HomeController implements Initializable
 	{
 		try
 		{
-			List<String> availablePlugins = pluginEJB.getAvailables();
+			List<Plugin> availablePlugins = pluginEJB.getAvailables();
 			
-			for(String pluginName : availablePlugins)
+			for(Plugin plugin : availablePlugins)
 			{
-				String mainView = "/com/rc2s/" + pluginName.toLowerCase().replace(" ", "") + "/views/MainView.fxml";
-				FXMLLoader loader = Resources.loadFxml(mainView);
+				if(plugin.getAccess().equalsIgnoreCase("user")
+				|| (plugin.getAccess().equalsIgnoreCase("admin") && isAdmin(Main.getAuthenticatedUser())))
+				{
+					String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/views/MainView.fxml";
+					FXMLLoader loader = Resources.loadFxml(mainView);
 
-				if(loader != null)
-					tabPane.getTabs().add(new Tab(pluginName, loader.getRoot()));
+					if(loader != null)
+						tabPane.getTabs().add(new Tab(plugin.getName(), loader.getRoot()));
+				}
 			}
 		}
 		catch(EJBException e)

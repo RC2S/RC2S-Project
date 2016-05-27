@@ -29,7 +29,7 @@ public class PluginService implements IPluginService
 	}
 	
 	@Override
-	public List<String> getAvailables() throws ServiceException
+	public List<Plugin> getAvailables() throws ServiceException
 	{
 		try
 		{
