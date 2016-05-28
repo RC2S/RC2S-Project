@@ -1,10 +1,10 @@
 apply plugin: 'application'
 
+mainClassName = 'com.rc2s.daemon.Daemon'
+
 configurations {
     sshAntTask
 }
-
-mainClassName = 'com.rc2s.daemon.Daemon'
 
 dependencies {
     compile group: 'com.pi4j', name: 'pi4j-core', version: '1.0'
@@ -13,7 +13,14 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.rc2s.daemon.Daemon'
+        attributes (
+            "Implementation-Title" : project.name,
+            "Implementation-Version" : version,
+            "Main-Class" : mainClassName,
+            "Class-Path" : configurations.compile.collect{it.getName()}.join(' '),
+            "Permissions": "all-permissions",
+            "Application-Name" : project.name
+        )
     }
 }
 

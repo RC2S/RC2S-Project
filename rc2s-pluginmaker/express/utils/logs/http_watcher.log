@@ -1161,3 +1161,7 @@
 [2016-05-22 22:30:17.591] [WARN] http_watcher.log - The project successfully removed
 [2016-05-22 22:30:17.606] [TRACE] http_watcher.log - *** Che HTTP GET on workspace/name/rc2s
 [2016-05-22 22:30:17.607] [WARN] http_watcher.log - The response contains requested workspace entity
+[2016-05-26 23:17:23.935] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-26 23:17:23.936] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
+[2016-05-26 23:17:38.802] [ERROR] http_watcher.log - Failed HTTP operation GETFBN1
+[2016-05-26 23:17:38.802] [ERROR] http_watcher.log - connect EHOSTUNREACH 192.168.1.108:8080
