@@ -72,10 +72,11 @@ task generateJnlp(dependsOn: signAll) << {
 }
 
 war {
-    dependsOn generateJnlp
+    
     from "${project.buildDir}/jnlp/"
     archiveName "rc2s-jnlp.war"
-    if(!project.hasProperty('skipAutodeploy')) {
+    if(!project.hasProperty('skipJNLPAutodeploy')) {
+        dependsOn generateJnlp
 		doLast {
             println '****** Deploying RC2S-JNLP Web Application ******'
 			tasks.deployWar.execute();

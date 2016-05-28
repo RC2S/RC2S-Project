@@ -18,7 +18,7 @@ ear {
         description = "JEE Server for RC2S project"
     }
 	
-	if(!project.hasProperty('skipAutodeploy')) {
+	if(!project.hasProperty('skipServerAutodeploy')) {
 		doLast {
             println '****** Deploying RC2S-Server Application ******'
 			tasks.deployServer.execute();
