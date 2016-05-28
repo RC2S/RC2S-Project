@@ -59,11 +59,6 @@ public class SourceControlProcessor extends AbstractProcessor
 					try
 					{
 						SourceUtil.verifySource(mainClass);
-						/* 
-						// With a non-static SourceUtil
-						NewSourceUtil nsu = new NewSourceUtil(mainClass);
-						nsu.verifySource();
-						*/
 					}
 					catch (Exception ex)
 					{

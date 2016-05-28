@@ -1,23 +1,45 @@
 package com.rc2s.annotations.utils;
 
 import com.rc2s.annotations.mappers.ElementMapper;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SourceUtil
-{	
-	private static final ArrayList<String> controllersList = null;
-	
+{	// Name of the plugin, found from the package name
 	private static String pluginName = null;
 	
-	private static final String statelessPackage	= "javax.ejb.Stateless";
-	private static final String statefulPackage		= "javax.ejb.Stateful";
-	private static final String remotePackage		= "javax.ejb.Remote";
-	private static final String localPackage		= "javax.ejb.Local";
-	private static final String entityPackage		= "javax.persistence.Entity";
+	// List of controllers contained by the plugin
+	private static ArrayList<String> controllersList = null;
+	private static ArrayList<String> viewsList = null;
+	// Should contain exactly one MainController
+	private static boolean hasMainController;
+	private static boolean hasMainView;
+	
+	// Needed annotations package names
+	private final static String viewsFolderPath		= "/media/Data/RC2S/rc2s-project/rc2s-client/src/main/resources/views";
+	private final static String statelessPackage	= "javax.ejb.Stateless";
+	private final static String statefulPackage		= "javax.ejb.Stateful";
+	private final static String remotePackage		= "javax.ejb.Remote";
+	private final static String localPackage		= "javax.ejb.Local";
+	private final static String entityPackage		= "javax.persistence.Entity";
 	
 	public static void verifySource(ElementMapper mainClass)
 	{
 		String[] packageParts = mainClass.getPackageName().split("\\.");
+		
+		// First, get all views names and verify there is a MainView.fxml
+		try
+		{
+			getAllViewsNames();
+		}
+		catch (SourceControlException | IOException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
 		
 		try
 		{
@@ -215,10 +237,6 @@ public class SourceUtil
 					verifyControllersStandards(mainClass, cne, entityName);
 					break;
 						
-				case VIEWS:
-					verifyViewsStandards(mainClass, cne, entityName);
-					break;
-						
 				case UTILS:		//void - utils only need @SourceControl
 				case CSS:		//void
 				case IMAGES:		//void
@@ -316,8 +334,17 @@ public class SourceUtil
 
 	private static void verifyVoStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
-		// Regex for name ? [A-Z]([a-z])+
+		// Compile the regex
+		Pattern p = Pattern.compile("(([A-Z]+)([a-z]*))+");
+		// Create search engine
+		Matcher m = p.matcher(mainClass.getName());
+		// Search occurences
+		Boolean b = m.matches();
+		
 		System.err.println("CLASS NAME : " + mainClass.getName());
+		
+		if (!b)
+			throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
 		
 		if (!mainClass.getAnnotations().contains(entityPackage))
 			throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + entityPackage + "'");
@@ -331,14 +358,30 @@ public class SourceUtil
 
 	private static void verifyControllersStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
+		if (mainClass.getName().equals("MainController"))
+		{
+			if (hasMainController)
+				throw new SourceControlException("Found two MainController.java, your plugin should only contain one.");
+			
+			hasMainController = true;
+		}
+		
 		if (controllersList.contains(mainClass.getName()))
 			throw new SourceControlException("Controller " + mainClass.getName() + " already in controllers list. You might have added two times the same controller.");
-		
-		controllersList.add(mainClass.getName());
 	}
 
-	private static void verifyViewsStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName)
+	private static void getAllViewsNames() throws SourceControlException, IOException//, ParserConfigurationException, SAXException
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		// Open xml file
+		/*DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		Document doc = docBuilder.parse(this.viewsFilePath);
+		*/
+		
+		Files.walk(Paths.get(viewsFolderPath)).forEach(filePath -> {
+			if (Files.isRegularFile(filePath)) {
+				System.err.println(filePath);
+			}
+		});
 	}
 }
