@@ -1,16 +1,9 @@
 apply plugin: 'war'
 
-
-war {
-    
+dependencies {
+    providedCompile group: 'com.rc2s', name: 'rc2s-client', version: version
 }
 
-/*doLast {
-        tasks.copyLibs.execute();
-        tasks.signAll.execute();
-        tasks.generateJnlp.execute();
-    }*/
-    
 /**
  * JNLP
  */
@@ -21,49 +14,44 @@ task copyLibs(type: Copy) {
     include('*.jar')
 }
 
-task signAll(dependsOn: [copyLibs]) << {
-    println("Signing Libs")
+task signAll(dependsOn: copyLibs) << {
+    println '****** Signing Libs ******'
+    
     new File("${project.buildDir}/jnlp/libs").mkdirs()
     def libFiles = files { file("${project.buildDir}/jnlp/build").listFiles() }
     libFiles.each {
+        println '[Signing ' + it + ']'
         ant.signjar(
             destDir: "${project.buildDir}/jnlp/libs",
             alias: 'RC2S',
             jar: it,
-            keystore: "${project.projectDir}/src/main/jnlp/keys/RC2S.jks",
+            keystore: "${project.projectDir}/src/jnlp/keys/RC2S.jks",
             storepass: 'P@ssword1234',
             preservelastmodified: 'true'
         )
     }
     delete "${project.buildDir}/jnlp/build"
+    
+    println '****** Libs Successfully Signed ******'
 }
-task generateJnlp(dependsOn: [signAll]) << {
-    println("Generating JNLP")
-    File jnlpTemplateFile = new File("${project.projectDir}/src/main/jnlp/descriptors/rc2s-${env}.jnlp")
+
+task generateJnlp(dependsOn: signAll) << {
+    println '****** Generating JNLP ******'
+    
+    def jnlpFileName    = "rc2s-client.jnlp"
+    def mainJar         = "rc2s-client-${version}.jar"
+    def mainClassName   = "com.rc2s.client.Main"
+    
+    File jnlpTemplateFile = new File("${project.projectDir}/src/jnlp/rc2s-${env}.jnlp")
     def root = new XmlParser().parse(jnlpTemplateFile)
-    def jnlpFileName = "rc2s-client-${env}-${version}.jnlp"
-    
-    // Setting values in the jnlp template
-    
+   
     // Racine
-    //root.@codebase = 'file://' + new File("${project.buildDir}/jnlp").absolutePath
-    root.@codebase = 'http://192.168.1.108' // Prod Server IP Address
     root.@href = jnlpFileName
-    
-    // Initialisation des informations
-    def information = root.information[0]
-    def title = information.title[0]
-    def vendor = information.vendor[0]
-    title.setValue("RC2S-Client")
-    vendor.setValue("RC2S")
     
     // Initialisation des ressources (main JAR + libs)
     def resource = root.resources[0]
-    def j2se = resource.j2se[0]
-    j2se.@version = "1.8+"
     
-    def mainJar = "rc2s-client-${version}.jar"
-    def libs = files { file("${project.buildDir}/jnlp/libs").listFiles() }
+    def libs = files {file("${project.buildDir}/jnlp/libs").listFiles()}
     libs.each {
         def resourceValues = [href: "libs/" + it.name]
         if (mainJar == it.name) {
@@ -72,11 +60,39 @@ task generateJnlp(dependsOn: [signAll]) << {
         resource.appendNode('jar', resourceValues)
     }
     
-    // On définit la class principale
+    // On définit la classe principale
     def applicationDesc = root.'application-desc'[0]
     applicationDesc.'@main-class' = mainClassName
     
     // Écriture du nouveau contenu dans un nouveau fichier JNLP
     File jnlpFile = new File("${project.buildDir}/jnlp/" + jnlpFileName)
     new XmlNodePrinter(new PrintWriter(jnlpFile)).print(root)
+    
+    println '****** JNLP Successfully Generated ******'
+}
+
+war {
+    dependsOn generateJnlp
+    from "${project.buildDir}/jnlp/"
+    archiveName "rc2s-jnlp.war"
+    if(!project.hasProperty('skipAutodeploy')) {
+		doLast {
+            println '****** Deploying RC2S-JNLP Web Application ******'
+			tasks.deployWar.execute();
+
+            sleep(4 * 1000) // Sleep when Payara autodeploy process execution
+            def files = fileTree("$System.env.RC2S_HOME/autodeploy").filter {it.isFile()}.files.name
+            files.any {
+                if(it.contains("rc2s-jnlp.war_deployed"))
+                    println '****** Application RC2S-JNLP successfully deployed on Payara Server ! ******'
+                else if(it.contains("rc2s-jnlp.war_deployFailed"))
+                    println '****** Error while deploying RC2S-JNLP Application on Payara Server ! ******'
+            }
+		}
+    }
+}
+
+task deployWar(type: Copy) {
+    from("$buildDir/libs/rc2s-jnlp.war")
+    into("$System.env.RC2S_HOME/autodeploy")
 }

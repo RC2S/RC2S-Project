@@ -1,27 +1,12 @@
 apply plugin: 'application'
 
 mainClassName = 'com.rc2s.client.Main'
-
-repositories {
-    flatDir {
-        dirs '../rc2s-ejb/build/libs'
-    }
-}
-
 dependencies {
     compile project(':rc2s-common')
     compile project(':rc2s-annotations')
-    compile name: "interfaces-$version"
+    compile group: 'com.rc2s', name: 'rc2s-interfaces', version: version
     compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 }
-
-project.tasks.compileJava.dependsOn(
-	rootProject.getSubprojects().findAll {
-        subproject -> subproject.name != project.name 
-	}.collect { 
-        subproject -> "${subproject.getPath()}:build"
-	}
-)
 
 jar {
     manifest {
@@ -29,7 +14,6 @@ jar {
             "Implementation-Title" : project.name,
             "Implementation-Version" : version,
             "Main-Class" : mainClassName,
-            //"Class-Path" : configurations.compile.collect{it.getName()}.join(' '),
             "Permissions": "all-permissions",
             "Application-Name" : project.name
         )
