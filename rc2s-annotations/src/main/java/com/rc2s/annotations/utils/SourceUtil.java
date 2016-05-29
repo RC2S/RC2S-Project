@@ -29,8 +29,8 @@ public class SourceUtil
 	private static ArrayList<String> viewsList = null;
 	
 	// Should contain exactly one MainController & one MainView
-	private static boolean hasMainController;
-	private static boolean hasMainView;
+	private static boolean hasMainController = false;
+	private static boolean hasMainView = false;
 	
 	// Needed annotations package names & packages paths
 	private final static String controllersFolderPath	= "/media/Data/RC2S/rc2s-project/rc2s-client/src/main/java/com/rc2s/client/controllers";
@@ -41,7 +41,22 @@ public class SourceUtil
 	private final static String localPackage			= "javax.ejb.Local";
 	private final static String entityPackage			= "javax.persistence.Entity";
 	
-	public static void verifySource(ElementMapper mainClass)
+	public SourceUtil()
+	{
+		if (expectedControllersList == null)
+			expectedControllersList = new ArrayList<>();
+		
+		if (controllersList == null)
+			controllersList = new ArrayList<>();
+		
+		if (initialControllersList == null)
+			initialControllersList = new ArrayList<>();
+		
+		if (viewsList == null)
+			viewsList = new ArrayList<>();
+	}
+	
+	public void verifySource(ElementMapper mainClass)
 	{
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
@@ -66,8 +81,6 @@ public class SourceUtil
 		}
 		
 		String[] packageParts = mainClass.getPackageName().split("\\.");
-		
-		controllersList = new ArrayList<>();
 		
 		try
 		{
@@ -101,7 +114,7 @@ public class SourceUtil
 		}
 	}
 
-	private static void verifyRoot(String[] packageParts) throws SourceControlException
+	private void verifyRoot(String[] packageParts) throws SourceControlException
 	{
 		if (packageParts.length < 3)
 			throw new SourceControlException("Invalid package naming - Too short (expected : more than 2 parts)");
@@ -122,7 +135,7 @@ public class SourceUtil
 			throw new SourceControlException("Invalid plugin naming - Already retrieved '" + pluginName + "' and found '" + packageParts[2] + "' in this class");
 	}
 
-	private static ClassNamesEnum findClassName(String[] packageParts) throws SourceControlException
+	private ClassNamesEnum findClassName(String[] packageParts) throws SourceControlException
 	{
 		if (packageParts.length < 5)
 			throw new SourceControlException("Invalid package naming - Too short (expected : more than 4 parts)");
@@ -149,7 +162,7 @@ public class SourceUtil
 		}
 	}
 	
-	private static ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
+	private ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
 	{
 		switch (packagePart) 
 		{
@@ -164,7 +177,7 @@ public class SourceUtil
 		}
 	}
 
-	private static ClassNamesEnum clientClassNameFromPackage(String packagePart) throws SourceControlException
+	private ClassNamesEnum clientClassNameFromPackage(String packagePart) throws SourceControlException
 	{
 		switch (packagePart) 
 		{
@@ -188,7 +201,7 @@ public class SourceUtil
 		}
 	}
 	
-	private static String verifyPackageEnd(String[] packageParts) throws SourceControlException
+	private String verifyPackageEnd(String[] packageParts) throws SourceControlException
 	{
 		boolean hasUppers = !packageParts[4].equals(packageParts[4].toLowerCase());
 		
@@ -229,7 +242,7 @@ public class SourceUtil
 	* pn.client.css				OK -> void
 	* pn.client.images			OK -> void
 	*/
-	private static void verifyClassStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
+	private void verifyClassStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
 		if (cne != null)
 		{
@@ -266,23 +279,17 @@ public class SourceUtil
 					break;
 			}
 		}
-		
-		System.err.println("");
 	}
 
-	private static void verifyEjbStandards(ElementMapper mainClass, String entityName) throws SourceControlException
+	private void verifyEjbStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
 		if (mainClass.getName().equals(entityName + "FacadeRemote"))
 		{
-			System.err.println("CLASS NAME : " + mainClass.getName());
-			
 			if (!mainClass.getAnnotations().contains(remotePackage))
 				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + remotePackage + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "FacadeBean"))
 		{
-			System.err.println("CLASS NAME : " + mainClass.getName());
-			
 			checkClassHasStatelessOrStatefulAnnotation(mainClass);
 		}
 		else
@@ -292,19 +299,15 @@ public class SourceUtil
 		}
 	}
 
-	private static void verifyApplicationStandards(ElementMapper mainClass, String entityName) throws SourceControlException
+	private void verifyApplicationStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
 		if (mainClass.getName().equals("I" + entityName + "Service"))
 		{
-			System.err.println("CLASS NAME : " + mainClass.getName());
-			
 			if (!mainClass.getAnnotations().contains(localPackage))
 				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + localPackage + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "Service"))
 		{
-			System.err.println("CLASS NAME : " + mainClass.getName());
-			
 			checkClassHasStatelessOrStatefulAnnotation(mainClass);
 		}
 		else
@@ -314,19 +317,15 @@ public class SourceUtil
 		}
 	}
 
-	private static void verifyDaoStandards(ElementMapper mainClass, String entityName) throws SourceControlException
+	private void verifyDaoStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
 		if (mainClass.getName().equals("I" + entityName + "DAO"))
 		{
-			System.err.println("CLASS NAME : " + mainClass.getName());
-			
 			if (!mainClass.getAnnotations().contains(localPackage))
 				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + localPackage + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "DAO"))
 		{
-			System.err.println("CLASS NAME : " + mainClass.getName());
-			
 			checkClassHasStatelessOrStatefulAnnotation(mainClass);
 		}
 		else
@@ -336,7 +335,7 @@ public class SourceUtil
 		}
 	}
 	
-	private static void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
+	private void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
 	{
 		Boolean hasStateless	= mainClass.getAnnotations().contains(statelessPackage);
 		Boolean hasStateful		= mainClass.getAnnotations().contains(statefulPackage);
@@ -354,7 +353,7 @@ public class SourceUtil
 		}
 	}
 
-	private static void verifyVoStandards(ElementMapper mainClass) throws SourceControlException
+	private void verifyVoStandards(ElementMapper mainClass) throws SourceControlException
 	{
 		// Compile the regex
 		Pattern p = Pattern.compile("(([A-Z]+)([a-z]*))+");
@@ -363,8 +362,6 @@ public class SourceUtil
 		// Search occurences
 		Boolean b = m.matches();
 		
-		System.err.println("CLASS NAME : " + mainClass.getName());
-		
 		if (!b)
 			throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
 		
@@ -372,13 +369,13 @@ public class SourceUtil
 			throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + entityPackage + "'");
 	}
 
-	private static void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) 
+	private void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) 
 	{
 		// Behaviour to determine
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	private static void verifyControllerStandards(ElementMapper mainClass) throws SourceControlException
+	private void verifyControllerStandards(ElementMapper mainClass) throws SourceControlException
 	{
 		// We shall find initialize(URL, ResourceBundle)
 		boolean hasJavaNetURL = false;
@@ -432,10 +429,8 @@ public class SourceUtil
 		controllersList.add(mainClass.getName());
 	}
 	
-	private static void getAllControllersNames()
+	private void getAllControllersNames()
 	{
-		initialControllersList = new ArrayList<>();
-		
 		File testDirectory = new File(controllersFolderPath);
 		File[] files = testDirectory.listFiles(
 			(File pathname) -> pathname.getName().endsWith(".java") 
@@ -447,10 +442,8 @@ public class SourceUtil
 			initialControllersList.add(file.getName());
 	}
 
-	private static void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
+	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
 	{
-		viewsList = new ArrayList<>();
-		
 		File testDirectory = new File(viewsFolderPath);
 		File[] files = testDirectory.listFiles(
 			(File pathname) -> pathname.getName().endsWith(".fxml") 
@@ -462,13 +455,12 @@ public class SourceUtil
 			viewsList.add(file.getName());
 		
 		// Get associated Controllers
-		expectedControllersList = new ArrayList<>();
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		
 		for (String fileName : viewsList)
 		{
-			if (fileName.equals("HomeView.fxml"))
+			if (fileName.equals("MainView.fxml"))
 			{
 				if (hasMainView)
 					throw new SourceControlException("Your plugin should only contain one MainView.fxml");
