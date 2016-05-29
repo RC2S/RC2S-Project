@@ -58,7 +58,7 @@ public class Resources
     {
         StringBuilder   fxmlFile;
         FXMLLoader      loader;
-        
+		
         fxmlFile = new StringBuilder();
         
         if(!fxml.contains(".fxml"))
@@ -67,18 +67,18 @@ public class Resources
             fxmlFile.append(fxml);
         
         loader = new FXMLLoader();
-        
+		
         try
         {
-            if(resourceExists(fxmlFile.toString()))
-            {
-                loader.setLocation(getResource(fxmlFile.toString()));
-                loader.load(getResource(fxmlFile.toString()).openStream());
-                
-                return loader;
-            }
-            else
-                return null;
+			if(resourceExists(fxmlFile.toString()))
+			{
+				loader.setLocation(getResource(fxmlFile.toString()));
+				loader.load(getResource(fxmlFile.toString()).openStream());
+
+				return loader;
+			}
+			else
+				return null;
         }
         catch(IOException e)
         {

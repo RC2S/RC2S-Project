@@ -4,8 +4,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
@@ -35,7 +33,7 @@ public class LedCube extends Group
 		this.actionEvents = actionEvents;
         drawCube(x, y, z, size, color);
 		
-        this.parent.setOnMouseDragged((MouseEvent e) -> {
+        this.parent.setOnMouseDragged((e) -> {
             if(e.isPrimaryButtonDown())
             {
                 double oldx = mx;
@@ -50,12 +48,14 @@ public class LedCube extends Group
 				
                 this.rx.setAngle(nx);
                 this.ry.setAngle(ny);
+				
+				e.consume();
             }
         });
 		
 		if(actionEvents)
 		{
-			this.parent.setOnScroll((ScrollEvent e) -> {
+			this.parent.setOnScroll((e) -> {
 				if(e.getDeltaY() == 0
 				|| (this.size <= LedCube.MIN_SIZE && e.getDeltaY() < 0)
 				|| (this.size >= LedCube.MAX_SIZE && e.getDeltaY() > 0))
@@ -63,6 +63,8 @@ public class LedCube extends Group
 
 				double delta = e.getDeltaY() > 0 ? 1. : -1.;
 				this.setSize(this.size + delta);
+				
+				e.consume();
 			});
 		}
 		
@@ -210,5 +212,16 @@ public class LedCube extends Group
             l.setSize(this.size);
         }
         updateAxis();
+    }
+
+    public void setColor(Color color)
+    {
+        this.color = color;
+
+        for(Node n : this.getChildren())
+        {
+            Led l = (Led)n;
+            l.setColor(this.color);
+        }
     }
 }

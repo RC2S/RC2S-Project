@@ -1,13 +1,22 @@
+apply plugin: 'maven-publish'
+
 dependencies {
     compile project(':rc2s-application')
     compile group: 'javax', name: 'javaee-api', version: '7.0'
 }
 
 task generateApi(type: Jar, dependsOn: jar) {
-	baseName = 'interfaces'
+	baseName = 'rc2s-interfaces'
 	from fileTree(dir: "$buildDir/classes/main/", include: '**/*Remote.class')
 }
 
-artifacts {
-	archives generateApi
+publishing {
+    publications {
+        InterfacesJar(MavenPublication) {
+            artifactId "rc2s-interfaces"
+            version "$version"
+            groupId "$group"
+            artifact generateApi
+        }
+    }
 }

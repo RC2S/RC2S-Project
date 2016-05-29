@@ -1,30 +1,43 @@
 package com.rc2s.client;
 
-import com.rc2s.client.utils.EJB;
-import com.rc2s.common.vo.User;
-import com.rc2s.ejb.user.UserFacadeRemote;
-import java.util.List;
-import javax.naming.NamingException;
-
 public class ClientTest
 {
     public static void main(String[] args)
     {
-        try
-        {
-            // Test UsersEJB
-            System.out.println("Client Context" + EJB.getContext());
-            UserFacadeRemote userEJB = (UserFacadeRemote)EJB.getContext().lookup("UserEJB");
+		/*try
+		{
+			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+			List<String> users = (List<String>)pluginLoader.invoke("testplugin", "User", "getUsers");
 			
-            List<User> users = userEJB.getAllUsers();
-            for(User user : users) {
-                System.out.println(user.getId() + " " + user.getUsername() 
-                    + " " + user.getPassword() + " " + user.getCreated());
-            }
-        }
-        catch(NamingException e)
-        {
-            e.printStackTrace();
-        }
+			for(String user : users)
+			{
+				System.out.println(user);
+			}
+		}
+		catch(EJBException e)
+		{
+			e.printStackTrace();
+		}*/
+		
+		/*try
+		{
+			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+			boolean uploaded = pluginLoader.uploadPlugin("Test Plugin", Files.readAllBytes(new File("D:\\testplugin.zip").toPath()));
+			
+			if(uploaded)
+			{
+				System.out.println("Upload success!");
+				BotFacadeRemote bot = (BotFacadeRemote)EJB.lookup("BotEJB");
+				
+				for(String b : bot.getBots())
+					System.out.println(b);
+			}
+			else
+				System.out.println("Upload failed...");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}*/
     }
 }

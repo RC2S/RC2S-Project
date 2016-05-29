@@ -3,35 +3,47 @@ apply plugin: 'ear'
 
 dependencies {
     deploy project(':rc2s-ejb')
-    earlib project(path: ':rc2s-ejb', configuration: 'compile')
-    // To-Do : Reussir à exclude dao et application de earlib et ajouter deploy dao application
+    deploy project(':rc2s-dao')
+    deploy project(':rc2s-application')
+    //earlib project(path: ':rc2s-ejb', configuration: 'compile')
 }
 
 ear {
     appDirName 'META-INF/'
     libDirName 'APP-INF/lib'
     deploymentDescriptor {
-        applicationName = "RC2S Server"
+        applicationName = "RC2S-Server"
         initializeInOrder = true
         displayName = "RC2S Server"
         description = "JEE Server for RC2S project"
-        module("APP-INF/lib/rc2s-application-1.0.jar", "ejb")
-        module("APP-INF/lib/rc2s-dao-1.0.jar", "ejb")
     }
 	
-	if(!project.hasProperty('skipAutodeploy')) {
+	if(!project.hasProperty('skipServerAutodeploy')) {
 		doLast {
-			tasks.autodeploy.execute();
+            println '****** Deploying RC2S-Server Application ******'
+			tasks.undeployServer.execute();
+            sleep(2 * 1000);
+            tasks.deployServer.execute();
+
+            sleep(4 * 1000); // Sleep when Payara autodeploy process execution
+            def files = fileTree("$System.env.RC2S_HOME/autodeploy").filter {it.isFile()}.files.name
+            files.any {
+                if(it.contains("rc2s-ear-${version}.ear_deployed"))
+                    println '****** Application RC2S-Server successfully deployed on Payara Server ! ******'
+                else if(it.contains("rc2s-ear-${version}.ear_deployFailed"))
+                    println '****** Error while deploying RC2S-Server Application on Payara Server ! ******'
+            }
 		}
 	}
 }
 
-task autodeploy(type: Exec) {
-	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-		executable "D:\\Programmes\\payara41\\bin\\asadmin.bat"
-	}
-	else {
-		executable "/home/esp010/Bureau/payara41/bin/asadmin"
-	}
-	args "deploy", "--force=true", "--type", "ear", "--name", "rc2s", "$buildDir/libs/rc2s-ear-${version}.ear"
+task undeployServer(type: Delete) {
+    delete fileTree(dir: "$System.env.RC2S_HOME/autodeploy").matching {
+        include 'rc2s-ear-*.ear'
+    }
+}
+
+task deployServer(type: Copy) {
+    from("$buildDir/libs/rc2s-ear-${version}.ear")
+    into("$System.env.RC2S_HOME/autodeploy")
 }

@@ -3,22 +3,27 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "synchronization")
 public class Synchronization implements Serializable
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@NotNull
 	private String name;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -42,7 +47,7 @@ public class Synchronization implements Serializable
 
 	public Synchronization() {}
 	
-	public Synchronization(int id, String name, Date created, Date updated)
+	public Synchronization(Integer id, String name, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -50,12 +55,12 @@ public class Synchronization implements Serializable
 		this.updated = updated;
 	}
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -108,5 +113,36 @@ public class Synchronization implements Serializable
 	public void setUpdated(Date updated)
 	{
 		this.updated = updated;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 3;
+		hash = 71 * hash + Objects.hashCode(this.id);
+		hash = 71 * hash + Objects.hashCode(this.name);
+		hash = 71 * hash + Objects.hashCode(this.created);
+		hash = 71 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Synchronization)
+		{
+			Synchronization s = (Synchronization)o;
+			
+			if(s.getId() != null && this.getId() != null)
+				return Objects.equals(s.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }

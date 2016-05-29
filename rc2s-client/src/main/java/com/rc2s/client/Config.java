@@ -17,5 +17,5 @@ public final class Config
     public static final String MAIN_PACKAGE             = "com.rc2s.client";
     public static final String VIEWS_PACKAGE            = "views";
     public static final String CSS_PACKAGE              = VIEWS_PACKAGE + ".css";
-    public static final String RESOURCES_PACKAGE        = MAIN_PACKAGE + ".resources";
+    public static final String RESOURCES_PACKAGE        = "";
 }
