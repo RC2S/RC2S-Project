@@ -14,7 +14,6 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven'
     
     processResources.dependsOn initProfile
     

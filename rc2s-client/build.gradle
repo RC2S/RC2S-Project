@@ -1,6 +1,8 @@
 apply plugin: 'application'
+apply plugin: 'maven'
 
 mainClassName = 'com.rc2s.client.Main'
+
 dependencies {
     compile project(':rc2s-common')
     compile project(':rc2s-annotations')

@@ -12,12 +12,13 @@
         <arg>clean</arg>
         <arg>publishToMavenLocal</arg>
         <arg>install</arg>
+        <arg>build</arg>
         <arg>-PskipJNLPAutodeploy=true</arg>
       </task-args>
       <task-jvm-args/>
     </task>
     <task>
-      <display-name>prod</display-name>
+      <display-name>sign</display-name>
       <non-blocking>no</non-blocking>
       <task-names>
         <name must-exist="no">gradle</name>
@@ -26,6 +27,7 @@
         <arg>clean</arg>
         <arg>publishToMavenLocal</arg>
         <arg>install</arg>
+        <arg>build</arg>
       </task-args>
       <task-jvm-args/>
     </task>
