@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="accessAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/accessManagement-style.css" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.AccessManagementController">
+<AnchorPane fx:id="accessAnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/accessManagement-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.AccessManagementController">
    <children>
       <GridPane fx:id="anchorGridPane" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>
@@ -27,23 +30,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="gridTableView" prefHeight="353.0" prefWidth="598.0" GridPane.rowSpan="3">
-              <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-              </columnResizePolicy>
+            <TableView fx:id="usersTable" onKeyPressed="#onKeyPressedEvent" prefHeight="353.0" prefWidth="598.0" GridPane.rowSpan="3">
               <columns>
-                  <TableColumn fx:id="usernameTableCol" maxWidth="6000.0" prefWidth="75.0" text="Username" />
-                <TableColumn fx:id="statusTableCol" maxWidth="4000.0" prefWidth="75.0" text="Status" />
-                <TableColumn fx:id="roleTableCol" maxWidth="4000.0" prefWidth="75.0" text="Role" />
-                  <TableColumn fx:id="cubicAccessTableCol" maxWidth="6000.0" prefWidth="75.0" text="Cubic Access" />
-                  <TableColumn fx:id="updateTableCol" maxWidth="1000.0" prefWidth="150.0" text="U" />
-                  <TableColumn fx:id="deleteTableCol" maxWidth="1000.0" prefWidth="49.0" text="D" />
+                  <TableColumn fx:id="usernameColumn" maxWidth="6000.0" prefWidth="75.0" text="Username" />
+                <TableColumn fx:id="activatedColumn" maxWidth="4000.0" prefWidth="75.0" text="Activated" />
+                <TableColumn fx:id="lockedColumn" maxWidth="4000.0" prefWidth="75.0" text="Locked" />
+                  <TableColumn fx:id="lastLoginColumn" maxWidth="6000.0" prefWidth="75.0" text="Last Login" />
+                  <TableColumn fx:id="createdColumn" maxWidth="1000.0" prefWidth="150.0" text="Created" />
+                  <TableColumn fx:id="updatedColumn" maxWidth="1000.0" prefWidth="49.0" text="Updated" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
-            <BorderPane fx:id="gridBorderPane" prefHeight="200.0" prefWidth="200.0" styleClass="borderpane-border" GridPane.rowIndex="3" GridPane.rowSpan="2">
-               <top>
-                  <Label fx:id="bordPaneLabel" styleClass="borderpane-label" text=" Add User " BorderPane.alignment="TOP_LEFT" />
-               </top>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="borderpane-border" GridPane.rowIndex="3" GridPane.rowSpan="2">
                <center>
                   <GridPane fx:id="borderPaneGridPane" BorderPane.alignment="CENTER">
                     <columnConstraints>
@@ -58,20 +58,33 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="gridLabelUsername" alignment="CENTER" contentDisplay="CENTER" text="Username" GridPane.halignment="CENTER" />
-                        <Label fx:id="gridLabelPassword" text="Password" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label fx:id="gridLabelConfirmPass" text="Confirm Pass." GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <TextField fx:id="gridTextFieldUsername" GridPane.columnIndex="1" />
-                        <PasswordField fx:id="gridPasswordFieldPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <PasswordField fx:id="gridPasswordFieldConfirmPass" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="gridLabelRole" text="Role" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                        <Label fx:id="gridLabelCubicAccess" text="Cubic Access" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="gridComboBoxRole" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" />
-                        <ComboBox fx:id="gridComboBoxCubicAccess" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Button fx:id="gridButton" mnemonicParsing="false" text="Add !" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Username" GridPane.halignment="CENTER" />
+                        <Label text="Password" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label text="Confirm Pass." GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <TextField fx:id="usernameField" GridPane.columnIndex="1" />
+                        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <PasswordField fx:id="confirmPassField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Role" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <Label text="Cubic Access" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="rolesBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" />
+                        <ComboBox fx:id="cubicAccessBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddEvent" text="Add!" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </center>
+               <bottom>
+                  <Label fx:id="errorLabel" textFill="RED" BorderPane.alignment="CENTER" />
+               </bottom>
+               <top>
+                  <HBox BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="boxLabel" styleClass="borderpane-label" text=" Add User " />
+                        <Button fx:id="cancelEditButton" mnemonicParsing="false" onAction="#onEditCanceled" styleClass="borderpane-button" text="&lt;Cancel&gt;" visible="false" />
+                        <CheckBox fx:id="activatedCheckbox" mnemonicParsing="false" styleClass="borderpane-checkbox" text="Activated" visible="false" />
+                        <CheckBox fx:id="lockedCheckbox" mnemonicParsing="false" styleClass="borderpane-checkbox" text="Locked" visible="false" />
+                     </children>
+                  </HBox>
+               </top>
             </BorderPane>
          </children>
       </GridPane>

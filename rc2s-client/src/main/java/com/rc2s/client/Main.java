@@ -6,11 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.common.vo.User;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 
 public class Main extends Application
 {
     private static Stage stage;
+	private static User user;
     
     public static void main(String[] args)
     {
@@ -27,14 +30,15 @@ public class Main extends Application
         Scene scene;
         FXMLLoader loader;
         
-        this.stage = stage;
-        this.stage.setTitle(Config.APP_NAME);
+        Main.stage = stage;
+        Main.stage.setTitle(Config.APP_NAME);
+		Main.stage.getIcons().add(new Image(Resources.loadResource("views/images/rc2s_icon.png")));
         
         loader = Resources.loadFxml("LoginView");
         scene = new Scene((Parent)loader.getRoot());
         
-        this.stage.setScene(scene);
-        this.stage.show();
+        Main.stage.setScene(scene);
+        Main.stage.show();
     }
 
     @Override
@@ -47,4 +51,14 @@ public class Main extends Application
     {
         return stage;
     }
+	
+	public static void setAuthenticatedUser(User user)
+	{
+		Main.user = user;
+	}
+	
+	public static User getAuthenticatedUser()
+	{
+		return Main.user;
+	}
 }

@@ -10,11 +10,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "cookie-parser": "^1.4.1",
+    "crypto": "0.0.3",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "express-validator": "^2.20.4",
     "http": "0.0.0",
     "log4js": "^0.6.35",
+    "mustachex": "0.0.3",
     "mysql": "^2.10.2",
+    "recursive-readdir": "^2.0.0",
     "sha1": "^1.1.1"
   }
 }

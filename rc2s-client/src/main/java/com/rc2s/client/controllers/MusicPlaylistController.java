@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class MusicPlaylistController implements Initializable
+public class MusicPlaylistController extends TabController implements Initializable
 {
     @FXML
     private AnchorPane musicAnchorPane;
@@ -67,7 +67,13 @@ public class MusicPlaylistController implements Initializable
     private Label borderPaneLabel;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle rb) {}	
+	
+	@Override
+	public void updateContent()
+	{
+		
+	}
     
     @FXML
     public void handlePlayPauseButton(ActionEvent event)

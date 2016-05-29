@@ -3,9 +3,7 @@ package com.rc2s.annotations.processors;
 import com.rc2s.annotations.SourceControl;
 import com.rc2s.annotations.mappers.ElementMapper;
 import com.rc2s.annotations.utils.Analysor;
-import com.rc2s.annotations.utils.SourceControlException;
-import com.rc2s.annotations.utils.SourceUtil;
-import java.io.IOException;
+import com.rc2s.annotations.utils.NewSourceUtil;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +57,10 @@ public class SourceControlProcessor extends AbstractProcessor
 					
 					try
 					{
-						SourceUtil.verifySource(mainClass);
+						NewSourceUtil sourceUtil = new NewSourceUtil();
+						sourceUtil.verifySource(mainClass);
+						
+						//SourceUtil.verifySource(mainClass);
 					}
 					catch (Exception ex)
 					{

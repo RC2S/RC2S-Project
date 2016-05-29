@@ -3,25 +3,36 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "size")
 public class Size implements Serializable
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
+	@NotNull
 	private String name;
-	private int x;
-	private int y;
-	private int z;
+	
+	@Min(1)
+	private Integer x;
+	
+	@Min(1)
+	private Integer y;
+	
+	@Min(1)
+	private Integer z;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Cube> cubes;
@@ -31,7 +42,7 @@ public class Size implements Serializable
 	
 	public Size() {}
 
-	public Size(int id, String name, int x, int y, int z, Date created, Date updated)
+	public Size(Integer id, String name, Integer x, Integer y, Integer z, Date created, Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -42,12 +53,12 @@ public class Size implements Serializable
 		this.updated = updated;
 	}
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -62,32 +73,32 @@ public class Size implements Serializable
 		this.name = name;
 	}
 
-	public int getX()
+	public Integer getX()
 	{
 		return x;
 	}
 
-	public void setX(int x)
+	public void setX(Integer x)
 	{
 		this.x = x;
 	}
 
-	public int getY()
+	public Integer getY()
 	{
 		return y;
 	}
 
-	public void setY(int y)
+	public void setY(Integer y)
 	{
 		this.y = y;
 	}
 
-	public int getZ()
+	public Integer getZ()
 	{
 		return z;
 	}
 
-	public void setZ(int z)
+	public void setZ(Integer z)
 	{
 		this.z = z;
 	}
@@ -120,5 +131,46 @@ public class Size implements Serializable
 	public void setCubes(List<Cube> cubes)
 	{
 		this.cubes = cubes;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return new StringBuilder(name).append(" (")
+									  .append(x)
+									  .append("x")
+									  .append(y)
+									  .append("x")
+									  .append(z)
+									  .append(")")
+									  .toString();
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 37 * hash + Objects.hashCode(this.id);
+		hash = 37 * hash + Objects.hashCode(this.name);
+		hash = 37 * hash + Objects.hashCode(this.x);
+		hash = 37 * hash + Objects.hashCode(this.y);
+		hash = 37 * hash + Objects.hashCode(this.z);
+		hash = 37 * hash + Objects.hashCode(this.created);
+		hash = 37 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof Size)
+		{
+			Size s = (Size)o;
+			
+			if(s.getId() != null && this.getId() != null)
+				return Objects.equals(s.getId(), this.getId());
+		}
+		
+		return false;
 	}
 }
