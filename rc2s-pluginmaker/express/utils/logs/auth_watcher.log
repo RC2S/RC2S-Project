@@ -516,3 +516,6 @@
 [2016-05-22 22:29:45.987] [TRACE] auth_watcher.log - Entity [b12b6e63184fe6902447fc553441aae83312a380] accessing Url '/plugins'
 [2016-05-22 22:30:17.558] [TRACE] auth_watcher.log - Entity [b12b6e63184fe6902447fc553441aae83312a380] accessing Url '/plugins/remove/valentin'
 [2016-05-22 22:30:17.600] [TRACE] auth_watcher.log - Entity [b12b6e63184fe6902447fc553441aae83312a380] accessing Url '/plugins'
+[2016-05-26 23:17:20.929] [TRACE] auth_watcher.log - Entity [a14b7c498b9d8a77a950ea5c9921a333d010e310] accessing Url '/plugins'
+[2016-05-26 23:17:34.384] [TRACE] auth_watcher.log - Entity [a14b7c498b9d8a77a950ea5c9921a333d010e310] accessing Url '/plugins/add'
+[2016-05-26 23:17:35.800] [TRACE] auth_watcher.log - Entity [a14b7c498b9d8a77a950ea5c9921a333d010e310] accessing Url '/plugins'
