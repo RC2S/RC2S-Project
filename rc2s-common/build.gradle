@@ -17,7 +17,7 @@ task copyCommonLib(type: Copy, dependsOn: deleteOldCommonLib) {
 
 jar {
     doLast {
-        tasks.deleteOldCommonLib.execute()
-        tasks.copyCommonLib.execute()
+        tasks.deleteOldCommonLib.execute();
+        tasks.copyCommonLib.execute();
     }
 }

@@ -21,9 +21,11 @@ ear {
 	if(!project.hasProperty('skipServerAutodeploy')) {
 		doLast {
             println '****** Deploying RC2S-Server Application ******'
-			tasks.deployServer.execute();
+			tasks.undeployServer.execute();
+            sleep(2 * 1000);
+            tasks.deployServer.execute();
 
-            sleep(4 * 1000) // Sleep when Payara autodeploy process execution
+            sleep(4 * 1000); // Sleep when Payara autodeploy process execution
             def files = fileTree("$System.env.RC2S_HOME/autodeploy").filter {it.isFile()}.files.name
             files.any {
                 if(it.contains("rc2s-ear-${version}.ear_deployed"))
@@ -33,6 +35,12 @@ ear {
             }
 		}
 	}
+}
+
+task undeployServer(type: Delete) {
+    delete fileTree(dir: "$System.env.RC2S_HOME/autodeploy").matching {
+        include 'rc2s-ear-*.ear'
+    }
 }
 
 task deployServer(type: Copy) {
