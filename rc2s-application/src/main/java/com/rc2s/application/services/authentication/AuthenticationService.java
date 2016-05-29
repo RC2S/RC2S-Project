@@ -1,6 +1,5 @@
 package com.rc2s.application.services.authentication;
 
-import com.rc2s.common.vo.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -12,14 +11,14 @@ import javax.security.auth.login.LoginException;
 public class AuthenticationService implements IAuthenticationService
 {
     @Override
-    public boolean login(User user)
+    public boolean login(String username, String password)
     {
         System.setProperty("java.security.auth.login.config", AuthenticationService.class.getResource("/jaas.config").toString());
 
         try {
             LoginContext lc = new LoginContext(
                 "JDBCLoginModule",
-                new JDBCCallbackHandler(user.getUsername(), user.getPassword())
+                new JDBCCallbackHandler(username, password)
             );
             
             lc.login();

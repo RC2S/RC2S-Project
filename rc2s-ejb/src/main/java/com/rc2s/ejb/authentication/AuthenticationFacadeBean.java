@@ -12,8 +12,8 @@ public class AuthenticationFacadeBean implements AuthenticationFacadeRemote
     IAuthenticationService authenticationService;
     
     @Override
-    public boolean login(User user)
+    public boolean login(String username, String password)
     {
-        return authenticationService.login(user);
+        return authenticationService.login(username, password);
     }
 }

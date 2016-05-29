@@ -1,9 +1,4 @@
-module.exports = (app) => {
-	
-	require("./login")(app);
-
-	require("./workspaceGets")(app);
-	require("./workspacePosts")(app);
-	require("./workspacePuts")(app);
-	require("./workspaceDeletes")(app);
+module.exports = function(app) {
+	require('./UserRoute')(app);
+	require('./PluginsRoute')(app);
 };

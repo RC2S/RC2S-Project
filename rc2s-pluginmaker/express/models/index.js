@@ -1,4 +1,3 @@
 module.exports = {
-	
-	"errorsMaps" : require("./errorsMaps")
+	errorsMaps : require('./errorsMaps')
 };

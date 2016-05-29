@@ -12,25 +12,29 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.rc2s.client.Main;
-import com.rc2s.client.utils.EJB;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.client.utils.Tools;
+import com.rc2s.common.exceptions.EJBException;
+import com.rc2s.common.utils.EJB;
+import com.rc2s.common.utils.Hash;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.authentication.AuthenticationFacadeRemote;
+import com.rc2s.ejb.user.UserFacadeRemote;
 import javafx.event.Event;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.log4j.Logger;
 
 public class LoginController implements Initializable
-{    
-    private final AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote)EJB.lookup("AuthenticationEJB");
-    
-    @FXML private TextField ipaddr;
-    @FXML private TextField username;
-    @FXML private PasswordField password;
+{
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
+    @FXML private TextField ipField; 
+    @FXML private TextField usernameField; 
+    @FXML private PasswordField passwordField;
+	@FXML private Button connectButton;
     @FXML private Label errorLabel;
-    
-    private User user;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {}
@@ -52,7 +56,7 @@ public class LoginController implements Initializable
     @FXML
     private boolean validateIpAddress(KeyEvent event)
     {
-        if(!Tools.matchIP(ipaddr.getText()))
+        if(!Tools.matchIP(ipField.getText()))
         {
             errorLabel.setText("Invalid IP address");
             return false;
@@ -64,32 +68,69 @@ public class LoginController implements Initializable
 	
     private void connect(Event event)
     {
-        user = new User();
-        user.setUsername(username.getText());
-        user.setPassword(password.getText());
+		String ip = ipField.getText();
+        String username = usernameField.getText();
+        String password = Hash.sha1(passwordField.getText());
+		
+		disable(true);
 
         if(validateIpAddress(null))
         {
-            authenticationEJB.login(user);
-
-            // TODO : remplacer par un appel à l'EJB d'authentification
-            if(user.getUsername().equals("mathieu") && user.getPassword().equals("azeaze"))
-            {
-                Scene       scene;
-                FXMLLoader  loader;
-
-                loader  = Resources.loadFxml("HomeView");
-                scene   = new Scene((Parent) loader.getRoot());
+			try
+			{
+				// Init EJB context
+				EJB.initContext(ip, null);
+				UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");
+                AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote)EJB.lookup("AuthenticationEJB");
                 
-                Main.getStage().setScene(scene);
-                Main.getStage().setMinWidth(scene.getWidth());
-                Main.getStage().setMinHeight(scene.getHeight());
-                Main.getStage().show();
-            }
-            else
-                errorLabel.setText("Authentication failed");
+				try
+				{
+					// Get the authenticated user
+					User user = userEJB.login(username, password);
+                    //authenticationEJB.login(username, password);
+
+					if(user != null)
+					{
+						Main.setAuthenticatedUser(user);
+						
+						FXMLLoader loader = Resources.loadFxml("HomeView");
+						Scene scene = new Scene((Parent)loader.getRoot());
+
+						Main.getStage().setScene(scene);
+						Main.getStage().setMinWidth(scene.getWidth());
+						Main.getStage().setMinHeight(scene.getHeight());
+						Main.getStage().show();
+					}
+					else
+					{
+						errorLabel.setText("Authentication failed");
+					}
+				}
+				catch(EJBException e)
+				{
+					logger.error(e.getMessage());
+					errorLabel.setText("Authentication failed");
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				errorLabel.setText("Unable to connect to the server");
+			}
         }
         else
+		{
             errorLabel.setText("Invalid IP address");
+		}
+		
+		disable(false);
     }
+	
+	private void disable(boolean state)
+	{
+		ipField.setDisable(state);
+		usernameField.setDisable(state);
+		passwordField.setDisable(state);
+		connectButton.setDisable(state);
+	}
 }

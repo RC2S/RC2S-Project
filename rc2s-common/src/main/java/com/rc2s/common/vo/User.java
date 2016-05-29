@@ -3,9 +3,12 @@ package com.rc2s.common.vo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,24 +20,29 @@ import javax.persistence.Table;
 public class User implements Serializable
 {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     
+	@javax.validation.constraints.Size(min = 3)
     private String username;
+	
+	@javax.validation.constraints.Size(min = 8, max = 250)
     private String password;
-    private String token;
+	
     private boolean activated;
     private boolean locked;
-    private String lastIp;
+	
+	@Column(name = "last_login")
+    private Date lastLogin;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
 	private List<Synchronization> synchronizations;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-		name = "user_role",
-		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+		name = "link_user_role",
+		joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
 	)
 	private List<Role> roles;
 	
@@ -49,26 +57,25 @@ public class User implements Serializable
         this.password   = password;
     }
 
-    public User(int id, String username, String password,
-        String token, boolean activated, boolean locked,
-        String lastIp, Date created, Date updated)
+    public User(Integer id, String username, String password,
+        boolean activated, boolean locked,
+        Date lastLogin, Date created, Date updated)
     {
         this.id         = id;
         this.username   = username;
         this.password   = password;
-        this.token      = token;
         this.activated  = activated;
         this.locked     = locked;
-        this.lastIp     = lastIp;
+        this.lastLogin  = lastLogin;
         this.created    = created;
         this.updated    = updated;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
@@ -93,16 +100,6 @@ public class User implements Serializable
         this.password = password;
     }
     
-    public String getToken()
-    {
-        return token;
-    }
-
-    public void setToken(String token)
-    {
-        this.token = token;
-    }
-
     public boolean isActivated()
     {
         return activated;
@@ -118,19 +115,19 @@ public class User implements Serializable
         return locked;
     }
 
-    public void setLockrd(boolean locked)
+    public void setLocked(boolean locked)
     {
         this.locked = locked;
     }
 
-    public String getLastIp()
+    public Date getLastLogin()
     {
-        return lastIp;
+        return lastLogin;
     }
 
-    public void setLastIp(String lastIp)
+    public void setLastLogin(Date lastLogin)
     {
-        this.lastIp = lastIp;
+        this.lastLogin = lastLogin;
     }
 
     public Date getCreated()
@@ -152,4 +149,59 @@ public class User implements Serializable
     {
         this.updated = updated;
     }
+
+	public List<Synchronization> getSynchronizations()
+	{
+		return synchronizations;
+	}
+
+	public void setSynchronizations(List<Synchronization> synchronizations)
+	{
+		this.synchronizations = synchronizations;
+	}
+
+	public List<Role> getRoles()
+	{
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles)
+	{
+		this.roles = roles;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return username;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 17 * hash + Objects.hashCode(this.id);
+		hash = 17 * hash + Objects.hashCode(this.username);
+		hash = 17 * hash + Objects.hashCode(this.password);
+		hash = 17 * hash + (this.activated ? 1 : 0);
+		hash = 17 * hash + (this.locked ? 1 : 0);
+		hash = 17 * hash + Objects.hashCode(this.lastLogin);
+		hash = 17 * hash + Objects.hashCode(this.created);
+		hash = 17 * hash + Objects.hashCode(this.updated);
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o != null && o instanceof User)
+		{
+			User u = (User)o;
+			
+			if(u.getId() != null && this.getId() != null)
+				return Objects.equals(u.getId(), this.getId());
+		}
+		
+		return false;
+	}
 }

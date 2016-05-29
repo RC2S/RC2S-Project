@@ -1,24 +1,42 @@
-module.exports = () => {
-	var express = require("express");
-	var app = express();
+var session 		= require('express-session');
+var bodyParser 		= require('body-parser');
+var mustachex 		= require('mustachex');
+var validator		= require('express-validator');
+var config			= require('./utils/config');
+var express 		= require('express');
+var app 			= express();
 
-	var bodyParser = require("body-parser");
-	//app.use(bodyParser.json());
+module.exports = function() {
+	
+	/*** Configurations ***/
+
+	// Mustache
+	app.engine('html', mustachex.express);
+	app.set('view engine', 'html');
+	app.set('views', __dirname + '/views');
+	app.use(express.static(__dirname + '/public'));
+	app.set('layout', true);
+
+	// Session
+	app.use(session({
+		secret: config.secret
+	}));
+
+	// BodyParser
 	app.use(bodyParser.urlencoded({
 		"extended": false
 	}));
 
-	// Used for auth
-	var cookieParser = require("cookie-parser");
-	app.use(cookieParser());
+	// Express Validator
+	app.use(validator());
 
-	// Authentication middleware
-	require("./utils/authenticator")(app);
+	// Authentication Middleware
+	require('./utils/AuthenticationUtils')(app);
 
 	// App routes
-	require("./routes")(app);
+	require('./routes')(app);
 
-	app.listen(8080, () => {
-		console.log("Server running on port 8080...");
+	app.listen(config.port, function() {
+		console.log("Server running on port " + config.port);
 	});
 };

@@ -6,5 +6,5 @@ import javax.ejb.Remote;
 @Remote
 public interface AuthenticationFacadeRemote
 {
-    public boolean login(User user);
+    public boolean login(String username, String password);
 }

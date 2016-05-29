@@ -29,7 +29,7 @@ public class Led extends Sphere
         this.z = z;
         this.size = size;
         this.activated = activated;
-        this.color = color;
+        this.color = (color != null) ? color : Color.BLACK;
 		this.actionEvents = actionEvents;
         
         this.setTranslateX(x * size * SIZE_MODIFIER);
@@ -37,19 +37,21 @@ public class Led extends Sphere
         this.setTranslateZ(z * size * SIZE_MODIFIER);
         
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseColor(color);
+        material.setDiffuseColor(this.color);
         material.setSpecularColor(Color.BLACK);
         this.setMaterial(material);
 		
 		if(this.actionEvents)
 		{
-			this.setOnMouseClicked((MouseEvent e) -> {
+			this.setOnMouseClicked((e) -> {
 				PhongMaterial newColor = new PhongMaterial();
 				newColor.setSpecularColor(Color.BLACK);
 				newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
 
 				this.setMaterial(newColor);
 				this.activated = !this.activated;
+				
+				e.consume();
 			});
 		}
     }
