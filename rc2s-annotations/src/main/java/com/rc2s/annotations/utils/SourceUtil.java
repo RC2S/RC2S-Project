@@ -22,17 +22,17 @@ public class SourceUtil
 	// Name of the plugin, found from the package name
 	private static String pluginName = null;
 	
-	// List of controllers contained by the plugin
+	// List of controllers & views within the plugin
 	private static ArrayList<String> expectedControllersList = null;
 	private static ArrayList<String> controllersList = null;
 	private static ArrayList<String> initialControllersList = null;
 	private static ArrayList<String> viewsList = null;
 	
-	// Should contain exactly one MainController
+	// Should contain exactly one MainController & one MainView
 	private static boolean hasMainController;
 	private static boolean hasMainView;
 	
-	// Needed annotations package names
+	// Needed annotations package names & packages paths
 	private final static String controllersFolderPath	= "/media/Data/RC2S/rc2s-project/rc2s-client/src/main/java/com/rc2s/client/controllers";
 	private final static String viewsFolderPath			= "/media/Data/RC2S/rc2s-project/rc2s-client/src/main/resources/views";
 	private final static String statelessPackage		= "javax.ejb.Stateless";
@@ -67,7 +67,7 @@ public class SourceUtil
 			
 			isFirstCheck = false;
 		}
-		/*
+		
 		String[] packageParts = mainClass.getPackageName().split("\\.");
 		
 		controllersList = new ArrayList<>();
@@ -89,7 +89,7 @@ public class SourceUtil
 			 * Those parts shall be :
 			 * (ejb | application | dao).name
 			 * Others types are already verified within ClassNames Enum
-			 * /
+			 */
 			String entityName = null;
 			
 			if (ClassNamesEnum.APPLICATION.equals(cne)
@@ -107,7 +107,7 @@ public class SourceUtil
 		catch (SourceControlException scex)
 		{
 			System.err.println(scex.getMessage());
-		}*/
+		}
 	}
 
 	private static void verifyRoot(String[] packageParts) throws SourceControlException
@@ -257,7 +257,7 @@ public class SourceUtil
 				case DAO:
 					verifyDaoStandards(mainClass, entityName);
 					break;
-					
+
 				case VO:
 					verifyVoStandards(mainClass);
 					break;
@@ -265,11 +265,11 @@ public class SourceUtil
 				case SQL:
 					verifySqlStandards(mainClass, cne, entityName);
 					break;
-						
+	
 				case CONTROLLERS:
 					verifyControllerStandards(mainClass);
 					break;
-						
+
 				case UTILS:		//void - utils only need @SourceControl
 				case CSS:		//void
 				case IMAGES:		//void
@@ -394,6 +394,7 @@ public class SourceUtil
 		// We shall find initialize(URL, ResourceBundle)
 		boolean hasJavaNetURL = false;
 		boolean hasResourceBundle = false;
+		boolean hasInitializeMethod = false;
 		
 		String error = mainClass.getName() + "'s initialize method shall contain exactly 2 args : URL & ResourceBundle";
 		
@@ -409,9 +410,11 @@ public class SourceUtil
 		// Iterate over methods
 		for (ElementMapper em : mainClass.getMethods())
 		{
-			// If it's initialize, check it
+			// If it's initialize(), check its args
 			if (em.getName().equals("initialize"))
 			{
+				hasInitializeMethod = true;
+				
 				// Parameters URL & ResourceBundle are needed
 				if (em.getParameters().size() == 2)
 				{
@@ -430,6 +433,8 @@ public class SourceUtil
 					throw new SourceControlException(error);
 			}
 		}
+		if (!hasInitializeMethod)
+			throw new SourceControlException("Controller " + mainClass.getName() + " shall implement javafx.fxml.Initializable initialize() method.");
 		
 		// Check if it already exists
 		if (controllersList.contains(mainClass.getName()))
@@ -477,7 +482,7 @@ public class SourceUtil
 			if (fileName.equals("HomeView.fxml"))
 			{
 				if (hasMainView)
-					throw new SourceControlException("Your plugin should only contain one MainViews.fxml");
+					throw new SourceControlException("Your plugin should only contain one MainView.fxml");
 				
 				hasMainView = true;
 			}
