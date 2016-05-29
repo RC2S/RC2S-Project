@@ -51,9 +51,6 @@ public class SourceUtil
 				getAllViewsNames();
 				getAllControllersNames();
 				
-				viewsList.forEach(System.err::println);
-				initialControllersList.forEach(System.err::println);
-				
 				for (String controllerName : expectedControllersList)
 				{
 					if (!initialControllersList.contains(controllerName))
@@ -77,12 +74,8 @@ public class SourceUtil
 			// Verify root - shall be com.rc2s.{plugin_name}
 			verifyRoot(packageParts);
 			
-			System.err.println("\nPLUGIN NAME : " + pluginName);
-			
 			// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
 			ClassNamesEnum cne = findClassName(packageParts);
-			
-			System.err.println("CLASS TYPE : " + cne.name());
 			
 			/**
 			 * Then verify remaining package parts depending on ClassNamesEnum retrieved
@@ -97,8 +90,6 @@ public class SourceUtil
 				|| ClassNamesEnum.EJB.equals(cne))
 			{
 				entityName = verifyPackageEnd(packageParts);
-				
-				System.err.println("ENTITY : " + entityName);
 			}
 			
 			// Then verify class compulsorys' (name, annotations..)
@@ -112,8 +103,6 @@ public class SourceUtil
 
 	private static void verifyRoot(String[] packageParts) throws SourceControlException
 	{
-		String name = null;
-		
 		if (packageParts.length < 3)
 			throw new SourceControlException("Invalid package naming - Too short (expected : more than 2 parts)");
 		
@@ -385,7 +374,7 @@ public class SourceUtil
 
 	private static void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) 
 	{
-		// SHEAA WATTODO HERE ??
+		// Behaviour to determine
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
