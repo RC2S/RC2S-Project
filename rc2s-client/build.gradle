@@ -1,5 +1,4 @@
 apply plugin: 'application'
-apply plugin: 'maven'
 
 mainClassName = 'com.rc2s.client.Main'
 

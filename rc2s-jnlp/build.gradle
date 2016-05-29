@@ -1,7 +1,7 @@
 apply plugin: 'war'
 
 dependencies {
-    providedCompile group: 'com.rc2s', name: 'rc2s-client', version: version
+    providedCompile project(':rc2s-client')
 }
 
 /**
