@@ -1,5 +1,6 @@
 package com.rc2s.application.services.plugin.loader;
 
+import com.rc2s.application.services.jnlp.IJnlpService;
 import com.rc2s.application.services.plugin.IPluginService;
 import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
@@ -24,6 +25,7 @@ public class PluginLoaderService implements IPluginLoaderService
 {
 	@EJB private IPluginService pluginService;
 	@EJB private IPluginDAO pluginDAO;
+    @EJB private IJnlpService jnlpService;
 	
     @Override
     public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException
@@ -166,9 +168,11 @@ public class PluginLoaderService implements IPluginLoaderService
     @Override
     public void deployClientPlugin(String simpleName, File tmpJar) throws IOException
     {
-		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "jnlpwar" + File.separator + "libs" + File.separator;
-		File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
+		jnlpService.signJar(tmpJar.getAbsolutePath());
+        File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
 		Files.copy(tmpJar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        jnlpService.updateJNLP(simpleName + "_client.jar", false);
     }
 	
 	@Override
@@ -203,11 +207,13 @@ public class PluginLoaderService implements IPluginLoaderService
 		String simpleName = plugin.getName().toLowerCase().replace(" ", "");
 		
 		// Remove Client Plugin
-		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "jnlpwar" + File.separator + "libs" + File.separator;
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
 		File pluginClient = new File(jnlpLibsDir + simpleName + "_client.jar");
 		
 		if(pluginClient.exists())
 			pluginClient.delete();
+        
+        jnlpService.updateJNLP(simpleName + "_client.jar", true);
 		
 		// Remove Server Plugin
 		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
