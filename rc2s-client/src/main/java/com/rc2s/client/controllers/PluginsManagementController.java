@@ -2,7 +2,9 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.client.utils.Dialog;
+import com.rc2s.client.utils.HttpRequest;
 import com.rc2s.common.exceptions.EJBException;
+import com.rc2s.common.exceptions.RC2SException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Role;
@@ -10,9 +12,12 @@ import com.rc2s.ejb.plugin.PluginFacadeRemote;
 import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
 import com.rc2s.ejb.role.RoleFacadeRemote;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -21,6 +26,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -132,11 +138,50 @@ public class PluginsManagementController extends TabController implements Initia
 					ButtonType confirm = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Would you wish to restart your client now?");
 						
 					if(confirm == ButtonType.OK)
-						Platform.exit();
+					{
+						try
+						{
+							String url = "http://" + EJB.getServerAddress() + ":8080/rc2s-jnlp/rc2s-client.jnlp";
+							System.out.println(url);
+							HttpRequest request = new HttpRequest(new URL(url));
+
+							String rawJnlp = request.get();
+							System.out.println(rawJnlp);
+							
+							if(rawJnlp != null && !rawJnlp.isEmpty())
+							{
+								String pathProperty = System.getProperty("jnlpx.origFilenameArg");
+								System.out.println(pathProperty);
+								Path jnlpPath = Paths.get(pathProperty);
+
+								if(Files.exists(jnlpPath))
+								{
+									try
+									{
+										FileWriter fw = new FileWriter(jnlpPath.toFile());
+										fw.write(rawJnlp); // Erase with new content
+										fw.flush();
+										fw.close();
+										
+										Runtime.getRuntime().exec("javaws", new String[] {pathProperty});
+										Platform.exit();
+									}
+									catch(IOException ex)
+									{
+										Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
+									}
+								}
+							}
+						}
+						catch(RC2SException ex)
+						{
+							Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
+						}
+					}
 				}
 				catch(EJBException | IOException ex)
 				{
-					error(ex.getMessage());
+					Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
 				}
 			}
 			else
