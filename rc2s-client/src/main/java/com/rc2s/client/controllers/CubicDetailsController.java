@@ -118,6 +118,8 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		editButton.setVisible(false);
 		removeButton.setVisible(false);
+		cubesBox.setDisable(true);
+		addCubeButton.setDisable(true);
 		addButton.setVisible(true);
 		
 		cube = new Cube();
