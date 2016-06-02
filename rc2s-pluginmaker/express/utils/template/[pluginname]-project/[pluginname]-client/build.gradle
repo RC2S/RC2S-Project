@@ -1,0 +1,26 @@
+repositories {
+	flatDir {
+		dirs '../[pluginname]-server/build/libs'
+	}
+}
+
+dependencies {
+	compile project(':[pluginname]-common')
+	compile name: "[pluginname]-interfaces-$version"
+}
+
+project.tasks.compileJava.dependsOn(
+	rootProject.getSubprojects().findAll {
+		subproject -> subproject.name != project.name 
+	}.collect { 
+		subproject -> "${subproject.getPath()}:build"
+	}
+)
+
+jar {
+	from {
+        (configurations.runtime).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}

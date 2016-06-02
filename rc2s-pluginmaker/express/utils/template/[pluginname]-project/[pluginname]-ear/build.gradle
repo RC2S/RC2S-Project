@@ -1,0 +1,18 @@
+apply plugin: 'ear'
+
+dependencies {
+	deploy project(':[pluginname]-server')
+
+	// Ask for the server's dependencies
+	earlib project(path: ':[pluginname]-server', configuration: 'compile')
+}
+
+ear {
+	appDirName 'META-INF/'
+	libDirName 'APP-INF/lib'
+	deploymentDescriptor {
+		applicationName = '[pluginname]-project'
+		initializeInOrder = true
+		displayName = '[pluginname] Project'
+	}
+}

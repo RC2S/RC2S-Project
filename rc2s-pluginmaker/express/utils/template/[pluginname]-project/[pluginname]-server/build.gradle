@@ -1,0 +1,15 @@
+dependencies {
+	compile project(':[pluginname]-common')
+}
+
+jar {
+	doLast {
+		tasks.generateApi.execute()
+	}
+}
+
+task generateApi(type: Jar) {
+	baseName = '[pluginname]-interfaces' // Nom du jar créé
+
+	from fileTree(dir: "$buildDir/classes/main/", include: '**/*Remote.class')
+}
