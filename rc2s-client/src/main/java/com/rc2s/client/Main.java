@@ -1,6 +1,6 @@
 package com.rc2s.client;
 
-import com.rc2s.annotations.Knowledge;
+import com.rc2s.annotations.SourceControl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,7 +10,6 @@ import com.rc2s.common.vo.User;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
-@Knowledge
 public class Main extends Application
 {
     private static Stage stage;
