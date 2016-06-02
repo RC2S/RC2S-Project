@@ -1,5 +1,7 @@
 package com.rc2s.daemon.network;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -43,7 +45,16 @@ public class PacketProcessor extends Thread
 	 */
 	private void processPacket()
 	{
-		// TODO
+		try(ByteArrayInputStream bis = new ByteArrayInputStream(packet.getData()))
+		{
+			DataInputStream dis = new DataInputStream(bis);
+			
+			// TODO handle the byte array data
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**
