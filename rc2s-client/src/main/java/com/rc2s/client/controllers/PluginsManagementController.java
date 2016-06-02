@@ -3,6 +3,7 @@ package com.rc2s.client.controllers;
 import com.rc2s.client.Main;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.client.utils.HttpRequest;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.RC2SException;
 import com.rc2s.common.utils.EJB;
@@ -14,6 +15,7 @@ import com.rc2s.ejb.role.RoleFacadeRemote;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,6 +46,9 @@ import org.apache.logging.log4j.Logger;
 public class PluginsManagementController extends TabController implements Initializable
 {
     private static final Logger logger = LogManager.getLogger(PluginsManagementController.class);
+	private static final String SERVER_PROTOCOL = "http";
+	private static final String SERVER_PORT = "8080";
+	private static final String SERVER_JNLP = "/rc2s-jnlp/rc2s-client.jnlp";
 	
 	private final RoleFacadeRemote roleEJB = (RoleFacadeRemote)EJB.lookup("RoleEJB");
 	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote)EJB.lookup("PluginEJB");
@@ -74,7 +79,7 @@ public class PluginsManagementController extends TabController implements Initia
 		versionColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getVersion()));
 		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthor()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
-		accessColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAccess()));
+		accessColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAccess().toUpperCase()));
 		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getCreated())));
 		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getUpdated())));
 	}
@@ -135,51 +140,19 @@ public class PluginsManagementController extends TabController implements Initia
 				try
 				{
 					pluginLoaderEJB.uploadPlugin("Test Plugin", role, Files.readAllBytes(pluginFile.toPath()));
-					ButtonType confirm = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Would you wish to restart your client now?");
+					updatePlugins();
+					ButtonType updateJnlp = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Do you wish to restart your client now?");
 						
-					if(confirm == ButtonType.OK)
+					if(updateJnlp == ButtonType.OK)
 					{
-						try
-						{
-							String url = "http://" + EJB.getServerAddress() + ":8080/rc2s-jnlp/rc2s-client.jnlp";
-							System.out.println(url);
-							HttpRequest request = new HttpRequest(new URL(url));
-
-							String rawJnlp = request.get();
-							System.out.println(rawJnlp);
-							
-							if(rawJnlp != null && !rawJnlp.isEmpty())
-							{
-								String pathProperty = System.getProperty("jnlpx.origFilenameArg");
-								System.out.println(pathProperty);
-								Path jnlpPath = Paths.get(pathProperty);
-
-								if(Files.exists(jnlpPath))
-								{
-									try
-									{
-										FileWriter fw = new FileWriter(jnlpPath.toFile());
-										fw.write(rawJnlp); // Erase with new content
-										fw.flush();
-										fw.close();
-										
-										Runtime.getRuntime().exec("javaws", new String[] {pathProperty});
-										Platform.exit();
-									}
-									catch(IOException ex)
-									{
-										Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
-									}
-								}
-							}
-						}
-						catch(RC2SException ex)
-						{
-							Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
-						}
+						String url = SERVER_PROTOCOL + "://" + EJB.getServerAddress() + ":" + SERVER_PORT + SERVER_JNLP;
+						String jwsCmd = "javaws " + url;
+						System.out.println("JavaWS cmd: " + jwsCmd);
+						Runtime.getRuntime().exec(jwsCmd);
+						Platform.exit();
 					}
 				}
-				catch(EJBException | IOException ex)
+				catch(IOException | EJBException ex)
 				{
 					Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
 				}
