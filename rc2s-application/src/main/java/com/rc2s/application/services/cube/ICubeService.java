@@ -15,5 +15,5 @@ public interface ICubeService
 	public void remove(Cube c) throws ServiceException;
 	public Cube update(Cube cube) throws ServiceException;
 	
-	public boolean getStatus(Cube c);
+	public boolean getStatus(Cube c) throws ServiceException;
 }

@@ -83,6 +83,13 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	@Override
 	public boolean getStatus(Cube c) throws EJBException
 	{
-		return cubeService.getStatus(c);
+		try
+		{
+			return cubeService.getStatus(c);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
 	}
 }

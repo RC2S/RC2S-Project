@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import org.apache.logging.log4j.util.Strings;
 
 public class PacketProcessor extends Thread
 {
@@ -28,14 +29,13 @@ public class PacketProcessor extends Thread
 	@Override
 	public synchronized void run()
 	{
-		String raw = new String(packet.getData());
-		System.out.println("RECEIVED: " + raw);
+		String raw = new String(packet.getData()).trim();
+		System.out.println("Received: |" + raw + "|");
 		
-		switch(raw)
-		{
-			case "status": validateStatus(); break;
-			default: processPacket(); break;
-		}
+		if(raw.equals("status"))
+			validateStatus();
+		else
+			processPacket();
 	}
 	
 	/**

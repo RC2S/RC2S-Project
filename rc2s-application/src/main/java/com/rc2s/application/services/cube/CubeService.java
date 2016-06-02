@@ -1,5 +1,6 @@
 package com.rc2s.application.services.cube;
 
+import com.rc2s.application.daemon.IDaemonService;
 import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
@@ -13,8 +14,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class CubeService implements ICubeService
 {
-	@EJB
-    private ICubeDAO cubeDAO;
+	@EJB private ICubeDAO cubeDAO;
+	@EJB private IDaemonService daemonService;
     
     @Override
     public List<Cube> getCubes() throws ServiceException
@@ -83,8 +84,8 @@ public class CubeService implements ICubeService
 	}
 	
 	@Override
-	public boolean getStatus(Cube c)
+	public boolean getStatus(Cube c) throws ServiceException
 	{
-		return false;
+		return daemonService.isReachable(c.getIp());
 	}
 }
