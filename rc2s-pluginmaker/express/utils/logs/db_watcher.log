@@ -38,3 +38,19 @@
 [2016-06-05 13:35:51.075] [INFO] db_watcher.log - Message : 'Connection OK'
 [2016-06-05 13:35:51.077] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
 [2016-06-05 13:35:51.077] [INFO] db_watcher.log - User found. Creating new token : 770dc3d532c4c5ceedb8d33cb477ca506dd768e7
+[2016-06-05 19:53:05.301] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-06-05 19:53:05.302] [INFO] db_watcher.log - -> Host : localhost
+[2016-06-05 19:53:05.303] [INFO] db_watcher.log - -> User : root
+[2016-06-05 19:53:05.303] [INFO] db_watcher.log - -> Database : RC2S
+[2016-06-05 19:53:05.303] [INFO] db_watcher.log - -> Password : root
+[2016-06-05 19:53:05.303] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-06-05 19:53:05.305] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-06-05 19:53:05.305] [INFO] db_watcher.log - User found. Creating new token : dd2d6adfcf476be08b40198590946a46e5a3ccdf
+[2016-06-05 19:55:40.758] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-06-05 19:55:40.760] [INFO] db_watcher.log - -> Host : localhost
+[2016-06-05 19:55:40.760] [INFO] db_watcher.log - -> User : root
+[2016-06-05 19:55:40.760] [INFO] db_watcher.log - -> Database : RC2S
+[2016-06-05 19:55:40.760] [INFO] db_watcher.log - -> Password : root
+[2016-06-05 19:55:40.761] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-06-05 19:55:40.765] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-06-05 19:55:40.765] [INFO] db_watcher.log - User found. Creating new token : cf665003c263d3e1c5249df4c87c466fac65eb50
