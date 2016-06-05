@@ -2,6 +2,7 @@ var WorkspaceController	= require('./WorkspaceController');
 var config				= require('../utils/config');
 var recursive			= require('recursive-readdir');
 var fs 					= require('fs');
+var exec				= require('child_process').exec;
 
 function PluginsController() {};
 
@@ -134,6 +135,18 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			});
 		}
 		callback(true, undefined);
+	});
+};
+
+PluginsController.prototype.downloadZip = function(pluginName, callback) {
+	var dockerZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
+	exec(config.che.dockerCpCommand + dockerZipPath + ' ' + config.che.downloadFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
+		if(error && stderr)
+			return callback(false, stderr);
+		else if(error)
+			return callback(false, error);
+
+		return callback(true, undefined);
 	});
 };
 

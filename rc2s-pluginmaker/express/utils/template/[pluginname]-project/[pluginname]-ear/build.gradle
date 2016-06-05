@@ -1,5 +1,11 @@
 apply plugin: 'ear'
 
+// Trick : exclude librairies already existing on the server
+configurations {
+	earlib.exclude group: 'javax'
+	earlib.exclude group: 'com.rc2s'
+}
+
 dependencies {
 	deploy project(':[pluginname]-server')
 
@@ -10,6 +16,7 @@ dependencies {
 ear {
 	appDirName 'META-INF/'
 	libDirName 'APP-INF/lib'
+	archiveName '[pluginname]-server.ear'
 	deploymentDescriptor {
 		applicationName = '[pluginname]-project'
 		initializeInOrder = true

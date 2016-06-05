@@ -1,6 +1,6 @@
 repositories {
 	flatDir {
-		dirs '../[pluginname]-server/build/libs'
+		dirs "$rootDir/[pluginname]-server/build/libs"
 	}
 }
 
@@ -17,10 +17,23 @@ project.tasks.compileJava.dependsOn(
 	}
 )
 
+// Create a FatJar (one jar with all dependencies)
 jar {
+	archiveName '[pluginname]-client.jar'
 	from {
-        (configurations.runtime).collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
+		(configurations.runtime - configurations.provided).collect {
+			it.isDirectory() ? it : zipTree(it)
+		} 
+	}
+	
+	doLast {
+		tasks.generateZip.execute()
+	}
+}
+
+task generateZip(type: Zip) {
+	destinationDir buildDir
+	archiveName '[pluginname].zip'
+	from "$buildDir/libs"
+	from "$rootDir/[pluginname]-ear/build/libs"
 }

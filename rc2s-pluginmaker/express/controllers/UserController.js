@@ -36,8 +36,8 @@ UserController.prototype.login = function(req, callback) {
 	var query = '\
 		SELECT r.name \
 		FROM role r \
-		INNER JOIN user_role ur ON ur.role_id = r.id \
-		INNER JOIN user u ON u.id = ur.user_id \
+		INNER JOIN link_user_role ur ON ur.role = r.id \
+		INNER JOIN user u ON u.id = ur.user \
 		AND u.username = ? AND u.password = ? \
 	';
 
@@ -51,7 +51,7 @@ UserController.prototype.login = function(req, callback) {
 		if (rows.length == 0) {
 			logger.writeQueryLog('User not found !', query);
 			return callback(false, 'Invalid Login');
-		} else if (rows[0]["name"] == 'ROLE_ADMIN') {
+		} else if (rows[0]["name"] == 'ADMIN') {
 
 			// Ensure hash uniqueness
 			var currentDate = (new Date()).valueOf().toString();
