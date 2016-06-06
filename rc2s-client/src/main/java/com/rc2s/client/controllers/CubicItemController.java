@@ -49,7 +49,7 @@ public class CubicItemController extends TabController implements Initializable
 	{
 		this.cube = cube;
 		
-		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 5., Color.web(cube.getColor()), false);
+		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 5., Color.web(cube.getColor()), null);
 		this.display.getChildren().add(ledCube);
 		
 		this.name.setText(cube.getName());

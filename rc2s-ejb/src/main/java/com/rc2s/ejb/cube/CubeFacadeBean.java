@@ -1,5 +1,6 @@
 package com.rc2s.ejb.cube;
 
+import com.rc2s.application.daemon.IDaemonService;
 import com.rc2s.application.services.cube.ICubeService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
@@ -12,8 +13,8 @@ import javax.ejb.Stateless;
 @Stateless(mappedName = "CubeEJB")
 public class CubeFacadeBean implements CubeFacadeRemote
 {
-	@EJB
-	private ICubeService cubeService;
+	@EJB private ICubeService cubeService;
+	@EJB private IDaemonService daemonService;
 	
 	@Override
 	public List<Cube> getAllCubes() throws EJBException
@@ -83,6 +84,26 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	@Override
 	public boolean getStatus(Cube c) throws EJBException
 	{
-		return cubeService.getStatus(c);
+		try
+		{
+			return daemonService.isReachable(c.getIp());
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+	
+	@Override
+	public void updateAllLed(Cube c, double[] pos, boolean state) throws EJBException
+	{
+		try
+		{
+			daemonService.updateState(c, 0L, pos, state);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
 	}
 }

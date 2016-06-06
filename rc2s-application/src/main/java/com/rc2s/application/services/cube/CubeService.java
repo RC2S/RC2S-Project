@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
 public class CubeService implements ICubeService
 {
 	@EJB
-    private ICubeDAO cubeDAO;
+	private ICubeDAO cubeDAO;
     
     @Override
     public List<Cube> getCubes() throws ServiceException
@@ -80,11 +80,5 @@ public class CubeService implements ICubeService
 		{
 			throw new ServiceException(e);
 		}
-	}
-	
-	@Override
-	public boolean getStatus(Cube c)
-	{
-		return false;
 	}
 }
