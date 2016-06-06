@@ -19,18 +19,13 @@ public class LedCube extends Group
     private Rotate rx, ry, rz;
     private double size;
     
+	private LedEvent ledEvent;
     private Color color;
-	private boolean actionEvents;
-	
-	public LedCube(Parent parent, double x, double y, double z, double size, Color color)
-	{
-		this(parent, x, y, z, size, color, true);
-	}
     
-    public LedCube(Parent parent, double x, double y, double z, double size, Color color, boolean actionEvents)
+    public LedCube(Parent parent, double x, double y, double z, double size, Color color, LedEvent ledEvent)
     {
         this.parent = parent;
-		this.actionEvents = actionEvents;
+		this.ledEvent = ledEvent;
         drawCube(x, y, z, size, color);
 		
         this.parent.setOnMouseDragged((e) -> {
@@ -53,7 +48,7 @@ public class LedCube extends Group
             }
         });
 		
-		if(actionEvents)
+		if(this.ledEvent != null)
 		{
 			this.parent.setOnScroll((e) -> {
 				if(e.getDeltaY() == 0
@@ -116,7 +111,7 @@ public class LedCube extends Group
             {
                 for(int k = 0 ; k < z ; k++)
                 {
-                    Led led = new Led(i, j, k, size, true, color, this.actionEvents);
+                    Led led = new Led(i, j, k, size, true, color, this.ledEvent);
                     this.getChildren().add(led);
                 }
             }
@@ -224,4 +219,13 @@ public class LedCube extends Group
             l.setColor(this.color);
         }
     }
+	
+	public void setActivated(boolean activated)
+	{
+		for(Node n : this.getChildren())
+        {
+            Led l = (Led)n;
+            l.setActivated(activated);
+        }
+	}
 }

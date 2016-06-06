@@ -16,4 +16,5 @@ public interface CubeFacadeRemote
 	public Cube update(Cube cube) throws EJBException;
 	
 	public boolean getStatus(Cube c) throws EJBException;
+	public void updateAllLed(Cube c, double[] pos, boolean state) throws EJBException;
 }
