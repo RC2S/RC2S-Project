@@ -49,7 +49,7 @@ public class Listener extends Thread
 				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 				socket.receive(packet); // Listen for incoming packets
 				
-				PacketProcessor processor = new PacketProcessor(socket, packet);
+				PacketProcessor processor = new PacketProcessor(daemon, socket, packet);
 				processor.start();
 			}
 			

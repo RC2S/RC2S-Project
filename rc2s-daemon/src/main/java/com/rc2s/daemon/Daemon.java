@@ -97,6 +97,11 @@ public class Daemon implements Runnable
         return hardware;
     }
 
+	public StatesProcessor getProcessor()
+	{
+		return processor;
+	}	
+
     public void shutdown()
     {
         this.running = false;
