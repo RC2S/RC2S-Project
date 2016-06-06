@@ -138,7 +138,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		cube.setCreated(new Date());
 		cube.getSynchronization().setCreated(new Date());
 		
-		ledCube = new LedCube(this.display, 4., 4., 4., 10., Color.BLACK, onToggleLed());
+		ledCube = new LedCube(this.display, 4., 4., 4., 10., Color.BLACK, null);
 		display.getChildren().add(ledCube);
 		
 		toggleEditCube();
@@ -202,7 +202,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			(size != null) ? size.getZ() : 4.,
 			10.,
 			color,
-			onToggleLed()
+			allOnButton.isVisible() ? onToggleLed() : null
 		);
 		display.getChildren().clear();
 		display.getChildren().add(ledCube);
