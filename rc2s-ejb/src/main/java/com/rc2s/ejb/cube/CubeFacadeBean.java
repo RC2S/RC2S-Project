@@ -1,6 +1,6 @@
 package com.rc2s.ejb.cube;
 
-import com.rc2s.application.daemon.IDaemonService;
+import com.rc2s.application.services.daemon.IDaemonService;
 import com.rc2s.application.services.cube.ICubeService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;

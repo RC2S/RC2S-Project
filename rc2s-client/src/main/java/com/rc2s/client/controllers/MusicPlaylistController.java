@@ -1,89 +1,79 @@
 package com.rc2s.client.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import com.rc2s.client.Main;
+import com.rc2s.client.utils.Dialog;
+import com.rc2s.common.exceptions.EJBException;
+import com.rc2s.common.utils.EJB;
+import com.rc2s.common.vo.Track;
+import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
+import com.rc2s.ejb.track.TrackFacadeRemote;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.*;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class MusicPlaylistController extends TabController implements Initializable
 {
-    @FXML
-    private AnchorPane musicAnchorPane;
+    private final TrackFacadeRemote trackEJB = (TrackFacadeRemote) EJB.lookup("TrackEJB");
+    private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 
-    @FXML
-    private GridPane anchorGridPaneMain;
-/*
-    @FXML
-    private TableView<?> mainGridTableView;
+    @FXML private TableView<Track> tracksTable;
+    @FXML private TableColumn<Track, String> musicColumn;
+    @FXML private TableColumn<Track, String> timeColumn;
+    @FXML private TableColumn<Track, String> authorColumn;
 
-    @FXML
-    private TableColumn<?, ?> musicTableCol;
-
-    @FXML
-    private TableColumn<?, ?> timeTableCol;
-
-    @FXML
-    private TableColumn<?, ?> authorTableCol;
-*/
-    @FXML
-    private GridPane mainGridGridPane;
-/*
-    @FXML
-    private ComboBox<?> midGridComboBox;
-*/
-    @FXML
-    private GridPane midGridButtonGrid;
-
-    @FXML
-    private Button buttonGridBackButton;
-
-    @FXML
-    private Button buttonGridPlayButton;
-
-    @FXML
-    private Button buttonGridNextButton;
-
-    @FXML
-    private GridPane midGridSoundGrid;
-
-    @FXML
-    private Slider soundGridSlider;
-
-    @FXML
-    private ImageView soundGridImageView;
-
-    @FXML
-    private BorderPane MainGridBorderPane;
-
-    @FXML
-    private Label borderPaneLabel;
+    @FXML private ComboBox syncBox;
+    @FXML private Button previousButton;
+    @FXML private Button playPauseButton;
+    @FXML private Button nextButton;
+    @FXML private Slider soundSlider;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}	
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        musicColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPath()));
+    }
 	
 	@Override
 	public void updateContent()
 	{
-		
+        updateTracks();
+		updateSync();
 	}
-    
-    @FXML
-    public void handlePlayPauseButton(ActionEvent event)
+
+    private void updateTracks()
     {
-        System.out.println("ClickOnPlayPause o/");
+        try
+        {
+            tracksTable.getItems().clear();
+            tracksTable.getItems().addAll(trackEJB.getTracksByUser(Main.getAuthenticatedUser()));
+        }
+        catch(EJBException e)
+        {
+            Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void updateSync()
+    {
+        try
+        {
+            syncBox.getItems().clear();
+            syncBox.getItems().addAll(syncEJB.getAll());
+        }
+        catch(EJBException e)
+        {
+            Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
     
     @FXML
-    void anchor1TableViewSort(ActionEvent event)
+    public void onPlayPauseEvent(ActionEvent e)
     {
-    
+        System.out.println("onPlayPauseEvent");
     }
 }

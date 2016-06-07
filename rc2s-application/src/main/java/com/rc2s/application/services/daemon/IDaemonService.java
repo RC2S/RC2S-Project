@@ -1,4 +1,4 @@
-package com.rc2s.application.daemon;
+package com.rc2s.application.services.daemon;
 
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
