@@ -23,7 +23,6 @@ module.exports = {
 		authMethods 	: ['GET', 'POST', 'PUT', 'DELETE'],
 		workspace		: 'rc2s',
 		template		: __dirname + '/template/',
-		dockerCpCommand	: 'docker cp c25674496a80:/projects/', // Change à chaque start/stop du workspace
 		downloadFolder	: path.resolve(__dirname + '/../utils/download/') + '/',
 		prefixImport	: '[pluginname]'
 	},

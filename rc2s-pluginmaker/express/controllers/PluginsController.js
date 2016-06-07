@@ -88,7 +88,7 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
 	
-	recursive(config.che.template, function(err, files) {
+	recursive(config.che.template, function(errListFiles, files) {
 		var folderAlreadyCreated;
 
 		if (files) {
@@ -139,14 +139,22 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
-	var dockerZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
-	exec(config.che.dockerCpCommand + dockerZipPath + ' ' + config.che.downloadFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
-		if(error && stderr)
-			return callback(false, stderr);
+	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
+		if(errorPs && stderrPs)
+			return callback(false, stderrPs);
 		else if(error)
-			return callback(false, error);
+			return callback(false, errorPs);
+		console.log('------------' + idDockerMachine);
 
-		return callback(true, undefined);
+		var pluginZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
+		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.downloadFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
+			if(error && stderr)
+				return callback(false, stderr);
+			else if(error)
+				return callback(false, error);
+
+			return callback(true, undefined);
+		});
 	});
 };
 
