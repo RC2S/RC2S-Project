@@ -3,14 +3,15 @@ package com.rc2s.application.services.daemon;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.Size;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+
+import javax.ejb.Stateless;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import javax.ejb.Stateless;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 @Stateless
 public class DaemonService implements IDaemonService
@@ -18,11 +19,30 @@ public class DaemonService implements IDaemonService
 	private static final int DAEMON_PORT = 1337;
 	private static final int BUFFER_LENGTH = 1024;
 	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
-	
+
 	@Override
-	public void updateState(Cube cube, Long duration, double[] pos, boolean state) throws ServiceException
+	public void updateState(Cube cube, Long duration, boolean state) throws ServiceException
 	{
-		byte[] packetContent = createPacket(duration, cube.getSize(), pos, state);		
+		boolean[][][] states = new boolean[cube.getSize().getY()][cube.getSize().getZ()][cube.getSize().getX()];
+
+		for(int i = 0 ; i < cube.getSize().getY() ; i++)
+		{
+			for(int j = 0 ; j < cube.getSize().getZ() ; j++)
+			{
+				for(int k = 0 ; k < cube.getSize().getX() ; k++)
+				{
+					states[i][j][k] = state;
+				}
+			}
+		}
+
+		updateState(cube, duration, states);
+	}
+
+	@Override
+	public void updateState(Cube cube, Long duration, boolean[][][] states) throws ServiceException
+	{
+		byte[] packetContent = createPacket(duration, cube.getSize(), states);
 		sendPacket(cube.getIp(), packetContent, false);
 	}
 	
@@ -37,19 +57,16 @@ public class DaemonService implements IDaemonService
 		
 		return isUp;
 	}
-	
+
 	/**
-	 * 
 	 * @param duration
 	 * @param size
-	 * @param pos A Double array containing X [0], Y [1] and Z [2] values.
-	 * If null, the complete Cube is considered 
-	 * @param state
+	 * @param states
 	 * @return
-	 * @throws ServiceException 
-	 */
+	 * @throws ServiceException
+     */
 	@Override
-	public byte[] createPacket(Long duration, Size size, double[] pos, boolean state) throws ServiceException
+	public byte[] createPacket(Long duration, Size size, boolean[][][] states) throws ServiceException
 	{
 		try(ByteArrayOutputStream bos = new ByteArrayOutputStream())
 		{
@@ -67,16 +84,7 @@ public class DaemonService implements IDaemonService
 				{
 					for(int k = 0 ; k < size.getX() ; k++)
 					{
-						if(pos != null)
-						{
-							// If we're specifying a LED, all others must be off.
-							if(i == pos[1] && j == pos[2] && k == pos[1])
-								dos.writeBoolean(state);
-							else
-								dos.writeBoolean(false);
-						}
-						else
-							dos.writeBoolean(state);
+						dos.writeBoolean(states[i][j][k]);
 					}
 				}
 			}

@@ -35,13 +35,13 @@ public class MusicPlaylistController extends TabController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        musicColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPath()));
+		musicColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPath()));
     }
-	
+
 	@Override
 	public void updateContent()
 	{
-        updateTracks();
+		updateTracks();
 		updateSync();
 	}
 

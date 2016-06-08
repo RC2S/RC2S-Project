@@ -503,7 +503,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		try
 		{
-			cubeEJB.updateAllLed(cube, null, true);
+			cubeEJB.updateAllLed(cube, true);
 			ledCube.setActivated(true);
 		}
 		catch(EJBException ex)
@@ -517,7 +517,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		try
 		{
-			cubeEJB.updateAllLed(cube, null, false);
+			cubeEJB.updateAllLed(cube, false);
 			ledCube.setActivated(false);
 		}
 		catch(EJBException ex)
@@ -534,13 +534,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			{
 				try
 				{
-					double[] ledPos = new double[] {
-						getLed().getX(),
-						getLed().getY(),
-						getLed().getZ()
-					};
-					
-					cubeEJB.updateAllLed(cube, ledPos, true);
+					cubeEJB.updateAllLed(cube, ledCube.getStateArray());
 				}
 				catch(EJBException e)
 				{

@@ -228,4 +228,20 @@ public class LedCube extends Group
             l.setActivated(activated);
         }
 	}
+
+    public boolean[][][] getStateArray()
+    {
+        boolean[][][] states = new boolean[(int)getY()][(int)getZ()][(int)getX()];
+
+        for(Node n : this.getChildren())
+        {
+            if(n instanceof Led)
+            {
+                Led l = (Led) n;
+                states[(int)l.getY()][(int)l.getZ()][(int)l.getX()] = l.isActivated();
+            }
+        }
+
+        return states;
+    }
 }

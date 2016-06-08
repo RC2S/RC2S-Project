@@ -93,13 +93,26 @@ public class CubeFacadeBean implements CubeFacadeRemote
 			throw new EJBException(e);
 		}
 	}
-	
+
 	@Override
-	public void updateAllLed(Cube c, double[] pos, boolean state) throws EJBException
+	public void updateAllLed(Cube c, boolean state) throws EJBException
 	{
 		try
 		{
-			daemonService.updateState(c, 0L, pos, state);
+			daemonService.updateState(c, 0L, state);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+
+	@Override
+	public void updateAllLed(Cube c, boolean[][][] states) throws EJBException
+	{
+		try
+		{
+			daemonService.updateState(c, 0L, states);
 		}
 		catch(ServiceException e)
 		{
