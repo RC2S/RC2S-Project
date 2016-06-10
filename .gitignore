@@ -4,5 +4,5 @@
 /out/
 /rc2s-*/build/
 /rc2s-*/private/
-/rc2s-pluginmaker/node_modules/
-/rc2s-pluginmaker/nbproject/
+/rc2s-*/node_modules/
+/rc2s-*/nbproject/
