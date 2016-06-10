@@ -16,13 +16,15 @@ public class StreamingService implements IStreamingService
     
     // Synchronisation object to wait for the audio to finish.
     private Semaphore sync = new Semaphore(0);
-    
+
     private MediaPlayerFactory factory;
     
     private DirectAudioPlayer audioPlayer;
     
     public StreamingService()
     {
+		System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+		
         factory     = new MediaPlayerFactory();
         
         // newDirectAudioPlayer(format, rate, channel, new callback(blocksize of samples))

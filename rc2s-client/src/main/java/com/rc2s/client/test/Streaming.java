@@ -10,7 +10,7 @@ public class Streaming
     // For Server : sudo apt-get install libvlc-dev libvlccore-dev
     public Streaming(StreamingFacadeRemote streamingEJB) throws Exception
     {
-        String media = "/home/esp010/Bureau/TheMemo.mp3";
+        String media = "D:\\Musique\\AC-DC - Black Ice\\Rock N Roll Train.mp3";
         String options = formatRtspStream("127.0.0.1", 5555, "audio");
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");

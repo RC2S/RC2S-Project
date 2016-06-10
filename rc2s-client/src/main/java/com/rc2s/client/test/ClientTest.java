@@ -10,6 +10,8 @@ public class ClientTest
     {
         try
         {
+			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+			
             // Test Streaming Start
             EJB.initContext("127.0.0.1", null);
             StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
