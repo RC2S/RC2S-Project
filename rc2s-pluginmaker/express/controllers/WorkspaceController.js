@@ -1,6 +1,8 @@
 var requestApi = require('../utils/HttpUtils');
 
-function WorkspaceController() {};
+var WorkspaceController = function() {
+	this.createdFolder = [];
+};
 
 WorkspaceController.prototype.findAll = function(callback) {
 	requestApi('GETFA1', 'workspace?skipCount=0&maxItems=30', 'GET', undefined, callback);
@@ -92,15 +94,23 @@ WorkspaceController.prototype.stopWorkspace = function(wsID, callback) {
 };
 
 WorkspaceController.prototype.addFolderToProject = function(wsID, prjName, folderPath, callback) {
+
+	if (!folderPath || this.createdFolder.indexOf(folderPath) != -1)
+		return callback('in array', undefined);
+
+	this.createdFolder.push(folderPath);
+	
 	requestApi('POSTAFTP', 'ext/project/' + wsID + '/folder/' + prjName + '/' + folderPath, 'POST', undefined, function(res) {
+
 		if (res.statusCode == 201)
-			callback(res.content, undefined);
+			callback(res, undefined);
 		else
 			callback(undefined, res.content);
 	});
 };
 
 WorkspaceController.prototype.addFileToProject = function(wsID, prjName, folderPath, fileName, content, callback) {
+	
 	requestApi('POSTAFITP', 'ext/project/' + wsID + '/file/' + prjName  + '/' + folderPath + '?name=' + fileName, 'POST', content, function(res) {
 		if (res.statusCode == 201)
 			callback(res.content, undefined);

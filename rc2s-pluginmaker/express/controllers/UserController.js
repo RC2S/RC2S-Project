@@ -26,11 +26,11 @@ UserController.prototype.login = function(req, callback) {
 
 	conn.connect(function(err) {
 		if (err) {
-			logger.writeConnectionLog(err, options);
+			//logger.writeConnectionLog(err, options);
 			return callback(false, 'Internal Error');
 		}
 
-		logger.writeConnectionLog('Connection OK', options);
+		//logger.writeConnectionLog('Connection OK', options);
 	});
 
 	var query = '\
@@ -64,12 +64,12 @@ UserController.prototype.login = function(req, callback) {
 				.update(currentDate + random)
 				.digest('hex');
 
-            logger.writeQueryLog('User found. Creating new token : ' + shaToken, query);
+            //logger.writeQueryLog('User found. Creating new token : ' + shaToken, query);
 
 			req.session.token = shaToken;
 			return callback(true, undefined);
 		} else {
-			logger.writeQueryLog('User not Admin !', query);
+			//logger.writeQueryLog('User not Admin !', query);
 			//res.redirect("/login");
 		}
 	});
