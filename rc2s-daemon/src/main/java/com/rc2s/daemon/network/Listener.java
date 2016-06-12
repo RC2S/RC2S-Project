@@ -1,21 +1,63 @@
 package com.rc2s.daemon.network;
 
 import com.rc2s.daemon.Daemon;
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 
 public class Listener extends Thread
 {
-    private Daemon daemon;
+	private static final int BUFFER_LENGHT = 1024;
+	
+    private final Daemon daemon;
+	private final int port;
     private DatagramSocket socket;
 
-    public Listener(Daemon daemon)
+	/**
+	 * Create a new UDP listener.
+	 * @param daemon
+	 * @param port 
+	 */
+    public Listener(Daemon daemon, int port)
     {
-        this.daemon = daemon;
+		this.daemon = daemon;
+		this.port = port;
+			
+		try {
+			this.socket = new DatagramSocket(port);
+		}
+		catch(SocketException e) {
+			e.printStackTrace();
+		}
     }
 
+	/**
+	 * Run the listener's thread and listen for the application server
+	 * packets.
+	 */
     @Override
-    public synchronized void start()
+    public synchronized void run()
     {
-        // https://systembash.com/a-simple-java-udp-server-and-udp-client/
+		try
+		{
+			// Listener loop
+			while(daemon.isRunning())
+			{
+				System.out.println("Listening on port " + port + "...");
+				byte[] buffer = new byte[BUFFER_LENGHT];
+				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+				socket.receive(packet); // Listen for incoming packets
+				
+				PacketProcessor processor = new PacketProcessor(daemon, socket, packet);
+				processor.start();
+			}
+			
+			socket.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
     }
 }

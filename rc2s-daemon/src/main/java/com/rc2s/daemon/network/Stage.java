@@ -3,7 +3,7 @@ package com.rc2s.daemon.network;
 public class Stage
 {
     private boolean[][] states;
-
+	
     public Stage(boolean[][] states)
     {
         this.states = states;
