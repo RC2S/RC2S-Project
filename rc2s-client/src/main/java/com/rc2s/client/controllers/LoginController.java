@@ -87,7 +87,7 @@ public class LoginController implements Initializable
 				{
 					// Get the authenticated user
 					User user = userEJB.login(username, password);
-                    //authenticationEJB.login(username, password);
+                    System.out.println(authenticationEJB.login(username, password) ? "Logged" : "Not Logged");
 
 					if(user != null)
 					{

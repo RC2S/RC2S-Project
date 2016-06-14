@@ -1,8 +1,13 @@
 package com.rc2s.application.services.authentication;
 
+import com.rc2s.common.utils.Hash;
+import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
@@ -10,6 +15,9 @@ import javax.security.auth.login.LoginException;
 @Stateless
 public class AuthenticationService implements IAuthenticationService
 {
+    private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy";
+	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
+    
     @Override
     public boolean login(String username, String password)
     {
@@ -18,14 +26,28 @@ public class AuthenticationService implements IAuthenticationService
         try {
             LoginContext lc = new LoginContext(
                 "JDBCLoginModule",
-                new JDBCCallbackHandler(username, password)
+                new JDBCCallbackHandler(username, Hash.sha1(SALT + password + PEPPER))
             );
             
             lc.login();
             
             Subject subject = lc.getSubject();
+            
+            InitialContext ic = new InitialContext();
+            SessionContext sessionContext = (SessionContext) ic.lookup("java:comp/EJBContext");
+            
+            for(Principal p : subject.getPrincipals()) {
+                System.out.println("Princ " + p.getName());
+            }
+            System.out.println("before add");
+            sessionContext.getContextData().put("Principal", subject.getPrincipals());
+            System.out.println("after add");
+            return subject != null;
         }
         catch (LoginException ex)
+        {
+            Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex)
         {
             Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
         }

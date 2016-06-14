@@ -1,7 +1,6 @@
 package com.rc2s.ejb.authentication;
 
 import com.rc2s.application.services.authentication.IAuthenticationService;
-import com.rc2s.common.vo.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
