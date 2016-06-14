@@ -4,7 +4,7 @@ pipelines:
   default:
     - step:
         script:
-          - pwd
-          - ls -al ~
-          - ls -al .
-          - ls -al /
+          - mkdir ~/rc2s-project/
+          - cp -r . ~/rc2s-project/
+          - cd ~/rc2s-project/
+          - gradle clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true
