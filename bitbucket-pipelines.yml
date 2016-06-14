@@ -5,3 +5,4 @@ pipelines:
     - step:
         script:
           - echo "It's RC2S baby :D o/ !"
+          - gradle --version
