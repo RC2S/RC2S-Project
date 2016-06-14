@@ -5,4 +5,4 @@ pipelines:
     - step:
         script:
           - echo "It's RC2S !"
-          - gradle clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true
+          - gradle --gradle-user-home=/home/user/ clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true
