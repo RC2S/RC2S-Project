@@ -5,9 +5,9 @@ dependencies {
 }
 
 task deleteOldCommonLib(type: Delete) {
-    delete fileTree(dir: "$System.env.RC2S_HOME/lib/ext").matching {
-        include 'rc2s-common-*.jar'
-    }
+	delete fileTree(dir: "$System.env.RC2S_HOME/lib/ext").matching {
+		include 'rc2s-common-*.jar'
+	}
 }
 
 task copyCommonLib(type: Copy, dependsOn: deleteOldCommonLib) {
@@ -17,7 +17,18 @@ task copyCommonLib(type: Copy, dependsOn: deleteOldCommonLib) {
 
 jar {
     doLast {
-        tasks.deleteOldCommonLib.execute();
-        tasks.copyCommonLib.execute();
+		try {
+			tasks.deleteOldCommonLib.execute();
+		}
+		catch(Throwable t) {
+			println t.getMessage();
+		}
+		
+		try {
+			tasks.copyCommonLib.execute();
+		}
+		catch(Throwable t) {
+			println t.getMessage();
+		}
     }
 }

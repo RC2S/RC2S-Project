@@ -1,6 +1,5 @@
 package com.rc2s.client.components;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -13,14 +12,9 @@ public class Led extends Sphere
     private double size;
     private boolean activated;
     private Color color;
-	private boolean actionEvents;
-    
-	public Led(double x, double y, double z, double size, boolean activated, Color color)
-	{
-		this(x, y, z, size, activated, color, true);
-	}
+	private LedEvent ledEvent;
 	
-    public Led(double x, double y, double z, double size, boolean activated, Color color, boolean actionEvents)
+    public Led(double x, double y, double z, double size, boolean activated, Color color, LedEvent ledEvent)
     {
         super(size);
         
@@ -30,7 +24,7 @@ public class Led extends Sphere
         this.size = size;
         this.activated = activated;
         this.color = (color != null) ? color : Color.BLACK;
-		this.actionEvents = actionEvents;
+		this.ledEvent = ledEvent;
         
         this.setTranslateX(x * size * SIZE_MODIFIER);
         this.setTranslateY(y * size * SIZE_MODIFIER);
@@ -41,16 +35,12 @@ public class Led extends Sphere
         material.setSpecularColor(Color.BLACK);
         this.setMaterial(material);
 		
-		if(this.actionEvents)
+		if(this.ledEvent != null)
 		{
 			this.setOnMouseClicked((e) -> {
-				PhongMaterial newColor = new PhongMaterial();
-				newColor.setSpecularColor(Color.BLACK);
-				newColor.setDiffuseColor(this.activated ? Color.BLACK : this.color);
-
-				this.setMaterial(newColor);
-				this.activated = !this.activated;
-				
+				this.setActivated(!isActivated());
+				this.ledEvent.setLed(this);
+				this.ledEvent.run();
 				e.consume();
 			});
 		}
@@ -110,6 +100,11 @@ public class Led extends Sphere
 
     public void setActivated(boolean activated)
     {
+		PhongMaterial newColor = new PhongMaterial();
+		newColor.setSpecularColor(Color.BLACK);
+		newColor.setDiffuseColor(activated ? this.color : Color.WHITE);
+
+		this.setMaterial(newColor);
         this.activated = activated;
     }
 
