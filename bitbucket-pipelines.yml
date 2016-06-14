@@ -1,0 +1,8 @@
+image: rc2s/rc2s-ci:v0.1
+
+pipelines:
+  default:
+    - step:
+        script:
+          - echo "It's RC2S baby :D o/ !"
+          - gradle --version
