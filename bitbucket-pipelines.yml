@@ -1,0 +1,10 @@
+image: rc2s/rc2s-ci:v0.3
+
+pipelines:
+  default:
+    - step:
+        script:
+          - mkdir ~/rc2s-project/
+          - cp -r . ~/rc2s-project/
+          - cd ~/rc2s-project/
+          - gradle clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true

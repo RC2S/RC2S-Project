@@ -1,6 +1,7 @@
 package com.rc2s.daemon;
 
 import com.rc2s.daemon.hardware.Hardware;
+import com.rc2s.daemon.network.Listener;
 import com.rc2s.daemon.network.Packet;
 import com.rc2s.daemon.network.Stage;
 
@@ -8,6 +9,7 @@ public class Daemon implements Runnable
 {
     private final Hardware hardware;
     private final StatesProcessor processor;
+	private final Listener listener;
 
     private boolean running;
 
@@ -20,15 +22,17 @@ public class Daemon implements Runnable
     }
 
     public Daemon()
-    {		
+    {
         this.hardware = new Hardware();
         this.processor = new StatesProcessor(this);
+		this.listener = new Listener(this, 1337);
     }
 
     @Override
     public void run()
     {
         this.running = true;
+		listener.start();
         
         Stage s1 = new Stage(new boolean[][] {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}});
         Stage s2 = new Stage(new boolean[][] {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}});
@@ -92,6 +96,11 @@ public class Daemon implements Runnable
     {
         return hardware;
     }
+
+	public StatesProcessor getProcessor()
+	{
+		return processor;
+	}	
 
     public void shutdown()
     {

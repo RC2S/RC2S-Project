@@ -10,6 +10,7 @@
     <class>com.rc2s.common.vo.Cube</class>
     <class>com.rc2s.common.vo.Size</class>
     <class>com.rc2s.common.vo.Plugin</class>
+    <class>com.rc2s.common.vo.Track</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
     </properties>

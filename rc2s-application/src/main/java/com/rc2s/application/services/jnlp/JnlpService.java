@@ -24,13 +24,13 @@ import org.xml.sax.SAXException;
 @Stateless
 public class JnlpService implements IJnlpService
 {
-    private final String jnlpFilePath = "/home/esp010/Bureau/rc2s-client.jnlp";
+    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications/rc2s-jnlp/rc2s-client.jnlp";
     
     private final String jnlpLibsFolder = "libs/";
     
-    private final String jarSignerPath = System.getenv("JAVA_HOME") + "/bin/jarsigner";
+    private final String jarSignerPath = System.getenv("JAVA_HOME") + "/bin/jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
     
-    private final String signKeyStore = "/home/esp010/Bureau/RC2S.jks";
+    private final String signKeyStore = JnlpService.class.getResource("/RC2S.jks").getPath();
     
     private final String signStorePass = "P@ssword1234";
     
@@ -38,7 +38,7 @@ public class JnlpService implements IJnlpService
     
     @Override
     public void signJar(String jarPath)
-    {
+    {        
         String args[] = {
             jarSignerPath,
             "-keystore", signKeyStore,
@@ -106,7 +106,7 @@ public class JnlpService implements IJnlpService
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(jnlpFilePath));
+            StreamResult result = new StreamResult(new File(jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)));
             transformer.transform(source, result);
         }
         catch (ParserConfigurationException
