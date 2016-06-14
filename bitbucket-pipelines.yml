@@ -1,4 +1,4 @@
-image: rc2s/rc2s-ci:v0.2
+image: rc2s/rc2s-ci:v0.3
 
 pipelines:
   default:
