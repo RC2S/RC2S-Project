@@ -4,5 +4,5 @@ pipelines:
   default:
     - step:
         script:
-          - echo "It's RC2S baby :D o/ !"
-          - gradle --version
+          - echo "It's RC2S !"
+          - gradle clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true
