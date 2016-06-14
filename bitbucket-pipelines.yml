@@ -1,0 +1,8 @@
+image: rc2s/rc2s-ci:v0.1
+
+pipelines:
+  default:
+    - step:
+      script:
+        - echo "Start RC2S-CI script"
+        - gradle clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true
