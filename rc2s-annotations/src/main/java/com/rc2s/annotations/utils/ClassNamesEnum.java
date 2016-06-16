@@ -16,5 +16,4 @@ public enum ClassNamesEnum
 	
 	// Client Classes
 	CONTROLLERS,
-	VIEWS,
 }

@@ -65,10 +65,11 @@ public class SourceUtil
 		String[] packageParts = mainClass.getPackageName().split("\\.");
 		
 		// First, get all views names and verify there is a MainView.fxml
+		/*
 		if (isFirstCheck)
 		{
 			getControllersAndViewsFoldersPaths(packageParts);
-			/*
+			
 			try
 			{
 				getAllViewsNames();
@@ -84,10 +85,11 @@ public class SourceUtil
 			{
 				System.err.println(ex.getMessage());
 			}
-			*/
+			
 			isFirstCheck = false;
 		}
-		/*
+		*/
+		
 		try
 		{
 			// Verify root - shall be com.rc2s.{plugin_name}
@@ -101,7 +103,7 @@ public class SourceUtil
 			 * Those parts shall be :
 			 * (ejb | application | dao).name
 			 * Others types are already verified within ClassNames Enum
-			 * /
+			 */
 			String entityName = null;
 			
 			if (ClassNamesEnum.APPLICATION.equals(cne)
@@ -118,19 +120,17 @@ public class SourceUtil
 		{
 			System.err.println(scex.getMessage());
 		}
-		*/
 	}
 	
 	public void getControllersAndViewsFoldersPaths(String[] packageParts)
-	{
+	{	
 		StringBuilder sb = new StringBuilder();
 		
 		for (int i = 0; i < 3; i++)
 		{
-			sb.append(packageParts[i]);
 			sb.append("/");
+			sb.append(packageParts[i]);
 		}
-		sb.deleteCharAt(sb.length()-1);
 		
 		System.err.println("PACKAGE FOUND : " + sb.toString());
 	
@@ -293,9 +293,6 @@ public class SourceUtil
 		{
 			case "controllers":
 				return ClassNamesEnum.CONTROLLERS;
-				
-			case "views":
-				return ClassNamesEnum.VIEWS;
 				
 			default:
 				throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packagePart + "'");
@@ -470,7 +467,12 @@ public class SourceUtil
 		boolean hasResourceBundle = false;
 		boolean hasInitializeMethod = false;
 		
-		String error = mainClass.getName() + "'s initialize method shall contain exactly 2 args : URL & ResourceBundle";
+		String error = mainClass.getName() 
+				+ "'s initialize method shall contain exactly 2 args : '" 
+				+ URL_PACKAGE 
+				+ "' & '" 
+				+ RESOURCE_BUNDLE_PACKAGE 
+				+ "'";
 		
 		// MainController will be used for MainView.fxml
 		if (mainClass.getName().equals("MainController"))
