@@ -25,23 +25,25 @@ public class SourceUtil
 	private static String pluginName = null;
 	
 	// List of controllers & views within the plugin
-	private static ArrayList<String> expectedControllersList = null;
-	private static ArrayList<String> controllersList = null;
-	private static ArrayList<String> initialControllersList = null;
-	private static ArrayList<String> viewsList = null;
+	private static ArrayList<String> expectedControllersList	= null;
+	private static ArrayList<String> initialControllersList		= null;
+	private static ArrayList<String> controllersList			= null;
+	private static ArrayList<String> viewsList					= null;
 	
 	// Should contain exactly one MainController & one MainView
-	private static boolean hasMainController = false;
-	private static boolean hasMainView = false;
+	private static boolean hasMainController	= false;
+	private static boolean hasMainView			= false;
 	
 	// Needed annotations package names & packages paths
-	private final static String controllersFolderPath	= null;
-	private final static String viewsFolderPath			= null;
-	private final static String statelessPackage		= "javax.ejb.Stateless";
-	private final static String statefulPackage			= "javax.ejb.Stateful";
-	private final static String remotePackage			= "javax.ejb.Remote";
-	private final static String localPackage			= "javax.ejb.Local";
-	private final static String entityPackage			= "javax.persistence.Entity";
+	private final static String CONTROLLERS_FOLDER_PATH	= null;
+	private final static String VIEWS_FOLDER_PATH		= null;
+	private final static String STATELESS_PACKAGE		= "javax.ejb.Stateless";
+	private final static String STATEFUL_PACKAGE		= "javax.ejb.Stateful";
+	private final static String REMOTE_PACKAGE			= "javax.ejb.Remote";
+	private final static String LOCAL_PACKAGE			= "javax.ejb.Local";
+	private final static String ENTITY_PACKAGE			= "javax.persistence.Entity";
+	private final static String URL_PACKAGE				= "java.net.URL";
+	private final static String RESOURCE_BUNDLE_PACKAGE = "java.util.ResourceBundle";
 	
 	public SourceUtil()
 	{
@@ -72,10 +74,10 @@ public class SourceUtil
 				getAllViewsNames();
 				getAllControllersNames();
 				
-				for (String controllerName : expectedControllersList)
+				for (String expectedControllerName : expectedControllersList)
 				{
-					if (!initialControllersList.contains(controllerName))
-						throw new SourceControlException("Controller " + controllerName + " was expected and wasn't found");
+					if (!initialControllersList.contains(expectedControllerName))
+						throw new SourceControlException("Controller " + expectedControllerName + " was expected and wasn't found");
 				}
 			}
 			catch (SourceControlException | ParserConfigurationException | SAXException | IOException ex)
@@ -115,7 +117,8 @@ public class SourceUtil
 		catch (SourceControlException scex)
 		{
 			System.err.println(scex.getMessage());
-		}*/
+		}
+		*/
 	}
 	
 	public void getControllersAndViewsFoldersPaths(String[] packageParts)
@@ -146,7 +149,8 @@ public class SourceUtil
 		}
 	}
 	
-	public static void displayInfo(String f) throws IOException {
+	public static void displayInfo(String f) throws IOException
+	{
 		File file = new File(f);
 		System.out.println("========================================");
 		System.out.println("          name : " + file.getName());
@@ -155,6 +159,72 @@ public class SourceUtil
 		System.out.println("          path : " + file.getPath());
 		System.out.println(" absolute path : " + file.getAbsolutePath());
 		System.out.println("canonical path : " + file.getCanonicalPath());
+	}
+
+	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
+	{
+		File testDirectory = new File(VIEWS_FOLDER_PATH);
+		File[] files = testDirectory.listFiles(
+			(File pathname) -> pathname.getName().endsWith(".fxml") 
+							&& pathname.isFile()
+		);
+		
+		// Get all Views names
+		for (File file : files)
+			viewsList.add(file.getName());
+		
+		// Get associated Controllers
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		
+		for (String fileName : viewsList)
+		{
+			if (fileName.equals("MainView.fxml"))
+			{
+				if (hasMainView)
+					throw new SourceControlException("Your plugin should only contain one MainView.fxml");
+				
+				hasMainView = true;
+			}
+			
+			// Parse fxml file
+			Document fxmlDoc = docBuilder.parse(VIEWS_FOLDER_PATH + "/" + fileName);
+			
+			// Retrieve first AnchorPane Node element
+			Node anchorNode = fxmlDoc.getElementsByTagName("AnchorPane").item(0);
+			
+			if (anchorNode != null
+				&& anchorNode.hasAttributes()
+				&& anchorNode.getAttributes().getNamedItem("fx:controller") != null)
+			{
+				expectedControllersList.add(
+					anchorNode
+					.getAttributes()
+					.getNamedItem("fx:controller")
+					.getNodeValue()
+					.split("controllers.")[1]
+					.concat(".java")
+				);
+			}
+			else
+				throw new SourceControlException("No fx:controller attribute has been found on main AnchorPane in " + fileName);
+		}
+		
+		if (!hasMainView)
+			throw new SourceControlException("MainView.fxml expected in views package");
+	}
+	
+	private void getAllControllersNames()
+	{
+		File testDirectory = new File(CONTROLLERS_FOLDER_PATH);
+		File[] files = testDirectory.listFiles(
+			(File pathname) -> pathname.getName().endsWith(".java") 
+							&& pathname.isFile()
+		);
+		
+		// Get all Views names
+		for (File file : files)
+			initialControllersList.add(file.getName());
 	}
 
 	private void verifyRoot(String[] packageParts) throws SourceControlException
@@ -212,11 +282,8 @@ public class SourceUtil
 			case "vo":
 				return ClassNamesEnum.VO;
 				
-			case "sql":
-				return ClassNamesEnum.SQL;
-				
 			default:
-				throw new SourceControlException("Invalid common package naming - Expected (vo|sql), got '" + packagePart + "'");
+				throw new SourceControlException("Invalid common package naming - Expected (vo), got '" + packagePart + "'");
 		}
 	}
 
@@ -229,15 +296,6 @@ public class SourceUtil
 				
 			case "views":
 				return ClassNamesEnum.VIEWS;
-				
-			case "css":
-				return ClassNamesEnum.CSS;
-				
-			case "images":
-				return ClassNamesEnum.IMAGES;
-				
-			case "utils":
-				return ClassNamesEnum.UTILS;
 				
 			default:
 				throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packagePart + "'");
@@ -306,18 +364,11 @@ public class SourceUtil
 				case VO:
 					verifyVoStandards(mainClass);
 					break;
-
-				case SQL:
-					verifySqlStandards(mainClass, cne, entityName);
-					break;
 	
 				case CONTROLLERS:
 					verifyControllerStandards(mainClass);
 					break;
-
-				case UTILS:		//void - utils only need @SourceControl
-				case CSS:		//void
-				case IMAGES:		//void
+					
 				default:
 					break;
 			}
@@ -328,8 +379,8 @@ public class SourceUtil
 	{
 		if (mainClass.getName().equals(entityName + "FacadeRemote"))
 		{
-			if (!mainClass.getAnnotations().contains(remotePackage))
-				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + remotePackage + "'");
+			if (!mainClass.getAnnotations().contains(REMOTE_PACKAGE))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + REMOTE_PACKAGE + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "FacadeBean"))
 		{
@@ -346,8 +397,8 @@ public class SourceUtil
 	{
 		if (mainClass.getName().equals("I" + entityName + "Service"))
 		{
-			if (!mainClass.getAnnotations().contains(localPackage))
-				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + localPackage + "'");
+			if (!mainClass.getAnnotations().contains(LOCAL_PACKAGE))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + LOCAL_PACKAGE + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "Service"))
 		{
@@ -364,8 +415,8 @@ public class SourceUtil
 	{
 		if (mainClass.getName().equals("I" + entityName + "DAO"))
 		{
-			if (!mainClass.getAnnotations().contains(localPackage))
-				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + localPackage + "'");
+			if (!mainClass.getAnnotations().contains(LOCAL_PACKAGE))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + LOCAL_PACKAGE + "'");
 		}
 		else if (mainClass.getName().equals(entityName + "DAO"))
 		{
@@ -380,19 +431,19 @@ public class SourceUtil
 	
 	private void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
 	{
-		Boolean hasStateless	= mainClass.getAnnotations().contains(statelessPackage);
-		Boolean hasStateful		= mainClass.getAnnotations().contains(statefulPackage);
+		Boolean hasStateless	= mainClass.getAnnotations().contains(STATELESS_PACKAGE);
+		Boolean hasStateful		= mainClass.getAnnotations().contains(STATEFUL_PACKAGE);
 		Boolean hasBoth		= hasStateless && hasStateful;
 		Boolean hasNone		= !hasStateless && !hasStateful;
 
 		if (hasBoth)
 		{
 			throw new SourceControlException("Class " + mainClass.getName() + 
-				" has both " + statelessPackage + " & " + statefulPackage + " annotations : it should only have one");
+				" has both " + STATELESS_PACKAGE + " & " + STATEFUL_PACKAGE + " annotations : it should only have one");
 		}
 		else if (hasNone)
 		{
-			throw new SourceControlException("Class " + mainClass.getName() + " requires " + statelessPackage + " or " + statefulPackage + " annotation");
+			throw new SourceControlException("Class " + mainClass.getName() + " requires " + STATELESS_PACKAGE + " or " + STATEFUL_PACKAGE + " annotation");
 		}
 	}
 
@@ -408,14 +459,8 @@ public class SourceUtil
 		if (!b)
 			throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
 		
-		if (!mainClass.getAnnotations().contains(entityPackage))
-			throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + entityPackage + "'");
-	}
-
-	private void verifySqlStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) 
-	{
-		// Behaviour to determine
-		throw new UnsupportedOperationException("Not supported yet.");
+		if (!mainClass.getAnnotations().contains(ENTITY_PACKAGE))
+			throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + ENTITY_PACKAGE + "'");
 	}
 
 	private void verifyControllerStandards(ElementMapper mainClass) throws SourceControlException
@@ -449,9 +494,9 @@ public class SourceUtil
 				{
 					for (ParameterMapper pm : em.getParameters())
 					{
-						if (pm.getType().equals("java.net.URL"))
+						if (pm.getType().equals(URL_PACKAGE))
 							hasJavaNetURL = true;
-						else if (pm.getType().equals("java.util.ResourceBundle"))
+						else if (pm.getType().equals(RESOURCE_BUNDLE_PACKAGE))
 							hasResourceBundle = true;
 					}
 					
@@ -470,71 +515,5 @@ public class SourceUtil
 			throw new SourceControlException("Controller " + mainClass.getName() + " already in controllers list. You might have added two times the same controller.");
 		
 		controllersList.add(mainClass.getName());
-	}
-	
-	private void getAllControllersNames()
-	{
-		File testDirectory = new File(controllersFolderPath);
-		File[] files = testDirectory.listFiles(
-			(File pathname) -> pathname.getName().endsWith(".java") 
-							&& pathname.isFile()
-		);
-		
-		// Get all Views names
-		for (File file : files)
-			initialControllersList.add(file.getName());
-	}
-
-	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
-	{
-		File testDirectory = new File(viewsFolderPath);
-		File[] files = testDirectory.listFiles(
-			(File pathname) -> pathname.getName().endsWith(".fxml") 
-							&& pathname.isFile()
-		);
-		
-		// Get all Views names
-		for (File file : files)
-			viewsList.add(file.getName());
-		
-		// Get associated Controllers
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		
-		for (String fileName : viewsList)
-		{
-			if (fileName.equals("MainView.fxml"))
-			{
-				if (hasMainView)
-					throw new SourceControlException("Your plugin should only contain one MainView.fxml");
-				
-				hasMainView = true;
-			}
-			
-			// Parse fxml file
-			Document doc = docBuilder.parse(viewsFolderPath + "/" + fileName);
-			
-			// Retrieve first AnchorPane Node element
-			Node anchorNode = doc.getElementsByTagName("AnchorPane").item(0);
-			
-			if (anchorNode != null
-				&& anchorNode.hasAttributes()
-				&& anchorNode.getAttributes().getNamedItem("fx:controller") != null)
-			{
-				expectedControllersList.add(
-					anchorNode
-					.getAttributes()
-					.getNamedItem("fx:controller")
-					.getNodeValue()
-					.split("controllers.")[1]
-					.concat(".java")
-				);
-			}
-			else
-				throw new SourceControlException("No fx:controller attribute has been found on main AnchorPane in " + fileName);
-		}
-		
-		if (!hasMainView)
-			throw new SourceControlException("MainView.fxml expected in views package");
 	}
 }

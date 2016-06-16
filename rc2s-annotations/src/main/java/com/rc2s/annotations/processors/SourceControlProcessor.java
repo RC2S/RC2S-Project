@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
@@ -21,23 +20,18 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 public class SourceControlProcessor extends AbstractProcessor
 {
-    private Types       typeUtils;
     private Elements    elementUtils;
-    private Filer       filer;
     private Messager    messager;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv)
     {
         super.init(processingEnv);
-        typeUtils       = processingEnv.getTypeUtils();
         elementUtils    = processingEnv.getElementUtils();
-        filer           = processingEnv.getFiler();
         messager        = processingEnv.getMessager();
     }
     
