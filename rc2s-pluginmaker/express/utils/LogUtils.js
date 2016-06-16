@@ -2,7 +2,7 @@ var loggersList = require('./LogFilesUtils');
 var logger;
 
 // Begin HTTP Zone
-var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
+var writeHttpLog = function(errorsMapSerial, apiPath, method, statusCode) {
 	
 	logger = loggersList.HttpLogger;
 
@@ -16,7 +16,7 @@ var writeHttpLog = (errorsMapSerial, apiPath, method, statusCode) => {
 	logger.warn(ctxErrors[statusCode]);
 };
 
-var writeHttpErrorLog = (errorsMapSerial, message) => {
+var writeHttpErrorLog = function(errorsMapSerial, message) {
 
 	logger = loggersList.HttpLogger;
 	
@@ -27,7 +27,7 @@ var writeHttpErrorLog = (errorsMapSerial, message) => {
 // End HTTP
 
 // Begin Authentication Zone
-var writeAuthAccess = (originalUrl, token) => {
+var writeAuthAccess = function(originalUrl, token) {
 
 	logger = loggersList.AuthLogger;
 
@@ -37,7 +37,7 @@ var writeAuthAccess = (originalUrl, token) => {
 // End Authentication
 
 // Begin Database Logs Zone
-var writeConnectionLog = (message, credentials) => {
+var writeConnectionLog = function(message, credentials) {
 
 	logger = loggersList.DBLogger;
 
@@ -50,7 +50,7 @@ var writeConnectionLog = (message, credentials) => {
 	logger.info("Message : '" + message + "'");
 }
 
-var writeQueryLog = (message, query) => {
+var writeQueryLog = function(message, query) {
 
 	logger = loggersList.DBLogger;
 	
@@ -61,12 +61,9 @@ var writeQueryLog = (message, query) => {
 // End Database Logs
 
 module.exports = {
-
-	"writeHttpLog" 			: writeHttpLog,
-	"writeHttpErrorLog" 	: writeHttpErrorLog,
-
-	"writeAuthAccess" 		: writeAuthAccess,
-
-	"writeConnectionLog" 	: writeConnectionLog,
-	"writeQueryLog" 		: writeQueryLog
+	writeHttpLog 		: writeHttpLog,
+	writeHttpErrorLog 	: writeHttpErrorLog,
+	writeAuthAccess 	: writeAuthAccess,
+	writeConnectionLog 	: writeConnectionLog,
+	writeQueryLog 		: writeQueryLog
 };
