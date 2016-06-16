@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="275.0" prefWidth="250.0" styleClass="item-panel" stylesheets="@css/cubicItem-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.CubicItemController">
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="275.0" minHeight="275.0" prefHeight="275.0" prefWidth="250.0" styleClass="item-panel" stylesheets="@css/cubicItem-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.client.controllers.CubicItemController">
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>

@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
@@ -41,7 +42,7 @@ public class CubicListController extends TabController implements Initializable
 		{
 			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
 
-			int i = 0, j = 0;
+			int i = 0, j = 1;
 			for(Cube cube : cubes)
 			{
 				FXMLLoader loader = Resources.loadFxml("CubicItemView");
@@ -49,13 +50,12 @@ public class CubicListController extends TabController implements Initializable
 				controller.setTab(getTab());
 				controller.update(cube);
 
-				this.grid.add(loader.getRoot(), i, j);
+				grid.add(loader.getRoot(), i, j);
 
 				if(++i == MAX_COLUMNS)
 				{
 					i = 0;
-					grid.addRow(1);
-					j++;
+					grid.addRow(++j);
 				}
 			}
 		}
