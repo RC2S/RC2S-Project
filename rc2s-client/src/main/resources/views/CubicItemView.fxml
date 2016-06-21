@@ -38,7 +38,7 @@
             <Label fx:id="name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label fx:id="ip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Label fx:id="status" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <HBox fx:id="display" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <HBox fx:id="display" alignment="CENTER" depthTest="ENABLE" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
    </children>

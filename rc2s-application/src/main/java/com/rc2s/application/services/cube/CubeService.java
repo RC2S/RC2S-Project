@@ -47,6 +47,15 @@ public class CubeService implements ICubeService
 	{
 		try
 		{
+			try
+			{
+				Cube existing = cubeDAO.getByIp(c.getIp());
+
+				if (existing != null)
+					throw new ServiceException("Cube " + existing.getName() + " already uses the IP address " + existing.getIp());
+			}
+			catch(DAOException e) { /* Ignore getSingleResult() exception */ }
+
 			c.setCreated(new Date());
 			cubeDAO.save(c);
 		}

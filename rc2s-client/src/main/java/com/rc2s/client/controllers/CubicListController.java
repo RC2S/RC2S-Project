@@ -42,7 +42,7 @@ public class CubicListController extends TabController implements Initializable
 		{
 			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
 
-			int i = 0, j = 1;
+			int i = 0, j = 0;
 			for(Cube cube : cubes)
 			{
 				FXMLLoader loader = Resources.loadFxml("CubicItemView");
