@@ -19,8 +19,8 @@ public class Hardware
     {
         this.gpioc = GpioFactory.getInstance();
         this.mGpio = new HashMap<>();
-
-        pulse(GPIOEnum.CLEAR, false);
+        
+        resetState(false);
     }
 
     private GPIOEnum getStageGpio(int level)
@@ -45,21 +45,24 @@ public class Hardware
         return pulse(pin, true);
     }
 
+    /**
+     * Si revert = true l'état du pin est inversé 2 fois pour revenir à l'état initial
+     * 
+     * @param pin
+     * @param revert
+     * @return 
+     */
     public GpioPinDigitalOutput pulse(GPIOEnum pin, boolean revert)
     {
         GpioPinDigitalOutput gpdo = mGpio.get(pin);
-
-        if (gpdo == null)
+        
+        if (gpdo != null)
         {
-            gpdo = gpioc.provisionDigitalOutputPin(pin.getPin(), pin.getInfo(), PinState.HIGH);
-            gpdo.setShutdownOptions(true, PinState.LOW);
-            mGpio.put(pin, gpdo);
-        }
-        else
             gpdo.toggle();
 
-        if (revert)
-            gpdo.toggle();
+            if (revert)
+                gpdo.toggle();
+        }
 
         return gpdo;
     }
@@ -105,11 +108,35 @@ public class Hardware
             lock = null;
         }
     }
-
+    
+    public final void resetState(boolean hardReset)
+    {        
+        for(GPIOEnum pin : GPIOEnum.values())
+        {
+            GpioPinDigitalOutput gpdo = mGpio.get(pin);
+            
+            if (gpdo == null)
+            {
+                gpdo = gpioc.provisionDigitalOutputPin(pin.getPin(), pin.getInfo(), PinState.LOW);
+                gpdo.setShutdownOptions(true, PinState.LOW);
+                mGpio.put(pin, gpdo);
+                
+                if (pin.isInverted())
+                    gpdo.high();
+            }
+            else
+            {
+                if (hardReset || !pin.isInverted())
+                    gpdo.low();
+                else
+                    gpdo.high();
+            }                
+        }
+        send();
+    }
     public void shutdown()
     {
-        clear();
-        send();
+        resetState(true);        
         gpioc.shutdown();
     }
 }
