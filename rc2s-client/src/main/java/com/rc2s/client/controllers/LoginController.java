@@ -18,7 +18,6 @@ import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.utils.Hash;
 import com.rc2s.common.vo.User;
-import com.rc2s.ejb.authentication.AuthenticationFacadeRemote;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import javafx.event.Event;
 import javafx.scene.control.Button;
@@ -79,16 +78,13 @@ public class LoginController implements Initializable
 			try
 			{
 				// Init EJB context
-				EJB.initContext(ip, null);
-				UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");
-                AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote)EJB.lookup("AuthenticationEJB");
-                
+				EJB.initContext(ip, null, username, password);
+				UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");                
 				try
 				{
 					// Get the authenticated user
 					User user = userEJB.login(username, password);
-                    System.out.println(authenticationEJB.login(username, password) ? "Logged" : "Not Logged");
-
+                    
 					if(user != null)
 					{
 						Main.setAuthenticatedUser(user);

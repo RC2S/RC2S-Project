@@ -1,7 +1,13 @@
 apply plugin: 'maven'
 
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
 dependencies {
     compile group: 'javax', name: 'javaee-api', version: '7.0'
+    provided group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 }
 
 task deleteOldCommonLib(type: Delete) {

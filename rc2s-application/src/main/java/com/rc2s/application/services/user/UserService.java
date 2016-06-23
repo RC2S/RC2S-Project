@@ -41,7 +41,7 @@ public class UserService implements IUserService
 			
 			if(username != null && password != null)
 			{
-				password = Hash.sha1(UserService.SALT + password + UserService.PEPPER);
+				//password = Hash.sha1(UserService.SALT + password + UserService.PEPPER);
 				user = userDAO.getAuthenticatedUser(username, password);
 				
 				if(user != null)
