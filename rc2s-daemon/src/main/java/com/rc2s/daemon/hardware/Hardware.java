@@ -67,9 +67,15 @@ public class Hardware
         return gpdo;
     }
 
-    public void sendStage(int i)
+    public void sendStage(int i, int maxStage)
     {
-        pulse(getStageGpio(i));
+        if(i == 0)
+            pulse(getStageGpio(i), false);
+        else
+        {
+            pulse(getStageGpio(i - 1), false);
+            pulse(getStageGpio(i), (i == maxStage - 1));
+        }
     }
 
     public GpioPinDigitalOutput bit()
