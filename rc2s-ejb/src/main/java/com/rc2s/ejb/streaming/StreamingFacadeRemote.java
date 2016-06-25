@@ -5,5 +5,5 @@ import javax.ejb.Remote;
 @Remote
 public interface StreamingFacadeRemote
 {
-	
+	public void streamMusic();
 }
