@@ -63,7 +63,7 @@ public class MusicPlaylistController extends TabController implements Initializa
         try
         {
             syncBox.getItems().clear();
-            syncBox.getItems().addAll(syncEJB.getAll());
+            syncBox.getItems().addAll(syncEJB.getByUser(Main.getAuthenticatedUser()));
         }
         catch(EJBException e)
         {
