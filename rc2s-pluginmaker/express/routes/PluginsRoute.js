@@ -1,5 +1,7 @@
 var PluginsController 	= require('../controllers').PluginsController;
 var CommonUtils 		= require('../utils/CommonUtils');
+var config				= require('../utils/config');
+var del 				= require('del');
 
 module.exports = function(app) {
 	var globalFlash = {};
@@ -19,7 +21,8 @@ module.exports = function(app) {
 
 	app.get('/plugins/add', function(req, res, next) {
 		res.render('addPlugin', {
-			layout : 'layoutPlugin'
+			title	: 'Ajout Plugin | RC2S-PluginMaker',
+			layout	: 'layoutPlugin'
 		});
 	});
 
@@ -31,6 +34,19 @@ module.exports = function(app) {
 				globalFlash = {error : CommonUtils.formatFormErrors(errors)};
 
 			res.redirect('/plugins');
+		});
+	});
+
+	app.get('/plugins/download/:name', function(req, res, next) {
+		PluginsController.downloadZip(req.params.name, function(valid, errors) {
+			if(valid)
+				res.sendFile(config.che.downloadFolder + req.params.name + '.zip');
+			else {
+				globalFlash = {error : CommonUtils.formatFormErrors(errors)};
+				res.redirect('/plugins');
+			}
+
+			del(config.che.downloadFolder + '/*');
 		});
 	});
 

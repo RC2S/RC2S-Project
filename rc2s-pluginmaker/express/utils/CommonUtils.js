@@ -7,7 +7,7 @@ CommonUtils.prototype.formatFormErrors = function(errors) {
 		errorsString = '';
 		
 		if (!Array.isArray(errors))
-			return '<div>' + errors + '</div>';
+			return '<div>' + JSON.stringify(errors) + '</div>';
 		
 		errors.forEach(function(err) {
 			if (err.param && err.msg)

@@ -26,18 +26,18 @@ UserController.prototype.login = function(req, callback) {
 
 	conn.connect(function(err) {
 		if (err) {
-			logger.writeConnectionLog(err, options);
+			//logger.writeConnectionLog(err, options);
 			return callback(false, 'Internal Error');
 		}
 
-		logger.writeConnectionLog('Connection OK', options);
+		//logger.writeConnectionLog('Connection OK', options);
 	});
 
 	var query = '\
 		SELECT r.name \
 		FROM role r \
-		INNER JOIN user_role ur ON ur.role_id = r.id \
-		INNER JOIN user u ON u.id = ur.user_id \
+		INNER JOIN link_user_role ur ON ur.role = r.id \
+		INNER JOIN user u ON u.id = ur.user \
 		AND u.username = ? AND u.password = ? \
 	';
 
@@ -51,7 +51,7 @@ UserController.prototype.login = function(req, callback) {
 		if (rows.length == 0) {
 			logger.writeQueryLog('User not found !', query);
 			return callback(false, 'Invalid Login');
-		} else if (rows[0]["name"] == 'ROLE_ADMIN') {
+		} else if (rows[0]["name"] == 'ADMIN') {
 
 			// Ensure hash uniqueness
 			var currentDate = (new Date()).valueOf().toString();
@@ -64,12 +64,12 @@ UserController.prototype.login = function(req, callback) {
 				.update(currentDate + random)
 				.digest('hex');
 
-            logger.writeQueryLog('User found. Creating new token : ' + shaToken, query);
+            //logger.writeQueryLog('User found. Creating new token : ' + shaToken, query);
 
 			req.session.token = shaToken;
 			return callback(true, undefined);
 		} else {
-			logger.writeQueryLog('User not Admin !', query);
+			//logger.writeQueryLog('User not Admin !', query);
 			//res.redirect("/login");
 		}
 	});
