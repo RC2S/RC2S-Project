@@ -1,6 +1,9 @@
-/.gradle/
-/.nb-gradle/
-/rc2s-*/build/
-/rc2s-*/private/
+/**/.gradle/
+/**/.nb-gradle/
+/**/build/
+/**/private/
+/.idea/
+/out/
 /rc2s-pluginmaker/node_modules/
 /rc2s-pluginmaker/nbproject/
+/rc2s-pluginmaker/**/logs

@@ -54,6 +54,7 @@ public class AccessManagementController extends TabController implements Initial
 	@FXML private TableColumn<User, String> usernameColumn;
 	@FXML private TableColumn<User, String> activatedColumn;
 	@FXML private TableColumn<User, String> lockedColumn;
+	@FXML private TableColumn<User, String> roleColumn;
 	@FXML private TableColumn<User, String> lastLoginColumn;
 	@FXML private TableColumn<User, String> createdColumn;
 	@FXML private TableColumn<User, String> updatedColumn;
@@ -80,6 +81,7 @@ public class AccessManagementController extends TabController implements Initial
 		usernameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUsername()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
 		lockedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isLocked() ? "Yes" : "No"));
+		roleColumn.setCellValueFactory(data -> new SimpleStringProperty((data.getValue().getRoles() != null) ? data.getValue().getRoles().get(0).getName() : "None"));
 		lastLoginColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getLastLogin())));
 		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getCreated())));
 		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getUpdated())));

@@ -6,4 +6,9 @@ public class ServiceException extends RC2SException
 	{
 		super(t);
 	}
+
+	public ServiceException(String msg)
+	{
+		super(msg);
+	}
 }

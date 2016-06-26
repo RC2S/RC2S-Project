@@ -30,17 +30,21 @@ public class StatesProcessor implements Runnable
     {
         do
         {
-            try
-            {
-                Packet packet = queue.remove();
-                sweep(packet);
+			try
+			{
+				try
+				{
+					Packet packet = queue.remove();
+					sweep(packet);
 
-                daemon.getHardware().clear();
-                daemon.getHardware().send();
-
-                Thread.sleep(50l);
-            }
-            catch(NoSuchElementException | InterruptedException e) {}
+					daemon.getHardware().clear();
+					daemon.getHardware().send();
+				}
+				catch(NoSuchElementException e) {}
+				
+				Thread.sleep(50l);
+			}
+			catch(InterruptedException e) {}
         } while(daemon.isRunning());
     }
 
@@ -52,17 +56,17 @@ public class StatesProcessor implements Runnable
         {
             for (int i = 0; i < RPI_GPIO_LIMIT && i < packet.getStages().length; i++)
             {
-                handle(i, packet.getStages()[i]);
+                handle(i, packet.getStages().length, packet.getStages()[i]);
             }
         } while ((packet.getDuration() > 0 && (new Date().getTime() - start < packet.getDuration()))
                 || (packet.getDuration() <= 0 && queue.isEmpty()));
     }
 
-    private void handle(int level, Stage stage)
+    private void handle(int level, int maxStage, Stage stage)
     {
         boolean[][] states = stage.getStates();
 
-        for (int i = 0; i < states.length; i++)
+        for(int i = 0; i < states.length; i++)
         {
             for(int j = 0; j < states[i].length; j++)
             {
@@ -71,14 +75,18 @@ public class StatesProcessor implements Runnable
                 if(states[i][j])
                 {
                     gpdo = daemon.getHardware().bit();
-                    System.out.println("1");
+                    System.out.print("1 ");
                 }
+				else
+					System.out.print("0 ");
+				
                 daemon.getHardware().shift(gpdo);
             }
+			System.out.println("");
         }
 
         daemon.getHardware().send();
-        daemon.getHardware().sendStage(level);
+        daemon.getHardware().sendStage(level, maxStage);
     }
 
     public void shutdown()

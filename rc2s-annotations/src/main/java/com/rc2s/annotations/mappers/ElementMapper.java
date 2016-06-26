@@ -1,5 +1,6 @@
 package com.rc2s.annotations.mappers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.lang.model.element.ElementKind;
@@ -27,6 +28,14 @@ public class ElementMapper
     
     // Annotated element description
     private String description;
+	
+	// Fields, Constructors, Methods
+	private final List<ElementMapper> fields;
+	private final List<ElementMapper> constructors;
+	private final List<ElementMapper> methods;
+	
+	// Class Annotations
+	private final List<String> annotations;
 
     public ElementMapper(String packageName, Set<Modifier> modifiers,
         ElementKind kind, String name)
@@ -35,6 +44,12 @@ public class ElementMapper
         this.modifiers      = modifiers;
         this.kind           = kind;
         this.name           = name;
+		
+		this.fields			= new ArrayList<>();
+		this.constructors	= new ArrayList<>();
+		this.methods		= new ArrayList<>();
+		
+		this.annotations	= new ArrayList<>();
     }
 
     public String getPackageName()
@@ -86,4 +101,24 @@ public class ElementMapper
     {
         this.description = description;
     }
+
+	public List<ElementMapper> getFields()
+	{
+		return fields;
+	}
+
+	public List<ElementMapper> getConstructors()
+	{
+		return constructors;
+	}
+
+	public List<ElementMapper> getMethods()
+	{
+		return methods;
+	}
+	
+	public List<String> getAnnotations()
+	{
+		return annotations;
+	}
 }

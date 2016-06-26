@@ -7,4 +7,4 @@ pipelines:
           - mkdir ~/rc2s-project/
           - cp -r . ~/rc2s-project/
           - cd ~/rc2s-project/
-          - gradle clean publishToMavenLocal compileTestJava -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true
+          - gradle clean publishToMavenLocal test -PskipServerAutodeploy=true -PskipJNLPAutodeploy=true

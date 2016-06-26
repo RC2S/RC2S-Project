@@ -2,6 +2,7 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.client.components.LedCube;
+import com.rc2s.client.components.LedEvent;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
@@ -53,6 +54,9 @@ public class CubicDetailsController extends TabController implements Initializab
 	@FXML private Button backButton;
 	@FXML private Label errorLabel;
 	
+	@FXML private Button allOnButton;
+	@FXML private Button allOffButton;
+	
 	// Cube
 	@FXML private Label nameLabel;
 	@FXML private TextField nameField;
@@ -103,7 +107,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
 
 			// Gather cubes (all, only available for this user... ?)
-			cubesBox.getItems().addAll(cubeEJB.getAllCubes());
+			cubesBox.getItems().addAll(cubeEJB.getCubes(Main.getAuthenticatedUser()));
 		}
 		catch(EJBException e)
 		{
@@ -116,8 +120,13 @@ public class CubicDetailsController extends TabController implements Initializab
 	
 	public void initEmpty()
 	{
+		allOnButton.setVisible(false);
+		allOffButton.setVisible(false);
+		
 		editButton.setVisible(false);
 		removeButton.setVisible(false);
+		cubesBox.setDisable(true);
+		addCubeButton.setDisable(true);
 		addButton.setVisible(true);
 		
 		cube = new Cube();
@@ -129,7 +138,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		cube.setCreated(new Date());
 		cube.getSynchronization().setCreated(new Date());
 		
-		ledCube = new LedCube(this.display, 4., 4., 4., 10., Color.BLACK, false);
+		ledCube = new LedCube(this.display, 4., 4., 4., 10., Color.BLACK, null);
 		display.getChildren().add(ledCube);
 		
 		toggleEditCube();
@@ -193,7 +202,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			(size != null) ? size.getZ() : 4.,
 			10.,
 			color,
-			false
+			allOnButton.isVisible() ? onToggleLed() : null
 		);
 		display.getChildren().clear();
 		display.getChildren().add(ledCube);
@@ -201,6 +210,9 @@ public class CubicDetailsController extends TabController implements Initializab
 	
 	private void toggleEditCube()
 	{
+		allOnButton.setDisable(!allOnButton.isDisable());
+		allOffButton.setDisable(!allOffButton.isDisable());
+		
 		nameLabel.setVisible(!nameLabel.isVisible());
 		nameField.setVisible(!nameField.isVisible());
 				
@@ -484,6 +496,52 @@ public class CubicDetailsController extends TabController implements Initializab
 			
 			e.consume();
 		}
+	}
+	
+	@FXML
+	private void onAllOnEvent(ActionEvent e)
+	{
+		try
+		{
+			cubeEJB.updateAllLed(cube, true);
+			ledCube.setActivated(true);
+		}
+		catch(EJBException ex)
+		{
+			error(ex.getMessage());
+		}
+	}
+	
+	@FXML
+	private void onAllOffEvent(ActionEvent e)
+	{
+		try
+		{
+			cubeEJB.updateAllLed(cube, false);
+			ledCube.setActivated(false);
+		}
+		catch(EJBException ex)
+		{
+			error(ex.getMessage());
+		}
+	}
+	
+	public LedEvent onToggleLed()
+	{
+		return new LedEvent() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					cubeEJB.updateAllLed(cube, ledCube.getStateArray());
+				}
+				catch(EJBException e)
+				{
+					error(e.getMessage());
+				}
+			}
+		};
 	}
 	
 	private void error(String err)

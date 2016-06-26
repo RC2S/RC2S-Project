@@ -4,16 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -45,6 +36,9 @@ public class User implements Serializable
 		inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
 	)
 	private List<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Track> tracks;
 	
     private Date created;
     private Date updated;
@@ -169,6 +163,16 @@ public class User implements Serializable
 	{
 		this.roles = roles;
 	}
+
+    public List<Track> getTracks()
+    {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks)
+    {
+        this.tracks = tracks;
+    }
 	
 	@Override
 	public String toString()

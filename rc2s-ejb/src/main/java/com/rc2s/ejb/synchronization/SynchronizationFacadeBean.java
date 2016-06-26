@@ -4,6 +4,8 @@ import com.rc2s.application.services.synchronization.ISynchronizationService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Synchronization;
+import com.rc2s.common.vo.User;
+
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -20,6 +22,19 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 		try
 		{
 			return synchronizationService.getAll();
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
+
+	@Override
+	public List<Synchronization> getByUser(User user) throws EJBException
+	{
+		try
+		{
+			return synchronizationService.getByUser(user);
 		}
 		catch(ServiceException e)
 		{
