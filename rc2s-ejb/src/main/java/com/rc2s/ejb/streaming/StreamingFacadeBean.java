@@ -14,4 +14,16 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
 	{
 		streamingService.streamMusic();
 	}
+    
+    @Override
+    public void startStreaming(String mrl)
+    {
+        streamingService.start(mrl);
+    }
+
+    @Override
+    public void stopStreaming()
+    {
+        streamingService.stop();
+    }
 }

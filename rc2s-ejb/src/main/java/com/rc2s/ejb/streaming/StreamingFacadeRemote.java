@@ -6,4 +6,8 @@ import javax.ejb.Remote;
 public interface StreamingFacadeRemote
 {
 	public void streamMusic();
+
+    public void startStreaming(String mrl);
+    
+    public void stopStreaming();
 }
