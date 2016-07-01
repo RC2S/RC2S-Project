@@ -37,7 +37,7 @@ public class StreamingService implements IStreamingService
     
     public StreamingService()
     {
-		System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+		//System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 		
         factory     = new MediaPlayerFactory();
         
