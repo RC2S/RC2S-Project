@@ -7,10 +7,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import java.util.concurrent.Semaphore;
 
-@Stateless
+@Stateful
 public class StreamingService implements IStreamingService
 {
     private static final Logger log = LogManager.getLogger(StreamingService.class);

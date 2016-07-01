@@ -18,7 +18,7 @@ public class ClientTest
             
             System.err.println("------- Before Streaming -------");
             Streaming stream = new Streaming(streamingEJB);
-            stream = null;
+            stream.start();
             System.err.println("------- After Streaming -------");
         }
         catch(NamingException e)
