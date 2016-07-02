@@ -26,7 +26,7 @@ module.exports = {
 		workspace		: 'rc2s',
 		template		: __dirname + '/template/',
 		templateFolder	: path.resolve(__dirname + '/template') + '/',
-		downloadFolder	: path.resolve(__dirname + '/download') + '/',
+		tmpFolder 		: path.resolve(__dirname + '/tmp') + '/',
 		prefixImport	: '[pluginname]'
 	},
 	log4js : {

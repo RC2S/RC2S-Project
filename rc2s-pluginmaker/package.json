@@ -19,6 +19,8 @@
     "log4js": "^0.6.35",
     "mustachex": "0.0.3",
     "mysql": "^2.10.2",
-    "recursive-readdir": "^2.0.0"
+    "recursive-copy": "^2.0.5",
+    "recursive-readdir": "^2.0.0",
+    "through2": "^2.0.1"
   }
 }

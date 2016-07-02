@@ -1,6 +1,8 @@
 var WorkspaceController	= require('./WorkspaceController');
 var config				= require('../utils/config');
 var recursive			= require('recursive-readdir');
+var copy				= require('recursive-copy');
+var through				= require('through2');
 var fs 					= require('fs');
 var exec				= require('child_process').exec;
 
@@ -118,32 +120,60 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 		}
 		callback(true, undefined);
 	});*/
-	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
-		if(errorPs && stderrPs)
-			return callback(false, stderrPs);
-		else if(error)
-			return callback(false, errorPs);
+	
+	var options = {
+		overwrite: true,
+		expand: true,
+		dot: true,
+		junk: true,
+		filter: [
+			'**/*'
+		],
+		rename: function(filePath) {
+			return filePath.replace('[pluginname]', pluginName);
+		},
+		transform: function(src, dest, stats) {
+			return through(function(chunk, enc, done)  {
+				var output = chunk.toString().split('[pluginname]').join(pluginName);
+				done(null, output);
+			});
+		}
+	};
 
-		exec('docker cp ' + config.che.templateFolder.replace(/\s+/g, "\\ ") + ' ' + idDockerMachine + ':/projects/' + pluginName, function(error, stdout, stderr) {
-			if(error && stderr)
-				return callback(false, stderr);
-			else if(error)
-				return callback(false, error);
+	copy(config.che.templateFolder, config.che.tmpFolder + pluginName, options)
+		.then(function(results) {
+			console.log('Copied ' + results.length + ' files');
 
-			return callback(true, undefined);
+			exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
+				if(errorPs && stderrPs)
+					return callback(false, stderrPs);
+				else if(errorPs)
+					return callback(false, errorPs);
+
+				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName + ' ' + idDockerMachine + ':/projects/', function(error, stdout, stderr) {
+					if(error && stderr)
+						return callback(false, stderr);
+					else if(error)
+						return callback(false, error);
+
+					return callback(true, undefined);
+				});
+			});
+		})
+		.catch(function(error) {
+			callback(false, error);
 		});
-	});
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
 	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
 		if(errorPs && stderrPs)
 			return callback(false, stderrPs);
-		else if(error)
+		else if(errorPs)
 			return callback(false, errorPs);
 
 		var pluginZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
-		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.downloadFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
+		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
 			if(error && stderr)
 				return callback(false, stderr);
 			else if(error)
