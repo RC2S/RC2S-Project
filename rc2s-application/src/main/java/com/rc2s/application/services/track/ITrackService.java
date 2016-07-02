@@ -11,7 +11,10 @@ import java.util.List;
 public interface ITrackService
 {
     public Track add(Track track) throws ServiceException;
+    
     public Track update(Track track) throws ServiceException;
+    
     public void delete(Track track) throws ServiceException;
+    
     public List<Track> getTracksByUser(User user) throws ServiceException;
 }

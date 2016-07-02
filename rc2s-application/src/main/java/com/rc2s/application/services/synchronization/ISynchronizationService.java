@@ -11,6 +11,8 @@ import javax.ejb.Local;
 public interface ISynchronizationService
 {
 	public List<Synchronization> getAll() throws ServiceException;
+    
 	public List<Synchronization> getByUser(User user) throws ServiceException;
+    
 	public void add(Synchronization synchronization) throws ServiceException;
 }
