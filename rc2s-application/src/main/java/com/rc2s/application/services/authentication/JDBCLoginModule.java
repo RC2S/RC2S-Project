@@ -1,8 +1,6 @@
 package com.rc2s.application.services.authentication;
 
 import com.rc2s.common.vo.User;
-import com.rc2s.dao.user.IUserDAO;
-import com.rc2s.dao.user.UserDAO;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +28,6 @@ public class JDBCLoginModule implements LoginModule
     
     private Map options;
     
-    private IUserDAO userDao;
-    
     private User foundUser;
     
     private UserPrincipal userPrincipal;
@@ -48,8 +44,6 @@ public class JDBCLoginModule implements LoginModule
         this.callbackHandler    = callbackHandler;
         this.sharedState        = sharedState;
         this.options            = options;
-        
-        userDao = new UserDAO();
     }
 
     @Override
