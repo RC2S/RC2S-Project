@@ -1,0 +1,76 @@
+[2016-07-02 16:02:17.892] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0	'
+[2016-07-02 16:02:17.894] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:02:46.083] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:02:46.085] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 16:02:46.086] [INFO] db_watcher.log - -> User : root
+[2016-07-02 16:02:46.086] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 16:02:46.086] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 16:02:46.086] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 16:02:46.088] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0	'
+[2016-07-02 16:02:46.089] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:03:12.034] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:03:12.036] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 16:03:12.036] [INFO] db_watcher.log - -> User : root
+[2016-07-02 16:03:12.036] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 16:03:12.036] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 16:03:12.036] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 16:03:12.039] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-07-02 16:03:12.039] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:03:51.776] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:03:51.778] [INFO] db_watcher.log - -> Host : undefined
+[2016-07-02 16:03:51.778] [INFO] db_watcher.log - -> User : undefined
+[2016-07-02 16:03:51.778] [INFO] db_watcher.log - -> Database : undefined
+[2016-07-02 16:03:51.778] [INFO] db_watcher.log - -> Password : undefined
+[2016-07-02 16:03:51.778] [INFO] db_watcher.log - Message : 'Password'
+[2016-07-02 16:03:51.786] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:03:51.787] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 16:03:51.787] [INFO] db_watcher.log - -> User : root
+[2016-07-02 16:03:51.787] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 16:03:51.787] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 16:03:51.787] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 16:03:51.789] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-07-02 16:03:51.789] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:04:56.820] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:04:56.822] [INFO] db_watcher.log - -> Host : undefined
+[2016-07-02 16:04:56.822] [INFO] db_watcher.log - -> User : undefined
+[2016-07-02 16:04:56.822] [INFO] db_watcher.log - -> Database : undefined
+[2016-07-02 16:04:56.822] [INFO] db_watcher.log - -> Password : undefined
+[2016-07-02 16:04:56.822] [INFO] db_watcher.log - Message : 'Password'
+[2016-07-02 16:04:56.828] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:04:56.829] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 16:04:56.829] [INFO] db_watcher.log - -> User : root
+[2016-07-02 16:04:56.829] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 16:04:56.829] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 16:04:56.829] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 16:04:56.833] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-07-02 16:04:56.833] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:05:53.486] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:05:53.487] [INFO] db_watcher.log - -> Host : undefined
+[2016-07-02 16:05:53.488] [INFO] db_watcher.log - -> User : undefined
+[2016-07-02 16:05:53.488] [INFO] db_watcher.log - -> Database : undefined
+[2016-07-02 16:05:53.488] [INFO] db_watcher.log - -> Password : 69dcfd1c45dca6ac430cb32945991b0900a7e8c7
+[2016-07-02 16:05:53.488] [INFO] db_watcher.log - Message : 'Password'
+[2016-07-02 16:05:53.494] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:05:53.495] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 16:05:53.495] [INFO] db_watcher.log - -> User : root
+[2016-07-02 16:05:53.495] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 16:05:53.495] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 16:05:53.495] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 16:05:53.498] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-07-02 16:05:53.498] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:10:06.594] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0 	'
+[2016-07-02 16:10:06.596] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:12:41.777] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0 	'
+[2016-07-02 16:12:41.779] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:19:42.771] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-07-02 16:19:42.773] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:20:15.791] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 	'
+[2016-07-02 16:20:15.792] [INFO] db_watcher.log - User not found !
+[2016-07-02 16:23:15.133] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 16:23:15.135] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 16:23:15.135] [INFO] db_watcher.log - -> User : root
+[2016-07-02 16:23:15.135] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 16:23:15.135] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 16:23:15.135] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 16:23:15.139] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0 	'
+[2016-07-02 16:23:15.139] [INFO] db_watcher.log - User found. Creating new token : d0606c3592ee43b938e8f43797b041a3e0816a33
