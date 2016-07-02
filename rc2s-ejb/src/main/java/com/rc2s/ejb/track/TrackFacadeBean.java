@@ -1,5 +1,6 @@
 package com.rc2s.ejb.track;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.track.ITrackService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
@@ -9,8 +10,10 @@ import com.rc2s.common.vo.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "TrackEJB")
+@Interceptors(SecurityInterceptor.class)
 public class TrackFacadeBean implements TrackFacadeRemote
 {
     @EJB

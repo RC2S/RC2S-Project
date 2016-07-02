@@ -1,5 +1,6 @@
 package com.rc2s.ejb.cube;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.daemon.IDaemonService;
 import com.rc2s.application.services.cube.ICubeService;
 import com.rc2s.common.exceptions.EJBException;
@@ -8,12 +9,13 @@ import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "CubeEJB")
+@Interceptors(SecurityInterceptor.class)
 public class CubeFacadeBean implements CubeFacadeRemote
 {
 	@EJB private ICubeService cubeService;
@@ -36,10 +38,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
-    @RolesAllowed("user")
 	public List<Cube> getCubes(User user) throws EJBException
 	{
-        System.out.println(context.getCallerPrincipal().getName());
 		try
 		{
 			return cubeService.getCubes(user);

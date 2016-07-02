@@ -10,7 +10,7 @@ public class ClientTest
 {
     public static void main(String[] args)
     {
-		try
+		/*try
 		{
 			EJB.initContext("127.0.0.1", "3700");
 		
@@ -21,7 +21,7 @@ public class ClientTest
 		catch (RC2SException ex)
 		{
 			Logger.getLogger(ClientTest.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		}*/
 		
 		/*try
 		{

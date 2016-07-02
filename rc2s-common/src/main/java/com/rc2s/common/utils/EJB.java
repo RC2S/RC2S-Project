@@ -1,7 +1,6 @@
 package com.rc2s.common.utils;
 
 import com.rc2s.common.exceptions.RC2SException;
-import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,7 +13,7 @@ public class EJB
 
 	private static InitialContext context;
 
-	public static void initContext(String ip, String port, String username, String password) throws RC2SException
+	public static void initContext(String ip, String port) throws RC2SException
 	{
         try
 		{
@@ -22,20 +21,13 @@ public class EJB
 				EJB.setServerAddress(ip);
 			if(port != null)
 				EJB.setServerPort(port);
-            
-            System.setProperty("java.security.auth.login.config", EJB.class.getResource("/jaas.config").toString());
 			
 			Properties props = new Properties();
 			props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
 			props.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
 			props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-            props.put(Context.SECURITY_PRINCIPAL, username);
-            props.put(Context.SECURITY_CREDENTIALS, password);
-			props.put("org.omg.CORBA.ORBInitialHost", (EJB.serverIp));
-			props.put("org.omg.CORBA.ORBInitialPort", (EJB.serverPort));
-            
-            /*ProgrammaticLogin pl = new ProgrammaticLogin();
-            pl.login(username, password.toCharArray());*/
+			props.put("org.omg.CORBA.ORBInitialHost", EJB.serverIp);
+			props.put("org.omg.CORBA.ORBInitialPort", EJB.serverPort);
             
 			EJB.context = new InitialContext(props);
 		}

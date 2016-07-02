@@ -1,6 +1,9 @@
 package com.rc2s.ejb.authentication;
 
 import com.rc2s.application.services.authentication.IAuthenticationService;
+import com.rc2s.common.exceptions.EJBException;
+import com.rc2s.common.exceptions.ServiceException;
+import com.rc2s.common.vo.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -11,8 +14,15 @@ public class AuthenticationFacadeBean implements AuthenticationFacadeRemote
     IAuthenticationService authenticationService;
     
     @Override
-    public boolean login(String username, String password)
-    {
-        return authenticationService.login(username, password);
-    }
+	public User login(String username, String password) throws EJBException
+	{
+		try
+		{
+			return authenticationService.login(username, password);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+	}
 }

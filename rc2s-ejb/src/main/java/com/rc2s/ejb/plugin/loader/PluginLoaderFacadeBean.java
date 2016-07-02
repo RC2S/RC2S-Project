@@ -1,5 +1,6 @@
 package com.rc2s.ejb.plugin.loader;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.plugin.loader.IPluginLoaderService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
@@ -7,8 +8,10 @@ import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Role;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "PluginLoaderEJB")
+@Interceptors(SecurityInterceptor.class)
 public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 {
     @EJB

@@ -1,59 +1,83 @@
 package com.rc2s.application.services.authentication;
 
+import com.rc2s.common.exceptions.DAOException;
+import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.utils.Hash;
-import java.security.Principal;
+import com.rc2s.common.vo.User;
+import com.rc2s.dao.user.IUserDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.SessionContext;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
 @Stateless
 public class AuthenticationService implements IAuthenticationService
-{
+{  
+    @EJB
+    private IUserDAO userDAO;
+    
     private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy";
 	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
     
     @Override
-    public boolean login(String username, String password)
+    @Deprecated
+    public boolean loginJaas(String username, String password)
     {
         System.setProperty("java.security.auth.login.config", AuthenticationService.class.getResource("/jaas.config").toString());
 
         try {
             LoginContext lc = new LoginContext(
                 "JDBCLoginModule",
-                new JDBCCallbackHandler(username, Hash.sha1(SALT + password + PEPPER))
+                new JDBCCallbackHandler(username, password)
             );
             
             lc.login();
             
             Subject subject = lc.getSubject();
             
-            InitialContext ic = new InitialContext();
-            SessionContext sessionContext = (SessionContext) ic.lookup("java:comp/EJBContext");
-            
-            for(Principal p : subject.getPrincipals()) {
-                System.out.println("Princ " + p.getName());
-            }
-            System.out.println("before add");
-            sessionContext.getContextData().put("Principal", subject.getPrincipals());
-            System.out.println("after add");
             return subject != null;
         }
         catch (LoginException ex)
-        {
-            Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex)
         {
             Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return false;
     }
+
+    @Override
+	public User login(String username, String password) throws ServiceException
+	{
+		try
+		{
+			User user = null;
+			
+			if(username != null && password != null)
+			{
+				password = Hash.sha1(SALT + password + PEPPER);
+				user = userDAO.getAuthenticatedUser(username, password);
+				
+				if(user != null)
+				{
+					int code = userDAO.setLastLogin(user);
+				
+					if(code != 1)
+					{
+						System.err.println("Unable to update user's last IP address. Return code is: " + code);
+					}
+				}
+			}
+			
+			return user;
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
 }
 
 

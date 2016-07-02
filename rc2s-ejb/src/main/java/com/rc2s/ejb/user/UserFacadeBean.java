@@ -1,5 +1,6 @@
 package com.rc2s.ejb.user;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.common.vo.User;
 import javax.ejb.Stateless;
 import com.rc2s.application.services.user.IUserService;
@@ -7,8 +8,10 @@ import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "UserEJB")
+@Interceptors(SecurityInterceptor.class)
 public class UserFacadeBean implements UserFacadeRemote
 {
     @EJB
@@ -26,19 +29,6 @@ public class UserFacadeBean implements UserFacadeRemote
 			throw new EJBException(e);
 		}
     }
-	
-	@Override
-	public User login(String username, String password) throws EJBException
-	{
-		try
-		{
-			return userService.login(username, password);
-		}
-		catch(ServiceException e)
-		{
-			throw new EJBException(e);
-		}
-	}
 	
 	@Override
 	public User add(User user) throws EJBException
