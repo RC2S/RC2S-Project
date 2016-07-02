@@ -1,0 +1,6 @@
+rootProject.name = '[pluginname]-Project'
+
+include '[pluginname]-client'
+include '[pluginname]-common'
+include '[pluginname]-ear'
+include '[pluginname]-server'

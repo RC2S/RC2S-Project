@@ -52,40 +52,49 @@ public class PacketProcessor extends Thread
 	 */
 	private void processPacket()
 	{
-		try(ByteArrayInputStream bis = new ByteArrayInputStream(packet.getData()))
+		try
 		{
-			DataInputStream dis = new DataInputStream(bis);
-
-			long duration = dis.readLong();
-
-			int x = dis.readInt();
-			int y = dis.readInt();
-			int z = dis.readInt();
-
-			List<Stage> stages = new ArrayList<>();
-			
-			for(int i = 0 ; i < y ; i++)
-			{
-				boolean[][] stageData = new boolean[x][z];
-				
-				for(int j = 0 ; j < x ; j++)
-				{
-					for(int k = 0 ; k < z ; k++)
-					{
-						stageData[j][k] = dis.readBoolean();
-					}
-				}
-				
-				stages.add(new Stage(stageData));
-			}
-			
-			Packet processorPacket = new Packet(duration, stages.toArray(new Stage[]{}));
+			Packet processorPacket = forgePacket(packet.getData());
 			daemon.getProcessor().add(processorPacket);
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public Packet forgePacket(byte[] bytes) throws IOException
+	{
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		DataInputStream dis = new DataInputStream(bis);
+
+		long duration = dis.readLong();
+
+		int x = dis.readInt();
+		int y = dis.readInt();
+		int z = dis.readInt();
+
+		List<Stage> stages = new ArrayList<>();
+
+		for(int i = 0 ; i < y ; i++)
+		{
+			boolean[][] stageData = new boolean[x][z];
+
+			for(int j = 0 ; j < x ; j++)
+			{
+				for(int k = 0 ; k < z ; k++)
+				{
+					stageData[j][k] = dis.readBoolean();
+				}
+			}
+
+			stages.add(new Stage(stageData));
+		}
+
+		Packet packet = new Packet(duration, stages.toArray(new Stage[]{}));
+
+		dis.close();
+		return packet;
 	}
 	
 	/**

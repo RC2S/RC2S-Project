@@ -17,6 +17,45 @@ public class TrackFacadeBean implements TrackFacadeRemote
     private ITrackService trackService;
 
     @Override
+    public Track add(Track track) throws EJBException
+    {
+        try
+        {
+            return trackService.add(track);
+        }
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+    }
+
+    @Override
+    public Track update(Track track) throws EJBException
+	{
+        try
+		{
+			return trackService.update(track);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+    }
+
+    @Override
+    public void delete(Track track) throws EJBException
+	{
+		try
+		{
+			trackService.delete(track);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+    }
+
+    @Override
     public List<Track> getTracksByUser(User user) throws EJBException
     {
         try

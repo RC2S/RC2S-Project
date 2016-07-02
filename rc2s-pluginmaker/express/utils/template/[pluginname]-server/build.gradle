@@ -1,0 +1,15 @@
+dependencies {
+	compile project(':[pluginname]-common')
+	provided group: 'javax', name: 'javaee-api', version: '7.0'
+}
+
+jar {
+	doLast {
+		tasks.generateApi.execute()
+	}
+}
+
+task generateApi(type: Jar) {
+	baseName = '[pluginname]-interfaces' // Nom du jar créé
+	from fileTree(dir: "$buildDir/classes/main/", include: 'com/rc2s/[pluginname]/ejb/**/*Remote.class')
+}

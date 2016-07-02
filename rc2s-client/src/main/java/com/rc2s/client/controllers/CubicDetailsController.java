@@ -107,7 +107,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
 
 			// Gather cubes (all, only available for this user... ?)
-			cubesBox.getItems().addAll(cubeEJB.getAllCubes());
+			cubesBox.getItems().addAll(cubeEJB.getCubes(Main.getAuthenticatedUser()));
 		}
 		catch(EJBException e)
 		{

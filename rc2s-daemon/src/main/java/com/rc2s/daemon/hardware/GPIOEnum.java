@@ -9,7 +9,7 @@ public enum GPIOEnum
     DATA_IN (RaspiPin.GPIO_00, "Data In"),
     CLOCK (RaspiPin.GPIO_01, "Clock"),
     LATCH (RaspiPin.GPIO_02, "Latch"),
-    CLEAR (RaspiPin.GPIO_03, "Clear"),
+    CLEAR (RaspiPin.GPIO_03, "Clear", true),
     BLANK (RaspiPin.GPIO_04, "Security GPIO"),
     // LED stages
     STAGE0 (RaspiPin.GPIO_21, "Stage 0 (floor)"),
@@ -24,11 +24,18 @@ public enum GPIOEnum
 
     private final Pin pin;
     private final String info;
+    private final boolean invertedState;
 
     private GPIOEnum(Pin pin, String info)
     {
+        this(pin, info, false);
+    }
+    
+    private GPIOEnum(Pin pin, String info, boolean invertedState)
+    {
         this.pin = pin;
         this.info = info;
+        this.invertedState = invertedState;
     }
 
     public Pin getPin()
@@ -39,5 +46,10 @@ public enum GPIOEnum
     public String getInfo()
     {
         return info;
+    }
+    
+    public boolean isInverted()
+    {
+        return invertedState;
     }
 }

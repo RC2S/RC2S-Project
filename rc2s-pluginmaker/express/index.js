@@ -19,7 +19,9 @@ module.exports = function() {
 
 	// Session
 	app.use(session({
-		secret: config.secret
+		secret: config.secret,
+		resave: true,
+		saveUninitialized: true
 	}));
 
 	// BodyParser
