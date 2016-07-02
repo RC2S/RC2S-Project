@@ -39,7 +39,7 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 
 PluginsController.prototype.addPlugin = function(req, callback) {
 	
-	req.checkBody('pluginName', 'Invalid Plugin Name').notEmpty().len(3, 20);
+	req.checkBody('pluginName', 'Invalid Plugin Name').notEmpty().len(3, 20).notSpecialChars();
 	req.checkBody('pluginDesc', 'Invalid Plugin Description').notEmpty().len(3, 100);
 
 	var errors = req.validationErrors();
@@ -88,7 +88,7 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
 	
-	recursive(config.che.template, function(errListFiles, files) {
+	/*recursive(config.che.template, function(errListFiles, files) {
 		if (errListFiles)
 			return callback(false, errListFiles);
 
@@ -117,6 +117,21 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			});
 		}
 		callback(true, undefined);
+	});*/
+	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
+		if(errorPs && stderrPs)
+			return callback(false, stderrPs);
+		else if(error)
+			return callback(false, errorPs);
+
+		exec('docker cp ' + config.che.templateFolder.replace(/\s+/g, "\\ ") + ' ' + idDockerMachine + ':/projects/' + pluginName, function(error, stdout, stderr) {
+			if(error && stderr)
+				return callback(false, stderr);
+			else if(error)
+				return callback(false, error);
+
+			return callback(true, undefined);
+		});
 	});
 };
 

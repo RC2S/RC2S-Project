@@ -25,7 +25,8 @@ module.exports = {
 		authMethods 	: ['GET', 'POST', 'PUT', 'DELETE'],
 		workspace		: 'rc2s',
 		template		: __dirname + '/template/',
-		downloadFolder	: path.resolve(__dirname + '/../utils/download/') + '/',
+		templateFolder	: path.resolve(__dirname + '/template') + '/',
+		downloadFolder	: path.resolve(__dirname + '/download') + '/',
 		prefixImport	: '[pluginname]'
 	},
 	log4js : {

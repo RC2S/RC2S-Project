@@ -74,3 +74,19 @@
 [2016-07-02 16:23:15.135] [INFO] db_watcher.log - Message : 'Connection OK'
 [2016-07-02 16:23:15.139] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0 	'
 [2016-07-02 16:23:15.139] [INFO] db_watcher.log - User found. Creating new token : d0606c3592ee43b938e8f43797b041a3e0816a33
+[2016-07-02 18:07:51.318] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 18:07:51.320] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 18:07:51.320] [INFO] db_watcher.log - -> User : root
+[2016-07-02 18:07:51.321] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 18:07:51.321] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 18:07:51.321] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 18:07:51.324] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0 	'
+[2016-07-02 18:07:51.324] [INFO] db_watcher.log - User found. Creating new token : 1116907a86a94fdda57fac14024ec9ea4b796fc7
+[2016-07-02 18:08:29.316] [TRACE] db_watcher.log - Tried to create MySQL connection with credentials :
+[2016-07-02 18:08:29.318] [INFO] db_watcher.log - -> Host : localhost
+[2016-07-02 18:08:29.318] [INFO] db_watcher.log - -> User : root
+[2016-07-02 18:08:29.318] [INFO] db_watcher.log - -> Database : RC2S
+[2016-07-02 18:08:29.318] [INFO] db_watcher.log - -> Password : root
+[2016-07-02 18:08:29.318] [INFO] db_watcher.log - Message : 'Connection OK'
+[2016-07-02 18:08:29.326] [TRACE] db_watcher.log - Queryied : '		SELECT r.name 		FROM role r 		INNER JOIN link_user_role ur ON ur.role = r.id 		INNER JOIN user u ON u.id = ur.user 		AND u.username = ? AND u.password = ? 		AND u.activated = 1 AND u.locked = 0 	'
+[2016-07-02 18:08:29.326] [INFO] db_watcher.log - User found. Creating new token : e2fc88c8a8aa414d56b0b15535c282fb080d83d8

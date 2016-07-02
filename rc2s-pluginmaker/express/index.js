@@ -30,7 +30,14 @@ module.exports = function() {
 	}));
 
 	// Express Validator
-	app.use(validator());
+	app.use(validator({
+		customValidators : {
+			notSpecialChars : function(value) {
+				return value.indexOf(' ') == -1 
+					&& value.indexOf('$') == -1;
+			}
+		}
+	}));
 
 	// Authentication Middleware
 	require('./utils/AuthenticationUtils')(app);
