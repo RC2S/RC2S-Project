@@ -51,7 +51,7 @@ public class Streaming extends Thread
 		try
 		{
 			// TODO: Required or the content is not streamed?!
-			Thread.currentThread().join(60000L);
+			Thread.currentThread().join(10000L);
 		}
 		catch(InterruptedException e)
 		{
