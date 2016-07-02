@@ -79,7 +79,7 @@ public class LoginController implements Initializable
 			{
 				// Init EJB context
 				EJB.initContext(ip, null);
-                AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote)EJB.lookup("AuthenticationEJB");
+                AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote) EJB.lookup("AuthenticationEJB");
                 
 				try
 				{

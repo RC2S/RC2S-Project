@@ -18,7 +18,7 @@ public class UserFacadeBean implements UserFacadeRemote
     private IUserService userService;
     
     @Override
-    public List<User> getAll() throws EJBException
+    public List<User> getAll(User caller) throws EJBException
     {
 		try
 		{
@@ -31,7 +31,7 @@ public class UserFacadeBean implements UserFacadeRemote
     }
 	
 	@Override
-	public User add(User user) throws EJBException
+	public User add(User caller, User user) throws EJBException
 	{
 		try
 		{
@@ -44,7 +44,7 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
-	public User update(User user, boolean passwordUpdated) throws EJBException
+	public User update(User caller, User user, boolean passwordUpdated) throws EJBException
 	{
 		try
 		{
@@ -57,7 +57,7 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
-	public void delete(User user) throws EJBException
+	public void delete(User caller, User user) throws EJBException
 	{
 		try
 		{

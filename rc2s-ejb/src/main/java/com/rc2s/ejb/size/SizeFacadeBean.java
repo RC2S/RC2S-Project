@@ -5,6 +5,7 @@ import com.rc2s.application.services.size.ISizeService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Size;
+import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,7 +19,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	private ISizeService sizeService;
 
 	@Override
-	public List<Size> getAll() throws EJBException
+	public List<Size> getAll(User caller) throws EJBException
 	{
 		try
 		{
@@ -31,7 +32,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	}
 
 	@Override
-	public Size add(Size size) throws EJBException
+	public Size add(User caller, Size size) throws EJBException
 	{
 		try
 		{

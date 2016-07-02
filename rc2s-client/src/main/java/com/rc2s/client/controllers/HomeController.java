@@ -57,7 +57,7 @@ public class HomeController implements Initializable
 	{
 		try
 		{
-			List<Plugin> availablePlugins = pluginEJB.getAvailables();
+			List<Plugin> availablePlugins = pluginEJB.getAvailables(Main.getAuthenticatedUser());
 			
 			for(Plugin plugin : availablePlugins)
 			{

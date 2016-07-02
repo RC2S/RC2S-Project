@@ -20,7 +20,7 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 	private ISynchronizationService synchronizationService;
 
 	@Override
-	public List<Synchronization> getAll() throws EJBException
+	public List<Synchronization> getAll(User caller) throws EJBException
 	{
 		try
 		{
@@ -33,11 +33,11 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 	}
 
 	@Override
-	public List<Synchronization> getByUser(User user) throws EJBException
+	public List<Synchronization> getByUser(User caller) throws EJBException
 	{
 		try
 		{
-			return synchronizationService.getByUser(user);
+			return synchronizationService.getByUser(caller);
 		}
 		catch(ServiceException e)
 		{
@@ -46,7 +46,7 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 	}
 
 	@Override
-	public void add(Synchronization synchronization) throws EJBException
+	public void add(User uscallerer, Synchronization synchronization) throws EJBException
 	{
 		try
 		{

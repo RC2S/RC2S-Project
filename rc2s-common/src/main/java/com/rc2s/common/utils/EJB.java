@@ -28,6 +28,7 @@ public class EJB
 			props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
 			props.put("org.omg.CORBA.ORBInitialHost", EJB.serverIp);
 			props.put("org.omg.CORBA.ORBInitialPort", EJB.serverPort);
+            props.put("foo", "bar");
             
 			EJB.context = new InitialContext(props);
 		}
@@ -41,7 +42,8 @@ public class EJB
 	{
 		try
 		{
-			return EJB.context != null ? EJB.context.lookup(ejbName) : null;
+            EJB.context.addToEnvironment("foo2", "bar2");
+            return EJB.context != null ? EJB.context.lookup(ejbName) : null;
 		} catch (NamingException e)
 		{
 			System.err.println(e.getMessage());

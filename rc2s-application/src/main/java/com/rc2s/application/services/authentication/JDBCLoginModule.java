@@ -140,6 +140,7 @@ public class JDBCLoginModule implements LoginModule
         return true;
     }
     
+    @SuppressWarnings("unchecked")
     private User getUserByUsernameAndPassword(String username, String password)
     {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("rc2s");
