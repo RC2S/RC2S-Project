@@ -1,10 +1,11 @@
 var WorkspaceController	= require('./WorkspaceController');
 var config				= require('../utils/config');
-var recursive			= require('recursive-readdir');
 var copy				= require('recursive-copy');
 var through				= require('through2');
 var fs 					= require('fs');
+var del					= require('del');
 var exec				= require('child_process').exec;
+// var recursive		= require('recursive-readdir');
 
 function PluginsController() {};
 
@@ -89,38 +90,7 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 };
 
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
-	
-	/*recursive(config.che.template, function(errListFiles, files) {
-		if (errListFiles)
-			return callback(false, errListFiles);
 
-		if (files) {
-			files.forEach(function(absoluteFilePath) {
-				var relativeFilePath 	= absoluteFilePath.substr(config.che.template.length, absoluteFilePath.length);
-				var folders 			= relativeFilePath.substr(0, relativeFilePath.lastIndexOf('/'));
-				var file 				= relativeFilePath.substr((folders ? relativeFilePath.lastIndexOf('/') : 0), relativeFilePath.length);
-
-				console.log("Folder : " + folders);
-				WorkspaceController.addFolderToProject(wsID, pluginName, folders, function(resFolder, errFolder) {
-					console.log(resFolder);
-					if (errFolder)
-						return callback(false, errFolder);
-
-					var data = fs.readFileSync(absoluteFilePath, 'utf-8');
-					
-					if (!data) 
-						return callback(false, 'no data');
-
-					WorkspaceController.addFileToProject(wsID, pluginName, folders, file, data, function(resFile, errFile) {
-						if (errFile)
-							return callback(false, errFile);
-					});
-				});
-			});
-		}
-		callback(true, undefined);
-	});*/
-	
 	var options = {
 		overwrite: true,
 		expand: true,
@@ -130,7 +100,7 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			'**/*'
 		],
 		rename: function(filePath) {
-			return filePath.replace('[pluginname]', pluginName);
+			return filePath.replace('[pluginname]', pluginName).replace('pluginname', pluginName);
 		},
 		transform: function(src, dest, stats) {
 			return through(function(chunk, enc, done)  {
@@ -150,12 +120,15 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 				else if(errorPs)
 					return callback(false, errorPs);
 
-				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName + ' ' + idDockerMachine + ':/projects/', function(error, stdout, stderr) {
+				idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
+
+				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName + '/ ' + idDockerMachine + ':/projects/', function(error, stdout, stderr) {
 					if(error && stderr)
 						return callback(false, stderr);
 					else if(error)
 						return callback(false, error);
 
+					del(config.che.tmpFolder + '/*');
 					return callback(true, undefined);
 				});
 			});
@@ -163,6 +136,37 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 		.catch(function(error) {
 			callback(false, error);
 		});
+
+	// Async problems : files are created before folders in some cases
+	/*recursive(config.che.template, function(errListFiles, files) {
+		if (errListFiles)
+			return callback(false, errListFiles);
+
+		if (files) {
+			files.forEach(function(absoluteFilePath) {
+				var relativeFilePath 	= absoluteFilePath.substr(config.che.template.length, absoluteFilePath.length);
+				var folders 			= relativeFilePath.substr(0, relativeFilePath.lastIndexOf('/'));
+				var file 				= relativeFilePath.substr((folders ? relativeFilePath.lastIndexOf('/') : 0), relativeFilePath.length);
+
+				WorkspaceController.addFolderToProject(wsID, pluginName, folders, function(resFolder, errFolder) {
+					console.log(resFolder);
+					if (errFolder)
+						return callback(false, errFolder);
+
+					var data = fs.readFileSync(absoluteFilePath, 'utf-8');
+					
+					if (!data) 
+						return callback(false, 'no data');
+
+					WorkspaceController.addFileToProject(wsID, pluginName, folders, file, data, function(resFile, errFile) {
+						if (errFile)
+							return callback(false, errFile);
+					});
+				});
+			});
+		}
+		callback(true, undefined);
+	});*/
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
@@ -172,6 +176,8 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 		else if(errorPs)
 			return callback(false, errorPs);
 
+		idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
+		
 		var pluginZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
 		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
 			if(error && stderr)

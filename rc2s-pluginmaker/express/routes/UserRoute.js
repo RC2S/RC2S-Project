@@ -11,7 +11,7 @@ module.exports = function(app) {
 		res.render('login', {
 			title	: 'Connexion | RC2S-PluginMaker',
 			css 	: ['login'],
-			js		: ['login','TweenLite.min'],
+			js		: ['login', 'TweenLite.min'],
 			flash	: {error : CommonUtils.formatFormErrors(errors)}
 		});
 		errors = null;

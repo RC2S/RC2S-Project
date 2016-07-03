@@ -29,7 +29,7 @@ module.exports = function() {
 		"extended": false
 	}));
 
-	// Express Validator
+	// Express Validator with custom validator
 	app.use(validator({
 		customValidators : {
 			notSpecialChars : function(value) {

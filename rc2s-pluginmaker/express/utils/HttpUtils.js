@@ -24,7 +24,7 @@ module.exports = function(errorsMapSerial, path, method, data, callback, content
 		var content = '';
 
 		// Write basic log
-		//logger.writeHttpLog(errorsMapSerial, path, method, res.statusCode);
+		logger.writeHttpLog(errorsMapSerial, path, method, res.statusCode);
 
 		res.setEncoding('utf8');
 
@@ -44,7 +44,7 @@ module.exports = function(errorsMapSerial, path, method, data, callback, content
 
 	req.on('error', function(e) {
 		// Write error log
-		//logger.writeHttpErrorLog(errorsMapSerial, e.message);
+		logger.writeHttpErrorLog(errorsMapSerial, e.message);
 		callback({
 			statusCode 	: 503,
 			content 	: e.message
