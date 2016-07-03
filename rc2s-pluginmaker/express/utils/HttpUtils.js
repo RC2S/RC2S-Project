@@ -33,6 +33,7 @@ module.exports = function(errorsMapSerial, path, method, data, callback, content
 		});
 		
 		res.on('end', function() {
+			console.log('Request Path : ' + path);
 			callback({
 				statusCode 	: res.statusCode,
 				headers 	: res.headers,

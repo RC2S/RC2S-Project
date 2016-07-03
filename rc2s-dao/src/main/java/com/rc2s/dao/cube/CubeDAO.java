@@ -34,4 +34,19 @@ public class CubeDAO extends GenericDAO<Cube> implements ICubeDAO
 			throw new DAOException(e);
 		}
 	}
+
+	@Override
+	public Cube getByIp(String ipAddress) throws DAOException
+	{
+		try
+		{
+			Query query = em().createQuery("SELECT c FROM Cube AS c WHERE c.ip = :ip")
+					 		  .setParameter("ip", ipAddress);
+			return (Cube)query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			throw new DAOException(e);
+		}
+	}
 }

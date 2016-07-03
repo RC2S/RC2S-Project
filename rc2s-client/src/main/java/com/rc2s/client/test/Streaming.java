@@ -1,5 +1,6 @@
 package com.rc2s.client.test;
 
+import com.rc2s.client.Main;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -44,7 +45,7 @@ public class Streaming extends Thread
 		String mrl = new RtspMrl().host("127.0.0.1").port(5555).path("/audio").value();
 
 		System.err.println("------- Start Streaming RMI -------");
-		streamingEJB.startStreaming(mrl);
+		streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
 		System.err.println("------- Thread join -------");
 
 		try
@@ -58,7 +59,7 @@ public class Streaming extends Thread
 		}
 
 		System.err.println("------- Stop Streaming RMI -------");
-		streamingEJB.stopStreaming();
+		streamingEJB.stopStreaming(Main.getAuthenticatedUser());
 		System.err.println("------- Stop Media Player -------");
 		mediaPlayer.stop();
 		mediaPlayer.release();

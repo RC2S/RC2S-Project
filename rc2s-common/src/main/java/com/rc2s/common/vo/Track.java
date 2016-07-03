@@ -19,7 +19,7 @@ public class Track implements Serializable
 
     @Column(name="`order`")
     @NotNull
-    private short order;
+    private Short order;
 
     private Date created;
 

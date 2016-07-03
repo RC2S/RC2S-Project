@@ -15,7 +15,7 @@ public class EJB
 
 	public static void initContext(String ip, String port) throws RC2SException
 	{
-		try
+        try
 		{
 			if(ip != null)
 				EJB.setServerAddress(ip);
@@ -26,12 +26,13 @@ public class EJB
 			props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
 			props.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
 			props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-			props.put("org.omg.CORBA.ORBInitialHost", (EJB.serverIp));
-			props.put("org.omg.CORBA.ORBInitialPort", (EJB.serverPort));
-
+			props.put("org.omg.CORBA.ORBInitialHost", EJB.serverIp);
+			props.put("org.omg.CORBA.ORBInitialPort", EJB.serverPort);
+            props.put("foo", "bar");
+            
 			EJB.context = new InitialContext(props);
 		}
-		catch (NamingException e)
+		catch (Exception e)
 		{
 			throw new RC2SException(e);
 		}
@@ -41,7 +42,8 @@ public class EJB
 	{
 		try
 		{
-			return EJB.context != null ? EJB.context.lookup(ejbName) : null;
+            EJB.context.addToEnvironment("foo2", "bar2");
+            return EJB.context != null ? EJB.context.lookup(ejbName) : null;
 		} catch (NamingException e)
 		{
 			System.err.println(e.getMessage());

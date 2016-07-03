@@ -1,21 +1,25 @@
 package com.rc2s.ejb.plugin;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.plugin.IPluginService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
+import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "PluginEJB")
+@Interceptors(SecurityInterceptor.class)
 public class PluginFacadeBean implements PluginFacadeRemote
 {
 	@EJB
 	private IPluginService pluginService;
 
 	@Override
-	public List<Plugin> getAll() throws EJBException
+	public List<Plugin> getAll(User caller) throws EJBException
 	{
 		try
 		{
@@ -28,7 +32,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public List<Plugin> getAvailables() throws EJBException
+	public List<Plugin> getAvailables(User caller) throws EJBException
 	{
 		try
 		{
@@ -41,7 +45,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public Plugin add(Plugin plugin) throws EJBException
+	public Plugin add(User caller, Plugin plugin) throws EJBException
 	{
 		try
 		{
@@ -54,7 +58,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public Plugin update(Plugin plugin) throws EJBException
+	public Plugin update(User caller, Plugin plugin) throws EJBException
 	{
 		try
 		{
@@ -67,7 +71,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public void delete(Plugin plugin) throws EJBException
+	public void delete(User caller, Plugin plugin) throws EJBException
 	{
 		try
 		{

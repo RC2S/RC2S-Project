@@ -9,9 +9,12 @@ import javax.ejb.Local;
 public interface IPluginService
 {
 	public List<Plugin> getAll() throws ServiceException;
+    
 	public List<Plugin> getAvailables() throws ServiceException;
 	
 	public Plugin add(Plugin plugin) throws ServiceException;
+    
 	public Plugin update(Plugin plugin) throws ServiceException;
+    
 	public void delete(Plugin plugin) throws ServiceException;
 }

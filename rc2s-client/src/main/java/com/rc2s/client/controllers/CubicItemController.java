@@ -1,5 +1,6 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.client.Main;
 import com.rc2s.client.components.LedCube;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
@@ -57,7 +58,7 @@ public class CubicItemController extends TabController implements Initializable
 		
 		try
 		{
-			boolean state = cubeEJB.getStatus(cube);
+			boolean state = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
 			this.status.setText(state ? "Online" : "Offline");
 		}
 		catch(EJBException e)

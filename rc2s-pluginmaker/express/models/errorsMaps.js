@@ -94,7 +94,7 @@ module.exports = {
 			403 : 'The user does not have access remove the project',
 			404 : 'The workspace not found',
 			500 : 'Internal server error occurred'
-		}, 
+		},
 		"DELSWS1" : {
 			204 : 'The workspace is stopping',
 			403 : 'The user is not workspace owner',

@@ -36,12 +36,16 @@ UserController.prototype.login = function(req, callback) {
 	var query = '\
 		SELECT r.name \
 		FROM role r \
-		INNER JOIN user_role ur ON ur.role_id = r.id \
-		INNER JOIN user u ON u.id = ur.user_id \
+		INNER JOIN link_user_role ur ON ur.role = r.id \
+		INNER JOIN user u ON u.id = ur.user \
 		AND u.username = ? AND u.password = ? \
-	';
+		AND u.activated = 1 AND u.locked = 0 \
+	';	
 
-	conn.query(query, [req.body.username, req.body.password], function(err, rows, fields) {
+	var shaPass = crypto.createHash('sha1').update(req.body.password).digest('hex');
+	var password = crypto.createHash('sha1').update(config.database.salt + shaPass + config.database.pepper).digest('hex');
+
+	conn.query(query, [req.body.username, password], function(err, rows, fields) {
 
 		if (err) {
 			logger.writeQueryLog(err, query);
@@ -51,16 +55,14 @@ UserController.prototype.login = function(req, callback) {
 		if (rows.length == 0) {
 			logger.writeQueryLog('User not found !', query);
 			return callback(false, 'Invalid Login');
-		} else if (rows[0]["name"] == 'ROLE_ADMIN') {
+		} else if (rows[0]["name"] == 'ADMIN') {
 
 			// Ensure hash uniqueness
 			var currentDate = (new Date()).valueOf().toString();
 			var random = Math.random().toString();
 
 			// Token base
-			var secret = rows[0]['username'] + rows[0]['password'];
-
-			var shaToken = crypto.createHmac('sha1', 'secret')
+			var shaToken = crypto.createHmac('sha1', req.body.username + password)
 				.update(currentDate + random)
 				.digest('hex');
 
@@ -70,7 +72,7 @@ UserController.prototype.login = function(req, callback) {
 			return callback(true, undefined);
 		} else {
 			logger.writeQueryLog('User not Admin !', query);
-			//res.redirect("/login");
+			res.redirect("/login");
 		}
 	});
 };

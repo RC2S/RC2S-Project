@@ -56,13 +56,13 @@ public class StatesProcessor implements Runnable
         {
             for (int i = 0; i < RPI_GPIO_LIMIT && i < packet.getStages().length; i++)
             {
-                handle(i, packet.getStages()[i]);
+                handle(i, packet.getStages().length, packet.getStages()[i]);
             }
         } while ((packet.getDuration() > 0 && (new Date().getTime() - start < packet.getDuration()))
                 || (packet.getDuration() <= 0 && queue.isEmpty()));
     }
 
-    private void handle(int level, Stage stage)
+    private void handle(int level, int maxStage, Stage stage)
     {
         boolean[][] states = stage.getStates();
 
@@ -86,7 +86,7 @@ public class StatesProcessor implements Runnable
         }
 
         daemon.getHardware().send();
-        daemon.getHardware().sendStage(level);
+        daemon.getHardware().sendStage(level, maxStage);
     }
 
     public void shutdown()

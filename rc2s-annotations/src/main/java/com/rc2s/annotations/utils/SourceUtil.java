@@ -5,6 +5,8 @@ import com.rc2s.annotations.mappers.ParameterMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
@@ -33,8 +35,8 @@ public class SourceUtil
 	private static boolean hasMainView = false;
 	
 	// Needed annotations package names & packages paths
-	private final static String controllersFolderPath	= "/media/Data/RC2S/rc2s-project/rc2s-client/src/main/java/com/rc2s/client/controllers";
-	private final static String viewsFolderPath			= "/media/Data/RC2S/rc2s-project/rc2s-client/src/main/resources/views";
+	private final static String controllersFolderPath	= null;
+	private final static String viewsFolderPath			= null;
 	private final static String statelessPackage		= "javax.ejb.Stateless";
 	private final static String statefulPackage			= "javax.ejb.Stateful";
 	private final static String remotePackage			= "javax.ejb.Remote";
@@ -58,9 +60,13 @@ public class SourceUtil
 	
 	public void verifySource(ElementMapper mainClass)
 	{
+		String[] packageParts = mainClass.getPackageName().split("\\.");
+		
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
 		{
+			getControllersAndViewsFoldersPaths(packageParts);
+			/*
 			try
 			{
 				getAllViewsNames();
@@ -76,12 +82,10 @@ public class SourceUtil
 			{
 				System.err.println(ex.getMessage());
 			}
-			
+			*/
 			isFirstCheck = false;
 		}
-		
-		String[] packageParts = mainClass.getPackageName().split("\\.");
-		
+		/*
 		try
 		{
 			// Verify root - shall be com.rc2s.{plugin_name}
@@ -95,7 +99,7 @@ public class SourceUtil
 			 * Those parts shall be :
 			 * (ejb | application | dao).name
 			 * Others types are already verified within ClassNames Enum
-			 */
+			 * /
 			String entityName = null;
 			
 			if (ClassNamesEnum.APPLICATION.equals(cne)
@@ -111,7 +115,46 @@ public class SourceUtil
 		catch (SourceControlException scex)
 		{
 			System.err.println(scex.getMessage());
+		}*/
+	}
+	
+	public void getControllersAndViewsFoldersPaths(String[] packageParts)
+	{
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < 3; i++)
+		{
+			sb.append(packageParts[i]);
+			sb.append("/");
 		}
+		sb.deleteCharAt(sb.length()-1);
+		
+		System.err.println("PACKAGE FOUND : " + sb.toString());
+	
+		try
+		{
+			displayInfo(sb.toString());
+			/*
+			File[] files = testDirectory.listFiles(
+			(File pathname) -> pathname.getName().endsWith(".java")
+			&& pathname.isFile()
+			);*/
+		}
+		catch (IOException ex)
+		{
+			Logger.getLogger(SourceUtil.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	
+	public static void displayInfo(String f) throws IOException {
+		File file = new File(f);
+		System.out.println("========================================");
+		System.out.println("          name : " + file.getName());
+		System.out.println("  is directory : " + file.isDirectory());
+		System.out.println("        exists : " + file.exists());
+		System.out.println("          path : " + file.getPath());
+		System.out.println(" absolute path : " + file.getAbsolutePath());
+		System.out.println("canonical path : " + file.getCanonicalPath());
 	}
 
 	private void verifyRoot(String[] packageParts) throws SourceControlException

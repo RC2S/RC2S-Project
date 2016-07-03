@@ -11,10 +11,14 @@ import javax.ejb.Local;
 public interface IDaemonService
 {
 	public void updateState(Cube cube, Long duration, boolean state) throws ServiceException;
+    
 	public void updateState(Cube cube, Long duration, boolean[][][] states) throws ServiceException;
+    
 	public boolean isReachable(String ipAddress) throws ServiceException;
 	
 	public byte[] createPacket(Long duration, Size size, boolean[][][] states) throws ServiceException;
+    
 	public byte[] sendPacket(String ipAddress, byte[] data, boolean response) throws ServiceException;
+    
 	public byte[] getResponse(DatagramSocket socket) throws IOException;
 }

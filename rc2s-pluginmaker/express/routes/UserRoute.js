@@ -9,9 +9,9 @@ module.exports = function(app) {
 			return res.redirect('/plugins');
 
 		res.render('login', {
-			title 	: 'Connexion | RC2S-PluginMaker',
+			title	: 'Connexion | RC2S-PluginMaker',
 			css 	: ['login'],
-			js 		: ['login','TweenLite.min'],
+			js		: ['login', 'TweenLite.min'],
 			flash	: {error : CommonUtils.formatFormErrors(errors)}
 		});
 		errors = null;
@@ -34,7 +34,7 @@ module.exports = function(app) {
 			
 			req.session.destroy(function(err) {
 				if(err)
-			   		console.log(err);
+					console.log(err);
 				else {
 					errors = null;
 					res.redirect('/');
