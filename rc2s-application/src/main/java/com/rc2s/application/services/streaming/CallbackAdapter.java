@@ -13,14 +13,15 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 {
 	private static boolean timeChanged;
 	private static boolean timeTests;
+	private static long currentTime;
+	
+	private static int cubeWidth;
+	private static int cubeDepth;
+	private static int cubeHeight;
 	
 	private final List<Integer> lineMinAnalysis;
 	private final List<Integer> lineMaxAnalysis;
 	private final List<Integer> lineAvgAnalysis;
-	
-	private static long currentTime;
-	
-	//private final int positionsPerSecond;
 	
     private final Logger log = LogManager.getLogger(CallbackAdapter.class);
     
@@ -31,11 +32,12 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
         super(blockSize);
         out = new BufferedOutputStream(System.out);
 		
+		timeTests	= false;
 		currentTime = 0;
 		
-		//positionsPerSecond = 40;
-		
-		timeTests = false;
+		cubeWidth	= 8;
+		cubeDepth	= 8;
+		cubeHeight	= 8;
 		
 		lineMinAnalysis = new ArrayList<>();
 		lineMaxAnalysis = new ArrayList<>();
@@ -164,7 +166,9 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 			// @arg2 : depth mirror (y)
 			// @arg3 : width mirror (x)
 			// @arg4 : height mirror (z)
-			proposeCoordinates(true, true, true, true);
+			// @arg5 : triple mirror (x, y, z -> +3 coords)
+			// @arg6 : eightify (y, z, y, x, y, z, y -> +7 coords)
+			proposeCoordinates(true, false, false, false, false, false);
 			
 			lineMaxAnalysis.clear();
 			lineMinAnalysis.clear();
@@ -233,11 +237,12 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	private void proposeCoordinates(boolean withClassic, boolean depthMirror,
-			boolean widthMirror, boolean heightMirror)
+			boolean widthMirror, boolean heightMirror, boolean tripleMirror,
+			boolean eightify)
 	{
-		int abs_x = (Math.abs(getLineVariation(lineMaxAnalysis, true)) % 4);
-		int abs_y = (Math.abs(getLineVariation(lineMinAnalysis, true)) % 4);
-		int abs_z = (Math.abs(getLineVariation(lineAvgAnalysis, true)) % 4);
+		int abs_x = (Math.abs(getLineVariation(lineMaxAnalysis, true)) % cubeWidth);
+		int abs_y = (Math.abs(getLineVariation(lineMinAnalysis, true)) % cubeDepth);
+		int abs_z = (Math.abs(getLineVariation(lineAvgAnalysis, true)) % cubeHeight);
 		
 		System.out.println(
 			"Coord proposal : ABS(" + abs_x + ", " + abs_y + ", " + abs_z + ")"
@@ -245,52 +250,100 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		if (withClassic)
 			produceClassicCoordinate();
-		if (depthMirror)
-			produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
 		if (widthMirror)
 			produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
+		if (depthMirror)
+			produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
 		if (heightMirror)
 			produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
+		if (tripleMirror)
+			produceTripleMirrorCoordinate(abs_x, abs_y, abs_z);
+		if (eightify)
+			produceEightifyCoordinates(abs_x, abs_y, abs_z);
 		
 		System.out.println("--------------------");
 	}
 
 	private void produceClassicCoordinate()
 	{
-		int cla_x = (Math.abs(getLineVariation(lineMaxAnalysis, false)) % 4);
-		int cla_y = (Math.abs(getLineVariation(lineMinAnalysis, false)) % 4);
-		int cla_z = (Math.abs(getLineVariation(lineAvgAnalysis, false)) % 4);
+		int cla_x = (Math.abs(getLineVariation(lineMaxAnalysis, false)) % cubeWidth);
+		int cla_y = (Math.abs(getLineVariation(lineMinAnalysis, false)) % cubeDepth);
+		int cla_z = (Math.abs(getLineVariation(lineAvgAnalysis, false)) % cubeHeight);
 
 		System.out.println(
 			"Coord proposal : CLA(" + cla_x + ", " + cla_y + ", " + cla_z + ")"
 		);
+		System.out.println(".");
 	}
 
+	private void produceWidthMirrorCoordinate(int abs_x, int abs_y, int abs_z)
+	{
+		int wid_x = getMirrorCoordinateValue(abs_x, cubeWidth);
+		
+		System.out.println(
+			"Coord proposal : WID(" + wid_x + ", " + abs_y + ", " + abs_z + ")"
+		);
+	}
+	
 	private void produceDepthMirrorCoordinate(int abs_x, int abs_y, int abs_z)
 	{
-		int dep_y = (-1 * abs_y) + 3;
+		int dep_y = getMirrorCoordinateValue(abs_y, cubeDepth);
 		
 		System.out.println(
 			"Coord proposal : DEP(" + abs_x + ", " + dep_y + ", " + abs_z + ")"
 		);
 	}
 
-	private void produceWidthMirrorCoordinate(int abs_x, int abs_y, int abs_z)
-	{
-		int wid_x = (-1 * abs_x) + 3;
-		
-		System.out.println(
-			"Coord proposal : WID(" + wid_x + ", " + abs_y + ", " + abs_z + ")"
-		);
-	}
-
 	private void produceHeightMirrorCoordinate(int abs_x, int abs_y, int abs_z)
 	{
-		int hei_z = (-1 * abs_z) + 3;
+		int hei_z = getMirrorCoordinateValue(abs_z, cubeHeight);
 		
 		System.out.println(
 			"Coord proposal : HEI(" + abs_x + ", " + abs_y + ", " + hei_z + ")"
 		);
+	}
+	
+	private void produceTripleMirrorCoordinate(int abs_x, int abs_y, int abs_z)
+	{
+		produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
+		produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
+		produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
+		System.out.println(".");
+	}
+	
+	private void produceEightifyCoordinates(int abs_x, int abs_y, int abs_z)
+	{
+		int new_x = abs_x,
+			new_y = abs_y,
+			new_z = abs_z;
+		
+		/* Scheme shall be m(Y(Z(Y(X(Y(Z(Y))))))) */
+		// Y
+		produceDepthMirrorCoordinate(new_x, new_y, new_z);
+		new_y = getMirrorCoordinateValue(new_y, cubeDepth);
+		// Z
+		produceHeightMirrorCoordinate(new_x, new_y, new_z);
+		new_z = getMirrorCoordinateValue(new_z, cubeHeight);
+		// Y
+		produceDepthMirrorCoordinate(new_x, new_y, new_z);
+		new_y = getMirrorCoordinateValue(new_y, cubeDepth);
+		// X
+		produceWidthMirrorCoordinate(new_x, new_y, new_z);
+		new_x = getMirrorCoordinateValue(new_x, cubeWidth);
+		// Y
+		produceDepthMirrorCoordinate(new_x, new_y, new_z);
+		new_y = getMirrorCoordinateValue(new_y, cubeDepth);
+		// Z
+		produceHeightMirrorCoordinate(new_x, new_y, new_z);
+		new_z = getMirrorCoordinateValue(new_z, cubeHeight);
+		// Y
+		produceDepthMirrorCoordinate(new_x, new_y, new_z);
+		System.out.println(".");
+	}
+	
+	private int getMirrorCoordinateValue(int origin, int dimension)
+	{
+		return (-1 * origin) + dimension - 1;
 	}
 	
 	private void doTimeTests()
