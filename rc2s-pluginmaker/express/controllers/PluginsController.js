@@ -178,7 +178,7 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 
 		idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
 		
-		var pluginZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
+		var pluginZipPath = pluginName + '/' + pluginName + '-client/build/' + pluginName + '.zip';
 		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
 			if(error && stderr)
 				return callback(false, stderr);
