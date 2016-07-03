@@ -129,7 +129,7 @@ public class StreamingService implements IStreamingService
 		
 		//firstTest(music);
 		
-		trueTest(music);
+		//trueTest(music);
 	}
 	
 	private void trueTest(String music)
