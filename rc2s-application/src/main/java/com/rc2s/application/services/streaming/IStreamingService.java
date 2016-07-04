@@ -6,8 +6,6 @@ import javax.ejb.Local;
 public interface IStreamingService
 {
     public void start(String mrl);
-	public void resume();
-	public void pause();
 	public void stop();
 
     public void musicAlgorithm();

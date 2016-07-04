@@ -68,76 +68,55 @@ public class StreamingService implements IStreamingService
 			}
 		});
 
-        Thread thread = new Thread() {
-            public void run() {
-                log.info("Begin start " + mrl);
-                audioPlayer.playMedia(mrl);
+		Thread thread = new Thread() {
+			public void run() {
+				synchronized (audioPlayer) {
+					log.info("Begin start " + mrl);
+					audioPlayer.playMedia(mrl);
 
-                log.info("Waiting for finished...");
+					log.info("Waiting for finished...");
 
-                try {
-                    // Slight race condition in theory possible if the audio finishes immediately
-                    // (but this is just a test so it's good enough)...
-                    sync.acquire();
-                }
-                catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+					try {
+						// Slight race condition in theory possible if the audio finishes immediately
+						// (but this is just a test so it's good enough)...
+						sync.acquire();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 
-                log.info("Finished, releasing native resources...");
+					log.info("Finished, releasing native resources...");
 
-                audioPlayer.release();
-                factory.release();
+					if(audioPlayer.isPlaying())
+					{
+						audioPlayer.release();
+						factory.release();
+					}
 
-                log.info("All done");
-            }
-        };
-        thread.start();
+					log.info("All done");
+				}
+			}
+		};
+		thread.start();
     }
-
-	public void resume()
-	{
-		Thread thread = new Thread() {
-			public void run() {
-				log.info("Resume streaming");
-
-				if(!audioPlayer.isPlaying())
-					audioPlayer.play();
-			}
-		};
-		thread.start();
-	}
-
-	public void pause()
-	{
-		Thread thread = new Thread() {
-			public void run() {
-				log.info("Pause streaming");
-
-				if(audioPlayer.isPlaying())
-					audioPlayer.pause();
-			}
-		};
-		thread.start();
-	}
 
     @Override
     public void stop()
     {
-        Thread thread = new Thread() {
-            public void run() {
-                log.info("Stop streaming");
-                if(audioPlayer.isPlaying())
-                {
-                    audioPlayer.stop();
+		Thread thread = new Thread() {
+			public void run() {
+				synchronized (audioPlayer) {
+					log.info("Stop streaming");
+					if (audioPlayer.isPlaying()) {
+						audioPlayer.stop();
 
-                    sync.release();
-                    audioPlayer.release();
-                    factory.release();
-                }
-            }
-        };
-        thread.start();
+						sync.release();
+						audioPlayer.release();
+						factory.release();
+					}
+				}
+			}
+		};
+		thread.start();
     }
 
 	@Override

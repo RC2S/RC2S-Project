@@ -14,14 +14,12 @@ public class Streaming extends Thread
 		INIT, PLAY, PAUSE, STOP;
 	}
 
-
 	private StreamingFacadeRemote streamingEJB;
 
 	private MediaPlayerFactory mediaPlayerFactory;
 	private HeadlessMediaPlayer mediaPlayer;
 
 	private StreamingState state;
-	//private StreamLocker lock;
 
 	private String id;
 	private String media;
@@ -47,18 +45,19 @@ public class Streaming extends Thread
         System.err.println("------- Launch Media Player -------");
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
 
-		this.state = StreamingState.INIT;
+		setStreamingState(StreamingState.INIT);
     }
 
 	@Override
-    public synchronized void run()
+	public synchronized void run()
 	{
-		mediaPlayer.playMedia(media,
-				options,
-				":no-sout-rtp-sap",
-				":no-sout-standard-sap",
-				":sout-all",
-				":sout-keep"
+		mediaPlayer.playMedia(
+			media,
+			options,
+			":no-sout-rtp-sap",
+			":no-sout-standard-sap",
+			":sout-all",
+			":sout-keep"
 		);
 
 		System.err.println("------- MRL -------");
@@ -73,7 +72,8 @@ public class Streaming extends Thread
 		{
 			do
 			{
-				Thread.currentThread().wait();
+				wait();
+				System.out.println("---------------- After wait, state is: " + state.toString() + " -----------------");
 
 				switch(state)
 				{
@@ -111,10 +111,9 @@ public class Streaming extends Thread
 	public synchronized void setStreamingState(StreamingState state)
 	{
 		this.state = state;
-		Thread.currentThread().notifyAll();
 	}
 
-	public StreamingState getStreamignState()
+	public StreamingState getStreamingState()
 	{
 		return state;
 	}
@@ -136,17 +135,4 @@ public class Streaming extends Thread
 		sb.append("}");
 		return sb.toString();
 	}
-
-	/*private class StreamLocker extends Thread
-	{
-		@Override
-		public synchronized void run()
-		{
-			try
-			{
-				wait();
-			}
-			catch(InterruptedException e) {}
-		}
-	}*/
 }

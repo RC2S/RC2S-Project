@@ -2,6 +2,7 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.client.test.Streaming;
+import com.rc2s.client.test.StreamingHandler;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
@@ -32,7 +33,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
 
 	private MediaPlayer mediaPlayer;
-	private Streaming streaming;
+	private StreamingHandler streamingHandler;
 	private boolean playing = false;
 	private int currentTrack = -1;
 
@@ -261,19 +262,31 @@ public class MusicPlaylistController extends TabController implements Initializa
 					play();
 				}
 			}
-			catch(ArrayIndexOutOfBoundsException e) { /* End of the playlist */ }
+			catch(IndexOutOfBoundsException e)
+			{
+				synchronized (streamingHandler) {
+					// End of the playlist
+					mediaPlayer.stop();
+					mediaPlayer.dispose();
+					mediaPlayer = null;
+
+					streamingHandler.stopStreaming();
+					streamingHandler = null;
+				}
+			}
 		});
 
 		// Create/Update the streaming object
 		try
 		{
 			// If it exists, we notify it to stop
-			if(streaming != null)
-			{
-				streaming.setStreamingState(Streaming.StreamingState.STOP);
+			if (streamingHandler != null) {
+				synchronized (streamingHandler) {
+					streamingHandler.stopStreaming();
+				}
 			}
 
-			streaming = new Streaming(
+			streamingHandler = new StreamingHandler(
 				streamingEJB,
 				Main.getAuthenticatedUser().getUsername(),
 				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
@@ -287,30 +300,31 @@ public class MusicPlaylistController extends TabController implements Initializa
 		currentTrack = trackIndex;
 	}
 
-	private synchronized void pause()
+	private void pause()
 	{
 		mediaPlayer.pause();
 
-		if(streaming != null && streaming.isPlaying())
-		{
-			streaming.setStreamingState(Streaming.StreamingState.PAUSE);
+		if (streamingHandler != null && streamingHandler.isPlaying()) {
+			synchronized (streamingHandler) {
+				streamingHandler.pauseStreaming();
+			}
 		}
 
 		playing = false;
 		playPauseButton.setText("Play");
 	}
 
-	private synchronized void play()
+	private void play()
 	{
 		mediaPlayer.play();
 
-		if(streaming != null)
-		{
-			if(streaming.getStreamignState() == Streaming.StreamingState.INIT)
-				streaming.start();
-			else if(!streaming.isPlaying())
-			{
-				streaming.setStreamingState(Streaming.StreamingState.PLAY);
+		if (streamingHandler != null) {
+			synchronized (streamingHandler) {
+				if (streamingHandler.getStreamingState() == Streaming.StreamingState.INIT)
+					streamingHandler.start();
+				else if (!streamingHandler.isPlaying()) {
+					streamingHandler.resumeStreaming();
+				}
 			}
 		}
 
