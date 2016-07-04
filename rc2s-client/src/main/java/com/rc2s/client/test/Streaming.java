@@ -1,6 +1,7 @@
 package com.rc2s.client.test;
 
 import com.rc2s.client.Main;
+import com.rc2s.common.utils.EJB;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -8,18 +9,37 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
 public class Streaming extends Thread
 {
+	public static enum StreamingState
+	{
+		INIT, PLAY, PAUSE, STOP;
+	}
+
+
 	private StreamingFacadeRemote streamingEJB;
 
 	private MediaPlayerFactory mediaPlayerFactory;
 	private HeadlessMediaPlayer mediaPlayer;
 
-	private String media = "D:\\Musique\\AC-DC - Black Ice\\Rock N Roll Train.mp3";
+	private StreamingState state;
+	//private StreamLocker lock;
+
+	private String id;
+	private String media;
 	private String options;
 
     // For Server : sudo apt-get install libvlc-dev libvlccore-dev
-    public Streaming(StreamingFacadeRemote streamingEJB) throws Exception
+    public Streaming(StreamingFacadeRemote streamingEJB, String id, String media) throws Exception
     {
 		this.streamingEJB = streamingEJB;
+
+		this.id = id;
+
+		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			this.media = media.replace('/', '\\');
+		else
+			this.media = media;
+
+		this.options = formatRtspStream(EJB.getServerAddress(), EJB.getRtspPort(), id);
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
@@ -27,11 +47,11 @@ public class Streaming extends Thread
         System.err.println("------- Launch Media Player -------");
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
 
-		options = formatRtspStream("127.0.0.1", 5555, "audio");
+		this.state = StreamingState.INIT;
     }
 
 	@Override
-    public void run()
+    public synchronized void run()
 	{
 		mediaPlayer.playMedia(media,
 				options,
@@ -42,16 +62,39 @@ public class Streaming extends Thread
 		);
 
 		System.err.println("------- MRL -------");
-		String mrl = new RtspMrl().host("127.0.0.1").port(5555).path("/audio").value();
+		String mrl = new RtspMrl().host(EJB.getServerAddress()).port(EJB.getRtspPort()).path("/" + id).value();
 
 		System.err.println("------- Start Streaming RMI -------");
 		streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
+		setStreamingState(StreamingState.PLAY);
 		System.err.println("------- Thread join -------");
 
 		try
 		{
-			// TODO: Required or the content is not streamed?!
-			Thread.currentThread().join(60000L);
+			do
+			{
+				Thread.currentThread().wait();
+
+				switch(state)
+				{
+					case PLAY:
+						if(!mediaPlayer.isPlaying())
+						{
+							mediaPlayer.play();
+							System.out.println("------ MediaPlayer resumed ------");
+						}
+						break;
+
+					case PAUSE:
+						if(mediaPlayer.isPlaying())
+						{
+							mediaPlayer.pause();
+							System.out.println("------ MediaPlayer paused ------");
+						}
+						break;
+				}
+
+			} while(state != StreamingState.STOP);
 		}
 		catch(InterruptedException e)
 		{
@@ -65,16 +108,45 @@ public class Streaming extends Thread
 		mediaPlayer.release();
 	}
 
-    private String formatRtspStream(String serverAddress, int serverPort, String id)
-    {
-        StringBuilder sb = new StringBuilder(60);
-        sb.append(":sout=#rtp{sdp=rtsp://@");
-        sb.append(serverAddress);
-        sb.append(':');
-        sb.append(serverPort);
-        sb.append('/');
-        sb.append(id);
-        sb.append("}");
-        return sb.toString();
-    }
+	public synchronized void setStreamingState(StreamingState state)
+	{
+		this.state = state;
+		Thread.currentThread().notifyAll();
+	}
+
+	public StreamingState getStreamignState()
+	{
+		return state;
+	}
+
+	public boolean isPlaying()
+	{
+		return mediaPlayer.isPlaying();
+	}
+
+	private String formatRtspStream(String serverAddress, int serverPort, String id)
+	{
+		StringBuilder sb = new StringBuilder(60);
+		sb.append(":sout=#rtp{sdp=rtsp://@");
+		sb.append(serverAddress);
+		sb.append(':');
+		sb.append(serverPort);
+		sb.append('/');
+		sb.append(id);
+		sb.append("}");
+		return sb.toString();
+	}
+
+	/*private class StreamLocker extends Thread
+	{
+		@Override
+		public synchronized void run()
+		{
+			try
+			{
+				wait();
+			}
+			catch(InterruptedException e) {}
+		}
+	}*/
 }

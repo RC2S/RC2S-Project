@@ -21,6 +21,18 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
     }
 
     @Override
+    public void resumeStreaming(User caller)
+    {
+        streamingService.resume();
+    }
+
+    @Override
+    public void pauseStreaming(User caller)
+    {
+        streamingService.pause();
+    }
+
+    @Override
     public void stopStreaming(User caller)
     {
         streamingService.stop();

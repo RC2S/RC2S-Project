@@ -1,10 +1,12 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
+import com.rc2s.client.test.Streaming;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Track;
+import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import com.rc2s.ejb.track.TrackFacadeRemote;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,14 +22,17 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ResourceBundle;
 
 public class MusicPlaylistController extends TabController implements Initializable
 {
     private final TrackFacadeRemote trackEJB = (TrackFacadeRemote) EJB.lookup("TrackEJB");
     private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
+	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
 
 	private MediaPlayer mediaPlayer;
+	private Streaming streaming;
 	private boolean playing = false;
 	private int currentTrack = -1;
 
@@ -45,6 +50,9 @@ public class MusicPlaylistController extends TabController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+
 		musicColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPath()));
 
 		tracksTable.setRowFactory(table -> {
@@ -232,7 +240,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			play();
     }
 
-	private void setTrack(int trackIndex)
+	private synchronized void setTrack(int trackIndex)
 	{
 		Track track = tracksTable.getItems().get(trackIndex);
 		Media media = new Media(track.getPath());
@@ -256,19 +264,56 @@ public class MusicPlaylistController extends TabController implements Initializa
 			catch(ArrayIndexOutOfBoundsException e) { /* End of the playlist */ }
 		});
 
+		// Create/Update the streaming object
+		try
+		{
+			// If it exists, we notify it to stop
+			if(streaming != null)
+			{
+				streaming.setStreamingState(Streaming.StreamingState.STOP);
+			}
+
+			streaming = new Streaming(
+				streamingEJB,
+				Main.getAuthenticatedUser().getUsername(),
+				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
+			);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 		currentTrack = trackIndex;
 	}
 
-	private void pause()
+	private synchronized void pause()
 	{
 		mediaPlayer.pause();
+
+		if(streaming != null && streaming.isPlaying())
+		{
+			streaming.setStreamingState(Streaming.StreamingState.PAUSE);
+		}
+
 		playing = false;
 		playPauseButton.setText("Play");
 	}
 
-	private void play()
+	private synchronized void play()
 	{
 		mediaPlayer.play();
+
+		if(streaming != null)
+		{
+			if(streaming.getStreamignState() == Streaming.StreamingState.INIT)
+				streaming.start();
+			else if(!streaming.isPlaying())
+			{
+				streaming.setStreamingState(Streaming.StreamingState.PLAY);
+			}
+		}
+
 		playing = true;
 		playPauseButton.setText("||");
 	}

@@ -40,7 +40,8 @@ public class StreamingService implements IStreamingService
 	 */
 	public StreamingService()
     {
-		System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 	}
 
     @Override
@@ -93,6 +94,32 @@ public class StreamingService implements IStreamingService
         };
         thread.start();
     }
+
+	public void resume()
+	{
+		Thread thread = new Thread() {
+			public void run() {
+				log.info("Resume streaming");
+
+				if(!audioPlayer.isPlaying())
+					audioPlayer.play();
+			}
+		};
+		thread.start();
+	}
+
+	public void pause()
+	{
+		Thread thread = new Thread() {
+			public void run() {
+				log.info("Pause streaming");
+
+				if(audioPlayer.isPlaying())
+					audioPlayer.pause();
+			}
+		};
+		thread.start();
+	}
 
     @Override
     public void stop()

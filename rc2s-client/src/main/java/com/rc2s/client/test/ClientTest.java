@@ -17,7 +17,7 @@ public class ClientTest
             StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
             
             System.err.println("------- Before Streaming -------");
-            Streaming stream = new Streaming(streamingEJB);
+            Streaming stream = new Streaming(streamingEJB, "audio", "D:\\Musique\\AC-DC - Black Ice\\Rock N Roll Train.mp3");
             stream.start();
             System.err.println("------- After Streaming -------");
         }
