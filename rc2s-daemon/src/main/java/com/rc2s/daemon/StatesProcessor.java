@@ -58,6 +58,9 @@ public class StatesProcessor implements Runnable
             {
                 handle(i, packet.getStages().length, packet.getStages()[i]);
             }
+            
+            daemon.getHardware().resetState(false);
+            
         } while ((packet.getDuration() > 0 && (new Date().getTime() - start < packet.getDuration()))
                 || (packet.getDuration() <= 0 && queue.isEmpty()));
     }
