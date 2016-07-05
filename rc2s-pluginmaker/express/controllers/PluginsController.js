@@ -52,8 +52,8 @@ PluginsController.prototype.addPlugin = function(req, callback) {
 		return callback(false, errors);
 
 	// Transform pluginName for package standard
-	unidecode(req.body.pluginName); // Transform non ASCII to ASCII : é -> e
-	formatedPluginName = req.body.pluginName.replace(/[^0-9a-zA-Z_-]/gi, ''); 	// Remove non alphanumeric
+	formatedPluginName = unidecode(req.body.pluginName); 						// Transform non ASCII to ASCII : é -> e
+	formatedPluginName = formatedPluginName.replace(/[^0-9a-zA-Z_-]/gi, ''); 	// Remove non alphanumeric
 
 	var plugin = {
 		name 		: formatedPluginName,
@@ -97,8 +97,7 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
 
 	// Transform PluginName for package standard
-	formatedPluginName = unidecode(pluginName); 			// Transform non ASCII to ASCII : é -> e
-	formatedPluginName = pluginName.replace(/\W/g, ''); 	// Remove non alphanumeric
+	formatedPluginName = pluginName.replace(/\W/g, '').toLowerCase(); 	// Remove non alphanumeric
 
 	var options = {
 		overwrite: true,
