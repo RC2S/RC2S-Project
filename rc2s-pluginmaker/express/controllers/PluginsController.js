@@ -51,8 +51,12 @@ PluginsController.prototype.addPlugin = function(req, callback) {
 	if (errors)
 		return callback(false, errors);
 
+	// Transform pluginName for package standard
+	unidecode(req.body.pluginName); // Transform non ASCII to ASCII : é -> e
+	formatedPluginName = req.body.pluginName.replace(/[^0-9a-zA-Z_-]/gi, ''); 	// Remove non alphanumeric
+
 	var plugin = {
-		name 		: req.body.pluginName,
+		name 		: formatedPluginName,
 		description : req.body.pluginDesc
 	};
 
