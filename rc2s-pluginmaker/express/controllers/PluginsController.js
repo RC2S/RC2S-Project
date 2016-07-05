@@ -93,8 +93,8 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
 
 	// Transform PluginName for package standard
-	pluginName = unidecode(pluginName); 			// Transform non ASCII to ASCII : é -> e
-	pluginName = pluginName.replace(/\W/g, ''); 	// Remove non alphanumeric
+	formatedPluginName = unidecode(pluginName); 			// Transform non ASCII to ASCII : é -> e
+	formatedPluginName = pluginName.replace(/\W/g, ''); 	// Remove non alphanumeric
 
 	var options = {
 		overwrite: true,
@@ -105,11 +105,11 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			'**/*'
 		],
 		rename: function(filePath) {
-			return filePath.split('[pluginname]').join(pluginName);
+			return filePath.split('[pluginname]').join(formatedPluginName);
 		},
 		transform: function(src, dest, stats) {
 			return through(function(chunk, enc, done)  {
-				var output = chunk.toString().split('[pluginname]').join(pluginName);
+				var output = chunk.toString().split('[pluginname]').join(formatedPluginName);
 				done(null, output);
 			});
 		}
@@ -117,7 +117,7 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 
 	// Copy files from the template folder to the tmp folder by replacing [pluginname]
 	// in the folder names and file contents by the plugin name
-	copy(config.che.templateFolder, config.che.tmpFolder + pluginName, options)
+	copy(config.che.templateFolder, config.che.tmpFolder + formatedPluginName, options)
 		.then(function(results) {
 			console.log('Copied ' + results.length + ' files');
 
@@ -129,7 +129,7 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 
 				idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
 
-				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName + '/ ' + idDockerMachine + ':/projects/', function(error, stdout, stderr) {
+				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + formatedPluginName + '/. ' + idDockerMachine + ':/projects/' + pluginName, function(error, stdout, stderr) {
 					if (error && stderr)
 						return callback(false, stderr);
 					else if (error)
