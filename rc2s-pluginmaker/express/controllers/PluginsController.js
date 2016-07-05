@@ -100,7 +100,7 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			'**/*'
 		],
 		rename: function(filePath) {
-			return filePath.replace('[pluginname]', pluginName).replace('pluginname', pluginName);
+			return filePath.split('[pluginname]').join(pluginName);
 		},
 		transform: function(src, dest, stats) {
 			return through(function(chunk, enc, done)  {

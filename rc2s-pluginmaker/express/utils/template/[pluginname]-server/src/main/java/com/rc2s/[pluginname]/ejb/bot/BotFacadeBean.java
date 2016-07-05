@@ -1,4 +1,4 @@
-package com.rc2s.pluginname.ejb.bot;
+package com.rc2s.[pluginname].ejb.bot;
 
 import javax.ejb.Stateless;
 

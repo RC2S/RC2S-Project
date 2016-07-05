@@ -1,4 +1,4 @@
-package com.rc2s.pluginname.common.vo;
+package com.rc2s.[pluginname].common.vo;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

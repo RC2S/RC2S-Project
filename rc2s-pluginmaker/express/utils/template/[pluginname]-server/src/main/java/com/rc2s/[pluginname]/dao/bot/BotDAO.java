@@ -1,4 +1,4 @@
-package com.rc2s.pluginname.dao.bot;
+package com.rc2s.[pluginname].dao.bot;
 
 import javax.ejb.Stateless;
 

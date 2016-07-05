@@ -1,4 +1,4 @@
-package com.rc2s.pluginname.client.controllers;
+package com.rc2s.[pluginname].client.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
