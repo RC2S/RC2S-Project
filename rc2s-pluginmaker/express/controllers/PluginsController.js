@@ -27,7 +27,7 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 					});
 				});
 
-			if(workspace.status == 'STOPPED')
+			if (workspace.status == 'STOPPED')
 				WorkspaceController.startWorkspaceByName(workspace.config.name, function(wsState, errStart) {
 					if (errStart != undefined)
 						return callback(undefined, errStart);
@@ -115,17 +115,17 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			console.log('Copied ' + results.length + ' files');
 
 			exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
-				if(errorPs && stderrPs)
+				if (errorPs && stderrPs)
 					return callback(false, stderrPs);
-				else if(errorPs)
+				else if (errorPs)
 					return callback(false, errorPs);
 
 				idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
 
 				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName + '/ ' + idDockerMachine + ':/projects/', function(error, stdout, stderr) {
-					if(error && stderr)
+					if (error && stderr)
 						return callback(false, stderr);
-					else if(error)
+					else if (error)
 						return callback(false, error);
 
 					del(config.che.tmpFolder + '/*');

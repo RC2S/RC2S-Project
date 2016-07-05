@@ -39,7 +39,7 @@ module.exports = function(app) {
 
 	app.get('/plugins/download/:name', function(req, res, next) {
 		PluginsController.downloadZip(req.params.name, function(valid, errors) {
-			if(valid)
+			if (valid)
 				res.sendFile(config.che.tmpFolder + req.params.name + '.zip');
 			else {
 				globalFlash = {error : CommonUtils.formatFormErrors(errors)};
