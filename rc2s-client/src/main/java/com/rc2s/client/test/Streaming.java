@@ -9,8 +9,7 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
 public class Streaming extends Thread
 {
-	public static enum StreamingState
-	{
+	public static enum StreamingState {
 		INIT, PLAY, PAUSE, STOP;
 	}
 
@@ -73,7 +72,7 @@ public class Streaming extends Thread
 			do
 			{
 				wait();
-				System.out.println("---------------- After wait, state is: " + state.toString() + " -----------------");
+				System.err.println("------ After wait, state is: " + state.toString() + " ------");
 
 				switch(state)
 				{
@@ -81,7 +80,7 @@ public class Streaming extends Thread
 						if(!mediaPlayer.isPlaying())
 						{
 							mediaPlayer.play();
-							System.out.println("------ MediaPlayer resumed ------");
+							System.err.println("------ MediaPlayer resumed ------");
 						}
 						break;
 
@@ -89,7 +88,7 @@ public class Streaming extends Thread
 						if(mediaPlayer.isPlaying())
 						{
 							mediaPlayer.pause();
-							System.out.println("------ MediaPlayer paused ------");
+							System.err.println("------ MediaPlayer paused ------");
 						}
 						break;
 				}

@@ -40,6 +40,14 @@ public class StreamingHandler extends Thread
 		synchronized (streaming) {
 			streaming.setStreamingState(Streaming.StreamingState.STOP);
 			streaming.notifyAll();
+
+			System.err.println("------- Waiting for the current Streaming process to stop... ------");
+			try {
+				streaming.join();
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.err.println("------ Streaming has ended! ------");
 		}
 	}
 
