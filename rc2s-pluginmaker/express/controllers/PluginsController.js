@@ -5,6 +5,7 @@ var through				= require('through2');
 var fs 					= require('fs');
 var del					= require('del');
 var exec				= require('child_process').exec;
+var unidecode			= require('unidecode');
 // var recursive		= require('recursive-readdir');
 
 function PluginsController() {};
@@ -91,6 +92,10 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
 
+	// Transform PluginName for package standard
+	pluginName = unidecode(pluginName); 			// Transform non ASCII to ASCII : é -> e
+	pluginName = pluginName..replace(/\W/g, ''); 	// Remove non alphanumeric
+
 	var options = {
 		overwrite: true,
 		expand: true,
@@ -110,6 +115,8 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 		}
 	};
 
+	// Copy files from the template folder to the tmp folder by replacing [pluginname]
+	// in the folder names and file contents by the plugin name
 	copy(config.che.templateFolder, config.che.tmpFolder + pluginName, options)
 		.then(function(results) {
 			console.log('Copied ' + results.length + ' files');

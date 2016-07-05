@@ -38,9 +38,7 @@ module.exports = function() {
 			}
 		}
 	}));
-
-	console.log(JSON.stringify("sdfsdfs\"'"));
-
+	
 	// Authentication Middleware
 	require('./utils/AuthenticationUtils')(app);
 
