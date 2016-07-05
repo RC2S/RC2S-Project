@@ -94,7 +94,7 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 
 	// Transform PluginName for package standard
 	pluginName = unidecode(pluginName); 			// Transform non ASCII to ASCII : é -> e
-	pluginName = pluginName..replace(/\W/g, ''); 	// Remove non alphanumeric
+	pluginName = pluginName.replace(/\W/g, ''); 	// Remove non alphanumeric
 
 	var options = {
 		overwrite: true,
