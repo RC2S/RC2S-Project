@@ -7,8 +7,11 @@ import com.rc2s.dao.role.IRoleDAO;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class RoleService implements IRoleService
 {
 	@EJB

@@ -10,8 +10,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 @Stateless
 public class DaemonService implements IDaemonService

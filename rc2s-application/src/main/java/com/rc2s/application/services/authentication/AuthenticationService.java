@@ -9,11 +9,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class AuthenticationService implements IAuthenticationService
 {  
     @EJB

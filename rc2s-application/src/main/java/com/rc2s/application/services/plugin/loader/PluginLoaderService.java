@@ -19,8 +19,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class PluginLoaderService implements IPluginLoaderService
 {
 	@EJB private IPluginService pluginService;
