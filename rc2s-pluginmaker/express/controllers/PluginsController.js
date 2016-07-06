@@ -188,6 +188,10 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
+
+	// Transform PluginName for package standard
+	formatedPluginName = pluginName.replace(/\W/g, '').toLowerCase(); 	// Remove non alphanumeric
+
 	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
 		if(errorPs && stderrPs)
 			return callback(false, stderrPs);
@@ -196,12 +200,12 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 
 		idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
 		
-		var pluginZipPath = pluginName + '/' + pluginName + '-client/build/' + pluginName + '.zip';
-		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
-			if(error && stderr)
-				return callback(false, stderr);
-			else if(error)
-				return callback(false, error);
+		var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
+		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
+			if(errorCp && stderrCp)
+				return callback(false, stderrCp);
+			else if(errorCp)
+				return callback(false, errorCp);
 
 			return callback(true, undefined);
 		});
