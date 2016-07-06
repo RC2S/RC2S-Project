@@ -140,7 +140,7 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 
 					del(config.che.tmpFolder + '/*');
 
-					exec('docker exec ' + idDockerMachine + 'sudo chown -R user:user /projects/' + pluginName, function(errorExec, stdoutExec, stderrExec) {
+					exec('docker exec ' + idDockerMachine + ' sudo chown -R user:user /projects/' + pluginName, function(errorExec, stdoutExec, stderrExec) {
 						if (errorExec && stderrExec)
 							return callback(false, stderrExec);
 						else if (errorExec)
