@@ -132,14 +132,22 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 
 				idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
 
-				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + formatedPluginName + '/. ' + idDockerMachine + ':/projects/' + pluginName, function(error, stdout, stderr) {
-					if (error && stderr)
-						return callback(false, stderr);
-					else if (error)
-						return callback(false, error);
+				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + formatedPluginName + '/. ' + idDockerMachine + ':/projects/' + pluginName, function(errorCp, stdoutCp, stderrCp) {
+					if (errorCp && stderrCp)
+						return callback(false, stderrCp);
+					else if (errorCp)
+						return callback(false, errorCp);
 
 					del(config.che.tmpFolder + '/*');
-					return callback(true, undefined);
+
+					exec('docker exec ' + idDockerMachine + 'sudo chown -R user:user /projects/' + pluginName, function(errorExec, stdoutExec, stderrExec) {
+						if (errorExec && stderrExec)
+							return callback(false, stderrExec);
+						else if (errorExec)
+							return callback(false, errorExec);
+
+						return callback(true, undefined);
+					});
 				});
 			});
 		})
