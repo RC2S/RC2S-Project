@@ -40,8 +40,27 @@ public class DaemonService implements IDaemonService
 	@Override
 	public void updateState(Cube cube, Long duration, boolean[][][] states) throws ServiceException
 	{
-		byte[] packetContent = createPacket(duration, cube.getSize(), states);
+		boolean[][][] formatted = formatStatesArray(states);
+		byte[] packetContent = createPacket(duration, cube.getSize(), formatted);
 		sendPacket(cube.getIp(), packetContent, false);
+	}
+
+	@Override
+	public boolean[][][] formatStatesArray(final boolean[][][] states)
+	{
+		for(int y = 0 ; y < states.length ; y++)
+		{
+			for(int z = 0 ; z < states[y].length / 2 ; z++)
+			{
+				int zOpposite = states[y].length - 1 - z;
+
+				boolean[] zTmp = states[y][z];
+				states[y][z] = states[y][zOpposite];
+				states[y][zOpposite] = zTmp;
+			}
+		}
+
+		return states;
 	}
 	
 	@Override
