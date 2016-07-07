@@ -22,6 +22,7 @@ public class Streaming extends Thread
 
 	private String id;
 	private String media;
+
 	private String options;
 
     // For Server : sudo apt-get install libvlc-dev libvlccore-dev
@@ -42,6 +43,7 @@ public class Streaming extends Thread
 
         mediaPlayerFactory = new MediaPlayerFactory();
         System.err.println("------- Launch Media Player -------");
+
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
 
 		setStreamingState(StreamingState.INIT);

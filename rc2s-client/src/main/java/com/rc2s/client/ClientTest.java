@@ -16,7 +16,7 @@ public class ClientTest
 		
 			StreamingFacadeRemote streamingLoader = (StreamingFacadeRemote)EJB.lookup("StreamingEJB");
 
-			streamingLoader.streamMusic();
+			//streamingLoader.startStreaming();
 		}
 		catch (RC2SException ex)
 		{

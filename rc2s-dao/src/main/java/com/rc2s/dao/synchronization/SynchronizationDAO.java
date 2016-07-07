@@ -19,7 +19,15 @@ public class SynchronizationDAO extends GenericDAO<Synchronization> implements I
 			Query query = em().createQuery("SELECT s FROM Synchronization AS s JOIN s.users AS u ON u.id = :userId")
 							  .setParameter("userId", user.getId());
 
-			return query.getResultList();
+			List<Synchronization> list = query.getResultList();
+
+			// Lazy loading
+			for(Synchronization sync : list)
+			{
+				sync.getCubes().size(); // Load the Synchronization's Cubes
+			}
+
+			return list;
 		}
 		catch(Exception e)
 		{

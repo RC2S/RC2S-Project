@@ -10,11 +10,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
 import javax.ejb.Stateful;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 @Stateful
@@ -26,6 +21,7 @@ public class StreamingService implements IStreamingService
     
     // Synchronisation object to wait for the audio to finish.
     private Semaphore sync = new Semaphore(0);
+	private CallbackAdapter callbackAdapter;
 
     private MediaPlayerFactory factory;
     private DirectAudioPlayer audioPlayer;
@@ -52,8 +48,10 @@ public class StreamingService implements IStreamingService
     public void start(String mrl)
     {
 		factory = new MediaPlayerFactory();
+		callbackAdapter = new CallbackAdapter(4, getSyncSize());
+
 		// newDirectAudioPlayer(format, rate, channel, new callback(blocksize of samples))
-		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, new CallbackAdapter(4));
+		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, callbackAdapter);
 
 		audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 			public void playing(MediaPlayer mediaPlayer) {
@@ -146,5 +144,8 @@ public class StreamingService implements IStreamingService
 	public void setSynchronization(Synchronization synchronization)
 	{
 		this.synchronization = synchronization;
+
+		if(callbackAdapter != null)
+			callbackAdapter.setDimensions(getSyncSize());
 	}
 }
