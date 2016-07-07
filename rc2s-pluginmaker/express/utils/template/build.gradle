@@ -24,7 +24,7 @@ subprojects {
 
 	dependencies {
 		provided group: 'com.rc2s', name: 'rc2s-annotations', version: 0.2
-		provided group: 'com.rc2s', name: 'rc2s-interfaces', version: 0.2
+		//provided group: 'com.rc2s', name: 'rc2s-interfaces', version: 0.2
 		provided group: 'com.rc2s', name: 'rc2s-common', version: 0.2
 	}
 }

@@ -5,8 +5,6 @@ import com.rc2s.annotations.mappers.ParameterMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
@@ -65,7 +63,6 @@ public class SourceUtil
 		String[] packageParts = mainClass.getPackageName().split("\\.");
 		
 		// First, get all views names and verify there is a MainView.fxml
-		/*
 		if (isFirstCheck)
 		{
 			getControllersAndViewsFoldersPaths(packageParts);
@@ -88,7 +85,7 @@ public class SourceUtil
 			
 			isFirstCheck = false;
 		}
-		*/
+		
 		
 		try
 		{
@@ -124,29 +121,7 @@ public class SourceUtil
 	
 	public void getControllersAndViewsFoldersPaths(String[] packageParts)
 	{	
-		StringBuilder sb = new StringBuilder();
-		
-		for (int i = 0; i < 3; i++)
-		{
-			sb.append("/");
-			sb.append(packageParts[i]);
-		}
-		
-		System.err.println("PACKAGE FOUND : " + sb.toString());
-	
-		try
-		{
-			displayInfo(sb.toString());
-			/*
-			File[] files = testDirectory.listFiles(
-			(File pathname) -> pathname.getName().endsWith(".java")
-			&& pathname.isFile()
-			);*/
-		}
-		catch (IOException ex)
-		{
-			Logger.getLogger(SourceUtil.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		System.out.println("User.dir : " + System.getProperty("user.dir"));
 	}
 	
 	public static void displayInfo(String f) throws IOException

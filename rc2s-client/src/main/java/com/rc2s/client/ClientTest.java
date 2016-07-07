@@ -1,5 +1,8 @@
 package com.rc2s.client;
 
+import com.rc2s.annotations.SourceControl;
+
+@SourceControl
 public class ClientTest
 {
     public static void main(String[] args)
