@@ -53,7 +53,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ComboBox fx:id="syncBox" prefWidth="150.0" promptText="Synchronization lists" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ComboBox fx:id="syncBox" onAction="#onSyncSelected" prefWidth="150.0" promptText="Select a synchronization list..." GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <GridPane fx:id="midGridButtonGrid" GridPane.columnIndex="1">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

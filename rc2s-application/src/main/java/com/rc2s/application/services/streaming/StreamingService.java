@@ -1,5 +1,6 @@
 package com.rc2s.application.services.streaming;
 
+import com.rc2s.common.vo.Synchronization;
 import javafx.scene.media.MediaPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,8 @@ import java.util.concurrent.Semaphore;
 public class StreamingService implements IStreamingService
 {
     private static final Logger log = LogManager.getLogger(StreamingService.class);
+
+	private Synchronization synchronization;
     
     // Synchronisation object to wait for the audio to finish.
     private Semaphore sync = new Semaphore(0);
@@ -259,4 +262,16 @@ public class StreamingService implements IStreamingService
 		}
 	}
 	/* END CoordinateMapper3D */
+
+	@Override
+	public Synchronization getSynchronization()
+	{
+		return synchronization;
+	}
+
+	@Override
+	public void setSynchronization(Synchronization synchronization)
+	{
+		this.synchronization = synchronization;
+	}
 }

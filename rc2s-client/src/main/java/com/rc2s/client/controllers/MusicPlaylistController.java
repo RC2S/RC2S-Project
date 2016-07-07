@@ -6,6 +6,7 @@ import com.rc2s.client.test.StreamingHandler;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
+import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.Track;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
@@ -42,7 +43,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @FXML private TableColumn<Track, String> timeColumn;
     @FXML private TableColumn<Track, String> authorColumn;
 
-    @FXML private ComboBox syncBox;
+    @FXML private ComboBox<Synchronization> syncBox;
     @FXML private Button previousButton;
     @FXML private Button playPauseButton;
     @FXML private Button nextButton;
@@ -98,12 +99,35 @@ public class MusicPlaylistController extends TabController implements Initializa
         {
             syncBox.getItems().clear();
             syncBox.getItems().addAll(syncEJB.getByUser(Main.getAuthenticatedUser()));
+
+			syncBox.getSelectionModel().selectFirst();
         }
         catch(EJBException e)
         {
             Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
+	@FXML
+	private void onSyncSelected(final ActionEvent e)
+	{
+		Synchronization sync = syncBox.getSelectionModel().getSelectedItem();
+
+		if(sync == null)
+		{
+			playPauseButton.setDisable(true);
+			nextButton.setDisable(true);
+			previousButton.setDisable(true);
+		}
+		else if(playPauseButton.isDisabled())
+		{
+			playPauseButton.setDisable(false);
+			nextButton.setDisable(false);
+			previousButton.setDisable(false);
+		}
+
+		streamingEJB.setSynchronization(sync);
+	}
 
 	@FXML
 	private void onKeyPressedEvent(KeyEvent e)

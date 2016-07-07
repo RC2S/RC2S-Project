@@ -55,7 +55,7 @@ public class CubicListController extends TabController implements Initializable
 
 				grid.add(loader.getRoot(), i, j);
 				grid.setHgrow(loader.getRoot(), Priority.ALWAYS);
-				
+
 				if(++i == MAX_COLUMNS)
 				{
 					i = 0;
