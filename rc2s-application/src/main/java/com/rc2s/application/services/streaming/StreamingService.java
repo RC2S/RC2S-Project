@@ -56,8 +56,9 @@ public class StreamingService implements IStreamingService
     public void start(String mrl)
     {
 		factory = new MediaPlayerFactory();
+		
 		// newDirectAudioPlayer(format, rate, channel, new callback(blocksize of samples))
-		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, new CallbackAdapter(4));
+		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, new CallbackAdapter(4, new int[] { 4, 4, 4 }));
 
 		audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 			public void playing(MediaPlayer mediaPlayer) {

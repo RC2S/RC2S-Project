@@ -11,38 +11,80 @@ import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
 public class CallbackAdapter extends DefaultAudioCallbackAdapter
 {
+	// Check if onPlay time data changed
 	private static boolean timeChanged;
-	private static boolean timeTests;
+	
+	// Keep current time retrieved in onPlay
 	private static long currentTime;
 	
-	private static int cubeWidth;
-	private static int cubeDepth;
-	private static int cubeHeight;
+	// Array containing the coordinates of the points to lighten
+	private int[][] positionsToLighten;
+	private int lighteningIndex;
 	
-	private final List<Integer> lineMinAnalysis;
+	// Type of algorithm wanted
+	private final AlgoEffectEnum algoEffect;
+	
+	// Sync dimensions
+	private static int syncWidth;
+	private static int syncHeight;
+	private static int syncDepth;
+	
+	// Lists used to compute audio algorithm
 	private final List<Integer> lineMaxAnalysis;
+	private final List<Integer> lineMinAnalysis;
 	private final List<Integer> lineAvgAnalysis;
 	
     private final Logger log = LogManager.getLogger(CallbackAdapter.class);
     
     private BufferedOutputStream out = null;
     
-    public CallbackAdapter(int blockSize)
+    public CallbackAdapter(int blockSize, int[] syncDimensions)
     {
         super(blockSize);
         out = new BufferedOutputStream(System.out);
 		
-		timeTests	= false;
 		currentTime = 0;
 		
-		cubeWidth	= 8;
-		cubeDepth	= 8;
-		cubeHeight	= 8;
+		syncWidth	= syncDimensions[0];
+		syncHeight	= syncDimensions[1];
+		syncDepth	= syncDimensions[2];
+		
+		algoEffect = getAlgoEffect((int) (Math.random() * 6));
+		
+		positionsToLighten = new int[algoEffect.getSize()][3];
+		lighteningIndex = 0;
 		
 		lineMinAnalysis = new ArrayList<>();
 		lineMaxAnalysis = new ArrayList<>();
 		lineAvgAnalysis = new ArrayList<>();
     }
+	
+	private AlgoEffectEnum getAlgoEffect(int value)
+	{
+		switch (value)
+		{
+			case 0:
+				return AlgoEffectEnum.CLASSIC;
+				
+			case 1:
+				return AlgoEffectEnum.MIRROR_WIDTH;
+				
+			case 2:
+				return AlgoEffectEnum.MIRROR_DEPTH;
+				
+			case 3:
+				return AlgoEffectEnum.MIRROR_HEIGHT;
+				
+			case 4:
+				return AlgoEffectEnum.MIRROR_TRIPLE;
+				
+			case 5:
+				return AlgoEffectEnum.EIGHTIFY;
+				
+			default:
+				return AlgoEffectEnum.CLASSIC;
+		}
+	}
 
     @Override
     protected void onPlay(DirectAudioPlayer mediaPlayer, byte[] bytes, int sampleCount, long pts)
@@ -53,10 +95,6 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 			if (mediaPlayer.getTime() != currentTime)
 			{
 				timeChanged = true;
-				
-				if (timeTests)
-					System.out.println("NEW TIME : " + mediaPlayer.getTime()); // +261/262 every 10 turn --> 1sec ~ 40 turns
-			
 				currentTime = mediaPlayer.getTime();
 			}
 			else
@@ -158,21 +196,10 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	{	
 		if (timeChanged)
 		{
-			if (timeTests)
-				doTimeTests();
-			
-			// Get coordinates proposal
-			// @arg1 : with classics
-			// @arg2 : depth mirror (y)
-			// @arg3 : width mirror (x)
-			// @arg4 : height mirror (z)
-			// @arg5 : triple mirror (x, y, z -> +3 coords)
-			// @arg6 : eightify (y, z, y, x, y, z, y -> +7 coords)
-			proposeCoordinates(true, false, false, false, false, false);
-			
-			lineMaxAnalysis.clear();
-			lineMinAnalysis.clear();
-			lineAvgAnalysis.clear();
+			// Gets coordinates proposal
+			prepareCoordinates();
+			// Sends coordinates proposal
+			sendCoordinates();
 		}
 		
 		// Compute that new data line
@@ -236,71 +263,91 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		return variation;
 	}
 	
-	private void proposeCoordinates(boolean withClassic, boolean depthMirror,
-			boolean widthMirror, boolean heightMirror, boolean tripleMirror,
-			boolean eightify)
+	/**
+	 * Adds a tuple(x, y, z) which represents the coordinates of
+	 * a LED to lighten in the global LED-to-lighten list
+	 * 
+	 * @param pos_x
+	 * @param pos_y
+	 * @param pos_z 
+	 */
+	private void addPositionsToLighteningList(int pos_x, int pos_y, int pos_z)
 	{
-		int abs_x = (Math.abs(getLineVariation(lineMaxAnalysis, true)) % cubeWidth);
-		int abs_y = (Math.abs(getLineVariation(lineMinAnalysis, true)) % cubeDepth);
-		int abs_z = (Math.abs(getLineVariation(lineAvgAnalysis, true)) % cubeHeight);
+		positionsToLighten[lighteningIndex][0] = pos_x;
+		positionsToLighten[lighteningIndex][1] = pos_y;
+		positionsToLighten[lighteningIndex][2] = pos_z;
+		lighteningIndex++;
+	}
+	
+	private void prepareCoordinates()
+	{
+		int abs_x = (Math.abs(getLineVariation(lineMaxAnalysis, true)) % syncWidth);
+		int abs_y = (Math.abs(getLineVariation(lineMinAnalysis, true)) % syncDepth);
+		int abs_z = (Math.abs(getLineVariation(lineAvgAnalysis, true)) % syncHeight);
 		
-		System.out.println(
-			"Coord proposal : ABS(" + abs_x + ", " + abs_y + ", " + abs_z + ")"
-		);
+		addPositionsToLighteningList(abs_x, abs_y, abs_z);
 		
-		if (withClassic)
-			produceClassicCoordinate();
-		if (widthMirror)
-			produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
-		if (depthMirror)
-			produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
-		if (heightMirror)
-			produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
-		if (tripleMirror)
-			produceTripleMirrorCoordinate(abs_x, abs_y, abs_z);
-		if (eightify)
-			produceEightifyCoordinates(abs_x, abs_y, abs_z);
-		
-		System.out.println("--------------------");
+		switch (this.algoEffect)
+		{
+			case CLASSIC:
+				produceClassicCoordinate();
+				break;
+			
+			case MIRROR_WIDTH:
+				produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
+				break;
+			
+			case MIRROR_DEPTH:
+				produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
+				break;
+			
+			case MIRROR_HEIGHT:
+				produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
+				break;
+			
+			case MIRROR_TRIPLE:
+				produceTripleMirrorCoordinate(abs_x, abs_y, abs_z);
+				break;
+				
+			case EIGHTIFY:
+				produceEightifyCoordinates(abs_x, abs_y, abs_z);
+				break;
+		}
 	}
 
 	private void produceClassicCoordinate()
 	{
-		int cla_x = (Math.abs(getLineVariation(lineMaxAnalysis, false)) % cubeWidth);
-		int cla_y = (Math.abs(getLineVariation(lineMinAnalysis, false)) % cubeDepth);
-		int cla_z = (Math.abs(getLineVariation(lineAvgAnalysis, false)) % cubeHeight);
+		int cla_x = (Math.abs(getLineVariation(lineMaxAnalysis, false)) % syncWidth);
+		int cla_y = (Math.abs(getLineVariation(lineMinAnalysis, false)) % syncDepth);
+		int cla_z = (Math.abs(getLineVariation(lineAvgAnalysis, false)) % syncHeight);
 
-		System.out.println(
-			"Coord proposal : CLA(" + cla_x + ", " + cla_y + ", " + cla_z + ")"
-		);
-		System.out.println(".");
+		addPositionsToLighteningList(cla_x, cla_y, cla_z);
+	}
+	
+	private int getMirrorCoordinateValue(int origin, int dimension)
+	{
+		return (-1 * origin) + dimension - 1;
 	}
 
 	private void produceWidthMirrorCoordinate(int abs_x, int abs_y, int abs_z)
 	{
-		int wid_x = getMirrorCoordinateValue(abs_x, cubeWidth);
+		int wid_x = getMirrorCoordinateValue(abs_x, syncWidth);
 		
-		System.out.println(
-			"Coord proposal : WID(" + wid_x + ", " + abs_y + ", " + abs_z + ")"
-		);
+		addPositionsToLighteningList(wid_x, abs_y, abs_z);
 	}
 	
 	private void produceDepthMirrorCoordinate(int abs_x, int abs_y, int abs_z)
 	{
-		int dep_y = getMirrorCoordinateValue(abs_y, cubeDepth);
+		int dep_y = getMirrorCoordinateValue(abs_y, syncDepth);
 		
-		System.out.println(
-			"Coord proposal : DEP(" + abs_x + ", " + dep_y + ", " + abs_z + ")"
-		);
+		addPositionsToLighteningList(abs_x, dep_y, abs_z);
 	}
 
 	private void produceHeightMirrorCoordinate(int abs_x, int abs_y, int abs_z)
 	{
-		int hei_z = getMirrorCoordinateValue(abs_z, cubeHeight);
+		int hei_z = getMirrorCoordinateValue(abs_z, syncHeight);
 		
-		System.out.println(
-			"Coord proposal : HEI(" + abs_x + ", " + abs_y + ", " + hei_z + ")"
-		);
+		addPositionsToLighteningList(abs_x, abs_y, hei_z);
 	}
 	
 	private void produceTripleMirrorCoordinate(int abs_x, int abs_y, int abs_z)
@@ -308,7 +355,6 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
 		produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
 		produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
-		System.out.println(".");
 	}
 	
 	private void produceEightifyCoordinates(int abs_x, int abs_y, int abs_z)
@@ -320,53 +366,33 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		/* Scheme shall be m(Y(Z(Y(X(Y(Z(Y))))))) */
 		// Y
 		produceDepthMirrorCoordinate(new_x, new_y, new_z);
-		new_y = getMirrorCoordinateValue(new_y, cubeDepth);
+		new_y = getMirrorCoordinateValue(new_y, syncDepth);
 		// Z
 		produceHeightMirrorCoordinate(new_x, new_y, new_z);
-		new_z = getMirrorCoordinateValue(new_z, cubeHeight);
+		new_z = getMirrorCoordinateValue(new_z, syncHeight);
 		// Y
 		produceDepthMirrorCoordinate(new_x, new_y, new_z);
-		new_y = getMirrorCoordinateValue(new_y, cubeDepth);
+		new_y = getMirrorCoordinateValue(new_y, syncDepth);
 		// X
 		produceWidthMirrorCoordinate(new_x, new_y, new_z);
-		new_x = getMirrorCoordinateValue(new_x, cubeWidth);
+		new_x = getMirrorCoordinateValue(new_x, syncWidth);
 		// Y
 		produceDepthMirrorCoordinate(new_x, new_y, new_z);
-		new_y = getMirrorCoordinateValue(new_y, cubeDepth);
+		new_y = getMirrorCoordinateValue(new_y, syncDepth);
 		// Z
 		produceHeightMirrorCoordinate(new_x, new_y, new_z);
-		new_z = getMirrorCoordinateValue(new_z, cubeHeight);
+		new_z = getMirrorCoordinateValue(new_z, syncHeight);
 		// Y
 		produceDepthMirrorCoordinate(new_x, new_y, new_z);
-		System.out.println(".");
 	}
 	
-	private int getMirrorCoordinateValue(int origin, int dimension)
+	private void sendCoordinates()
 	{
-		return (-1 * origin) + dimension - 1;
-	}
-	
-	private void doTimeTests()
-	{
-		System.out.println("***** IN Line analysis *****");
-			
-		System.out.println("Max list	: " + lineMaxAnalysis.toString());
-		System.out.println("Max total	: " + lineMaxAnalysis.stream().mapToInt(Integer::intValue).sum());
-		System.out.println("Max var		: " + getLineVariation(lineMaxAnalysis, false));
-		System.out.println("Max var abs	: " + getLineVariation(lineMaxAnalysis, true));
-
-		System.out.println("Min list	: " + lineMinAnalysis.toString());
-		System.out.println("Min total	: " + lineMinAnalysis.stream().mapToInt(Integer::intValue).sum());
-		System.out.println("Min var		: " + getLineVariation(lineMinAnalysis, false));
-		System.out.println("Min var abs	: " + getLineVariation(lineMinAnalysis, true));
-
-		System.out.println("Avg list	: " + lineAvgAnalysis.toString());
-		System.out.println("Avg total	: " + lineAvgAnalysis.stream().mapToInt(Integer::intValue).sum());
-		System.out.println("Avg var		: " + getLineVariation(lineAvgAnalysis, false));
-		System.out.println("Avg var abs	: " + getLineVariation(lineAvgAnalysis, true));
-
-		System.out.println("***** OUT Line analysis *****");
-		//System.out.println(".");
-		//System.out.println(".");
+		positionsToLighten = new int[algoEffect.getSize()][3];
+		lighteningIndex = 0;
+		
+		lineMaxAnalysis.clear();
+		lineMinAnalysis.clear();
+		lineAvgAnalysis.clear();
 	}
 }
