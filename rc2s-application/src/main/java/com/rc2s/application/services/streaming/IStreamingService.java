@@ -10,8 +10,7 @@ public interface IStreamingService
     public void start(String mrl);
 	public void stop();
 
-    public void musicAlgorithm();
-
+	public int[] getSyncSize();
 	public Synchronization getSynchronization();
 	public void setSynchronization(Synchronization synchronization);
 }
