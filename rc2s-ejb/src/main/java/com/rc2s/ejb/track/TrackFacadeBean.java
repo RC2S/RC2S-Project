@@ -20,7 +20,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     private ITrackService trackService;
 
     @Override
-    public Track add(User caller, Track track) throws EJBException
+    public Track add(final User caller, final Track track) throws EJBException
     {
         try
         {
@@ -33,7 +33,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     }
 
     @Override
-    public Track update(User caller, Track track) throws EJBException
+    public Track update(final User caller, final Track track) throws EJBException
 	{
         try
 		{
@@ -46,7 +46,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     }
 
     @Override
-    public void delete(User caller, Track track) throws EJBException
+    public void delete(final User caller, final Track track) throws EJBException
 	{
 		try
 		{
@@ -59,7 +59,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     }
 
     @Override
-    public List<Track> getTracksByUser(User caller) throws EJBException
+    public List<Track> getTracksByUser(final User caller) throws EJBException
     {
         try
         {

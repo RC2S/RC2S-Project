@@ -7,5 +7,5 @@ import javax.ejb.Remote;
 @Remote
 public interface AuthenticationFacadeRemote
 {
-    public User login(String username, String password) throws EJBException;
+    public User login(final String username, final String password) throws EJBException;
 }

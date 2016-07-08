@@ -19,7 +19,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	private ISizeService sizeService;
 
 	@Override
-	public List<Size> getAll(User caller) throws EJBException
+	public List<Size> getAll(final User caller) throws EJBException
 	{
 		try
 		{
@@ -32,7 +32,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	}
 
 	@Override
-	public Size add(User caller, Size size) throws EJBException
+	public Size add(final User caller, final Size size) throws EJBException
 	{
 		try
 		{

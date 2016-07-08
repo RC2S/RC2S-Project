@@ -9,13 +9,13 @@ import javax.ejb.Remote;
 @Remote
 public interface PluginFacadeRemote
 {
-	public List<Plugin> getAll(User caller) throws EJBException;
+	public List<Plugin> getAll(final User caller) throws EJBException;
     
-	public List<Plugin> getAvailables(User caller) throws EJBException;
+	public List<Plugin> getAvailables(final User caller) throws EJBException;
 	
-	public Plugin add(User caller, Plugin plugin) throws EJBException;
+	public Plugin add(final User caller, final Plugin plugin) throws EJBException;
     
-	public Plugin update(User caller, Plugin plugin) throws EJBException;
+	public Plugin update(final User caller, final Plugin plugin) throws EJBException;
     
-	public void delete(User caller, Plugin plugin) throws EJBException;
+	public void delete(final User caller, final Plugin plugin) throws EJBException;
 }

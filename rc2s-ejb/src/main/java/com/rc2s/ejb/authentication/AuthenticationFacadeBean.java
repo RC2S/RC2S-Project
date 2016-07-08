@@ -14,7 +14,7 @@ public class AuthenticationFacadeBean implements AuthenticationFacadeRemote
     IAuthenticationService authenticationService;
     
     @Override
-	public User login(String username, String password) throws EJBException
+	public User login(final String username, final String password) throws EJBException
 	{
 		try
 		{

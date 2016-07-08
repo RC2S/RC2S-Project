@@ -9,5 +9,5 @@ import javax.ejb.Remote;
 @Remote
 public interface RoleFacadeRemote
 {
-	public List<Role> getAll(User caller) throws EJBException;
+	public List<Role> getAll(final User caller) throws EJBException;
 }

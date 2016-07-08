@@ -19,7 +19,7 @@ public class RoleFacadeBean implements RoleFacadeRemote
 	private IRoleService roleService;
 
 	@Override
-	public List<Role> getAll(User caller) throws EJBException
+	public List<Role> getAll(final User caller) throws EJBException
 	{
 		try
 		{

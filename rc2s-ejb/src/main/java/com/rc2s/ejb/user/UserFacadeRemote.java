@@ -8,11 +8,11 @@ import javax.ejb.Remote;
 @Remote
 public interface UserFacadeRemote
 {
-    public List<User> getAll(User caller) throws EJBException;
+    public List<User> getAll(final User caller) throws EJBException;
     
-	public User add(User caller, User user) throws EJBException;
+	public User add(final User caller, final User user) throws EJBException;
     
-	public User update(User caller, User user, boolean passwordUpdated) throws EJBException;
+	public User update(final User caller, final User user, final boolean passwordUpdated) throws EJBException;
     
-	public void delete(User caller, User user) throws EJBException;
+	public void delete(final User caller, final User user) throws EJBException;
 }
