@@ -1,16 +1,17 @@
 package com.rc2s.application.services.streaming;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.co.caprica.vlcj.player.directaudio.DefaultAudioCallbackAdapter;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CallbackAdapter extends DefaultAudioCallbackAdapter
 {
+	private final StreamingService streamingService;
+
 	// Check if onPlay time data changed
 	private static boolean timeChanged;
 	
@@ -36,12 +37,10 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	
     private final Logger log = LogManager.getLogger(CallbackAdapter.class);
     
-    private BufferedOutputStream out = null;
-    
-    public CallbackAdapter(int blockSize, int[] syncDimensions)
+    public CallbackAdapter(StreamingService streamingService, int blockSize, int[] syncDimensions)
     {
         super(blockSize);
-        out = new BufferedOutputStream(System.out);
+		this.streamingService = streamingService;
 		
 		currentTime = 0;
 		
@@ -94,77 +93,53 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
     @Override
     protected void onPlay(DirectAudioPlayer mediaPlayer, byte[] bytes, int sampleCount, long pts)
     {
-		try
+		// Notice time changed to send datas when adding last line
+		if (mediaPlayer.getTime() != currentTime)
 		{
-			// Notice time changed to send datas when adding last line
-			if (mediaPlayer.getTime() != currentTime)
-			{
-				timeChanged = true;
-				currentTime = mediaPlayer.getTime();
-			}
-			else
-				timeChanged = false;
-
-			final int BYTES_LEN = bytes.length;
-			final int SAMPLE_LEN = BYTES_LEN / sampleCount;
-			int b_index;
-
-			byte[] sampleLine = new byte[sampleCount];
-			int s_index = 0;
-
-			// There are sampleCount samples in a line
-			// A line is 1 turn ~= (260/10)ms					
-			for (b_index = 0; b_index < BYTES_LEN; b_index += SAMPLE_LEN)
-			{
-				byte[] sampleBytes = new byte[4];
-
-				// Get sample bytes
-				for (int loc = 0; loc < SAMPLE_LEN; loc++)
-					sampleBytes[loc] = bytes[b_index + loc];
-
-				// Add sample computing to line
-				sampleLine[s_index] = getSampleDef(sampleBytes);
-				s_index++;
-			}
-
-			// Add line to algo buffer
-			addLineWord(sampleLine, sampleCount);
-			
-			//out.write(bytes);
-			out.flush();
+			timeChanged = true;
+			currentTime = mediaPlayer.getTime();
 		}
-		catch(IOException e)
+		else
+			timeChanged = false;
+
+		final int BYTES_LEN = bytes.length;
+		final int SAMPLE_LEN = BYTES_LEN / sampleCount;
+		int b_index;
+
+		byte[] sampleLine = new byte[sampleCount];
+		int s_index = 0;
+
+		// There are sampleCount samples in a line
+		// A line is 1 turn ~= (260/10)ms
+		for (b_index = 0; b_index < BYTES_LEN; b_index += SAMPLE_LEN)
 		{
-			e.printStackTrace();
+			byte[] sampleBytes = new byte[4];
+
+			// Get sample bytes
+			for (int loc = 0; loc < SAMPLE_LEN; loc++)
+				sampleBytes[loc] = bytes[b_index + loc];
+
+			// Add sample computing to line
+			sampleLine[s_index] = getSampleDef(sampleBytes);
+			s_index++;
 		}
+
+		// Add line to algo buffer
+		addLineWord(sampleLine, sampleCount);
     }
     
     @Override
     public void flush(DirectAudioPlayer mediaPlayer, long pts)
     {
-		try
-		{
-			out.flush();
-			log.info("flush()");
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+		super.flush(mediaPlayer, pts);
+		log.info("flush()");
     }
     
     @Override
     public void drain(DirectAudioPlayer mediaPlayer)
     {
-		try
-		{
-			out.close();
-			log.info("drain()");
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+		super.drain(mediaPlayer);
+		log.info("drain()");
     }
 
 	/**
@@ -282,6 +257,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		positionsToLighten[lighteningIndex][1] = pos_y;
 		positionsToLighten[lighteningIndex][2] = pos_z;
 		lighteningIndex++;
+
+		log.info(pos_x + ", " + pos_y + ", " + pos_z);
 	}
 	
 	private void prepareCoordinates()
@@ -393,6 +370,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	
 	private void sendCoordinates()
 	{
+		streamingService.processCoordinates(positionsToLighten);
+
 		positionsToLighten = new int[algoEffect.getSize()][3];
 		lighteningIndex = 0;
 		

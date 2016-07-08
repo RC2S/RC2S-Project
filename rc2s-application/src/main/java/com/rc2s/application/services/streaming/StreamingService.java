@@ -1,6 +1,10 @@
 package com.rc2s.application.services.streaming;
 
+import com.rc2s.application.services.daemon.IDaemonService;
+import com.rc2s.common.bo.CubeState;
+import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
+import com.rc2s.common.vo.Size;
 import com.rc2s.common.vo.Synchronization;
 import javafx.scene.media.MediaPlayer;
 import org.apache.logging.log4j.LogManager;
@@ -9,13 +13,19 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 @Stateful
 public class StreamingService implements IStreamingService
 {
     private static final Logger log = LogManager.getLogger(StreamingService.class);
+
+	@EJB
+	private IDaemonService daemonService;
 
 	private Synchronization synchronization;
     
@@ -48,7 +58,7 @@ public class StreamingService implements IStreamingService
     public void start(String mrl)
     {
 		factory = new MediaPlayerFactory();
-		callbackAdapter = new CallbackAdapter(4, getSyncSize());
+		callbackAdapter = new CallbackAdapter(this, 4, getSyncSize());
 
 		// newDirectAudioPlayer(format, rate, channel, new callback(blocksize of samples))
 		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, callbackAdapter);
@@ -117,17 +127,72 @@ public class StreamingService implements IStreamingService
     }
 
 	@Override
+	public void processCoordinates(int[][] coordinates)
+	{
+		if(synchronization == null)
+			return;
+
+		Map<Cube, CubeState> cubesStates = new HashMap<>();
+
+		for(Cube cube : synchronization.getCubes())
+		{
+			CubeState cubeState = new CubeState(daemonService.generateBooleanArray(cube.getSize(), false));
+
+			for(int[] position : coordinates)
+			{
+				// Skip negative values
+				if(position[0] < 0)
+					continue;
+
+				// If the position belongs to another Cube
+				if(position[0] >= cube.getSize().getX())
+				{
+					position[0] -= cube.getSize().getX();
+					continue;
+				}
+
+				cubeState.set(position[0], position[1], position[2], true);
+				position[0] = -1;
+			}
+
+			cubesStates.put(cube, cubeState);
+		}
+
+		try
+		{
+			daemonService.sendCubesStates(cubesStates);
+		}
+		catch(ServiceException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public int[] getSyncSize()
 	{
 		int[] syncSize = new int[] {0, 0, 0};
 
 		if(synchronization != null)
 		{
+			boolean first = true;
+
 			for(Cube cube : synchronization.getCubes())
 			{
-				syncSize[0] = cube.getSize().getX();
-				syncSize[1] = cube.getSize().getY();
-				syncSize[2] = cube.getSize().getZ();
+				syncSize[0] += cube.getSize().getX();
+
+				if(first)
+				{
+					first = false;
+
+					syncSize[1] = cube.getSize().getY();
+					syncSize[2] = cube.getSize().getZ();
+				}
+				else
+				{
+					syncSize[1] = Math.min(cube.getSize().getY(), syncSize[1]);
+					syncSize[2] = Math.min(cube.getSize().getZ(), syncSize[2]);
+				}
 			}
 		}
 

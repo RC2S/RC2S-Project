@@ -1,17 +1,19 @@
 package com.rc2s.application.services.daemon;
 
+import com.rc2s.common.bo.CubeState;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.Size;
 
 import javax.ejb.Stateless;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import java.util.Map;
 
 @Stateless
 public class DaemonService implements IDaemonService
@@ -21,21 +23,21 @@ public class DaemonService implements IDaemonService
 	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
 
 	@Override
+	public void sendCubesStates(Map<Cube, CubeState> cubesStates) throws ServiceException
+	{
+		for(Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
+		{
+			Cube cube = entry.getKey();
+			CubeState cubeState = entry.getValue();
+
+			updateState(cube, 0L, cubeState.getStates());
+		}
+	}
+
+	@Override
 	public void updateState(Cube cube, Long duration, boolean state) throws ServiceException
 	{
-		boolean[][][] states = new boolean[cube.getSize().getY()][cube.getSize().getZ()][cube.getSize().getX()];
-
-		for(int i = 0 ; i < cube.getSize().getY() ; i++)
-		{
-			for(int j = 0 ; j < cube.getSize().getZ() ; j++)
-			{
-				for(int k = 0 ; k < cube.getSize().getX() ; k++)
-				{
-					states[i][j][k] = state;
-				}
-			}
-		}
-
+		boolean[][][] states = generateBooleanArray(cube.getSize(), state);
 		updateState(cube, duration, states);
 	}
 
@@ -44,6 +46,25 @@ public class DaemonService implements IDaemonService
 	{
 		byte[] packetContent = createPacket(duration, cube.getSize(), states);
 		sendPacket(cube.getIp(), packetContent, false);
+	}
+
+	@Override
+	public boolean[][][] generateBooleanArray(Size size, boolean state)
+	{
+		boolean[][][] states = new boolean[size.getY()][size.getZ()][size.getX()];
+
+		for(int i = 0 ; i < size.getY() ; i++)
+		{
+			for(int j = 0 ; j < size.getZ() ; j++)
+			{
+				for(int k = 0 ; k < size.getX() ; k++)
+				{
+					states[i][j][k] = state;
+				}
+			}
+		}
+
+		return states;
 	}
 	
 	@Override
