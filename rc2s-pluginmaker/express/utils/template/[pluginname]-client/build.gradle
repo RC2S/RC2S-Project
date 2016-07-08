@@ -18,17 +18,17 @@ project.tasks.compileJava.dependsOn(
 )
 
 project.tasks.compileJava.doFirst {
-	def propFile = new File("${project.projectDir}/gradle.properties")
+	def propFile = new File("${project.projectDir}/src/main/resources/gradle.properties")
 	propFile.createNewFile()
-	propFile.write("path: ${project.projectDir}")
+	propFile.write("path=${project.projectDir}")
 }
 
 task cleanProperties(type : Delete) {
-	delete "${project.projectDir}/gradle.properties"
+	delete "${project.projectDir}/src/main/resources/gradle.properties"
 }
 
 project.tasks.compileJava.doLast {
-	tasks.cleanProperties.execute()
+	//tasks.cleanProperties.execute()
 }
 
 // Create a FatJar (one jar with all dependencies)

@@ -5,6 +5,8 @@ import com.rc2s.annotations.mappers.ParameterMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
@@ -65,7 +67,7 @@ public class SourceUtil
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
 		{
-			getControllersAndViewsFoldersPaths(packageParts);
+			getControllersAndViewsFoldersPaths();
 			
 			try
 			{
@@ -119,9 +121,22 @@ public class SourceUtil
 		}
 	}
 	
-	public void getControllersAndViewsFoldersPaths(String[] packageParts)
+	public void getControllersAndViewsFoldersPaths()
 	{	
-		System.out.println("User.dir : " + System.getProperty("user.dir"));
+		try
+		{
+			Properties properties = new Properties();
+			properties.load(getClass().getResourceAsStream("gradle.properties"));
+			
+			String path = properties.getProperty("path");
+			System.out.println("------------------");
+			System.out.println("Path found in gradle properties : " + path);
+			System.out.println("------------------");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public static void displayInfo(String f) throws IOException
