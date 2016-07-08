@@ -10,5 +10,5 @@ import java.util.List;
 @Local
 public interface ISynchronizationDAO extends IGenericDAO<Synchronization>
 {
-	public List<Synchronization> getByUser(User user) throws DAOException;
+	public List<Synchronization> getByUser(final User user) throws DAOException;
 }

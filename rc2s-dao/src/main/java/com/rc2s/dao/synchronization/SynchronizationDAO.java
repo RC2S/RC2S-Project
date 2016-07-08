@@ -12,7 +12,7 @@ import java.util.List;
 public class SynchronizationDAO extends GenericDAO<Synchronization> implements ISynchronizationDAO
 {
 	@Override
-	public List<Synchronization> getByUser(User user) throws DAOException
+	public List<Synchronization> getByUser(final User user) throws DAOException
 	{
 		try
 		{

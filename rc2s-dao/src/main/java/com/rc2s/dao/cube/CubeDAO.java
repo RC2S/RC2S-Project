@@ -12,7 +12,7 @@ import javax.persistence.Query;
 public class CubeDAO extends GenericDAO<Cube> implements ICubeDAO
 {
 	@Override
-	public List<Cube> getCubes(User user) throws DAOException
+	public List<Cube> getCubes(final User user) throws DAOException
 	{
 		try
 		{
@@ -36,7 +36,7 @@ public class CubeDAO extends GenericDAO<Cube> implements ICubeDAO
 	}
 
 	@Override
-	public Cube getByIp(String ipAddress) throws DAOException
+	public Cube getByIp(final String ipAddress) throws DAOException
 	{
 		try
 		{

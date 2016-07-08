@@ -11,5 +11,5 @@ public interface IPluginDAO extends IGenericDAO<Plugin>
 {
 	public List<Plugin> getAvailables() throws DAOException;
     
-	public Plugin getByName(String name) throws DAOException;
+	public Plugin getByName(final String name) throws DAOException;
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @Local
 public interface ITrackDAO extends IGenericDAO<Track>
 {
-    public List<Track> getTracksByUser(User user) throws DAOException;
+    public List<Track> getTracksByUser(final User user) throws DAOException;
 }
