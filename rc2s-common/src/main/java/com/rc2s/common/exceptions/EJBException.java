@@ -2,7 +2,7 @@ package com.rc2s.common.exceptions;
 
 public class EJBException extends RC2SException
 {
-	public EJBException(Throwable t)
+	public EJBException(final Throwable t)
 	{
 		super(t);
 	}

@@ -13,7 +13,7 @@ public class EJB
 
 	private static InitialContext context;
 
-	public static void initContext(String ip, String port) throws RC2SException
+	public static void initContext(final String ip, final String port) throws RC2SException
 	{
         try
 		{
@@ -38,7 +38,7 @@ public class EJB
 		}
 	}
 
-	public static Object lookup(String ejbName)
+	public static Object lookup(final String ejbName)
 	{
 		try
 		{
@@ -51,7 +51,7 @@ public class EJB
 		}
 	}
 	
-	private static void setServerAddress(String ip)
+	private static void setServerAddress(final String ip)
 	{
 		EJB.serverIp = ip;
 	}
@@ -61,7 +61,7 @@ public class EJB
 		return EJB.serverIp;
 	}
 	
-	private static void setServerPort(String port)
+	private static void setServerPort(final String port)
 	{
 		EJB.serverPort = port;
 	}

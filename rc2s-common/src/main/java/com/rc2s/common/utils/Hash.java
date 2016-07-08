@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash
 {
-	public static String sha1(String str)
+	public static String sha1(final String str)
 	{
 		String sha1 = null;
 		

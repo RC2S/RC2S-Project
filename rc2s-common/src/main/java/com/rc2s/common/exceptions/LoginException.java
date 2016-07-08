@@ -2,12 +2,12 @@ package com.rc2s.common.exceptions;
 
 public class LoginException extends RC2SException
 {
-    public LoginException(Throwable t)
+    public LoginException(final Throwable t)
     {
         super(t);
     }
     
-    public LoginException(String msg)
+    public LoginException(final String msg)
     {
         super(msg);
     }
