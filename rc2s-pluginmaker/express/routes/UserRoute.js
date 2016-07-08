@@ -33,7 +33,7 @@ module.exports = function(app) {
 			req.session.token = undefined;
 			
 			req.session.destroy(function(err) {
-				if(err)
+				if (err)
 					console.log(err);
 				else {
 					errors = null;

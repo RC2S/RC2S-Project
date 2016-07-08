@@ -38,7 +38,7 @@ module.exports = function() {
 			}
 		}
 	}));
-
+	
 	// Authentication Middleware
 	require('./utils/AuthenticationUtils')(app);
 

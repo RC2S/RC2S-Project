@@ -17,6 +17,7 @@ public interface IDaemonService
 	public void updateState(Cube cube, Long duration, boolean[][][] states) throws ServiceException;
 
 	public boolean[][][] generateBooleanArray(Size size, boolean state);
+	public boolean[][][] formatStatesArray(final boolean[][][] states);
     
 	public boolean isReachable(String ipAddress) throws ServiceException;
 	

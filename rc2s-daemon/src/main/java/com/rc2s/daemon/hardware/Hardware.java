@@ -70,11 +70,12 @@ public class Hardware
     public void sendStage(int i, int maxStage)
     {
         if(i == 0)
-            pulse(getStageGpio(i), false);
+            mGpio.get(getStageGpio(i)).high();
         else
         {
-            pulse(getStageGpio(i - 1), false);
-            pulse(getStageGpio(i), (i == maxStage - 1));
+            mGpio.get(getStageGpio(i - 1)).low();
+            
+            mGpio.get(getStageGpio(i)).high();
         }
     }
 

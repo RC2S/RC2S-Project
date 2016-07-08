@@ -35,9 +35,9 @@ public class Daemon implements Runnable
 		listener.start();
         
         Stage s1 = new Stage(new boolean[][] {{true, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}});
-        Stage s2 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}});
-        Stage s3 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}});
-        Stage s4 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false}});
+        Stage s2 = new Stage(new boolean[][] {{false, false, false, false}, {true, false, false, false}, {false, false, false, false}, {false, false, false, false}});
+        Stage s3 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {true, false, false, false}, {false, false, false, false}});
+        Stage s4 = new Stage(new boolean[][] {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {true, false, false, false}});
         
         processor.add(new Packet(10000l, new Stage[] {s1, s2, s3, s4}));
 
