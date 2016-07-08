@@ -34,7 +34,7 @@ public class PluginLoaderService implements IPluginLoaderService
     @EJB private IJnlpService jnlpService;
 	
     @Override
-    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException
+    public void uploadPlugin(final String pluginName, final Role accessRole, final byte[] binaryPlugin) throws ServiceException
     {
 		File tmpZip = null;
 		File unzipedDir = null;
@@ -77,7 +77,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public File unzipPlugin(String zipFile) throws IOException
+    public File unzipPlugin(final String zipFile) throws IOException
     {   	
         try
         {
@@ -124,7 +124,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public File checkServerPlugin(String simpleName, String tmpDir) throws Exception
+    public File checkServerPlugin(final String simpleName, final String tmpDir) throws Exception
     {
         try
 		{
@@ -144,7 +144,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public File checkClientPlugin(String simpleName, String tmpDir) throws Exception
+    public File checkClientPlugin(final String simpleName, final String tmpDir) throws Exception
     {
         try
 		{
@@ -164,7 +164,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	@Override
-    public void deployServerPlugin(String simpleName, File tmpEar) throws IOException
+    public void deployServerPlugin(final String simpleName, final File tmpEar) throws IOException
     {		
 		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
 		File pluginFile = new File(autodeployDir + simpleName + "_server.ear");
@@ -172,7 +172,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public void deployClientPlugin(String simpleName, File tmpJar) throws IOException
+    public void deployClientPlugin(final String simpleName, final File tmpJar) throws IOException
     {
 		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
 		jnlpService.signJar(tmpJar.getAbsolutePath());
@@ -182,7 +182,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 	
 	@Override
-	public Plugin persistPlugin(String pluginName, Role role) throws ServiceException
+	public Plugin persistPlugin(final String pluginName, final Role role) throws ServiceException
 	{
 		boolean update = false;
 		Plugin plugin;
@@ -208,7 +208,7 @@ public class PluginLoaderService implements IPluginLoaderService
 	}
 	
 	@Override
-	public void deletePlugin(Plugin plugin) throws ServiceException
+	public void deletePlugin(final Plugin plugin) throws ServiceException
 	{
 		String simpleName = plugin.getName().toLowerCase().replace(" ", "");
 		

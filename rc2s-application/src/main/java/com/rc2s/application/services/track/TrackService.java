@@ -24,7 +24,7 @@ public class TrackService implements ITrackService
     private ITrackDAO trackDAO;
 
     @Override
-    public Track add(Track track) throws ServiceException
+    public Track add(final Track track) throws ServiceException
     {
         try
         {
@@ -38,7 +38,7 @@ public class TrackService implements ITrackService
     }
 
     @Override
-    public Track update(Track track) throws ServiceException
+    public Track update(final Track track) throws ServiceException
     {
         try
         {
@@ -51,7 +51,7 @@ public class TrackService implements ITrackService
     }
 
     @Override
-    public void delete(Track track) throws ServiceException
+    public void delete(final Track track) throws ServiceException
     {
         try
         {
@@ -64,7 +64,7 @@ public class TrackService implements ITrackService
     }
 
     @Override
-    public List<Track> getTracksByUser(User user) throws ServiceException
+    public List<Track> getTracksByUser(final User user) throws ServiceException
     {
         try
         {

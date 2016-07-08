@@ -35,7 +35,7 @@ public class SizeService implements ISizeService
 	}
 
 	@Override
-	public Size add(Size size) throws ServiceException
+	public Size add(final Size size) throws ServiceException
 	{
 		try
 		{

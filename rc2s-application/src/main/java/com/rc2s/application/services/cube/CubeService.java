@@ -36,7 +36,7 @@ public class CubeService implements ICubeService
     }
     
     @Override
-    public List<Cube> getCubes(User user) throws ServiceException
+    public List<Cube> getCubes(final User user) throws ServiceException
     {
 		try
 		{
@@ -49,7 +49,7 @@ public class CubeService implements ICubeService
     }
 	
 	@Override
-	public void add(Cube c) throws ServiceException
+	public void add(final Cube c) throws ServiceException
 	{
 		try
 		{
@@ -72,7 +72,7 @@ public class CubeService implements ICubeService
 	}
 	
 	@Override
-	public void remove(Cube c) throws ServiceException
+	public void remove(final Cube c) throws ServiceException
 	{
 		try
 		{
@@ -85,7 +85,7 @@ public class CubeService implements ICubeService
 	}
 	
 	@Override
-	public Cube update(Cube cube) throws ServiceException
+	public Cube update(final Cube cube) throws ServiceException
 	{
 		try
 		{

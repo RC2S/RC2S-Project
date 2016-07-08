@@ -10,9 +10,9 @@ public interface IUserService
 {
     public List<User> getAll() throws ServiceException;
     
-	public User add(User user) throws ServiceException;
+	public User add(final User user) throws ServiceException;
     
-	public User update(User user, boolean passwordUpdated) throws ServiceException;
+	public User update(final User user, boolean passwordUpdated) throws ServiceException;
     
-	public void delete(User user) throws ServiceException;
+	public void delete(final User user) throws ServiceException;
 }

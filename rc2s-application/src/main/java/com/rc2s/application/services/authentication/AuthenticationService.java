@@ -30,7 +30,7 @@ public class AuthenticationService implements IAuthenticationService
     
     @Override
     @Deprecated
-    public boolean loginJaas(String username, String password)
+    public boolean loginJaas(final String username, final String password)
     {
         System.setProperty("java.security.auth.login.config", AuthenticationService.class.getResource("/jaas.config").toString());
 
@@ -55,7 +55,7 @@ public class AuthenticationService implements IAuthenticationService
     }
 
     @Override
-	public User login(String username, String password) throws ServiceException
+	public User login(final String username, final String password) throws ServiceException
 	{
 		try
 		{
@@ -63,8 +63,8 @@ public class AuthenticationService implements IAuthenticationService
 			
 			if(username != null && password != null)
 			{
-				password = Hash.sha1(SALT + password + PEPPER);
-				user = userDAO.getAuthenticatedUser(username, password);
+				String securedPassword = Hash.sha1(SALT + password + PEPPER);
+				user = userDAO.getAuthenticatedUser(username, securedPassword);
 				
 				if(user != null)
 				{

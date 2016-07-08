@@ -48,7 +48,7 @@ public class PluginService implements IPluginService
 	}
 
 	@Override
-	public Plugin add(Plugin plugin) throws ServiceException
+	public Plugin add(final Plugin plugin) throws ServiceException
 	{
 		try
 		{
@@ -62,7 +62,7 @@ public class PluginService implements IPluginService
 	}
 
 	@Override
-	public Plugin update(Plugin plugin) throws ServiceException
+	public Plugin update(final Plugin plugin) throws ServiceException
 	{
 		try
 		{
@@ -76,7 +76,7 @@ public class PluginService implements IPluginService
 	}
 
 	@Override
-	public void delete(Plugin plugin) throws ServiceException
+	public void delete(final Plugin plugin) throws ServiceException
 	{
 		try
 		{

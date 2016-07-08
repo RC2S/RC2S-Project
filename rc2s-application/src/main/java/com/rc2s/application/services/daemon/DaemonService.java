@@ -19,7 +19,7 @@ public class DaemonService implements IDaemonService
 	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
 
 	@Override
-	public void updateState(Cube cube, Long duration, boolean state) throws ServiceException
+	public void updateState(final Cube cube, final Long duration, final boolean state) throws ServiceException
 	{
 		boolean[][][] states = new boolean[cube.getSize().getY()][cube.getSize().getZ()][cube.getSize().getX()];
 
@@ -38,7 +38,7 @@ public class DaemonService implements IDaemonService
 	}
 
 	@Override
-	public void updateState(Cube cube, Long duration, boolean[][][] states) throws ServiceException
+	public void updateState(final Cube cube, final Long duration, final boolean[][][] states) throws ServiceException
 	{
 		boolean[][][] formatted = formatStatesArray(states);
 		byte[] packetContent = createPacket(duration, cube.getSize(), formatted);
@@ -64,7 +64,7 @@ public class DaemonService implements IDaemonService
 	}
 	
 	@Override
-	public boolean isReachable(String ipAddress) throws ServiceException
+	public boolean isReachable(final String ipAddress) throws ServiceException
 	{
 		byte[] response = sendPacket(ipAddress, "status".getBytes(), true);
 		boolean isUp = false;
@@ -83,7 +83,7 @@ public class DaemonService implements IDaemonService
 	 * @throws ServiceException
      */
 	@Override
-	public byte[] createPacket(Long duration, Size size, boolean[][][] states) throws ServiceException
+	public byte[] createPacket(final Long duration, final Size size, final boolean[][][] states) throws ServiceException
 	{
 		try(ByteArrayOutputStream bos = new ByteArrayOutputStream())
 		{
@@ -116,7 +116,7 @@ public class DaemonService implements IDaemonService
 	}
 	
 	@Override
-	public byte[] sendPacket(String ipAddress, byte[] data, boolean response) throws ServiceException
+	public byte[] sendPacket(final String ipAddress, final byte[] data, final boolean response) throws ServiceException
 	{
 		try(DatagramSocket socket = new DatagramSocket())
 		{
@@ -147,7 +147,7 @@ public class DaemonService implements IDaemonService
 	}
 	
 	@Override
-	public byte[] getResponse(DatagramSocket socket) throws IOException
+	public byte[] getResponse(final DatagramSocket socket) throws IOException
 	{
 		byte[] buffer = new byte[BUFFER_LENGTH];
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

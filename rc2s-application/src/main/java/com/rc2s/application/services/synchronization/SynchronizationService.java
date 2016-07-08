@@ -36,7 +36,7 @@ public class SynchronizationService implements ISynchronizationService
 	}
 
 	@Override
-	public List<Synchronization> getByUser(User user) throws ServiceException
+	public List<Synchronization> getByUser(final User user) throws ServiceException
 	{
 		try
 		{
@@ -49,7 +49,7 @@ public class SynchronizationService implements ISynchronizationService
 	}
 
 	@Override
-	public void add(Synchronization synchronization) throws ServiceException
+	public void add(final Synchronization synchronization) throws ServiceException
 	{
 		try
 		{

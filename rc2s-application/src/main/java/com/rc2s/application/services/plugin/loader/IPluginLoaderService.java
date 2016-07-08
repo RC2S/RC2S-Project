@@ -10,19 +10,19 @@ import javax.ejb.Local;
 @Local
 public interface IPluginLoaderService
 {
-    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException;
+    public void uploadPlugin(final String pluginName, final Role accessRole, final byte[] binaryPlugin) throws ServiceException;
     
-    public File unzipPlugin(String zipFile) throws IOException;
+    public File unzipPlugin(final String zipFile) throws IOException;
     
-    public File checkServerPlugin(String simpleName, String tmpDir) throws Exception;
+    public File checkServerPlugin(final String simpleName, final String tmpDir) throws Exception;
     
-    public File checkClientPlugin(String simpleName, String tmpDir) throws Exception;
+    public File checkClientPlugin(final String simpleName, final String tmpDir) throws Exception;
     
-    public void deployServerPlugin(String simpleName, File tmpEar) throws IOException;
+    public void deployServerPlugin(final String simpleName, final File tmpEar) throws IOException;
     
-    public void deployClientPlugin(String simpleName, File tmpJar) throws IOException;
+    public void deployClientPlugin(final String simpleName, final File tmpJar) throws IOException;
 	
-	public Plugin persistPlugin(String pluginName, Role role) throws ServiceException;
+	public Plugin persistPlugin(final String pluginName, final Role role) throws ServiceException;
 	
-	public void deletePlugin(Plugin plugin) throws ServiceException;
+	public void deletePlugin(final Plugin plugin) throws ServiceException;
 }

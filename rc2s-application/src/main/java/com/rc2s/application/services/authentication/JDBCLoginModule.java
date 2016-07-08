@@ -135,7 +135,7 @@ public class JDBCLoginModule implements LoginModule
     }
     
     @SuppressWarnings("unchecked")
-    private User getUserByUsernameAndPassword(String username, String password)
+    private User getUserByUsernameAndPassword(final String username, final String password)
     {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("rc2s");
         EntityManager em = emf.createEntityManager();

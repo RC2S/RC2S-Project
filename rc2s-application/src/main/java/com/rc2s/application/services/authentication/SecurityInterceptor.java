@@ -15,7 +15,7 @@ import javax.persistence.Query;
 public class SecurityInterceptor
 {
     @AroundInvoke
-    public Object checkAuthentication(InvocationContext ctx) throws Exception
+    public Object checkAuthentication(final InvocationContext ctx) throws Exception
     {
         User caller;
         Object[] parameters = ctx.getParameters();
@@ -34,7 +34,7 @@ public class SecurityInterceptor
     }
     
     @SuppressWarnings("unchecked")
-    private User getUserByUsernameAndPassword(String username, String password)
+    private User getUserByUsernameAndPassword(final String username, final String password)
     {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("rc2s");
         EntityManager em = emf.createEntityManager();

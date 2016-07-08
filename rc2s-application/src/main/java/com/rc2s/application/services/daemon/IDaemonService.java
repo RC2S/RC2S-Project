@@ -10,17 +10,17 @@ import javax.ejb.Local;
 @Local
 public interface IDaemonService
 {
-	public void updateState(Cube cube, Long duration, boolean state) throws ServiceException;
+	public void updateState(final Cube cube, final Long duration, final boolean state) throws ServiceException;
     
-	public void updateState(Cube cube, Long duration, boolean[][][] states) throws ServiceException;
+	public void updateState(final Cube cube, final Long duration, final boolean[][][] states) throws ServiceException;
 
 	public boolean[][][] formatStatesArray(final boolean[][][] states);
     
-	public boolean isReachable(String ipAddress) throws ServiceException;
+	public boolean isReachable(final String ipAddress) throws ServiceException;
 	
-	public byte[] createPacket(Long duration, Size size, boolean[][][] states) throws ServiceException;
+	public byte[] createPacket(final Long duration, final Size size, final boolean[][][] states) throws ServiceException;
     
-	public byte[] sendPacket(String ipAddress, byte[] data, boolean response) throws ServiceException;
+	public byte[] sendPacket(final String ipAddress, final byte[] data, final boolean response) throws ServiceException;
     
-	public byte[] getResponse(DatagramSocket socket) throws IOException;
+	public byte[] getResponse(final DatagramSocket socket) throws IOException;
 }

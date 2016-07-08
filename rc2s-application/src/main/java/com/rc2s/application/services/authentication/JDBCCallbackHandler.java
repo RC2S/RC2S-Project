@@ -12,14 +12,14 @@ public class JDBCCallbackHandler implements CallbackHandler
     private final String username;
     private final String password;
     
-    public JDBCCallbackHandler(String username, String password)
+    public JDBCCallbackHandler(final String username, final String password)
     {
         this.username = username;
         this.password = password;
     }
     
     @Override
-    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException
+    public void handle(final Callback[] callbacks) throws IOException, UnsupportedCallbackException
     {
         for(int i = 0; i < callbacks.length; i++)
         {

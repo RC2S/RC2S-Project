@@ -40,7 +40,7 @@ public class UserService implements IUserService
     }
 	
 	@Override
-	public User add(User user) throws ServiceException
+	public User add(final User user) throws ServiceException
 	{
 		try
 		{
@@ -57,7 +57,7 @@ public class UserService implements IUserService
 	}
 	
 	@Override
-	public User update(User user, boolean passwordUpdated) throws ServiceException
+	public User update(final User user, final boolean passwordUpdated) throws ServiceException
 	{
 		try
 		{
@@ -74,7 +74,7 @@ public class UserService implements IUserService
 	}
 	
 	@Override
-	public void delete(User user) throws ServiceException
+	public void delete(final User user) throws ServiceException
 	{
 		try
 		{

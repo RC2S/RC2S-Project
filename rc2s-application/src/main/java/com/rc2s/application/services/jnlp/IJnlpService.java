@@ -5,7 +5,7 @@ import javax.ejb.Local;
 @Local
 public interface IJnlpService
 {
-    public void signJar(String jarPath);
+    public void signJar(final String jarPath);
     
-    public void updateJNLP(String jarName, boolean removeJar);
+    public void updateJNLP(final String jarName, final boolean removeJar);
 }

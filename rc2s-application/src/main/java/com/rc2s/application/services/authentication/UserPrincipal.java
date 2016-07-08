@@ -8,7 +8,7 @@ public class UserPrincipal implements Principal, Serializable
 {
     private final String username;
     
-    public UserPrincipal(String username)
+    public UserPrincipal(final String username)
     {
         this.username = username;
     }
@@ -34,7 +34,7 @@ public class UserPrincipal implements Principal, Serializable
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj)
         {

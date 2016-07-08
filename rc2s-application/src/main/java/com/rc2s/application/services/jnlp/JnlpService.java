@@ -37,7 +37,7 @@ public class JnlpService implements IJnlpService
     private final String signAlias = "RC2S";
     
     @Override
-    public void signJar(String jarPath)
+    public void signJar(final String jarPath)
     {        
         String args[] = {
             jarSignerPath,
@@ -68,7 +68,7 @@ public class JnlpService implements IJnlpService
     }
 
     @Override
-    public void updateJNLP(String jarName, boolean removeJar)
+    public void updateJNLP(final String jarName, final boolean removeJar)
     {
         try
         {

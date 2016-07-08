@@ -7,7 +7,7 @@ import javax.ejb.Local;
 @Local
 public interface IAuthenticationService
 {
-    public User login(String username, String password) throws ServiceException;
+    public User login(final String username, final String password) throws ServiceException;
     
-    public boolean loginJaas(String username, String password);
+    public boolean loginJaas(final String username, final String password);
 }

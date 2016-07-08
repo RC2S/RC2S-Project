@@ -10,5 +10,5 @@ public interface ISizeService
 {
 	public List<Size> getAll() throws ServiceException;
     
-	public Size add(Size size) throws ServiceException;
+	public Size add(final Size size) throws ServiceException;
 }
