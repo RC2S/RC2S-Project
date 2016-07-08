@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class HtmlFile
 {
-	public static boolean createJavaDocFile(ElementMapper mainClass)
+	public static boolean createJavaDocFile(final ElementMapper mainClass)
 	{
 		Path path                       = Paths.get("rc2s-doc/" + mainClass.getName() + ".html");
         StringBuilder builder 			= new StringBuilder();
@@ -45,7 +45,7 @@ public class HtmlFile
 		return true;
 	}
 	
-	private static String generateClassInfos(ElementMapper mainClass)
+	private static String generateClassInfos(final ElementMapper mainClass)
 	{
 		StringBuilder builder = new StringBuilder();
 		
@@ -63,7 +63,7 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
-	private static String generateFieldsSummary(List<ElementMapper> fields)
+	private static String generateFieldsSummary(final List<ElementMapper> fields)
 	{
 		StringBuilder builder = new StringBuilder();
 		
@@ -93,7 +93,7 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
-	private static String generateMethodsSummary(List<ElementMapper> list)
+	private static String generateMethodsSummary(final List<ElementMapper> list)
 	{
 		StringBuilder builder = new StringBuilder();
 		
@@ -127,7 +127,7 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
-	private static String generateDetails(List<ElementMapper> list)
+	private static String generateDetails(final List<ElementMapper> list)
 	{
 		StringBuilder builder = new StringBuilder();
 		

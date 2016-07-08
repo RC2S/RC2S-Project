@@ -7,9 +7,9 @@ import javax.ejb.Remote;
 @Remote
 public interface StreamingFacadeRemote
 {
-    public void startStreaming(User caller, String mrl);
+    public void startStreaming(final User caller, final String mrl);
     
-    public void stopStreaming(User caller);
+    public void stopStreaming(final User caller);
     
-    public void setSynchronization(Synchronization synchronization);
+    public void setSynchronization(final Synchronization synchronization);
 }

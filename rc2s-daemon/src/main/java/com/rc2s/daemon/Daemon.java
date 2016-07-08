@@ -23,9 +23,9 @@ public class Daemon implements Runnable
 
     public Daemon()
     {
-        this.hardware = new Hardware();
-        this.processor = new StatesProcessor(this);
-		this.listener = new Listener(this, 1337);
+        this.hardware   = new Hardware();
+        this.processor  = new StatesProcessor(this);
+		this.listener   = new Listener(this, 1337);
     }
 
     @Override

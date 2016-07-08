@@ -13,7 +13,7 @@ public abstract class TabController
 		return tab;
 	}
 
-	public void setTab(Tab tab)
+	public void setTab(final Tab tab)
 	{
 		this.tab = tab;
 	}

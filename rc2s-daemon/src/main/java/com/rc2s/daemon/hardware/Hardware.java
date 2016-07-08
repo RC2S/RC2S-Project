@@ -23,7 +23,7 @@ public class Hardware
         resetState(false);
     }
 
-    private GPIOEnum getStageGpio(int level)
+    private GPIOEnum getStageGpio(final int level)
     {
         switch (level)
         {
@@ -40,7 +40,7 @@ public class Hardware
         }
     }
 
-    public GpioPinDigitalOutput pulse(GPIOEnum pin)
+    public GpioPinDigitalOutput pulse(final GPIOEnum pin)
     {
         return pulse(pin, true);
     }
@@ -52,7 +52,7 @@ public class Hardware
      * @param revert
      * @return 
      */
-    public GpioPinDigitalOutput pulse(GPIOEnum pin, boolean revert)
+    public GpioPinDigitalOutput pulse(final GPIOEnum pin, final boolean revert)
     {
         GpioPinDigitalOutput gpdo = mGpio.get(pin);
         
@@ -67,7 +67,7 @@ public class Hardware
         return gpdo;
     }
 
-    public void sendStage(int i, int maxStage)
+    public void sendStage(final int i, final int maxStage)
     {
         if(i == 0)
             mGpio.get(getStageGpio(i)).high();
@@ -116,7 +116,7 @@ public class Hardware
         }
     }
     
-    public final void resetState(boolean hardReset)
+    public final void resetState(final boolean hardReset)
     {        
         for(GPIOEnum pin : GPIOEnum.values())
         {

@@ -7,7 +7,7 @@ public class SourceControlException extends Exception
 		super();
 	}
 	
-	public SourceControlException(String message)
+	public SourceControlException(final String message)
 	{
 		super(message);
 	}

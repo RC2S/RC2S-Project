@@ -20,13 +20,13 @@ public class Analysor
 
 	public static List<String> processedClasses = new ArrayList();
 	
-	public Analysor(Elements els, Messager msgr)
+	public Analysor(final Elements els, final Messager msgr)
 	{
 		this.elementUtils = els;
 		this.messager = msgr;
 	}
 	
-	public ElementMapper classAnalysor(Element mainElement)
+	public ElementMapper classAnalysor(final Element mainElement)
     {
     	ElementMapper mainClass;
         
@@ -86,7 +86,7 @@ public class Analysor
         return mainClass;
     }
 	
-	private Object getAnnotationValue(Element element, String key)
+	private Object getAnnotationValue(final Element element, final String key)
     {
         Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
         
@@ -103,7 +103,7 @@ public class Analysor
         return null;
     }
 	
-	private List<String> getClassAnnotations(Element element)
+	private List<String> getClassAnnotations(final Element element)
 	{
 		Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
         List<String> annotations = new ArrayList<>();
@@ -120,7 +120,7 @@ public class Analysor
 		return annotations;
 	}
     
-    private List<ParameterMapper> getElementParameters(Element el)
+    private List<ParameterMapper> getElementParameters(final Element el)
     {
     	ExecutableElement execElement           = (ExecutableElement) el;
         List<ParameterMapper> params            = new ArrayList();

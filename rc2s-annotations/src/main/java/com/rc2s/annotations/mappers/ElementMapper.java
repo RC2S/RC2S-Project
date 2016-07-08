@@ -37,8 +37,8 @@ public class ElementMapper
 	// Class Annotations
 	private final List<String> annotations;
 
-    public ElementMapper(String packageName, Set<Modifier> modifiers,
-        ElementKind kind, String name)
+    public ElementMapper(final String packageName, final Set<Modifier> modifiers,
+        final ElementKind kind, final String name)
     {
         this.packageName    = packageName;
         this.modifiers      = modifiers;
@@ -67,7 +67,7 @@ public class ElementMapper
         return returnType;
     }
 
-    public void setReturnType(String returnType)
+    public void setReturnType(final String returnType)
     {
         this.returnType = returnType;
     }
@@ -92,12 +92,12 @@ public class ElementMapper
         return description;
     }
 
-    public void setParameters(List<ParameterMapper> parameters)
+    public void setParameters(final List<ParameterMapper> parameters)
     {
         this.parameters = parameters;
     }
 
-    public void setDescription(String description)
+    public void setDescription(final String description)
     {
         this.description = description;
     }

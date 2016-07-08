@@ -32,7 +32,7 @@ public class SourceControlProcessor extends AbstractProcessor
     private Messager    messager;
 
     @Override
-    public synchronized void init(ProcessingEnvironment processingEnv)
+    public synchronized void init(final ProcessingEnvironment processingEnv)
     {
         super.init(processingEnv);
         typeUtils       = processingEnv.getTypeUtils();
@@ -42,7 +42,7 @@ public class SourceControlProcessor extends AbstractProcessor
     }
     
     @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)
+    public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv)
     {
 		Analysor analysor = new Analysor(elementUtils, messager);
 		ElementMapper mainClass = null;

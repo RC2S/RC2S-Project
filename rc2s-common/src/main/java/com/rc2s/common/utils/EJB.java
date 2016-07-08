@@ -30,7 +30,6 @@ public class EJB
 			props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
 			props.put("org.omg.CORBA.ORBInitialHost", EJB.serverIp);
 			props.put("org.omg.CORBA.ORBInitialPort", EJB.serverPort);
-            props.put("foo", "bar");
             
 			EJB.context = new InitialContext(props);
 		}

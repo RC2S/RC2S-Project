@@ -14,13 +14,13 @@ public class StatesProcessor implements Runnable
     private final Daemon daemon;
     private final LinkedBlockingQueue<Packet> queue;
 
-    public StatesProcessor(Daemon daemon)
+    public StatesProcessor(final Daemon daemon)
     {
         this.daemon = daemon;
         this.queue = new LinkedBlockingQueue<>();
     }
 
-    public void add(Packet packet)
+    public void add(final Packet packet)
     {
         queue.add(packet);
     }
@@ -48,7 +48,7 @@ public class StatesProcessor implements Runnable
         } while(daemon.isRunning());
     }
 
-    private void sweep(Packet packet)
+    private void sweep(final Packet packet)
     {
         long start = new Date().getTime();
 
@@ -65,7 +65,7 @@ public class StatesProcessor implements Runnable
                 || (packet.getDuration() <= 0 && queue.isEmpty()));
     }
 
-    private void handle(int level, int maxStage, Stage stage)
+    private void handle(final int level, final int maxStage, final Stage stage)
     {
         boolean[][] states = stage.getStates();
 

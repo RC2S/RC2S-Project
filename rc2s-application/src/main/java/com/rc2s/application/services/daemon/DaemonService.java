@@ -23,7 +23,7 @@ public class DaemonService implements IDaemonService
 	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
 
 	@Override
-	public void sendCubesStates(Map<Cube, CubeState> cubesStates) throws ServiceException
+	public void sendCubesStates(final Map<Cube, CubeState> cubesStates) throws ServiceException
 	{
 		for(Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
 		{
@@ -50,7 +50,7 @@ public class DaemonService implements IDaemonService
 	}
 
 	@Override
-	public boolean[][][] generateBooleanArray(Size size, boolean state)
+	public boolean[][][] generateBooleanArray(final Size size, final boolean state)
 	{
 		boolean[][][] states = new boolean[size.getY()][size.getZ()][size.getX()];
 

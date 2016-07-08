@@ -7,7 +7,7 @@ public class Packet implements Serializable
     private long duration;
     private Stage[] stages;
 
-    public Packet(long duration, Stage[] states)
+    public Packet(final long duration, final Stage[] states)
     {
         this.duration = duration;
         this.stages = states;
@@ -18,7 +18,7 @@ public class Packet implements Serializable
         return duration;
     }
 
-    public void setDuration(long duration)
+    public void setDuration(final long duration)
     {
         this.duration = duration;
     }
@@ -28,7 +28,7 @@ public class Packet implements Serializable
         return stages;
     }
 
-    public void setStages(Stage[] stages)
+    public void setStages(final Stage[] stages)
     {
         this.stages = stages;
     }

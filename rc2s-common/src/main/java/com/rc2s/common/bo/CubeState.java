@@ -8,17 +8,17 @@ public class CubeState implements Serializable
 
 	public CubeState() {}
 
-	public CubeState(boolean[][][] states)
+	public CubeState(final boolean[][][] states)
 	{
 		this.states = states;
 	}
 
-	public void set(int x, int y, int z, boolean state)
+	public void set(final int x, final int y, final int z, final boolean state)
 	{
 		this.states[x][y][z] = state;
 	}
 
-	public boolean get(int x, int y, int z)
+	public boolean get(final int x, final int y, final int z)
 	{
 		return this.states[x][y][z];
 	}
@@ -28,7 +28,7 @@ public class CubeState implements Serializable
 		return states;
 	}
 
-	public void setStates(boolean[][][] states)
+	public void setStates(final boolean[][][] states)
 	{
 		this.states = states;
 	}

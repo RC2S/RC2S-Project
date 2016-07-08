@@ -37,8 +37,8 @@ public class JDBCLoginModule implements LoginModule
     private boolean commitSucceeded = false;
     
     @Override
-    public void initialize(Subject subject, CallbackHandler callbackHandler,
-        Map<String, ?> sharedState, Map<String, ?> options)
+    public void initialize(final Subject subject, final CallbackHandler callbackHandler,
+        final Map<String, ?> sharedState, final Map<String, ?> options)
     {
         this.subject            = subject;
         this.callbackHandler    = callbackHandler;

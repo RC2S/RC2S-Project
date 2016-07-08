@@ -51,7 +51,7 @@ public class Main extends Application
         return stage;
     }
 	
-	public static void setAuthenticatedUser(User user)
+	public static void setAuthenticatedUser(final User user)
 	{
 		Main.user = user;
 	}

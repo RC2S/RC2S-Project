@@ -54,7 +54,7 @@ public class StreamingService implements IStreamingService
 	}
 
     @Override
-    public void start(String mrl)
+    public void start(final String mrl)
     {
 		factory = new MediaPlayerFactory();
 		callbackAdapter = new CallbackAdapter(this, 4, getSyncSize());

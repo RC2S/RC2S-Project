@@ -37,7 +37,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	
     private final Logger log = LogManager.getLogger(CallbackAdapter.class);
     
-    public CallbackAdapter(StreamingService streamingService, int blockSize, int[] syncDimensions)
+    public CallbackAdapter(final StreamingService streamingService, final int blockSize, final int[] syncDimensions)
     {
         super(blockSize);
 		this.streamingService = streamingService;

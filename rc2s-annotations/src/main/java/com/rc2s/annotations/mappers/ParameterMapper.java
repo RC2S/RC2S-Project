@@ -8,7 +8,7 @@ public class ParameterMapper
     
     private final String description;
 
-    public ParameterMapper(String name, String type, String description)
+    public ParameterMapper(final String name, final String type, final String description)
     {
         this.name           = name;
         this.type           = type;

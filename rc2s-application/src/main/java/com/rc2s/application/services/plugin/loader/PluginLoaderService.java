@@ -30,7 +30,9 @@ import javax.ejb.TransactionManagementType;
 public class PluginLoaderService implements IPluginLoaderService
 {
 	@EJB private IPluginService pluginService;
+    
 	@EJB private IPluginDAO pluginDAO;
+    
     @EJB private IJnlpService jnlpService;
 	
     @Override
