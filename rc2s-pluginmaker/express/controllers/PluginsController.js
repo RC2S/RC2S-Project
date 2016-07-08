@@ -199,15 +199,55 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 			return callback(false, errorPs);
 
 		idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
-		
-		var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
-		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
-			if(errorCp && stderrCp)
-				return callback(false, stderrCp);
-			else if(errorCp)
-				return callback(false, errorCp);
 
-			return callback(true, undefined);
+		var chePluginPath 		= '/projects/' + pluginName + '/';
+		var serverPluginPath 	= config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName;
+		
+		exec('docker cp ' + idDockerMachine + ':' + chePluginPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCheck, stdoutCheck, stderrCheck) {
+			if(errorCheck && stderrCheck)
+				return callback(false, stderrCheck);
+			else if(errorCheck)
+				return callback(false, errorCheck);
+
+			fs.readdir(config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName, function(errorDir, filenames) {
+				if (errorDir)
+					return callback(false, errorDir);
+
+				var counter = 0;
+				filenames.forEach(function(filename) {
+					
+					if (filename.indexOf('.java') > -1) {
+
+						fs.readFile(serverPluginPath + filename, 'utf-8', function(errorFile, content) {
+							if (errorFile)
+								return callback(false, errFile);
+
+							if (content.indexOf('@SourceControl') == -1)
+								return callback(false, 'Annotation @SourceControl not found in file ' + filename);
+
+							counter++;
+						});
+					}
+					else {
+						counter++;
+					}
+
+					if (counter == filenames.length) {
+
+						del(serverPluginPath + '/*');
+
+						var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
+						exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
+							if(errorCp && stderrCp)
+								return callback(false, stderrCp);
+							else if(errorCp)
+								return callback(false, errorCp);
+
+							return callback(true, undefined);
+						});
+					}
+				});
+			});
 		});
 	});
 };
