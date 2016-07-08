@@ -1,10 +1,14 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
+import com.rc2s.client.test.Streaming;
+import com.rc2s.client.test.StreamingHandler;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
+import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.Track;
+import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import com.rc2s.ejb.track.TrackFacadeRemote;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,14 +24,17 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ResourceBundle;
 
 public class MusicPlaylistController extends TabController implements Initializable
 {
     private final TrackFacadeRemote trackEJB = (TrackFacadeRemote) EJB.lookup("TrackEJB");
     private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
+	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
 
 	private MediaPlayer mediaPlayer;
+	private StreamingHandler streamingHandler;
 	private boolean playing = false;
 	private int currentTrack = -1;
 
@@ -36,7 +43,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @FXML private TableColumn<Track, String> timeColumn;
     @FXML private TableColumn<Track, String> authorColumn;
 
-    @FXML private ComboBox syncBox;
+    @FXML private ComboBox<Synchronization> syncBox;
     @FXML private Button previousButton;
     @FXML private Button playPauseButton;
     @FXML private Button nextButton;
@@ -45,6 +52,9 @@ public class MusicPlaylistController extends TabController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+
 		musicColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPath()));
 
 		tracksTable.setRowFactory(table -> {
@@ -89,12 +99,35 @@ public class MusicPlaylistController extends TabController implements Initializa
         {
             syncBox.getItems().clear();
             syncBox.getItems().addAll(syncEJB.getByUser(Main.getAuthenticatedUser()));
+
+			syncBox.getSelectionModel().selectFirst();
         }
         catch(EJBException e)
         {
             Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
+	@FXML
+	private void onSyncSelected(final ActionEvent e)
+	{
+		Synchronization sync = syncBox.getSelectionModel().getSelectedItem();
+
+		if(sync == null)
+		{
+			playPauseButton.setDisable(true);
+			nextButton.setDisable(true);
+			previousButton.setDisable(true);
+		}
+		else if(playPauseButton.isDisabled())
+		{
+			playPauseButton.setDisable(false);
+			nextButton.setDisable(false);
+			previousButton.setDisable(false);
+		}
+
+		streamingEJB.setSynchronization(sync);
+	}
 
 	@FXML
 	private void onKeyPressedEvent(KeyEvent e)
@@ -232,7 +265,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			play();
     }
 
-	private void setTrack(int trackIndex)
+	private synchronized void setTrack(int trackIndex)
 	{
 		Track track = tracksTable.getItems().get(trackIndex);
 		Media media = new Media(track.getPath());
@@ -253,8 +286,40 @@ public class MusicPlaylistController extends TabController implements Initializa
 					play();
 				}
 			}
-			catch(ArrayIndexOutOfBoundsException e) { /* End of the playlist */ }
+			catch(IndexOutOfBoundsException e)
+			{
+				synchronized (streamingHandler) {
+					// End of the playlist
+					mediaPlayer.stop();
+					mediaPlayer.dispose();
+					mediaPlayer = null;
+
+					streamingHandler.stopStreaming();
+					streamingHandler = null;
+				}
+			}
 		});
+
+		// Create/Update the streaming object
+		try
+		{
+			// If it exists, we notify it to stop
+			if (streamingHandler != null) {
+				synchronized (streamingHandler) {
+					streamingHandler.stopStreaming();
+				}
+			}
+
+			streamingHandler = new StreamingHandler(
+				streamingEJB,
+				Main.getAuthenticatedUser().getUsername(),
+				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
+			);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		currentTrack = trackIndex;
 	}
@@ -262,6 +327,13 @@ public class MusicPlaylistController extends TabController implements Initializa
 	private void pause()
 	{
 		mediaPlayer.pause();
+
+		if (streamingHandler != null && streamingHandler.isPlaying()) {
+			synchronized (streamingHandler) {
+				streamingHandler.pauseStreaming();
+			}
+		}
+
 		playing = false;
 		playPauseButton.setText("Play");
 	}
@@ -269,6 +341,17 @@ public class MusicPlaylistController extends TabController implements Initializa
 	private void play()
 	{
 		mediaPlayer.play();
+
+		if (streamingHandler != null) {
+			synchronized (streamingHandler) {
+				if (streamingHandler.getStreamingState() == Streaming.StreamingState.INIT)
+					streamingHandler.start();
+				else if (!streamingHandler.isPlaying()) {
+					streamingHandler.resumeStreaming();
+				}
+			}
+		}
+
 		playing = true;
 		playPauseButton.setText("||");
 	}

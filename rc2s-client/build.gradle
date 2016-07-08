@@ -7,6 +7,7 @@ dependencies {
     compile project(':rc2s-annotations')
     compile group: 'com.rc2s', name: 'rc2s-interfaces', version: version
     compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
+    compile group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
 }
 
 jar {
