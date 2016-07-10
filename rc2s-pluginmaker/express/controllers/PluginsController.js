@@ -210,27 +210,24 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 				return callback(false, errorCheck);
 			
 			var filenames = recursive(serverPluginPath);
-			
+			var counter = 0;
+
 			filenames.forEach(function(filename) {
-				
+
 				if (filename.indexOf('.java') > -1) {
 
-					fs.readFile(serverPluginPath + filename, 'utf-8', function(errorFile, content) {
-						if (errorFile)
-							return callback(false, errorFile);
+					content = fs.readFileSync(filename);
+					if(content.indexOf('@SourceControl') == -1)
+						return callback(false, 'Annotation @SourceControl not found in file ' + filename);
 
-						if (content.indexOf('@SourceControl') == -1)
-							return callback(false, 'Annotation @SourceControl not found in file ' + filename);
-
-						counter++;
-					});
+					counter++;
 				}
 				else {
 					counter++;
 				}
 
 				if (counter == filenames.length) {
-
+						
 					del(serverPluginPath + '/*');
 
 					var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
