@@ -6,7 +6,7 @@ var fs 					= require('fs');
 var del					= require('del');
 var exec				= require('child_process').exec;
 var unidecode			= require('unidecode');
-// var recursive		= require('recursive-readdir');
+var recursive 			= require('recursive-readdir-sync');
 
 function PluginsController() {};
 
@@ -208,45 +208,41 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 				return callback(false, stderrCheck);
 			else if(errorCheck)
 				return callback(false, errorCheck);
+			
+			var filenames = recursive(serverPluginPath);
+			
+			filenames.forEach(function(filename) {
+				
+				if (filename.indexOf('.java') > -1) {
 
-			fs.readdir(config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName, function(errorDir, filenames) {
-				if (errorDir)
-					return callback(false, errorDir);
+					fs.readFile(serverPluginPath + filename, 'utf-8', function(errorFile, content) {
+						if (errorFile)
+							return callback(false, errorFile);
 
-				var counter = 0;
-				filenames.forEach(function(filename) {
-					
-					if (filename.indexOf('.java') > -1) {
+						if (content.indexOf('@SourceControl') == -1)
+							return callback(false, 'Annotation @SourceControl not found in file ' + filename);
 
-						fs.readFile(serverPluginPath + filename, 'utf-8', function(errorFile, content) {
-							if (errorFile)
-								return callback(false, errFile);
-
-							if (content.indexOf('@SourceControl') == -1)
-								return callback(false, 'Annotation @SourceControl not found in file ' + filename);
-
-							counter++;
-						});
-					}
-					else {
 						counter++;
-					}
+					});
+				}
+				else {
+					counter++;
+				}
 
-					if (counter == filenames.length) {
+				if (counter == filenames.length) {
 
-						del(serverPluginPath + '/*');
+					del(serverPluginPath + '/*');
 
-						var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
-						exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
-							if(errorCp && stderrCp)
-								return callback(false, stderrCp);
-							else if(errorCp)
-								return callback(false, errorCp);
+					var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
+					exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
+						if(errorCp && stderrCp)
+							return callback(false, stderrCp);
+						else if(errorCp)
+							return callback(false, errorCp);
 
-							return callback(true, undefined);
-						});
-					}
-				});
+						return callback(true, undefined);
+					});
+				}
 			});
 		});
 	});
