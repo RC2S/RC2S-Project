@@ -6,7 +6,7 @@ var fs 					= require('fs');
 var del					= require('del');
 var exec				= require('child_process').exec;
 var unidecode			= require('unidecode');
-// var recursive		= require('recursive-readdir');
+var recursive 			= require('recursive-readdir-sync');
 
 function PluginsController() {};
 
@@ -132,14 +132,22 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 
 				idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
 
-				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + formatedPluginName + '/. ' + idDockerMachine + ':/projects/' + pluginName, function(error, stdout, stderr) {
-					if (error && stderr)
-						return callback(false, stderr);
-					else if (error)
-						return callback(false, error);
+				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + formatedPluginName + '/. ' + idDockerMachine + ':/projects/' + pluginName, function(errorCp, stdoutCp, stderrCp) {
+					if (errorCp && stderrCp)
+						return callback(false, stderrCp);
+					else if (errorCp)
+						return callback(false, errorCp);
 
 					del(config.che.tmpFolder + '/*');
-					return callback(true, undefined);
+
+					exec('docker exec ' + idDockerMachine + ' sudo chown -R user:user /projects/' + pluginName, function(errorExec, stdoutExec, stderrExec) {
+						if (errorExec && stderrExec)
+							return callback(false, stderrExec);
+						else if (errorExec)
+							return callback(false, errorExec);
+
+						return callback(true, undefined);
+					});
 				});
 			});
 		})
@@ -180,6 +188,10 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
+
+	// Transform PluginName for package standard
+	formatedPluginName = pluginName.replace(/\W/g, '').toLowerCase(); 	// Remove non alphanumeric
+
 	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
 		if(errorPs && stderrPs)
 			return callback(false, stderrPs);
@@ -187,15 +199,48 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 			return callback(false, errorPs);
 
 		idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
-		
-		var pluginZipPath = pluginName + '/' + pluginName + '-client/build/' + pluginName + '.zip';
-		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
-			if(error && stderr)
-				return callback(false, stderr);
-			else if(error)
-				return callback(false, error);
 
-			return callback(true, undefined);
+		var chePluginPath 		= '/projects/' + pluginName + '/';
+		var serverPluginPath 	= config.che.tmpFolder.replace(/\s+/g, "\\ ") + pluginName;
+		
+		exec('docker cp ' + idDockerMachine + ':' + chePluginPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCheck, stdoutCheck, stderrCheck) {
+			if(errorCheck && stderrCheck)
+				return callback(false, stderrCheck);
+			else if(errorCheck)
+				return callback(false, errorCheck);
+			
+			var filenames = recursive(serverPluginPath);
+			var counter = 0;
+
+			filenames.forEach(function(filename) {
+
+				if (filename.indexOf('.java') > -1) {
+
+					content = fs.readFileSync(filename);
+					if(content.indexOf('@SourceControl') == -1)
+						return callback(false, 'Annotation @SourceControl not found in file ' + filename);
+
+					counter++;
+				}
+				else {
+					counter++;
+				}
+
+				if (counter == filenames.length) {
+						
+					del(serverPluginPath + '/*');
+
+					var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
+					exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
+						if(errorCp && stderrCp)
+							return callback(false, stderrCp);
+						else if(errorCp)
+							return callback(false, errorCp);
+
+						return callback(true, undefined);
+					});
+				}
+			});
 		});
 	});
 };

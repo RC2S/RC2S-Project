@@ -6,7 +6,7 @@ var path = require('path');
 
 module.exports = {
 	port	: 8081,
-	secret	: 'ssshhhhh',
+	secret	: '^&yv<nVgGy75:gN+',
 	database : {
 		type			: 'mysql',
 		name			: 'RC2S',
