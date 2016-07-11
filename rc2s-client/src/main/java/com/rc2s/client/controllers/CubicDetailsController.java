@@ -37,11 +37,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javax.validation.ConstraintViolation;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CubicDetailsController extends TabController implements Initializable
 {
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private final Logger logger = LogManager.getLogger(this.getClass());
 	
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote)EJB.lookup("SizeEJB");
@@ -96,7 +97,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	@FXML private TextField synchronizedField;
 	
 	@Override
-	public void initialize(URL url, ResourceBundle rb)
+	public void initialize(final URL url, final ResourceBundle rb)
 	{
 		try
 		{
@@ -144,7 +145,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		toggleEditCube();
 	}
 	
-	public void render(Cube cube)
+	public void render(final Cube cube)
 	{
 		this.cube = cube;
 		
@@ -236,7 +237,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onBackEvent(ActionEvent e)
+	private void onBackEvent(final ActionEvent e)
 	{
 		FXMLLoader loader = Resources.loadFxml("CubicListView");
 		CubicListController controller = loader.getController();
@@ -306,7 +307,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onEditEvent(ActionEvent e)
+	private void onEditEvent(final ActionEvent e)
 	{
 		ToggleButton btn = (ToggleButton)e.getSource();
 		errorLabel.setText("");
@@ -352,7 +353,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onAddEvent(ActionEvent e)
+	private void onAddEvent(final ActionEvent e)
 	{
 		boolean update = updateCube();
 		
@@ -390,7 +391,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onRemoveEvent(ActionEvent e)
+	private void onRemoveEvent(final ActionEvent e)
 	{
 		ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this cube from the RC2S Server?");
 		
@@ -409,7 +410,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onColorChanged(ActionEvent e)
+	private void onColorChanged(final ActionEvent e)
 	{
 		ComboBox box = (ComboBox)e.getSource();
 		Object o = box.getSelectionModel().getSelectedItem();
@@ -422,7 +423,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onSizeChanged(ActionEvent e)
+	private void onSizeChanged(final ActionEvent e)
 	{
 		ComboBox box = (ComboBox)e.getSource();
 		Object o = box.getSelectionModel().getSelectedItem();
@@ -435,19 +436,19 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onAddSizeEvent(ActionEvent e)
+	private void onAddSizeEvent(final ActionEvent e)
 	{
 		toggleEditSize();
 	}
 	
 	@FXML
-	private void onCancelSizeEvent(ActionEvent e)
+	private void onCancelSizeEvent(final ActionEvent e)
 	{
 		toggleEditSize();
 	}
 	
 	@FXML
-	private void onAddCubeEvent(ActionEvent e)
+	private void onAddCubeEvent(final ActionEvent e)
 	{
 		Cube c = (Cube)cubesBox.getSelectionModel().getSelectedItem();
 		
@@ -469,7 +470,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onListKeyEvent(KeyEvent e)
+	private void onListKeyEvent(final KeyEvent e)
 	{
 		if(e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
@@ -499,7 +500,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onAllOnEvent(ActionEvent e)
+	private void onAllOnEvent(final ActionEvent e)
 	{
 		try
 		{
@@ -513,7 +514,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	}
 	
 	@FXML
-	private void onAllOffEvent(ActionEvent e)
+	private void onAllOffEvent(final ActionEvent e)
 	{
 		try
 		{

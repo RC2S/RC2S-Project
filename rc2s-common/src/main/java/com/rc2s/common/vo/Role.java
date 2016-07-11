@@ -26,7 +26,7 @@ public class Role implements Serializable
 	
 	public Role() {}
 
-	public Role(String name)
+	public Role(final String name)
 	{
 		this.name = name;
 	}
@@ -46,7 +46,7 @@ public class Role implements Serializable
 		return name;
 	}
 
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
@@ -56,7 +56,7 @@ public class Role implements Serializable
 		return users;
 	}
 
-	public void setUsers(List<User> users)
+	public void setUsers(final List<User> users)
 	{
 		this.users = users;
 	}
@@ -77,7 +77,7 @@ public class Role implements Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
+	public boolean equals(final Object o)
 	{
 		if(o != null && o instanceof Role)
 		{

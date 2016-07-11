@@ -47,7 +47,8 @@ public class Synchronization implements Serializable
 
 	public Synchronization() {}
 	
-	public Synchronization(Integer id, String name, Date created, Date updated)
+	public Synchronization(final Integer id, final String name, 
+            final Date created, final Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -60,7 +61,7 @@ public class Synchronization implements Serializable
 		return id;
 	}
 
-	public void setId(Integer id)
+	public void setId(final Integer id)
 	{
 		this.id = id;
 	}
@@ -70,7 +71,7 @@ public class Synchronization implements Serializable
 		return name;
 	}
 
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
@@ -80,7 +81,7 @@ public class Synchronization implements Serializable
 		return cubes;
 	}
 
-	public void setCubes(List<Cube> cubes)
+	public void setCubes(final List<Cube> cubes)
 	{
 		this.cubes = cubes;
 	}
@@ -90,7 +91,7 @@ public class Synchronization implements Serializable
 		return users;
 	}
 
-	public void setUsers(List<User> users)
+	public void setUsers(final List<User> users)
 	{
 		this.users = users;
 	}
@@ -100,7 +101,7 @@ public class Synchronization implements Serializable
 		return created;
 	}
 
-	public void setCreated(Date created)
+	public void setCreated(final Date created)
 	{
 		this.created = created;
 	}
@@ -110,7 +111,7 @@ public class Synchronization implements Serializable
 		return updated;
 	}
 
-	public void setUpdated(Date updated)
+	public void setUpdated(final Date updated)
 	{
 		this.updated = updated;
 	}
@@ -133,7 +134,7 @@ public class Synchronization implements Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
+	public boolean equals(final Object o)
 	{
 		if(o != null && o instanceof Synchronization)
 		{

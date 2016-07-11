@@ -112,7 +112,7 @@ public class PluginsManagementController extends TabController implements Initia
 	}
     
     @FXML
-    private void handleUploadFileButton(ActionEvent event)
+    private void handleUploadFileButton(final ActionEvent event)
     {
         pluginFile = fileChooser.showOpenDialog(Main.getStage());
 		
@@ -121,7 +121,7 @@ public class PluginsManagementController extends TabController implements Initia
 	}
 	
 	@FXML
-	private void onAddEvent(ActionEvent e)
+	private void onAddEvent(final ActionEvent e)
 	{
 		error("");
 		if(pluginFile != null)
@@ -158,7 +158,7 @@ public class PluginsManagementController extends TabController implements Initia
 	}
 	
 	@FXML
-	private void onKeyPressedEvent(KeyEvent e)
+	private void onKeyPressedEvent(final KeyEvent e)
 	{
 		if(e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
@@ -187,7 +187,7 @@ public class PluginsManagementController extends TabController implements Initia
 		}
 	}
 	
-	private void hidePluginTab(String pluginName)
+	private void hidePluginTab(final String pluginName)
 	{
 		TabPane tabPane = getTab().getTabPane();
 		
@@ -201,7 +201,7 @@ public class PluginsManagementController extends TabController implements Initia
 		}
 	}
 	
-	private String formatDate(Date date)
+	private String formatDate(final Date date)
 	{
 		if(date == null)
 			return "";
@@ -209,7 +209,7 @@ public class PluginsManagementController extends TabController implements Initia
 		return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
 	}
 	
-	private void error(String err)
+	private void error(final String err)
 	{
 		statusLabel.setText(err);
 		

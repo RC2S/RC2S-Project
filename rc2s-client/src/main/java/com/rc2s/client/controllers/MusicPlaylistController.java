@@ -50,7 +50,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @FXML private Slider soundSlider;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
+    public void initialize(final URL url, final ResourceBundle rb)
     {
 		if(System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
@@ -130,7 +130,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	}
 
 	@FXML
-	private void onKeyPressedEvent(KeyEvent e)
+	private void onKeyPressedEvent(final KeyEvent e)
 	{
 		if(e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
@@ -159,7 +159,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	}
 
 	@FXML
-	private void onDragOverEvent(DragEvent event)
+	private void onDragOverEvent(final DragEvent event)
 	{
 		Dragboard db = event.getDragboard();
 
@@ -170,7 +170,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	}
 
 	@FXML
-	private void onDragDroppedEvent(DragEvent event)
+	private void onDragDroppedEvent(final DragEvent event)
 	{
 		Dragboard db = event.getDragboard();
 		boolean success = false;
@@ -198,7 +198,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		event.consume();
 	}
 
-	private Track uriToTrack(URI uri) throws MediaException
+	private Track uriToTrack(final URI uri) throws MediaException
 	{
 		Media media = new Media(uri.toString()); // If the file is not a media file, this will raise a MediaException
 
@@ -227,7 +227,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	}
 
 	@FXML
-	private void onPreviousEvent(ActionEvent e)
+	private void onPreviousEvent(final ActionEvent e)
 	{
 		if(currentTrack != -1 && currentTrack > 0)
 		{
@@ -237,7 +237,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	}
 
 	@FXML
-	private void onNextEvent(ActionEvent e)
+	private void onNextEvent(final ActionEvent e)
 	{
 		if(currentTrack != -1 && currentTrack + 1 < tracksTable.getItems().size())
 		{
@@ -247,7 +247,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	}
     
     @FXML
-    private void onPlayPauseEvent(ActionEvent e)
+    private void onPlayPauseEvent(final ActionEvent e)
     {
 		if(mediaPlayer == null)
 		{
@@ -265,7 +265,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			play();
     }
 
-	private synchronized void setTrack(int trackIndex)
+	private synchronized void setTrack(final int trackIndex)
 	{
 		Track track = tracksTable.getItems().get(trackIndex);
 		Media media = new Media(track.getPath());

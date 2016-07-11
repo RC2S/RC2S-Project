@@ -31,7 +31,7 @@ public class CubicItemController extends TabController implements Initializable
 	@FXML private Label status;
 	
 	@Override
-    public void initialize(URL url, ResourceBundle rb)
+    public void initialize(final URL url, final ResourceBundle rb)
 	{
 		root.setOnMouseClicked((MouseEvent e) -> {
 			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
@@ -46,7 +46,7 @@ public class CubicItemController extends TabController implements Initializable
 	@Override
 	public void updateContent() {}
 	
-	public void update(Cube cube)
+	public void update(final Cube cube)
 	{
 		this.cube = cube;
 		

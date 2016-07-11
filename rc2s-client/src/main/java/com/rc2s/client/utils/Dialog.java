@@ -10,22 +10,23 @@ import com.rc2s.client.Config;
 
 public class Dialog
 {
-    public static void message(String msg)
+    public static void message(final String msg)
     {
         message(Config.APP_NAME, null, msg, AlertType.INFORMATION);
     }
     
-    public static void message(String title, String msg)
+    public static void message(final String title, final String msg)
     {
         message(title, null, msg, AlertType.INFORMATION);
     }
     
-    public static void message(String title, String msg, AlertType type)
+    public static void message(final String title, final String msg, final AlertType type)
     {
         message(title, null, msg, type);
     }
     
-    public static void message(String title, String header, String msg, AlertType type)
+    public static void message(final String title, final String header, 
+            final String msg, final AlertType type)
     {
         Alert alert;
         
@@ -38,22 +39,23 @@ public class Dialog
         alert.showAndWait();
     }
     
-    public static ButtonType confirm(String msg)
+    public static ButtonType confirm(final String msg)
     {
         return confirm(Config.APP_NAME, null, msg, null);
     }
     
-    public static ButtonType confirm(String title, String msg)
+    public static ButtonType confirm(final String title, final String msg)
     {
         return confirm(title, null, msg, null);
     }
     
-    public static ButtonType confirm(String title, String msg, String header)
+    public static ButtonType confirm(final String title, final String msg, final String header)
     {
         return confirm(title, header, msg, null);
     }
     
-    public static ButtonType confirm(String title, String header, String msg, ArrayList<ButtonType> buttons)
+    public static ButtonType confirm(final String title, final String header, 
+            final String msg, final ArrayList<ButtonType> buttons)
     {
         Alert                   alert;
         Optional<ButtonType>    result;
@@ -72,22 +74,23 @@ public class Dialog
         return result.get();
     }
     
-    public static String input(String text)
+    public static String input(final String text)
     {
         return input(Config.APP_NAME, null, text, null);
     }
     
-    public static String input(String title, String text)
+    public static String input(final String title, final String text)
     {
         return input(title, null, text, null);
     }
     
-    public static String input(String title, String header, String text)
+    public static String input(final String title, final String header, final String text)
     {
         return input(title, header, text, null);
     }
     
-    public static String input(String title, String header, String text, String inputContent)
+    public static String input(final String title, final String header, 
+            final String text, final String inputContent)
     {
         TextInputDialog     dialog;
         Optional<String>    result;

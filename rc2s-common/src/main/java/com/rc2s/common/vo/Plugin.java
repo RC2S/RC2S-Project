@@ -29,7 +29,9 @@ public class Plugin implements Serializable
 	
 	public Plugin() {}
 
-	public Plugin(Integer id, String name, String version, String author, String status, Boolean activated, String access, Date created, Date updated)
+	public Plugin(final Integer id, final String name, final String version, 
+            final String author, final String status, final Boolean activated, 
+            final String access, final Date created, final Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -47,7 +49,7 @@ public class Plugin implements Serializable
 		return id;
 	}
 
-	public void setId(Integer id)
+	public void setId(final Integer id)
 	{
 		this.id = id;
 	}
@@ -57,7 +59,7 @@ public class Plugin implements Serializable
 		return name;
 	}
 
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
@@ -67,7 +69,7 @@ public class Plugin implements Serializable
 		return version;
 	}
 
-	public void setVersion(String version)
+	public void setVersion(final String version)
 	{
 		this.version = version;
 	}
@@ -77,7 +79,7 @@ public class Plugin implements Serializable
 		return author;
 	}
 
-	public void setAuthor(String author)
+	public void setAuthor(final String author)
 	{
 		this.author = author;
 	}
@@ -87,7 +89,7 @@ public class Plugin implements Serializable
 		return status;
 	}
 
-	public void setStatus(String status)
+	public void setStatus(final String status)
 	{
 		this.status = status;
 	}
@@ -97,7 +99,7 @@ public class Plugin implements Serializable
 		return activated;
 	}
 
-	public void setActivated(Boolean activated)
+	public void setActivated(final Boolean activated)
 	{
 		this.activated = activated;
 	}
@@ -107,7 +109,7 @@ public class Plugin implements Serializable
 		return access;
 	}
 
-	public void setAccess(String access)
+	public void setAccess(final String access)
 	{
 		this.access = access;
 	}
@@ -117,7 +119,7 @@ public class Plugin implements Serializable
 		return created;
 	}
 
-	public void setCreated(Date created)
+	public void setCreated(final Date created)
 	{
 		this.created = created;
 	}
@@ -155,7 +157,7 @@ public class Plugin implements Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
+	public boolean equals(final Object o)
 	{
 		if(o != null && o instanceof Plugin)
 		{
