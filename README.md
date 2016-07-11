@@ -1,11 +1,17 @@
 # Raspberry Cubic Control System (RC2S)
 ----------
-Logo centré
-Composé d’un **ensemble de cubes de LED** s’animant au rythme de la musique ou du son ambiant, la suite RC2S vient s’étoffer d’un ensemble de **solutions logicielles** permettant l’administration complète des différents cubes en votre possession. Une dimension créative s’y ajoute, l’extensibilité offerte par la création de **plugins** faisant de votre imagination la seule limite à son évolution.
 
-Dans sa **version initiale**, la suite RC2S propose à l’utilisateur de gérer les différents cubes de LED qu’il possède, d’interagir avec ces derniers en allumant ou éteignant chaque LED qui les composent, de jouer les différentes animations préenregistrées… Il aura également la possibilité d’installer des plugins créés pour améliorer l’expérience utilisateur en ajoutant de nouvelles fonctionnalités.
+Composé d’un **ensemble de cubes de LED** s’animant au rythme de la musique ou du son ambiant,  
+la suite RC2S vient s’étoffer d’un ensemble de **solutions logicielles** permettant l’administration complète des différents cubes en votre possession.  
+Une dimension créative s’y ajoute, l’extensibilité offerte par la création de **plugins** faisant de votre imagination la seule limite à son évolution.
 
-Un utilisateur avancé pourra, quant à lui, profiter des mêmes fonctionnalités tout en ayant la possibilité de **créer** lui-même **ses propres plugins** à travers une **API dédiée**. Il pourra ainsi développer de nouveaux contenus qui pourront être intégrés dans la solution RC2S et partagés avec la communauté !
+Dans sa **version initiale**, la suite RC2S propose à l’utilisateur de gérer les différents cubes de LED qu’il possède,  
+d’interagir avec ces derniers en allumant ou éteignant chaque LED qui les composent, de jouer les différentes animations préenregistrées…  
+Il aura également la possibilité d’installer des plugins créés pour améliorer l’expérience utilisateur en ajoutant de nouvelles fonctionnalités.
+
+Un utilisateur avancé pourra, quant à lui, profiter des mêmes fonctionnalités tout en ayant la possibilité de **créer**  
+lui-même **ses propres plugins** à travers une **API dédiée**.  
+Il pourra ainsi développer de nouveaux contenus qui pourront être intégrés dans la solution RC2S et partagés avec la communauté !
 
 Vous retrouverez tous les détails du projet dans la [documentation complète].
 
@@ -23,7 +29,9 @@ Version : **1.0**
 
 - **RC2S Client** : Client lourd JavaFX permettant la connexion à un serveur d’application RC2S et la gestion des Cubes liés à un utilisateur.
 
-- **RC2S Plugin Maker** : Environnement de développement de plugins pour la suite RC2S, intégrant entre autre fonctionnalité un parser d’annotations pour faciliter et alléger le développement. Les plugins ainsi créés pourront interagir avec le serveur et le client, permettant l’ajout de nouvelles fonctionnalités suivant les besoins de l’utilisateur.
+- **RC2S Plugin Maker** : Environnement de développement de plugins pour la suite RC2S,  
+intégrant entre autre fonctionnalité un parser d’annotations pour faciliter et alléger le développement.  
+Les plugins ainsi créés pourront interagir avec le serveur et le client, permettant l’ajout de nouvelles fonctionnalités suivant les besoins de l’utilisateur.
 
 ## Installation
 ----------
@@ -78,7 +86,7 @@ Photo
 ## License
 ----------
 
-RC2S est un projet annuel de 3ème année proposé par des étudiants de l'ESGI (Ecole Supérieure de Génie Informatique).
+RC2S est un projet annuel de 3ème année proposé par des étudiants de l'ESGI (Ecole Supérieure de Génie Informatique).  
 Développé par Mathieu BOISNARD, Valentin FRIES et Vincent MILANO.
 
    [JDK 8]: <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>
