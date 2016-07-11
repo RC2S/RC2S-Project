@@ -42,7 +42,8 @@ public class Size implements Serializable
 	
 	public Size() {}
 
-	public Size(Integer id, String name, Integer x, Integer y, Integer z, Date created, Date updated)
+	public Size(final Integer id, final String name, final Integer x, 
+            final Integer y, final Integer z, final Date created, final Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -58,7 +59,7 @@ public class Size implements Serializable
 		return id;
 	}
 
-	public void setId(Integer id)
+	public void setId(final Integer id)
 	{
 		this.id = id;
 	}
@@ -68,7 +69,7 @@ public class Size implements Serializable
 		return name;
 	}
 
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
@@ -78,7 +79,7 @@ public class Size implements Serializable
 		return x;
 	}
 
-	public void setX(Integer x)
+	public void setX(final Integer x)
 	{
 		this.x = x;
 	}
@@ -88,7 +89,7 @@ public class Size implements Serializable
 		return y;
 	}
 
-	public void setY(Integer y)
+	public void setY(final Integer y)
 	{
 		this.y = y;
 	}
@@ -98,7 +99,7 @@ public class Size implements Serializable
 		return z;
 	}
 
-	public void setZ(Integer z)
+	public void setZ(final Integer z)
 	{
 		this.z = z;
 	}
@@ -108,7 +109,7 @@ public class Size implements Serializable
 		return created;
 	}
 
-	public void setCreated(Date created)
+	public void setCreated(final Date created)
 	{
 		this.created = created;
 	}
@@ -118,7 +119,7 @@ public class Size implements Serializable
 		return updated;
 	}
 
-	public void setUpdated(Date upated)
+	public void setUpdated(final Date upated)
 	{
 		this.updated = upated;
 	}
@@ -128,7 +129,7 @@ public class Size implements Serializable
 		return cubes;
 	}
 
-	public void setCubes(List<Cube> cubes)
+	public void setCubes(final List<Cube> cubes)
 	{
 		this.cubes = cubes;
 	}
@@ -161,7 +162,7 @@ public class Size implements Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
+	public boolean equals(final Object o)
 	{
 		if(o != null && o instanceof Size)
 		{

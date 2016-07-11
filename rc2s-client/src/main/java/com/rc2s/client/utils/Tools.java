@@ -13,12 +13,12 @@ public class Tools
 	
     private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
     
-    public static boolean matchIP(String ip)
+    public static boolean matchIP(final String ip)
 	{
         return IP_PATTERN.matcher(ip).matches();
     }
 	
-	public static <T extends Serializable> Set<ConstraintViolation<T>> validate(T vo)
+	public static <T extends Serializable> Set<ConstraintViolation<T>> validate(final T vo)
 	{
 		return VALIDATOR.validate(vo);
 	}

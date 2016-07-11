@@ -12,49 +12,49 @@ public class Resources
     private static String cssPackage            = "/css/";
     private static String resourcesPackage      = "/resources/";
     
-    public static void setViewsPackage(String pkg)
+    public static void setViewsPackage(final String pkg)
     {
         viewsPackage = setPackage(pkg);
     }
     
-    public static void setCssPackage(String pkg)
+    public static void setCssPackage(final String pkg)
     {
         cssPackage = setPackage(pkg);
     }
     
-    public static void setResourcesPackage(String pkg)
+    public static void setResourcesPackage(final String pkg)
     {
         resourcesPackage = setPackage(pkg);
     }
     
-    private static String setPackage(String pkg)
+    private static String setPackage(final String pkg)
     {
-        pkg = pkg.replace(".", "/");
+        String newPkg = pkg.replace(".", "/");
 
-        if(!pkg.startsWith("/"))
-            pkg = "/".concat(pkg);
-        if(!pkg.endsWith("/"))
-            pkg = pkg.concat("/");
+        if(!newPkg.startsWith("/"))
+            newPkg = "/".concat(pkg);
+        if(!newPkg.endsWith("/"))
+            newPkg = newPkg.concat("/");
 
-        return pkg;
+        return newPkg;
     }
     
-    public static URL getResource(String name)
+    public static URL getResource(final String name)
     {       
         return Resources.class.getResource(name);
     }
     
-    public static InputStream getStreamResource(String name)
+    public static InputStream getStreamResource(final String name)
     {
         return Resources.class.getResourceAsStream(name);
     }
     
-    public static boolean resourceExists(String name)
+    public static boolean resourceExists(final String name)
     {
         return getResource(name) != null;
     }
     
-    public static FXMLLoader loadFxml(String fxml)
+    public static FXMLLoader loadFxml(final String fxml)
     {
         StringBuilder   fxmlFile;
         FXMLLoader      loader;
@@ -86,7 +86,7 @@ public class Resources
         }
     }
     
-    public static void loadCss(Scene scene, String css)
+    public static void loadCss(final Scene scene, final String css)
     {
         StringBuilder cssFile = new StringBuilder();
         
@@ -99,7 +99,7 @@ public class Resources
             scene.getStylesheets().add(getResource(cssFile.toString()).toExternalForm());
     }
     
-    public static InputStream loadResource(String file)
+    public static InputStream loadResource(final String file)
     {
         if(resourceExists(resourcesPackage + file))
             return getStreamResource(resourcesPackage + file);

@@ -24,7 +24,7 @@ public class Main extends Application
     }
     
     @Override
-    public void start(Stage stage) throws Exception
+    public void start(final Stage stage) throws Exception
     {
         Scene scene;
         FXMLLoader loader;

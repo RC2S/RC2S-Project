@@ -76,7 +76,7 @@ public class AccessManagementController extends TabController implements Initial
 	@FXML private Label errorLabel;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources)
+    public void initialize(final URL location, final ResourceBundle resources)
 	{
 		usernameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUsername()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
@@ -110,7 +110,7 @@ public class AccessManagementController extends TabController implements Initial
 		updateSync();
 	}
 	
-	private void error(String err)
+	private void error(final String err)
 	{
 		errorLabel.setText(err);
 		
@@ -165,7 +165,7 @@ public class AccessManagementController extends TabController implements Initial
 		element = new User();
 	}
 	
-	private void updateElement(boolean isNew)
+	private void updateElement(final boolean isNew)
 	{
 		Role role = (Role)rolesBox.getSelectionModel().getSelectedItem();
 		Synchronization synchronization = (Synchronization)cubicAccessBox.getSelectionModel().getSelectedItem();
@@ -190,7 +190,7 @@ public class AccessManagementController extends TabController implements Initial
 	}
 	
 	@FXML
-	private void onAddEvent(ActionEvent e)
+	private void onAddEvent(final ActionEvent e)
 	{
 		if(passwordField.getText().equals(confirmPassField.getText()))
 		{
@@ -233,7 +233,7 @@ public class AccessManagementController extends TabController implements Initial
 	}
 	
 	@FXML
-	private void onKeyPressedEvent(KeyEvent e)
+	private void onKeyPressedEvent(final KeyEvent e)
 	{
 		if(e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
@@ -267,7 +267,7 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
-	private void onEditStarts(User user)
+	private void onEditStarts(final User user)
 	{
 		error("");
 		
@@ -288,7 +288,7 @@ public class AccessManagementController extends TabController implements Initial
 	}
 	
 	@FXML
-	private void onEditCanceled(ActionEvent e)
+	private void onEditCanceled(final ActionEvent e)
 	{
 		error("");
 		
@@ -305,7 +305,7 @@ public class AccessManagementController extends TabController implements Initial
 	}
 	
 	@FXML
-	private void onEditSubmit(ActionEvent e)
+	private void onEditSubmit(final ActionEvent e)
 	{
 		boolean passwordUpdated = !passwordField.getText().isEmpty();
 		

@@ -12,7 +12,7 @@ public abstract class LedEvent implements Runnable
 		return led;
 	}
 
-	public void setLed(Led led)
+	public void setLed(final Led led)
 	{
 		this.led = led;
 	}

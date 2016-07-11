@@ -22,7 +22,9 @@ public class LedCube extends Group
 	private LedEvent ledEvent;
     private Color color;
     
-    public LedCube(Parent parent, double x, double y, double z, double size, Color color, LedEvent ledEvent)
+    public LedCube(final Parent parent, final double x, final double y, 
+            final double z, final double size, 
+            final Color color, final LedEvent ledEvent)
     {
         this.parent = parent;
 		this.ledEvent = ledEvent;
@@ -66,7 +68,8 @@ public class LedCube extends Group
         this.setCursor(Cursor.HAND);
     }
 	
-    private void drawCube(double x, double y, double z, double size, Color color)
+    private void drawCube(final double x, final double y, 
+            final double z, final double size, final Color color)
     {
         this.x = x;
         this.y = y;
@@ -123,7 +126,7 @@ public class LedCube extends Group
         return x;
     }
 
-    public void setX(double x)
+    public void setX(final double x)
     {
         this.x = x;
     }
@@ -133,7 +136,7 @@ public class LedCube extends Group
         return y;
     }
 
-    public void setY(double y)
+    public void setY(final double y)
     {
         this.y = y;
     }
@@ -143,7 +146,7 @@ public class LedCube extends Group
         return z;
     }
 
-    public void setZ(double z)
+    public void setZ(final double z)
     {
         this.z = z;
     }
@@ -153,7 +156,7 @@ public class LedCube extends Group
         return rx;
     }
 
-    public void setRx(Rotate rx)
+    public void setRx(final Rotate rx)
     {
         this.rx = rx;
         getTransforms().set(0, rx);
@@ -164,7 +167,7 @@ public class LedCube extends Group
         return ry;
     }
 
-    public void setRy(Rotate ry)
+    public void setRy(final Rotate ry)
     {
         this.ry = ry;
         getTransforms().set(1, ry);
@@ -175,7 +178,7 @@ public class LedCube extends Group
         return rz;
     }
 
-    public void setRz(Rotate rz)
+    public void setRz(final Rotate rz)
     {
         this.rz = rz;
         getTransforms().set(2, rz);
@@ -197,7 +200,7 @@ public class LedCube extends Group
         return size;
     }
 
-    public void setSize(double size)
+    public void setSize(final double size)
     {
         this.size = size;
 
@@ -209,7 +212,7 @@ public class LedCube extends Group
         updateAxis();
     }
 
-    public void setColor(Color color)
+    public void setColor(final Color color)
     {
         this.color = color;
 
@@ -220,7 +223,7 @@ public class LedCube extends Group
         }
     }
 	
-	public void setActivated(boolean activated)
+	public void setActivated(final boolean activated)
 	{
 		for(Node n : this.getChildren())
         {

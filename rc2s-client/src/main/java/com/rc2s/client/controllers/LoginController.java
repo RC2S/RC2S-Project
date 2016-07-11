@@ -36,10 +36,10 @@ public class LoginController implements Initializable
     @FXML private Label errorLabel;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(final URL url, final ResourceBundle rb) {}
 
     @FXML
-    private void handleReturnPressed(KeyEvent event)
+    private void handleReturnPressed(final KeyEvent event)
     {
         if(event.getEventType() == KeyEvent.KEY_PRESSED
         && event.getCode() == KeyCode.ENTER)
@@ -47,13 +47,13 @@ public class LoginController implements Initializable
     }
 	
     @FXML
-    private void handleConnectButton(ActionEvent event)
+    private void handleConnectButton(final ActionEvent event)
     {
         connect(event);
     }
 	
     @FXML
-    private boolean validateIpAddress(KeyEvent event)
+    private boolean validateIpAddress(final KeyEvent event)
     {
         if(!Tools.matchIP(ipField.getText()))
         {
@@ -65,7 +65,7 @@ public class LoginController implements Initializable
         return true;
     }
 	
-    private void connect(Event event)
+    private void connect(final Event event)
     {
 		String ip = ipField.getText();
         String username = usernameField.getText();
@@ -123,7 +123,7 @@ public class LoginController implements Initializable
 		disable(false);
     }
 	
-	private void disable(boolean state)
+	private void disable(final boolean state)
 	{
 		ipField.setDisable(state);
 		usernameField.setDisable(state);

@@ -81,7 +81,7 @@ public class HomeController implements Initializable
 		}
 	}
 	
-	private void loadTab(String name, FXMLLoader loader)
+	private void loadTab(final String name, final FXMLLoader loader)
 	{
 		Tab tab = new Tab();
 		Label label = new Label(name);
@@ -114,7 +114,7 @@ public class HomeController implements Initializable
 	 * @param user
 	 * @return 
 	 */
-	private boolean isAdmin(User user)
+	private boolean isAdmin(final User user)
 	{
 		for(Role r : user.getRoles())
 		{

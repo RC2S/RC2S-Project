@@ -13,13 +13,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 
 public class CubicListController extends TabController implements Initializable
 {
@@ -31,7 +28,7 @@ public class CubicListController extends TabController implements Initializable
 	@FXML private Button addButton;
 	
 	@Override
-	public void initialize(URL url, ResourceBundle rb)
+	public void initialize(final URL url, final ResourceBundle rb)
 	{
 		this.scroller.setFitToHeight(true);
 		this.scroller.setFitToWidth(true);
@@ -72,7 +69,7 @@ public class CubicListController extends TabController implements Initializable
 	}
 	
 	@FXML
-	private void showAddView(ActionEvent e)
+	private void showAddView(final ActionEvent e)
 	{
 		FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
 		CubicDetailsController controller = loader.getController();

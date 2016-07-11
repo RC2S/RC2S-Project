@@ -45,15 +45,15 @@ public class User implements Serializable
 
     public User() {}
     
-    public User(String username, String password)
+    public User(final String username, final String password)
     {
         this.username   = username;
         this.password   = password;
     }
 
-    public User(Integer id, String username, String password,
-        boolean activated, boolean locked,
-        Date lastLogin, Date created, Date updated)
+    public User(final Integer id, final String username, final String password,
+        final boolean activated, final boolean locked,
+        final Date lastLogin, final Date created, final Date updated)
     {
         this.id         = id;
         this.username   = username;
@@ -69,7 +69,7 @@ public class User implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -79,7 +79,7 @@ public class User implements Serializable
         return username;
     }
 
-    public void setUsername(String username)
+    public void setUsername(final String username)
     {
         this.username = username;
     }
@@ -89,7 +89,7 @@ public class User implements Serializable
         return password;
     }
 
-    public void setPassword(String password)
+    public void setPassword(final String password)
     {
         this.password = password;
     }
@@ -99,7 +99,7 @@ public class User implements Serializable
         return activated;
     }
 
-    public void setActivated(boolean activated)
+    public void setActivated(final boolean activated)
     {
         this.activated = activated;
     }
@@ -109,7 +109,7 @@ public class User implements Serializable
         return locked;
     }
 
-    public void setLocked(boolean locked)
+    public void setLocked(final boolean locked)
     {
         this.locked = locked;
     }
@@ -119,7 +119,7 @@ public class User implements Serializable
         return lastLogin;
     }
 
-    public void setLastLogin(Date lastLogin)
+    public void setLastLogin(final Date lastLogin)
     {
         this.lastLogin = lastLogin;
     }
@@ -129,7 +129,7 @@ public class User implements Serializable
         return created;
     }
 
-    public void setCreated(Date created)
+    public void setCreated(final Date created)
     {
         this.created = created;
     }
@@ -139,7 +139,7 @@ public class User implements Serializable
         return updated;
     }
 
-    public void setUpdated(Date updated)
+    public void setUpdated(final Date updated)
     {
         this.updated = updated;
     }
@@ -149,7 +149,7 @@ public class User implements Serializable
 		return synchronizations;
 	}
 
-	public void setSynchronizations(List<Synchronization> synchronizations)
+	public void setSynchronizations(final List<Synchronization> synchronizations)
 	{
 		this.synchronizations = synchronizations;
 	}
@@ -159,7 +159,7 @@ public class User implements Serializable
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles)
+	public void setRoles(final List<Role> roles)
 	{
 		this.roles = roles;
 	}
@@ -169,7 +169,7 @@ public class User implements Serializable
         return tracks;
     }
 
-    public void setTracks(List<Track> tracks)
+    public void setTracks(final List<Track> tracks)
     {
         this.tracks = tracks;
     }
@@ -196,7 +196,7 @@ public class User implements Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
+	public boolean equals(final Object o)
 	{
 		if(o != null && o instanceof User)
 		{
