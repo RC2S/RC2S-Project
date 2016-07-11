@@ -29,8 +29,7 @@ Version : **1.0**
 
 - **RC2S Client** : Client lourd JavaFX permettant la connexion à un serveur d’application RC2S et la gestion des Cubes liés à un utilisateur.
 
-- **RC2S Plugin Maker** : Environnement de développement de plugins pour la suite RC2S,  
-intégrant entre autre fonctionnalité un parser d’annotations pour faciliter et alléger le développement.  
+- **RC2S Plugin Maker** : Environnement de développement de plugins pour la suite RC2S, intégrant entre autre fonctionnalité un parser d’annotations pour faciliter et alléger le développement.  
 Les plugins ainsi créés pourront interagir avec le serveur et le client, permettant l’ajout de nouvelles fonctionnalités suivant les besoins de l’utilisateur.
 
 ## Installation
