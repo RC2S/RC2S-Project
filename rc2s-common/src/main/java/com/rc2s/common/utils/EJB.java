@@ -43,7 +43,6 @@ public class EJB
 	{
 		try
 		{
-            EJB.context.addToEnvironment("foo2", "bar2");
             return EJB.context != null ? EJB.context.lookup(ejbName) : null;
 		} catch (NamingException e)
 		{

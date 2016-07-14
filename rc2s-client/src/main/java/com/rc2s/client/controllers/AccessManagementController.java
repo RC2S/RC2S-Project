@@ -43,6 +43,7 @@ import org.apache.logging.log4j.Logger;
 public class AccessManagementController extends TabController implements Initializable
 {
 	private final Logger logger = LogManager.getLogger(this.getClass());
+    
 	private final UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");
 	private final RoleFacadeRemote roleEJB = (RoleFacadeRemote)EJB.lookup("RoleEJB");
 	private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote)EJB.lookup("SynchronizationEJB");
