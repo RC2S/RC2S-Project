@@ -78,8 +78,12 @@ public class LoginController implements Initializable
         {
 			try
 			{
-				// Init EJB context
+				// Init Programmatic Login
+                Main.getProgrammaticLogin().login(username, password.toCharArray());
+                
+                // Init EJB context
 				EJB.initContext(ip, null);
+                
                 AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote) EJB.lookup("AuthenticationEJB");
                 
 				try

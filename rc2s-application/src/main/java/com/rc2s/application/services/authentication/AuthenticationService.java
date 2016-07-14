@@ -25,8 +25,8 @@ public class AuthenticationService implements IAuthenticationService
     @EJB
     private IUserDAO userDAO;
     
-    private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy";
-	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
+    private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy";
+	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:";
     
     @Override
     @Deprecated
