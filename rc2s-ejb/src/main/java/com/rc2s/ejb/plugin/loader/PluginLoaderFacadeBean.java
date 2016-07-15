@@ -1,21 +1,25 @@
 package com.rc2s.ejb.plugin.loader;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.plugin.loader.IPluginLoaderService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "PluginLoaderEJB")
+@Interceptors(SecurityInterceptor.class)
 public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 {
     @EJB
     private IPluginLoaderService pluginLoaderService;
     
     @Override
-    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException
+    public void uploadPlugin(User caller, String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException
     {
 		try
 		{
@@ -28,7 +32,7 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
     }
 
 	@Override
-	public void deletePlugin(Plugin plugin) throws EJBException
+	public void deletePlugin(User caller, Plugin plugin) throws EJBException
 	{
 		try
 		{

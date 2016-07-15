@@ -9,15 +9,22 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class UserService implements IUserService
 {
     @EJB
     private IUserDAO userDAO;
-	
-	private static final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy";
-	private static final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
+    
+    private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy";
+	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
+    
     
     @Override
     public List<User> getAll() throws ServiceException
@@ -33,42 +40,11 @@ public class UserService implements IUserService
     }
 	
 	@Override
-	public User login(String username, String password) throws ServiceException
-	{
-		try
-		{
-			User user = null;
-			
-			if(username != null && password != null)
-			{
-				password = Hash.sha1(UserService.SALT + password + UserService.PEPPER);
-				user = userDAO.getAuthenticatedUser(username, password);
-				
-				if(user != null)
-				{
-					int code = userDAO.setLastLogin(user);
-				
-					if(code != 1)
-					{
-						System.err.println("Unable to update user's last IP address. Return code is: " + code);
-					}
-				}
-			}
-			
-			return user;
-		}
-		catch(DAOException e)
-		{
-			throw new ServiceException(e);
-		}
-	}
-	
-	@Override
 	public User add(User user) throws ServiceException
 	{
 		try
 		{
-			user.setPassword(Hash.sha1(UserService.SALT + user.getPassword() + UserService.PEPPER));
+			user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
 			System.out.println(user.getPassword());
 			
 			user.setCreated(new Date());
@@ -86,7 +62,7 @@ public class UserService implements IUserService
 		try
 		{
 			if(passwordUpdated)
-				user.setPassword(Hash.sha1(UserService.SALT + user.getPassword() + UserService.PEPPER));
+				user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
 			
 			user.setUpdated(new Date());
 			return userDAO.update(user);

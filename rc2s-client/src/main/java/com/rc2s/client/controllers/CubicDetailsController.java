@@ -101,13 +101,13 @@ public class CubicDetailsController extends TabController implements Initializab
 		try
 		{
 			// Gather sizes
-			sizeBox.getItems().addAll(sizeEJB.getAll());
+			sizeBox.getItems().addAll(sizeEJB.getAll(Main.getAuthenticatedUser()));
 
 			// Init colors
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
 
 			// Gather cubes (all, only available for this user... ?)
-			cubesBox.getItems().addAll(cubeEJB.getAllCubes());
+			cubesBox.getItems().addAll(cubeEJB.getCubes(Main.getAuthenticatedUser()));
 		}
 		catch(EJBException e)
 		{
@@ -164,7 +164,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		
 		try
 		{
-			boolean status = cubeEJB.getStatus(cube);
+			boolean status = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
 			statusLabel.setText(status ? "Online" : "Offline");
 		}
 		catch(EJBException e)
@@ -323,7 +323,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				{
 					try
 					{
-						cube = cubeEJB.update(cube);
+						cube = cubeEJB.update(Main.getAuthenticatedUser(), cube);
 						toggleEditCube();
 					}
 					catch(EJBException ex)
@@ -366,10 +366,10 @@ public class CubicDetailsController extends TabController implements Initializab
 				{
 					if(newSizeBox.isVisible())
 					{
-						Size newSize = sizeEJB.add(cube.getSize());
+						Size newSize = sizeEJB.add(Main.getAuthenticatedUser(), cube.getSize());
 						cube.setSize(newSize);
 					}
-					cubeEJB.add(cube);
+					cubeEJB.add(Main.getAuthenticatedUser(), cube);
 					
 					onBackEvent(null);
 				}
@@ -398,7 +398,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		{
 			try
 			{
-				cubeEJB.remove(cube);
+				cubeEJB.remove(Main.getAuthenticatedUser(), cube);
 				onBackEvent(null);
 			}
 			catch(EJBException ex)
@@ -459,7 +459,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				cubesBox.getItems().remove(c);
 				cube.getSynchronization().getCubes().add(c);
 				
-				cubeEJB.update(cube);
+				cubeEJB.update(Main.getAuthenticatedUser(), cube);
 			}
 			catch(EJBException ex)
 			{
@@ -486,7 +486,7 @@ public class CubicDetailsController extends TabController implements Initializab
 						cube.getSynchronization().getCubes().remove(c);
 					}
 
-					cubeEJB.update(cube);
+					cubeEJB.update(Main.getAuthenticatedUser(), cube);
 				}
 				catch(EJBException ex)
 				{
@@ -503,7 +503,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		try
 		{
-			cubeEJB.updateAllLed(cube, true);
+			cubeEJB.updateAllLed(Main.getAuthenticatedUser(), cube, true);
 			ledCube.setActivated(true);
 		}
 		catch(EJBException ex)
@@ -517,7 +517,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		try
 		{
-			cubeEJB.updateAllLed(cube, false);
+			cubeEJB.updateAllLed(Main.getAuthenticatedUser(), cube, false);
 			ledCube.setActivated(false);
 		}
 		catch(EJBException ex)
@@ -534,7 +534,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			{
 				try
 				{
-					cubeEJB.updateAllLed(cube, ledCube.getStateArray());
+					cubeEJB.updateAllLed(Main.getAuthenticatedUser(), cube, ledCube.getStateArray());
 				}
 				catch(EJBException e)
 				{

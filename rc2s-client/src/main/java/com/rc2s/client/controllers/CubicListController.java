@@ -13,9 +13,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 
 public class CubicListController extends TabController implements Initializable
 {
@@ -24,7 +28,6 @@ public class CubicListController extends TabController implements Initializable
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	
 	@FXML private ScrollPane scroller;
-	@FXML private GridPane grid;
 	@FXML private Button addButton;
 	
 	@Override
@@ -39,6 +42,7 @@ public class CubicListController extends TabController implements Initializable
 	{
 		try
 		{
+			GridPane grid = new GridPane();
 			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
 
 			int i = 0, j = 0;
@@ -49,15 +53,17 @@ public class CubicListController extends TabController implements Initializable
 				controller.setTab(getTab());
 				controller.update(cube);
 
-				this.grid.add(loader.getRoot(), i, j);
+				grid.add(loader.getRoot(), i, j);
+				grid.setHgrow(loader.getRoot(), Priority.ALWAYS);
 
 				if(++i == MAX_COLUMNS)
 				{
 					i = 0;
-					grid.addRow(1);
-					j++;
+					grid.addRow(++j);
 				}
 			}
+
+			scroller.setContent(grid);
 		}
 		catch(EJBException e)
 		{

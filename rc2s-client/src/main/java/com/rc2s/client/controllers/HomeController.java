@@ -14,8 +14,11 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.text.TextAlignment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,7 +60,7 @@ public class HomeController implements Initializable
 	{
 		try
 		{
-			List<Plugin> availablePlugins = pluginEJB.getAvailables();
+			List<Plugin> availablePlugins = pluginEJB.getAvailables(Main.getAuthenticatedUser());
 			
 			for(Plugin plugin : availablePlugins)
 			{
@@ -80,7 +83,16 @@ public class HomeController implements Initializable
 	
 	private void loadTab(String name, FXMLLoader loader)
 	{
-		Tab tab = new Tab(name, loader.getRoot());
+		Tab tab = new Tab();
+		Label label = new Label(name);
+		label.setStyle("-fx-rotate: 0; -fx-max-width: 100px; -fx-wrap-text: true; -fx-ellipsis-string: '...'");
+		label.setWrapText(true);
+		label.setAlignment(Pos.CENTER);
+		label.setTextAlignment(TextAlignment.CENTER);
+
+		tab.setGraphic(label);
+		tab.setContent(loader.getRoot());
+
 		Object rawController = loader.getController();
 
 		if(rawController instanceof TabController)

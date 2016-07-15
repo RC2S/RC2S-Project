@@ -1,12 +1,28 @@
 package com.rc2s.client;
 
-import com.rc2s.annotations.SourceControl;
+import com.rc2s.common.exceptions.RC2SException;
+import com.rc2s.common.utils.EJB;
+import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@SourceControl
 public class ClientTest
 {
     public static void main(String[] args)
     {
+		/*try
+		{
+			EJB.initContext("127.0.0.1", "3700");
+		
+			StreamingFacadeRemote streamingLoader = (StreamingFacadeRemote)EJB.lookup("StreamingEJB");
+
+			//streamingLoader.startStreaming();
+		}
+		catch (RC2SException ex)
+		{
+			Logger.getLogger(ClientTest.class.getName()).log(Level.SEVERE, null, ex);
+		}*/
+		
 		/*try
 		{
 			PluginLoaderFacadeRemote pluginLoader = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");

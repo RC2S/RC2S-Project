@@ -9,7 +9,7 @@ def loadProfile() {
 
 allprojects {
     group = 'com.rc2s'
-    version = '0.2'
+    version = '0.3'
 }
 
 subprojects {
@@ -28,8 +28,9 @@ subprojects {
     dependencies {
         compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.5'
         compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.5'
-        
+
         testCompile group: 'junit', name: 'junit', version: '4.12'
         testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+        testCompile group: 'org.apache.openejb', name: 'openejb-core', version: '4.7.4'
     }
 }

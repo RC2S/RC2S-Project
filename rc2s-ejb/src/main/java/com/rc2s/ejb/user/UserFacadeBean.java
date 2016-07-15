@@ -1,5 +1,6 @@
 package com.rc2s.ejb.user;
 
+import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.common.vo.User;
 import javax.ejb.Stateless;
 import com.rc2s.application.services.user.IUserService;
@@ -7,15 +8,17 @@ import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "UserEJB")
+@Interceptors(SecurityInterceptor.class)
 public class UserFacadeBean implements UserFacadeRemote
 {
     @EJB
     private IUserService userService;
     
     @Override
-    public List<User> getAll() throws EJBException
+    public List<User> getAll(User caller) throws EJBException
     {
 		try
 		{
@@ -28,20 +31,7 @@ public class UserFacadeBean implements UserFacadeRemote
     }
 	
 	@Override
-	public User login(String username, String password) throws EJBException
-	{
-		try
-		{
-			return userService.login(username, password);
-		}
-		catch(ServiceException e)
-		{
-			throw new EJBException(e);
-		}
-	}
-	
-	@Override
-	public User add(User user) throws EJBException
+	public User add(User caller, User user) throws EJBException
 	{
 		try
 		{
@@ -54,7 +44,7 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
-	public User update(User user, boolean passwordUpdated) throws EJBException
+	public User update(User caller, User user, boolean passwordUpdated) throws EJBException
 	{
 		try
 		{
@@ -67,7 +57,7 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
-	public void delete(User user) throws EJBException
+	public void delete(User caller, User user) throws EJBException
 	{
 		try
 		{

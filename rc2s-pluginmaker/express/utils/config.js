@@ -14,6 +14,8 @@ module.exports = {
 		port			: 3306,
 		user			: 'root',
 		password		: 'root',
+		salt	 		: 'c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy',
+		pepper			: '>m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:'
 	},
 	che : {
 		host			: '192.168.1.108',
@@ -23,7 +25,8 @@ module.exports = {
 		authMethods 	: ['GET', 'POST', 'PUT', 'DELETE'],
 		workspace		: 'rc2s',
 		template		: __dirname + '/template/',
-		downloadFolder	: path.resolve(__dirname + '/../utils/download/') + '/',
+		templateFolder	: path.resolve(__dirname + '/template') + '/',
+		tmpFolder 		: path.resolve(__dirname + '/tmp') + '/',
 		prefixImport	: '[pluginname]'
 	},
 	log4js : {

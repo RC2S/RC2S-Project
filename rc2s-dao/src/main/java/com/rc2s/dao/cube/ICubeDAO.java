@@ -11,4 +11,6 @@ import javax.ejb.Local;
 public interface ICubeDAO extends IGenericDAO<Cube>
 {
 	public List<Cube> getCubes(User user) throws DAOException;
+    
+	public Cube getByIp(String ipAddress) throws DAOException;
 }

@@ -1,8 +1,12 @@
 var WorkspaceController	= require('./WorkspaceController');
 var config				= require('../utils/config');
-var recursive			= require('recursive-readdir');
+var copy				= require('recursive-copy');
+var through				= require('through2');
 var fs 					= require('fs');
+var del					= require('del');
 var exec				= require('child_process').exec;
+var unidecode			= require('unidecode');
+// var recursive		= require('recursive-readdir');
 
 function PluginsController() {};
 
@@ -24,7 +28,7 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 					});
 				});
 
-			if(workspace.status == 'STOPPED')
+			if (workspace.status == 'STOPPED')
 				WorkspaceController.startWorkspaceByName(workspace.config.name, function(wsState, errStart) {
 					if (errStart != undefined)
 						return callback(undefined, errStart);
@@ -39,7 +43,7 @@ PluginsController.prototype.getAllPlugins = function(callback) {
 
 PluginsController.prototype.addPlugin = function(req, callback) {
 	
-	req.checkBody('pluginName', 'Invalid Plugin Name').notEmpty().len(3, 20);
+	req.checkBody('pluginName', 'Invalid Plugin Name').notEmpty().len(3, 20).notSpecialChars();
 	req.checkBody('pluginDesc', 'Invalid Plugin Description').notEmpty().len(3, 100);
 
 	var errors = req.validationErrors();
@@ -47,8 +51,12 @@ PluginsController.prototype.addPlugin = function(req, callback) {
 	if (errors)
 		return callback(false, errors);
 
+	// Transform pluginName for package standard
+	formatedPluginName = unidecode(req.body.pluginName); 						// Transform non ASCII to ASCII : é -> e
+	formatedPluginName = formatedPluginName.replace(/[^0-9a-zA-Z_-]/gi, ''); 	// Remove non alphanumeric
+
 	var plugin = {
-		name 		: req.body.pluginName,
+		name 		: formatedPluginName,
 		description : req.body.pluginDesc
 	};
 
@@ -87,8 +95,60 @@ PluginsController.prototype.removePlugin = function(pluginName, callback) {
 };
 
 PluginsController.prototype.importTemplateToProject = function(wsID, pluginName, callback) {
-	
-	recursive(config.che.template, function(errListFiles, files) {
+
+	// Transform PluginName for package standard
+	formatedPluginName = pluginName.replace(/\W/g, '').toLowerCase(); 	// Remove non alphanumeric
+
+	var options = {
+		overwrite: true,
+		expand: true,
+		dot: true,
+		junk: true,
+		filter: [
+			'**/*'
+		],
+		rename: function(filePath) {
+			return filePath.split('[pluginname]').join(formatedPluginName);
+		},
+		transform: function(src, dest, stats) {
+			return through(function(chunk, enc, done)  {
+				var output = chunk.toString().split('[pluginname]').join(formatedPluginName);
+				done(null, output);
+			});
+		}
+	};
+
+	// Copy files from the template folder to the tmp folder by replacing [pluginname]
+	// in the folder names and file contents by the plugin name
+	copy(config.che.templateFolder, config.che.tmpFolder + formatedPluginName, options)
+		.then(function(results) {
+			console.log('Copied ' + results.length + ' files');
+
+			exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
+				if (errorPs && stderrPs)
+					return callback(false, stderrPs);
+				else if (errorPs)
+					return callback(false, errorPs);
+
+				idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
+
+				exec('docker cp ' + config.che.tmpFolder.replace(/\s+/g, "\\ ") + formatedPluginName + '/. ' + idDockerMachine + ':/projects/' + pluginName, function(error, stdout, stderr) {
+					if (error && stderr)
+						return callback(false, stderr);
+					else if (error)
+						return callback(false, error);
+
+					del(config.che.tmpFolder + '/*');
+					return callback(true, undefined);
+				});
+			});
+		})
+		.catch(function(error) {
+			callback(false, error);
+		});
+
+	// Async problems : files are created before folders in some cases
+	/*recursive(config.che.template, function(errListFiles, files) {
 		if (errListFiles)
 			return callback(false, errListFiles);
 
@@ -98,7 +158,6 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 				var folders 			= relativeFilePath.substr(0, relativeFilePath.lastIndexOf('/'));
 				var file 				= relativeFilePath.substr((folders ? relativeFilePath.lastIndexOf('/') : 0), relativeFilePath.length);
 
-				console.log("Folder : " + folders);
 				WorkspaceController.addFolderToProject(wsID, pluginName, folders, function(resFolder, errFolder) {
 					console.log(resFolder);
 					if (errFolder)
@@ -117,18 +176,20 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 			});
 		}
 		callback(true, undefined);
-	});
+	});*/
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
 	exec('docker ps | cut -d" " -f1 | sed -n 2p', function(errorPs, idDockerMachine, stderrPs) {
 		if(errorPs && stderrPs)
 			return callback(false, stderrPs);
-		else if(error)
+		else if(errorPs)
 			return callback(false, errorPs);
 
-		var pluginZipPath = pluginName + '-project/' + pluginName + '-client/build' + pluginName + '.zip';
-		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.downloadFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
+		idDockerMachine = idDockerMachine.replace(/(\r\n|\r|\n|\s)/gm, '');
+		
+		var pluginZipPath = pluginName + '/' + pluginName + '-client/build/' + pluginName + '.zip';
+		exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(error, stdout, stderr) {
 			if(error && stderr)
 				return callback(false, stderr);
 			else if(error)

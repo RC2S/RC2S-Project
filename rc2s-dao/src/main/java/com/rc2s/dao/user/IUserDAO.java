@@ -9,5 +9,6 @@ import javax.ejb.Local;
 public interface IUserDAO extends IGenericDAO<User>
 {
 	public User getAuthenticatedUser(String username, String password) throws DAOException;
+    
 	public int setLastLogin(User user) throws DAOException;
 }

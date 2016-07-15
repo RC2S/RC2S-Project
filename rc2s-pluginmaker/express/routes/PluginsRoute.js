@@ -39,14 +39,14 @@ module.exports = function(app) {
 
 	app.get('/plugins/download/:name', function(req, res, next) {
 		PluginsController.downloadZip(req.params.name, function(valid, errors) {
-			if(valid)
-				res.sendFile(config.che.downloadFolder + req.params.name + '.zip');
+			if (valid)
+				res.sendFile(config.che.tmpFolder + req.params.name + '.zip');
 			else {
 				globalFlash = {error : CommonUtils.formatFormErrors(errors)};
 				res.redirect('/plugins');
 			}
 
-			del(config.che.downloadFolder + '/*');
+			del(config.che.tmpFolder + '/*');
 		});
 	});
 
