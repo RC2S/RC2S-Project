@@ -9,6 +9,7 @@ public class StreamingHandler extends Thread
 	public StreamingHandler(StreamingFacadeRemote streamingEJB, String id, String media) throws Exception
 	{
 		this.streaming = new Streaming(streamingEJB, id, media);
+		this.streaming.setDaemon(true);
 	}
 
 	@Override
@@ -59,5 +60,10 @@ public class StreamingHandler extends Thread
 	public Streaming.StreamingState getStreamingState()
 	{
 		return streaming.getStreamingState();
+	}
+
+	public Streaming getSlave()
+	{
+		return streaming;
 	}
 }

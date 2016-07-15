@@ -20,7 +20,7 @@ import javafx.scene.input.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
-import org.apache.logging.log4j.core.layout.StringBuilderEncoder;
+import javafx.stage.Window;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -389,6 +389,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 				Main.getAuthenticatedUser().getUsername(),
 				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
 			);
+			streamingHandler.setDaemon(true);
 		}
 		catch(Exception e)
 		{
