@@ -5,8 +5,6 @@ import com.rc2s.annotations.mappers.ParameterMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
@@ -35,8 +33,8 @@ public class SourceUtil
 	private static boolean hasMainView			= false;
 	
 	// Needed annotations package names & packages paths
-	private final static String CONTROLLERS_FOLDER_PATH	= null;
-	private final static String VIEWS_FOLDER_PATH		= null;
+	private static String CONTROLLERS_FOLDER_PATH	= null;
+	private static String VIEWS_FOLDER_PATH		= null;
 	private final static String STATELESS_PACKAGE		= "javax.ejb.Stateless";
 	private final static String STATEFUL_PACKAGE		= "javax.ejb.Stateful";
 	private final static String REMOTE_PACKAGE			= "javax.ejb.Remote";
@@ -67,7 +65,16 @@ public class SourceUtil
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
 		{
-			getControllersAndViewsFoldersPaths();
+			try
+			{
+				verifyRoot(packageParts);
+			}
+			catch (SourceControlException ex)
+			{
+				ex.printStackTrace();
+			}
+			
+			buildControllersAndViewsFoldersPaths();
 			
 			try
 			{
@@ -121,34 +128,32 @@ public class SourceUtil
 		}
 	}
 	
-	public void getControllersAndViewsFoldersPaths()
+	public void buildControllersAndViewsFoldersPaths()
 	{	
-		try
-		{
-			Properties properties = new Properties();
-			properties.load(getClass().getResourceAsStream("gradle.properties"));
-			
-			String path = properties.getProperty("path");
-			System.out.println("------------------");
-			System.out.println("Path found in gradle properties : " + path);
-			System.out.println("------------------");
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public static void displayInfo(String f) throws IOException
-	{
-		File file = new File(f);
-		System.out.println("========================================");
-		System.out.println("          name : " + file.getName());
-		System.out.println("  is directory : " + file.isDirectory());
-		System.out.println("        exists : " + file.exists());
-		System.out.println("          path : " + file.getPath());
-		System.out.println(" absolute path : " + file.getAbsolutePath());
-		System.out.println("canonical path : " + file.getCanonicalPath());
+		String pluginsRoot = System.getenv("RC2S_PLUGINS_ROOT");
+		
+		// Root is /[plugins-root]/[plugin-name]/[plugin-name]-client/src/main/
+		StringBuilder sb = new StringBuilder();
+		sb.append(pluginsRoot).append(File.separator)
+			.append(pluginName).append(File.separator)
+			.append(pluginName).append("-client").append(File.separator)
+			.append("src").append(File.separator)
+			.append("main").append(File.separator);
+		
+		// Controllers at /java/com/rc2s/[plugin-name]/controllers/
+		CONTROLLERS_FOLDER_PATH = new StringBuilder(sb)
+			.append("java").append(File.separator)
+			.append("com").append(File.separator)
+			.append("rc2s").append(File.separator)
+			.append(pluginName).append(File.separator)
+			.append("controllers").append(File.separator)
+			.toString();
+		
+		// Views at /resources/views/
+		VIEWS_FOLDER_PATH = new StringBuilder(sb)
+			.append("resources").append(File.separator)
+			.append("views").append(File.separator)
+			.toString();
 	}
 
 	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
