@@ -38,9 +38,10 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
               <columns>
-                <TableColumn fx:id="musicColumn" maxWidth="18000.0" prefWidth="206.0" text="Music" />
+                <TableColumn fx:id="musicColumn" maxWidth="18000.0" prefWidth="185.0" text="Music" />
+                <TableColumn fx:id="authorColumn" maxWidth="6000.0" prefWidth="156.0" text="Author" />
                 <TableColumn fx:id="timeColumn" maxWidth="2000.0" prefWidth="235.0" text="Time" />
-                <TableColumn fx:id="authorColumn" maxWidth="6000.0" prefWidth="104.0" text="Author" />
+                  <TableColumn fx:id="genreColumn" maxWidth="6000.0" prefWidth="90.0" text="Genre" />
               </columns>
             </TableView>
             <GridPane fx:id="mainGridGridPane" GridPane.rowIndex="6">
