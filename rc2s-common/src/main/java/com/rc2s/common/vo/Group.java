@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "group")
+@Table(name = "\"group\"")
 public class Group implements Serializable
 {
 	@Id

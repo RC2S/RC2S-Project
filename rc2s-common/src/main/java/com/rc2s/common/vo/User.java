@@ -33,7 +33,7 @@ public class User implements Serializable
 	@JoinTable(
 		name = "link_user_group",
 		joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "group", referencedColumnName = "id")
+		inverseJoinColumns = @JoinColumn(name = "\"group\"", referencedColumnName = "id")
 	)
 	private List<Group> groups;
 
