@@ -13,12 +13,7 @@ public enum ClassNamesEnum
 	
 	// Common Classes
 	VO,
-	SQL,
 	
 	// Client Classes
 	CONTROLLERS,
-	VIEWS,
-	CSS,
-	IMAGES,
-	UTILS
 }
