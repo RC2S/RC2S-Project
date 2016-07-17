@@ -23,18 +23,20 @@ task copyCommonLib(type: Copy, dependsOn: deleteOldCommonLib) {
 
 jar {
     doLast {
-		try {
-			tasks.deleteOldCommonLib.execute();
-		}
-		catch(Throwable t) {
-			println t.getMessage();
-		}
-		
-		try {
-			tasks.copyCommonLib.execute();
-		}
-		catch(Throwable t) {
-			println t.getMessage();
-		}
+        if(!project.hasProperty('skipServerAutodeploy')) {
+            try {
+                tasks.deleteOldCommonLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+
+            try {
+                tasks.copyCommonLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+        }
     }
 }

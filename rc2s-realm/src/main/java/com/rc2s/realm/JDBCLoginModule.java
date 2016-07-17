@@ -1,7 +1,6 @@
 package com.rc2s.realm;
 
 import com.sun.enterprise.security.BasePasswordLoginModule;
-import com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm;
 import java.util.Arrays;
 import java.util.logging.Level;
 import javax.security.auth.login.LoginException;

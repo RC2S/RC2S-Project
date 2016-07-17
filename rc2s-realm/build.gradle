@@ -16,18 +16,20 @@ task copyRealmLib(type: Copy, dependsOn: deleteOldRealmLib) {
 
 jar {
     doLast {
-		try {
-			tasks.deleteOldRealmLib.execute();
-		}
-		catch(Throwable t) {
-			println t.getMessage();
-		}
-		
-		try {
-			tasks.copyRealmLib.execute();
-		}
-		catch(Throwable t) {
-			println t.getMessage();
-		}
+        if(!project.hasProperty('skipServerAutodeploy')) {
+            try {
+                tasks.deleteOldRealmLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+
+            try {
+                tasks.copyRealmLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+        }
     }
 }

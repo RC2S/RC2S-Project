@@ -46,5 +46,21 @@
       </task-args>
       <task-jvm-args/>
     </task>
+    <task>
+      <display-name>without deploy</display-name>
+      <non-blocking>no</non-blocking>
+      <task-names>
+        <name must-exist="no">gradle</name>
+      </task-names>
+      <task-args>
+        <arg>clean</arg>
+        <arg>publishToMaven</arg>
+        <arg>install</arg>
+        <arg>build</arg>
+        <arg>-PskipJNLPAutodeploy=true</arg>
+        <arg>-PskipServerAutodeploy=true</arg>
+      </task-args>
+      <task-jvm-args/>
+    </task>
   </common-tasks>
 </gradle-project-properties>

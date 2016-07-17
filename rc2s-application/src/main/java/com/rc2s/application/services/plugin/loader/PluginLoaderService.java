@@ -5,7 +5,7 @@ import com.rc2s.application.services.plugin.IPluginService;
 import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.dao.plugin.IPluginDAO;
 import java.nio.file.StandardCopyOption;
 import java.io.BufferedOutputStream;
@@ -36,7 +36,7 @@ public class PluginLoaderService implements IPluginLoaderService
     @EJB private IJnlpService jnlpService;
 	
     @Override
-    public void uploadPlugin(final String pluginName, final Role accessRole, final byte[] binaryPlugin) throws ServiceException
+    public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws ServiceException
     {
 		File tmpZip = null;
 		File unzipedDir = null;
@@ -184,7 +184,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 	
 	@Override
-	public Plugin persistPlugin(final String pluginName, final Role role) throws ServiceException
+	public Plugin persistPlugin(final String pluginName, final Group role) throws ServiceException
 	{
 		boolean update = false;
 		Plugin plugin;

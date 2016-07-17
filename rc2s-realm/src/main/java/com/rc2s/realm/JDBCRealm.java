@@ -103,12 +103,13 @@ public class JDBCRealm extends AppservRealm
         
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT ")
-          .append("`" + groupNameColumn + "` ")
+          .append("g." + groupNameColumn + " ")
           .append("FROM ")
-          .append("`" + groupTable + "` g")
-          .append("INNER JOIN `" + linkUserGrpTable + "` lug ON lug." + linkGroupColumn + " = g.id ")
-          .append("INNER JOIN `" + userTable + "` u ON u.id = lug." + linkUserColumn + " AND u." + userNameColumn + " = ?");
+          .append("`" + groupTable + "` AS g ")
+          .append("INNER JOIN `" + linkUserGrpTable + "` AS lug ON lug." + linkGroupColumn + " = g.id ")
+          .append("INNER JOIN `" + userTable + "` AS u ON u.id = lug." + linkUserColumn + " AND u." + userNameColumn + " = ?");
         
+        LOG.info("------- Group : " + sb.toString());
         groupQuery = sb.toString();
 
 		this.setProperty(BaseRealm.JAAS_CONTEXT_PARAM, jaasCtx);
@@ -123,14 +124,11 @@ public class JDBCRealm extends AppservRealm
         if (charset != null)
 			this.setProperty(Params.CHARSET, charset);
 
-		if (LOG.isLoggable(Level.FINEST))
-        {
-			LOG.finest(getClass().getSimpleName() + ": "
-					+ BaseRealm.JAAS_CONTEXT_PARAM + "= " + jaasCtx + ", "
-					+ Params.DATASOURCE_JNDI + " = " + dsJndi + ", " + Params.DB_USER + " = "
-					+ dbUser + ", " + Params.CHARSET + " = " + charset + ", "
-					+ passwordHash);
-		}
+        LOG.info(getClass().getSimpleName() + ": "
+                + BaseRealm.JAAS_CONTEXT_PARAM + "= " + jaasCtx + ", "
+                + Params.DATASOURCE_JNDI + " = " + dsJndi + ", " + Params.DB_USER + " = "
+                + dbUser + ", " + Params.CHARSET + " = " + charset + ", "
+                + passwordHash);
 	}
 
 	private void checkPropertySet(String paramValue, String paramName)
@@ -202,14 +200,16 @@ public class JDBCRealm extends AppservRealm
 	 */
 	public String[] authenticate(String username, char[] password)
     {
-		LOG.log(Level.INFO, "authenticating username={0}", username);
+        LOG.log(Level.INFO, "authenticating username={0}", username);
 		String[] groups = null;
 		
         if (isUserValid(username, password))
         {
+            LOG.info("after user valid");
 			groups = findGroups(username);
 			groups = addAssignGroups(groups);
 			setGroupNames(username, groups);
+            LOG.info("after set groups");
 		}
         
 		return groups;
@@ -244,7 +244,7 @@ public class JDBCRealm extends AppservRealm
 		try
         {
 			String correctHash = getPasswordHash(user);
-			valid = passwordHash.compareHash(Arrays.toString(password), correctHash);
+			valid = passwordHash.compareHash(new String(password), correctHash);
 		}
         catch (Exception ex)
         {

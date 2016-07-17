@@ -1,5 +1,6 @@
 package com.rc2s.realm;
 
+import static com.rc2s.realm.JDBCRealm.LOG;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -16,7 +17,11 @@ public class PasswordHash
     
     public boolean compareHash(String actualHash, String expectedHash)
     {
-        return expectedHash.equals(createHash(actualHash));
+        LOG.info("actual hash : " + actualHash);
+        String hash = createHash(actualHash);
+        LOG.info("actual sha1 salted peppered : " + hash);
+        LOG.info("actual : " + hash + " expected : " + expectedHash);
+        return expectedHash.equals(hash);
     }
     
     private String createHash(String toHash)

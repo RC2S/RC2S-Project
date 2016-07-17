@@ -5,7 +5,7 @@ import com.rc2s.client.utils.Dialog;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.ejb.plugin.PluginFacadeRemote;
 import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
 import com.rc2s.ejb.role.RoleFacadeRemote;
@@ -126,13 +126,13 @@ public class PluginsManagementController extends TabController implements Initia
 		error("");
 		if(pluginFile != null)
 		{
-			Role role = (Role)rolesBox.getSelectionModel().getSelectedItem();
+			Group group = (Group) rolesBox.getSelectionModel().getSelectedItem();
 			
-			if(role != null)
+			if(group != null)
 			{
 				try
 				{
-					pluginLoaderEJB.uploadPlugin(Main.getAuthenticatedUser(), "Test Plugin", role, Files.readAllBytes(pluginFile.toPath()));
+					pluginLoaderEJB.uploadPlugin(Main.getAuthenticatedUser(), "Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
 					updatePlugins();
 					ButtonType updateJnlp = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Do you wish to restart your client now?");
 						
