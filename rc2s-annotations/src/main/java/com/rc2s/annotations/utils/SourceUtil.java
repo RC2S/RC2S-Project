@@ -88,6 +88,7 @@ public class SourceUtil
 			catch (SourceControlException | ParserConfigurationException | SAXException | IOException ex)
 			{
 				System.err.println(ex.getMessage());
+				ex.printStackTrace();
 			}
 			
 			isFirstCheck = false;
@@ -258,37 +259,19 @@ public class SourceUtil
 				return ClassNamesEnum.DAO;
 				
 			case "common":
-				return commonClassNameFromPackage(packageParts[4]);
+				if (packageParts[4].equals("vo"))
+					return ClassNamesEnum.VO;
+				else
+					throw new SourceControlException("Invalid common package naming - Expected (vo), got '" + packageParts[4] + "'");
 				
 			case "client":
-				return clientClassNameFromPackage(packageParts[4]);
+				if (packageParts[4].equals("controllers"))
+					return ClassNamesEnum.CONTROLLERS;
+				else
+					throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packageParts[4] + "'");
 				
 			default:
 				throw new SourceControlException("Invalid package naming after plugin name - Expected (ejb|application|dao|common|client), got '" + packageParts[3] + "'");
-		}
-	}
-	
-	private ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
-	{
-		switch (packagePart) 
-		{
-			case "vo":
-				return ClassNamesEnum.VO;
-				
-			default:
-				throw new SourceControlException("Invalid common package naming - Expected (vo), got '" + packagePart + "'");
-		}
-	}
-
-	private ClassNamesEnum clientClassNameFromPackage(String packagePart) throws SourceControlException
-	{
-		switch (packagePart) 
-		{
-			case "controllers":
-				return ClassNamesEnum.CONTROLLERS;
-				
-			default:
-				throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packagePart + "'");
 		}
 	}
 	
