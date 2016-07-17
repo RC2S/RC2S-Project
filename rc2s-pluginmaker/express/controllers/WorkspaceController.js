@@ -9,6 +9,7 @@ WorkspaceController.prototype.findAll = function(callback) {
 };
 
 WorkspaceController.prototype.findByName = function(wsName, callback) {
+
 	requestApi('GETFBN1', 'workspace/name/' + wsName, 'GET', undefined, function(res) {
 		if (res.statusCode == 200)
 			callback(res.content, undefined);
@@ -55,6 +56,7 @@ WorkspaceController.prototype.deleteWSByID = function(wsID, callback) {
 };
 
 WorkspaceController.prototype.addProjectToWS = function(wsID, plugin, callback) {
+
 	var data = {
 		name		: plugin.name,
 		description : plugin.description,
@@ -81,6 +83,7 @@ WorkspaceController.prototype.addProjectToWS = function(wsID, plugin, callback) 
 };
 
 WorkspaceController.prototype.removeProjectFromWS = function(wsID, pjName, callback) {
+
 	requestApi('DELRPFWS', 'ext/project/' + wsID + '/' + pjName, 'DELETE', undefined, function(res) {
 		if (res.statusCode == 200)
 			callback(res.content, undefined);

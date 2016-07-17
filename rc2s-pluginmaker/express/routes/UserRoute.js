@@ -31,7 +31,7 @@ module.exports = function(app) {
 	app.get('/logout', function(req, res, next) {
 		if (req.session) {
 			req.session.token = undefined;
-			
+
 			req.session.destroy(function(err) {
 				if (err)
 					console.log(err);
