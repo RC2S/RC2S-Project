@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -162,17 +164,25 @@ public class CubicDetailsController extends TabController implements Initializab
 		
 		sizeLabel.setText(cube.getSize().getName());
 		sizeBox.getSelectionModel().select(cube.getSize());
-		
-		try
+
+		statusLabel.setText("Probing...");
+		Platform.runLater(new Thread()
 		{
-			boolean status = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
-			statusLabel.setText(status ? "Online" : "Offline");
-		}
-		catch(EJBException e)
-		{
-			error(e.getMessage());
-			statusLabel.setText("Offline");
-		}
+			@Override
+			public void run()
+			{
+				try
+				{
+					boolean state = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
+					statusLabel.setText(state ? "Online" : "Offline");
+				}
+				catch(EJBException e)
+				{
+					error(e.getMessage());
+					statusLabel.setText("Offline");
+				}
+			}
+		});
 		
 		synchronizedLabel.setText(cube.getSynchronization().getName());
 		synchronizedField.setText(cube.getSynchronization().getName());

@@ -9,6 +9,8 @@ import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,16 +57,24 @@ public class CubicItemController extends TabController implements Initializable
 		
 		this.name.setText(cube.getName());
 		this.ip.setText(cube.getIp());
-		
-		try
+
+		this.status.setText("Probing...");
+		Platform.runLater(new Thread()
 		{
-			boolean state = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
-			this.status.setText(state ? "Online" : "Offline");
-		}
-		catch(EJBException e)
-		{
-			System.err.println(e.getMessage());
-			this.status.setText("Offline");
-		}
+			@Override
+			public void run()
+			{
+				try
+				{
+					boolean state = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
+					status.setText(state ? "Online" : "Offline");
+				}
+				catch(EJBException e)
+				{
+					System.err.println(e.getMessage());
+					status.setText("Offline");
+				}
+			}
+		});
 	}
 }
