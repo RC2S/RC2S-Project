@@ -113,7 +113,7 @@ public class StreamingService implements IStreamingService
     @Override
     public void stop()
     {
-		synchronized (audioPlayer) {
+		synchronized (factory) {
 			log.info("Stop streaming");
 			if (audioPlayer.isPlaying()) {
 				audioPlayer.stop();

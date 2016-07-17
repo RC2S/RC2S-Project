@@ -20,11 +20,24 @@ import javafx.scene.input.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Window;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MusicPlaylistController extends TabController implements Initializable
@@ -33,15 +46,23 @@ public class MusicPlaylistController extends TabController implements Initializa
     private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
 
+	private final String META_TITLE = "title";
+	private final String META_ARTIST = "xmpDM:artist";
+	private final String META_DURATION = "xmpDM:duration";
+	private final String META_GENRE = "xmpDM:genre";
+
 	private MediaPlayer mediaPlayer;
 	private StreamingHandler streamingHandler;
 	private boolean playing = false;
 	private int currentTrack = -1;
 
+	private Map<Track, Metadata> tracksMetadata;
+
     @FXML private TableView<Track> tracksTable;
     @FXML private TableColumn<Track, String> musicColumn;
-    @FXML private TableColumn<Track, String> timeColumn;
-    @FXML private TableColumn<Track, String> authorColumn;
+	@FXML private TableColumn<Track, String> authorColumn;
+	@FXML private TableColumn<Track, String> timeColumn;
+	@FXML private TableColumn<Track, String> genreColumn;
 
     @FXML private ComboBox<Synchronization> syncBox;
     @FXML private Button previousButton;
@@ -55,7 +76,12 @@ public class MusicPlaylistController extends TabController implements Initializa
 		if(System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 
-		musicColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPath()));
+		tracksMetadata = new HashMap<>();
+
+		musicColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_TITLE));
+		authorColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_ARTIST));
+		timeColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_DURATION));
+		genreColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_GENRE));
 
 		tracksTable.setRowFactory(table -> {
 			TableRow<Track> row = new TableRow<>();
@@ -73,6 +99,29 @@ public class MusicPlaylistController extends TabController implements Initializa
 		});
     }
 
+	private SimpleStringProperty getValueFromMetadata(Track track, String metadataName)
+	{
+		Metadata metadata = tracksMetadata.get(track);
+
+		if(metadata != null)
+		{
+			String value = metadata.get(metadataName);
+
+			if(metadataName.equalsIgnoreCase(META_DURATION))
+			{
+				double duration = Double.parseDouble(value) / 1000.;
+				int minutes = (int)(duration / 60.);
+				int seconds = (int)(duration - (60. * minutes));
+
+				value = new StringBuilder().append(minutes).append(":").append(seconds).toString();
+			}
+
+			return new SimpleStringProperty(value);
+		}
+
+		return new SimpleStringProperty("No such metadata: " + metadataName);
+	}
+
 	@Override
 	public void updateContent()
 	{
@@ -84,8 +133,33 @@ public class MusicPlaylistController extends TabController implements Initializa
     {
         try
         {
-            tracksTable.getItems().clear();
-            tracksTable.getItems().addAll(trackEJB.getTracksByUser(Main.getAuthenticatedUser()));
+			List<Track> tracks = trackEJB.getTracksByUser(Main.getAuthenticatedUser());
+
+			// Clear metadata HashMap
+			tracksMetadata.clear();
+
+			// Gather metadata
+			for(Track track : tracks)
+			{
+				try
+				{
+					File file = new File(URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", ""));
+
+					Parser parser = new AutoDetectParser();
+					BodyContentHandler handler = new BodyContentHandler();
+					Metadata metadata = new Metadata();
+					FileInputStream is = new FileInputStream(file);
+					ParseContext context = new ParseContext();
+
+					parser.parse(is, handler, metadata, context);
+					tracksMetadata.put(track, metadata);
+				}
+				catch (IOException | TikaException | SAXException e) {}
+			}
+
+			// Update table content
+			tracksTable.getItems().clear();
+			tracksTable.getItems().addAll(tracks);
         }
         catch(EJBException e)
         {
@@ -315,6 +389,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 				Main.getAuthenticatedUser().getUsername(),
 				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
 			);
+			streamingHandler.setDaemon(true);
 		}
 		catch(Exception e)
 		{
