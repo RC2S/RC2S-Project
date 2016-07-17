@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -108,8 +107,7 @@ public class JDBCRealm extends AppservRealm
           .append("`" + groupTable + "` AS g ")
           .append("INNER JOIN `" + linkUserGrpTable + "` AS lug ON lug." + linkGroupColumn + " = g.id ")
           .append("INNER JOIN `" + userTable + "` AS u ON u.id = lug." + linkUserColumn + " AND u." + userNameColumn + " = ?");
-        
-        LOG.info("------- Group : " + sb.toString());
+
         groupQuery = sb.toString();
 
 		this.setProperty(BaseRealm.JAAS_CONTEXT_PARAM, jaasCtx);
