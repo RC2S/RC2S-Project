@@ -2,6 +2,8 @@ package com.rc2s.client.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,45 +78,45 @@ public class LoginController implements Initializable
 
         if(validateIpAddress(null))
         {
-			try
-			{
-				// Init EJB context
-				EJB.initContext(ip, null);
-                AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote) EJB.lookup("AuthenticationEJB");
-                
+			Platform.runLater(() -> {
 				try
 				{
-					// Get the authenticated user
-					User user = authenticationEJB.login(username, password);
-                    
-					if(user != null)
-					{
-						Main.setAuthenticatedUser(user);
-						
-						FXMLLoader loader = Resources.loadFxml("HomeView");
-						Scene scene = new Scene((Parent)loader.getRoot());
+					// Init EJB context
+					EJB.initContext(ip, null);
+					AuthenticationFacadeRemote authenticationEJB = (AuthenticationFacadeRemote) EJB.lookup("AuthenticationEJB");
 
-						Main.getStage().setScene(scene);
-						Main.getStage().setMinWidth(scene.getWidth());
-						Main.getStage().setMinHeight(scene.getHeight());
-						Main.getStage().show();
-					}
-					else
+					try
 					{
+						// Get the authenticated user
+						User user = authenticationEJB.login(username, password);
+
+						if(user != null)
+						{
+							Main.setAuthenticatedUser(user);
+
+							FXMLLoader loader = Resources.loadFxml("HomeView");
+							Scene scene = new Scene((Parent) loader.getRoot());
+
+							Main.getStage().setScene(scene);
+							Main.getStage().setMinWidth(scene.getWidth());
+							Main.getStage().setMinHeight(scene.getHeight());
+							Main.getStage().show();
+						}
+						else
+						{
+							errorLabel.setText("Authentication failed");
+						}
+					} catch (EJBException e) {
+						logger.error(e.getMessage());
 						errorLabel.setText("Authentication failed");
 					}
 				}
-				catch(EJBException e)
+				catch(Exception e)
 				{
-					logger.error(e.getMessage());
-					errorLabel.setText("Authentication failed");
+					e.printStackTrace();
+					errorLabel.setText("Unable to connect to the server");
 				}
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				errorLabel.setText("Unable to connect to the server");
-			}
+			});
         }
         else
 		{

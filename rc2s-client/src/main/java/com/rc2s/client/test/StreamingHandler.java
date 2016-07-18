@@ -2,7 +2,7 @@ package com.rc2s.client.test;
 
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 
-public class StreamingHandler extends Thread
+public class StreamingHandler
 {
 	private Streaming streaming;
 
@@ -12,8 +12,7 @@ public class StreamingHandler extends Thread
 		this.streaming.setDaemon(true);
 	}
 
-	@Override
-	public void run()
+	public void start()
 	{
 		synchronized (streaming) {
 			streaming.start();

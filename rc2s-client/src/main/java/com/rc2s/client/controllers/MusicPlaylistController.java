@@ -20,7 +20,6 @@ import javafx.scene.input.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Window;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -68,7 +67,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @FXML private Button previousButton;
     @FXML private Button playPauseButton;
     @FXML private Button nextButton;
-    @FXML private Slider soundSlider;
+    @FXML private Label playingLabel;
 
     @Override
     public void initialize(final URL url, final ResourceBundle rb)
@@ -78,10 +77,10 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 		tracksMetadata = new HashMap<>();
 
-		musicColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_TITLE));
-		authorColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_ARTIST));
-		timeColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_DURATION));
-		genreColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_GENRE));
+		musicColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_TITLE)));
+		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_ARTIST)));
+		timeColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_DURATION)));
+		genreColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_GENRE)));
 
 		tracksTable.setRowFactory(table -> {
 			TableRow<Track> row = new TableRow<>();
@@ -99,7 +98,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		});
     }
 
-	private SimpleStringProperty getValueFromMetadata(Track track, String metadataName)
+	private String getValueFromMetadata(Track track, String metadataName)
 	{
 		Metadata metadata = tracksMetadata.get(track);
 
@@ -116,10 +115,10 @@ public class MusicPlaylistController extends TabController implements Initializa
 				value = new StringBuilder().append(minutes).append(":").append(seconds).toString();
 			}
 
-			return new SimpleStringProperty(value);
+			return value;
 		}
 
-		return new SimpleStringProperty("No such metadata: " + metadataName);
+		return "No such metadata: " + metadataName;
 	}
 
 	@Override
@@ -389,13 +388,13 @@ public class MusicPlaylistController extends TabController implements Initializa
 				Main.getAuthenticatedUser().getUsername(),
 				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
 			);
-			streamingHandler.setDaemon(true);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 
+		playingLabel.setText(getValueFromMetadata(track, META_TITLE));
 		currentTrack = trackIndex;
 	}
 
