@@ -124,7 +124,7 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		try
 		{
-			users = userEJB.getAll(Main.getAuthenticatedUser());
+			users = userEJB.getAll();
 			usersTable.getItems().clear();
 			usersTable.getItems().addAll(users);
 			
@@ -141,7 +141,7 @@ public class AccessManagementController extends TabController implements Initial
 		try
 		{
 			groupsBox.getItems().clear();
-			groupsBox.getItems().addAll(groupEJB.getAll(Main.getAuthenticatedUser()));
+			groupsBox.getItems().addAll(groupEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -154,7 +154,7 @@ public class AccessManagementController extends TabController implements Initial
 		try
 		{
 			cubicAccessBox.getItems().clear();
-			cubicAccessBox.getItems().addAll(syncEJB.getAll(Main.getAuthenticatedUser()));
+			cubicAccessBox.getItems().addAll(syncEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -206,7 +206,7 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					try
 					{
-						userEJB.add(Main.getAuthenticatedUser(), element);
+						userEJB.add(element);
 
 						clearElement();
 						updateUsers();
@@ -250,7 +250,7 @@ public class AccessManagementController extends TabController implements Initial
 
 						if(answer == ButtonType.OK)
 						{
-							userEJB.delete(Main.getAuthenticatedUser(), user);
+							userEJB.delete(user);
 							updateUsers();
 						}
 					}
@@ -319,7 +319,7 @@ public class AccessManagementController extends TabController implements Initial
 			{
 				try
 				{
-					userEJB.update(Main.getAuthenticatedUser(), element, passwordUpdated);
+					userEJB.update(element, passwordUpdated);
 
 					clearElement();
 					updateUsers();

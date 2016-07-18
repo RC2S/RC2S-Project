@@ -8,6 +8,4 @@ import javax.ejb.Local;
 public interface IAuthenticationService
 {
     public User login(final String username, final String password) throws ServiceException;
-    
-    public boolean loginJaas(final String username, final String password);
 }

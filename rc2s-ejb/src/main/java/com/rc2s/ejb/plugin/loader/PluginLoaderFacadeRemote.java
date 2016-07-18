@@ -9,7 +9,7 @@ import javax.ejb.Remote;
 @Remote
 public interface PluginLoaderFacadeRemote
 {
-    public void uploadPlugin(final User caller, final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws EJBException;
+    public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws EJBException;
     
-	public void deletePlugin(final User caller, final Plugin plugin) throws EJBException;
+	public void deletePlugin(final Plugin plugin) throws EJBException;
 }

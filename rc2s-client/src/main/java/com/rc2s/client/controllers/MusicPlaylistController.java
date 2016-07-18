@@ -218,7 +218,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 					if(answer == ButtonType.OK)
 					{
-						trackEJB.delete(Main.getAuthenticatedUser(), track);
+						trackEJB.delete(track);
 						updateTracks();
 					}
 				}
@@ -258,7 +258,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 				try
 				{
 					Track track = uriToTrack(file.toURI());
-					trackEJB.add(Main.getAuthenticatedUser(), track);
+					trackEJB.add(track);
 					updateTracks();
 				}
 				catch(EJBException | MediaException e)

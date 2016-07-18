@@ -90,7 +90,7 @@ public class PluginsManagementController extends TabController implements Initia
 		try
 		{
 			groupsBox.getItems().clear();
-			groupsBox.getItems().addAll(groupEJB.getAll(Main.getAuthenticatedUser()));
+			groupsBox.getItems().addAll(groupEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -103,7 +103,7 @@ public class PluginsManagementController extends TabController implements Initia
 		try
 		{
 			pluginsTable.getItems().clear();
-			pluginsTable.getItems().addAll(pluginEJB.getAll(Main.getAuthenticatedUser()));
+			pluginsTable.getItems().addAll(pluginEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -132,7 +132,7 @@ public class PluginsManagementController extends TabController implements Initia
 			{
 				try
 				{
-					pluginLoaderEJB.uploadPlugin(Main.getAuthenticatedUser(), "Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
+					pluginLoaderEJB.uploadPlugin("Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
 					updatePlugins();
 					ButtonType updateJnlp = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Do you wish to restart your client now?");
 						
@@ -171,7 +171,7 @@ public class PluginsManagementController extends TabController implements Initia
 		
 					if(answer == ButtonType.OK)
 					{
-						pluginLoaderEJB.deletePlugin(Main.getAuthenticatedUser(), plugin);
+						pluginLoaderEJB.deletePlugin(plugin);
 						hidePluginTab(plugin.getName());
 						updatePlugins();
 					}

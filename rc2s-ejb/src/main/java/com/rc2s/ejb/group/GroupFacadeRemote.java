@@ -9,5 +9,5 @@ import javax.ejb.Remote;
 @Remote
 public interface GroupFacadeRemote
 {
-	public List<Group> getAll(final User caller) throws EJBException;
+	public List<Group> getAll() throws EJBException;
 }
