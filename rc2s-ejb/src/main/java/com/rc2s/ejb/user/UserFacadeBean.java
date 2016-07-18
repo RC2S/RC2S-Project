@@ -7,6 +7,7 @@ import com.rc2s.application.services.user.IUserService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.interceptor.Interceptors;
 
@@ -18,6 +19,7 @@ public class UserFacadeBean implements UserFacadeRemote
     private IUserService userService;
     
     @Override
+    @RolesAllowed({"admin"})
     public List<User> getAll(final User caller) throws EJBException
     {
 		try
@@ -31,6 +33,7 @@ public class UserFacadeBean implements UserFacadeRemote
     }
 	
 	@Override
+    @RolesAllowed({"admin"})
 	public User add(final User caller, final User user) throws EJBException
 	{
 		try
@@ -44,6 +47,7 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"admin"})
 	public User update(final User caller, final User user, final boolean passwordUpdated) throws EJBException
 	{
 		try
@@ -57,6 +61,7 @@ public class UserFacadeBean implements UserFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"admin"})
 	public void delete(final User caller, final User user) throws EJBException
 	{
 		try

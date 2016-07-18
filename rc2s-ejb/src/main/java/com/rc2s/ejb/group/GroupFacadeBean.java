@@ -1,7 +1,6 @@
-package com.rc2s.ejb.role;
+package com.rc2s.ejb.group;
 
 import com.rc2s.application.services.authentication.SecurityInterceptor;
-import com.rc2s.application.services.role.IRoleService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Group;
@@ -10,20 +9,23 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
+import com.rc2s.application.services.group.IGroupService;
+import javax.annotation.security.RolesAllowed;
 
-@Stateless(mappedName = "RoleEJB")
+@Stateless(mappedName = "GroupEJB")
 @Interceptors(SecurityInterceptor.class)
-public class RoleFacadeBean implements RoleFacadeRemote
+public class GroupFacadeBean implements GroupFacadeRemote
 {
 	@EJB
-	private IRoleService roleService;
+	private IGroupService groupService;
 
 	@Override
+    @RolesAllowed({"admin"})
 	public List<Group> getAll(final User caller) throws EJBException
 	{
 		try
 		{
-			return roleService.getAll();
+			return groupService.getAll();
 		}
 		catch(ServiceException e)
 		{

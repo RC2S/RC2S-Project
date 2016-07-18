@@ -7,6 +7,7 @@ import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.User;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
@@ -19,6 +20,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	private IPluginService pluginService;
 
 	@Override
+    @RolesAllowed({"admin"})
 	public List<Plugin> getAll(final User caller) throws EJBException
 	{
 		try
@@ -32,6 +34,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"admin"})
 	public List<Plugin> getAvailables(final User caller) throws EJBException
 	{
 		try
@@ -45,6 +48,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"admin"})
 	public Plugin add(final User caller, final Plugin plugin) throws EJBException
 	{
 		try
@@ -58,6 +62,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"admin"})
 	public Plugin update(final User caller, final Plugin plugin) throws EJBException
 	{
 		try
@@ -71,6 +76,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"admin"})
 	public void delete(final User caller, final Plugin plugin) throws EJBException
 	{
 		try

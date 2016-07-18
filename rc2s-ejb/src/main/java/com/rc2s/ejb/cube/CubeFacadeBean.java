@@ -9,6 +9,7 @@ import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -25,6 +26,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
     private SessionContext context;
 	
 	@Override
+    @RolesAllowed({"user"})
 	public List<Cube> getAllCubes(final User caller) throws EJBException
 	{ 
 		try
@@ -38,6 +40,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
+    @RolesAllowed({"user"})
 	public List<Cube> getCubes(final User caller) throws EJBException
 	{
 		try
@@ -51,6 +54,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
+    @RolesAllowed({"user"})
 	public void add(final User caller, final Cube c) throws EJBException
 	{
 		try
@@ -64,6 +68,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
+    @RolesAllowed({"user"})
 	public void remove(User caller, Cube c) throws EJBException
 	{
 		try
@@ -77,6 +82,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
+    @RolesAllowed({"user"})
 	public Cube update(final User caller, final Cube cube) throws EJBException
 	{
 		try
@@ -90,6 +96,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
+    @RolesAllowed({"user"})
 	public boolean getStatus(final User caller, final Cube c) throws EJBException
 	{
 		try
@@ -103,6 +110,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"user"})
 	public void updateAllLed(final User caller, final Cube c, final boolean state) throws EJBException
 	{
 		try
@@ -116,6 +124,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"user"})
 	public void updateAllLed(final User caller, final Cube c, final boolean[][][] states) throws EJBException
 	{
 		try

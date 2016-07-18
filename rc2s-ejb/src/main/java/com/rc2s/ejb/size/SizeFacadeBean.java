@@ -7,6 +7,7 @@ import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Size;
 import com.rc2s.common.vo.User;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
@@ -19,6 +20,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	private ISizeService sizeService;
 
 	@Override
+    @RolesAllowed({"user"})
 	public List<Size> getAll(final User caller) throws EJBException
 	{
 		try
@@ -32,6 +34,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"user"})
 	public Size add(final User caller, final Size size) throws EJBException
 	{
 		try

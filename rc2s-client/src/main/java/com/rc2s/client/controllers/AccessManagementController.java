@@ -9,7 +9,7 @@ import com.rc2s.common.utils.Hash;
 import com.rc2s.common.vo.Group;
 import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.User;
-import com.rc2s.ejb.role.RoleFacadeRemote;
+import com.rc2s.ejb.group.GroupFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.net.URL;
@@ -45,7 +45,7 @@ public class AccessManagementController extends TabController implements Initial
 	private final Logger logger = LogManager.getLogger(this.getClass());
     
 	private final UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
-	private final RoleFacadeRemote roleEJB = (RoleFacadeRemote) EJB.lookup("RoleEJB");
+	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
 	private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	
 	private List<User> users;
@@ -71,7 +71,7 @@ public class AccessManagementController extends TabController implements Initial
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPassField;
 
-    @FXML private ComboBox rolesBox;
+    @FXML private ComboBox groupsBox;
     @FXML private ComboBox cubicAccessBox;
 
     @FXML private Button addButton;
@@ -108,7 +108,7 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		updateUsers();
 		clearElement();
-		updateRoles();
+		updateGroups();
 		updateSync();
 	}
 	
@@ -136,12 +136,12 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
-	private void updateRoles()
+	private void updateGroups()
 	{
 		try
 		{
-			rolesBox.getItems().clear();
-			rolesBox.getItems().addAll(roleEJB.getAll(Main.getAuthenticatedUser()));
+			groupsBox.getItems().clear();
+			groupsBox.getItems().addAll(groupEJB.getAll(Main.getAuthenticatedUser()));
 		}
 		catch(EJBException e)
 		{
@@ -169,7 +169,7 @@ public class AccessManagementController extends TabController implements Initial
 	
 	private void updateElement(final boolean isNew)
 	{
-		Group role = (Group)rolesBox.getSelectionModel().getSelectedItem();
+		Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 		Synchronization synchronization = (Synchronization)cubicAccessBox.getSelectionModel().getSelectedItem();
 		
 		if(isNew)
@@ -184,8 +184,8 @@ public class AccessManagementController extends TabController implements Initial
 			element.setLocked(lockedCheckbox.isSelected());
 		}
 		
-		if(role != null)
-			element.setGroups(Arrays.asList(new Group[] {role}));
+		if(group != null)
+			element.setGroups(Arrays.asList(new Group[] {group}));
 		if(synchronization != null)
 			element.setSynchronizations(Arrays.asList(new Synchronization[] {synchronization}));
 	}
@@ -195,9 +195,9 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		if(passwordField.getText().equals(confirmPassField.getText()))
 		{
-			Group role = (Group)rolesBox.getSelectionModel().getSelectedItem();
+			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
-			if(role != null)
+			if(group != null)
 			{
 				updateElement(true);
 				Set<ConstraintViolation<User>> violations = Tools.validate(element);
@@ -227,7 +227,7 @@ public class AccessManagementController extends TabController implements Initial
 				}
 			}
 			else
-				error("Please select a role for this user");
+				error("Please select a group for this user");
 		}
 		else
 			error("Passwords don't match");
@@ -285,7 +285,7 @@ public class AccessManagementController extends TabController implements Initial
 		usernameField.setText(user.getUsername());
 		usernameField.setDisable(true);
 		
-		rolesBox.getSelectionModel().select(user.getGroups().get(0));
+		groupsBox.getSelectionModel().select(user.getGroups().get(0));
 	}
 	
 	@FXML
@@ -350,7 +350,7 @@ public class AccessManagementController extends TabController implements Initial
 		usernameField.clear();
 		passwordField.clear();
 		confirmPassField.clear();
-		rolesBox.getSelectionModel().select(null);
+		groupsBox.getSelectionModel().select(null);
 		cubicAccessBox.getSelectionModel().select(null);
 		activatedCheckbox.setSelected(false);
 		lockedCheckbox.setSelected(false);

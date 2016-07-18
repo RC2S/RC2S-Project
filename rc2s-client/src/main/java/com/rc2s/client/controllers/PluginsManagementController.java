@@ -8,7 +8,7 @@ import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Group;
 import com.rc2s.ejb.plugin.PluginFacadeRemote;
 import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
-import com.rc2s.ejb.role.RoleFacadeRemote;
+import com.rc2s.ejb.group.GroupFacadeRemote;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,9 +43,9 @@ public class PluginsManagementController extends TabController implements Initia
 	private static final String SERVER_PORT = "8080";
 	private static final String SERVER_JNLP = "/rc2s-jnlp/rc2s-client.jnlp";
 	
-	private final RoleFacadeRemote roleEJB = (RoleFacadeRemote)EJB.lookup("RoleEJB");
-	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote)EJB.lookup("PluginEJB");
-	private final PluginLoaderFacadeRemote pluginLoaderEJB = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
+	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote) EJB.lookup("PluginEJB");
+	private final PluginLoaderFacadeRemote pluginLoaderEJB = (PluginLoaderFacadeRemote) EJB.lookup("PluginLoaderEJB");
 	
     private final FileChooser fileChooser = new FileChooser();
 	private File pluginFile;
@@ -61,7 +61,7 @@ public class PluginsManagementController extends TabController implements Initia
 	@FXML private TableColumn<Plugin, String> updatedColumn;
 	
 	@FXML private Button explorerButton;
-	@FXML private ComboBox rolesBox;
+	@FXML private ComboBox groupsBox;
 	@FXML private Button addButton;
 	@FXML private Label statusLabel;
 
@@ -81,16 +81,16 @@ public class PluginsManagementController extends TabController implements Initia
 	public void updateContent()
 	{
 		pluginFile = null;
-		updateRoles();
+		updateGroups();
 		updatePlugins();
 	}
 	
-	private void updateRoles()
+	private void updateGroups()
 	{
 		try
 		{
-			rolesBox.getItems().clear();
-			rolesBox.getItems().addAll(roleEJB.getAll(Main.getAuthenticatedUser()));
+			groupsBox.getItems().clear();
+			groupsBox.getItems().addAll(groupEJB.getAll(Main.getAuthenticatedUser()));
 		}
 		catch(EJBException e)
 		{
@@ -126,7 +126,7 @@ public class PluginsManagementController extends TabController implements Initia
 		error("");
 		if(pluginFile != null)
 		{
-			Group group = (Group) rolesBox.getSelectionModel().getSelectedItem();
+			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
 			if(group != null)
 			{

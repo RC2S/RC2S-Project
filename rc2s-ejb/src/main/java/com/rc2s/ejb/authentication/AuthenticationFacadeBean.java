@@ -15,7 +15,7 @@ public class AuthenticationFacadeBean implements AuthenticationFacadeRemote
     IAuthenticationService authenticationService;
     
     @Override
-    @RolesAllowed({"admin"})
+    @RolesAllowed({"user"})
 	public User login(final String username, final String password) throws EJBException
 	{
 		try

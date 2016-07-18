@@ -8,6 +8,7 @@ import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.User;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
@@ -20,6 +21,7 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 	private ISynchronizationService synchronizationService;
 
 	@Override
+    @RolesAllowed({"user"})
 	public List<Synchronization> getAll(final User caller) throws EJBException
 	{
 		try
@@ -33,6 +35,7 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"user"})
 	public List<Synchronization> getByUser(final User caller) throws EJBException
 	{
 		try
@@ -46,6 +49,7 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 	}
 
 	@Override
+    @RolesAllowed({"user"})
 	public void add(final User caller, final Synchronization synchronization) throws EJBException
 	{
 		try

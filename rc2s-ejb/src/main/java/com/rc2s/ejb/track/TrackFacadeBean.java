@@ -10,6 +10,7 @@ import com.rc2s.common.vo.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "TrackEJB")
@@ -20,6 +21,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     private ITrackService trackService;
 
     @Override
+    @RolesAllowed({"user"})
     public Track add(final User caller, final Track track) throws EJBException
     {
         try
@@ -33,6 +35,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     }
 
     @Override
+    @RolesAllowed({"user"})
     public Track update(final User caller, final Track track) throws EJBException
 	{
         try
@@ -46,6 +49,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     }
 
     @Override
+    @RolesAllowed({"user"})
     public void delete(final User caller, final Track track) throws EJBException
 	{
 		try
@@ -59,6 +63,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     }
 
     @Override
+    @RolesAllowed({"user"})
     public List<Track> getTracksByUser(final User caller) throws EJBException
     {
         try
