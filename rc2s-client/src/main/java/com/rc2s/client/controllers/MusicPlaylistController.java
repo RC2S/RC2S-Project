@@ -1,8 +1,6 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
-import com.rc2s.client.test.Streaming;
-import com.rc2s.client.test.StreamingHandler;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
@@ -52,7 +50,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	private final String META_GENRE     = "xmpDM:genre";
 
 	private MediaPlayer mediaPlayer;
-	private StreamingHandler streamingHandler;
+	private StreamingHandlerUtils streamingHandler;
 	private boolean playing     = false;
 	private int currentTrack    = -1;
 
@@ -384,7 +382,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 				}
 			}
 
-			streamingHandler = new StreamingHandler(
+			streamingHandler = new StreamingHandlerUtils(
 				streamingEJB,
 				Main.getAuthenticatedUser().getUsername(),
 				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
@@ -419,7 +417,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 		if (streamingHandler != null) {
 			synchronized (streamingHandler) {
-				if (streamingHandler.getStreamingState() == Streaming.StreamingState.INIT)
+				if (streamingHandler.getStreamingState() == StreamingUtils.StreamingState.INIT)
 					streamingHandler.start();
 				else if (!streamingHandler.isPlaying()) {
 					streamingHandler.resumeStreaming();
