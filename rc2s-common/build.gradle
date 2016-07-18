@@ -7,7 +7,7 @@ configurations {
 
 dependencies {
     compile group: 'javax', name: 'javaee-api', version: '7.0'
-    provided group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
+    // provided group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 }
 
 task deleteOldCommonLib(type: Delete) {
@@ -23,18 +23,20 @@ task copyCommonLib(type: Copy, dependsOn: deleteOldCommonLib) {
 
 jar {
     doLast {
-		try {
-			tasks.deleteOldCommonLib.execute();
-		}
-		catch(Throwable t) {
-			println t.getMessage();
-		}
-		
-		try {
-			tasks.copyCommonLib.execute();
-		}
-		catch(Throwable t) {
-			println t.getMessage();
-		}
+        if(!project.hasProperty('skipServerAutodeploy')) {
+            try {
+                tasks.deleteOldCommonLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+
+            try {
+                tasks.copyCommonLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+        }
     }
 }

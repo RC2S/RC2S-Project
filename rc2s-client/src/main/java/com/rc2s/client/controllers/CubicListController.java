@@ -22,7 +22,7 @@ public class CubicListController extends TabController implements Initializable
 {
 	private final int MAX_COLUMNS = 3;
 	
-	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
+	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote) EJB.lookup("CubeEJB");
 	
 	@FXML private ScrollPane scroller;
 	@FXML private Button addButton;

@@ -62,8 +62,8 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="explorerButton" mnemonicParsing="false" onAction="#handleUploadFileButton" prefHeight="26.0" prefWidth="180.0" text="Pick a file..." GridPane.columnSpan="3" GridPane.halignment="CENTER" />
-                        <Label text="Role" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                        <ComboBox fx:id="rolesBox" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                        <Label text="Group" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <ComboBox fx:id="groupsBox" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
                         <Label fx:id="statusLabel" textFill="RED" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddEvent" text="Add !" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                      </children>

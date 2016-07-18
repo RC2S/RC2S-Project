@@ -1,6 +1,5 @@
 package com.rc2s.ejb.cube;
 
-import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.daemon.IDaemonService;
 import com.rc2s.application.services.cube.ICubeService;
 import com.rc2s.common.exceptions.EJBException;
@@ -9,13 +8,12 @@ import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "CubeEJB")
-@Interceptors(SecurityInterceptor.class)
 public class CubeFacadeBean implements CubeFacadeRemote
 {
 	@EJB private ICubeService cubeService;
@@ -25,7 +23,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
     private SessionContext context;
 	
 	@Override
-	public List<Cube> getAllCubes(final User caller) throws EJBException
+    @RolesAllowed({"user"})
+	public List<Cube> getAllCubes() throws EJBException
 	{ 
 		try
 		{
@@ -38,11 +37,12 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
-	public List<Cube> getCubes(final User caller) throws EJBException
+    @RolesAllowed({"user"})
+	public List<Cube> getCubes(final User user) throws EJBException
 	{
 		try
 		{
-			return cubeService.getCubes(caller);
+			return cubeService.getCubes(user);
 		}
 		catch(ServiceException e)
 		{
@@ -51,7 +51,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
-	public void add(final User caller, final Cube c) throws EJBException
+    @RolesAllowed({"user"})
+	public void add(final Cube c) throws EJBException
 	{
 		try
 		{
@@ -64,7 +65,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
-	public void remove(User caller, Cube c) throws EJBException
+    @RolesAllowed({"user"})
+	public void remove(final Cube c) throws EJBException
 	{
 		try
 		{
@@ -77,7 +79,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
-	public Cube update(final User caller, final Cube cube) throws EJBException
+    @RolesAllowed({"user"})
+	public Cube update(final Cube cube) throws EJBException
 	{
 		try
 		{
@@ -90,7 +93,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 	
 	@Override
-	public boolean getStatus(final User caller, final Cube c) throws EJBException
+    @RolesAllowed({"user"})
+	public boolean getStatus(final Cube c) throws EJBException
 	{
 		try
 		{
@@ -103,7 +107,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 
 	@Override
-	public void updateAllLed(final User caller, final Cube c, final boolean state) throws EJBException
+    @RolesAllowed({"user"})
+	public void updateAllLed(final Cube c, final boolean state) throws EJBException
 	{
 		try
 		{
@@ -116,7 +121,8 @@ public class CubeFacadeBean implements CubeFacadeRemote
 	}
 
 	@Override
-	public void updateAllLed(final User caller, final Cube c, final boolean[][][] states) throws EJBException
+    @RolesAllowed({"user"})
+	public void updateAllLed(final Cube c, final boolean[][][] states) throws EJBException
 	{
 		try
 		{

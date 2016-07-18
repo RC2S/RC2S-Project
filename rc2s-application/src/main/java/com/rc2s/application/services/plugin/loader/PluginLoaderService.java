@@ -5,7 +5,7 @@ import com.rc2s.application.services.plugin.IPluginService;
 import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.dao.plugin.IPluginDAO;
 import java.nio.file.StandardCopyOption;
 import java.io.BufferedOutputStream;
@@ -23,20 +23,28 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class PluginLoaderService implements IPluginLoaderService
 {
-	@EJB private IPluginService pluginService;
+	@EJB 
+    private IPluginService pluginService;
     
-	@EJB private IPluginDAO pluginDAO;
+	@EJB
+    private IPluginDAO pluginDAO;
     
-    @EJB private IJnlpService jnlpService;
+    @EJB
+    private IJnlpService jnlpService;
+    
+    @Inject
+    private Logger log;
 	
     @Override
-    public void uploadPlugin(final String pluginName, final Role accessRole, final byte[] binaryPlugin) throws ServiceException
+    public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws ServiceException
     {
 		File tmpZip = null;
 		File unzipedDir = null;
@@ -53,7 +61,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			File tmpEar = checkServerPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
 			File tmpJar = checkClientPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
 			
-			if(tmpEar != null && tmpJar != null)
+			if (tmpEar != null && tmpJar != null)
 			{
 				deployServerPlugin(simpleName, tmpEar);
 				deployClientPlugin(simpleName, tmpJar);
@@ -66,10 +74,10 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		finally 
 		{
-			if(tmpZip != null)
+			if (tmpZip != null)
 				tmpZip.delete();
 			
-			if(unzipedDir != null)
+			if (unzipedDir != null)
 			{
 				for(File tmp : unzipedDir.listFiles())
 					tmp.delete();
@@ -132,7 +140,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		{
 			File tmpEar = new File(tmpDir + simpleName + "_server.ear");
 			
-			if(!tmpEar.exists())
+			if (!tmpEar.exists())
 				return null;
 			
 			// TODO: Check the EAR content
@@ -152,7 +160,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		{
 			File tmpJar = new File(tmpDir + simpleName + "_client.jar");
 			
-			if(!tmpJar.exists())
+			if (!tmpJar.exists())
 				return null;
 			
 			// TODO: Check the JAR content
@@ -184,7 +192,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 	
 	@Override
-	public Plugin persistPlugin(final String pluginName, final Role role) throws ServiceException
+	public Plugin persistPlugin(final String pluginName, final Group role) throws ServiceException
 	{
 		boolean update = false;
 		Plugin plugin;
@@ -237,7 +245,7 @@ public class PluginLoaderService implements IPluginLoaderService
 	{
 		String domainRoot = System.getProperty("com.sun.aas.instanceRootURI");
 		
-		if(domainRoot != null)
+		if (domainRoot != null)
 		{
 			if(domainRoot.startsWith("file:\\"))
 				domainRoot = domainRoot.replace("file:\\", "");

@@ -46,9 +46,9 @@ public class CubicDetailsController extends TabController implements Initializab
 {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 	
-	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
-	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote)EJB.lookup("SizeEJB");
-	private final SynchronizationFacadeRemote synchronizationEJB = (SynchronizationFacadeRemote)EJB.lookup("SynchronizationEJB");
+	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote) EJB.lookup("CubeEJB");
+	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote) EJB.lookup("SizeEJB");
+	private final SynchronizationFacadeRemote synchronizationEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	
 	private Cube cube;
 	private LedCube ledCube;
@@ -104,7 +104,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		try
 		{
 			// Gather sizes
-			sizeBox.getItems().addAll(sizeEJB.getAll(Main.getAuthenticatedUser()));
+			sizeBox.getItems().addAll(sizeEJB.getAll());
 
 			// Init colors
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
@@ -166,21 +166,16 @@ public class CubicDetailsController extends TabController implements Initializab
 		sizeBox.getSelectionModel().select(cube.getSize());
 
 		statusLabel.setText("Probing...");
-		Platform.runLater(new Thread()
-		{
-			@Override
-			public void run()
+		Platform.runLater(() ->  {
+			try
 			{
-				try
-				{
-					boolean state = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
-					statusLabel.setText(state ? "Online" : "Offline");
-				}
-				catch(EJBException e)
-				{
-					error(e.getMessage());
-					statusLabel.setText("Offline");
-				}
+				boolean state = cubeEJB.getStatus(cube);
+				statusLabel.setText(state ? "Online" : "Offline");
+			}
+			catch(EJBException e)
+			{
+				error(e.getMessage());
+				statusLabel.setText("Offline");
 			}
 		});
 		
@@ -334,7 +329,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				{
 					try
 					{
-						cube = cubeEJB.update(Main.getAuthenticatedUser(), cube);
+						cube = cubeEJB.update(cube);
 						toggleEditCube();
 					}
 					catch(EJBException ex)
@@ -377,10 +372,10 @@ public class CubicDetailsController extends TabController implements Initializab
 				{
 					if(newSizeBox.isVisible())
 					{
-						Size newSize = sizeEJB.add(Main.getAuthenticatedUser(), cube.getSize());
+						Size newSize = sizeEJB.add(cube.getSize());
 						cube.setSize(newSize);
 					}
-					cubeEJB.add(Main.getAuthenticatedUser(), cube);
+					cubeEJB.add(cube);
 					
 					onBackEvent(null);
 				}
@@ -409,7 +404,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		{
 			try
 			{
-				cubeEJB.remove(Main.getAuthenticatedUser(), cube);
+				cubeEJB.remove(cube);
 				onBackEvent(null);
 			}
 			catch(EJBException ex)
@@ -470,7 +465,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				cubesBox.getItems().remove(c);
 				cube.getSynchronization().getCubes().add(c);
 				
-				cubeEJB.update(Main.getAuthenticatedUser(), cube);
+				cubeEJB.update(cube);
 			}
 			catch(EJBException ex)
 			{
@@ -497,7 +492,7 @@ public class CubicDetailsController extends TabController implements Initializab
 						cube.getSynchronization().getCubes().remove(c);
 					}
 
-					cubeEJB.update(Main.getAuthenticatedUser(), cube);
+					cubeEJB.update(cube);
 				}
 				catch(EJBException ex)
 				{
@@ -514,7 +509,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		try
 		{
-			cubeEJB.updateAllLed(Main.getAuthenticatedUser(), cube, true);
+			cubeEJB.updateAllLed(cube, true);
 			ledCube.setActivated(true);
 		}
 		catch(EJBException ex)
@@ -528,7 +523,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		try
 		{
-			cubeEJB.updateAllLed(Main.getAuthenticatedUser(), cube, false);
+			cubeEJB.updateAllLed(cube, false);
 			ledCube.setActivated(false);
 		}
 		catch(EJBException ex)
@@ -545,7 +540,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			{
 				try
 				{
-					cubeEJB.updateAllLed(Main.getAuthenticatedUser(), cube, ledCube.getStateArray());
+					cubeEJB.updateAllLed(cube, ledCube.getStateArray());
 				}
 				catch(EJBException e)
 				{

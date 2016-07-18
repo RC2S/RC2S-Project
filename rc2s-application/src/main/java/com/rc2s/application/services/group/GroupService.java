@@ -1,9 +1,8 @@
-package com.rc2s.application.services.role;
+package com.rc2s.application.services.group;
 
 import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
-import com.rc2s.common.vo.Role;
-import com.rc2s.dao.role.IRoleDAO;
+import com.rc2s.common.vo.Group;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -11,17 +10,23 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import com.rc2s.dao.group.IGroupDAO;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class RoleService implements IRoleService
+public class GroupService implements IGroupService
 {
 	@EJB
-	private IRoleDAO roleDAO;
+	private IGroupDAO roleDAO;
+    
+    @Inject
+    private Logger log;
 	
 	@Override
-	public List<Role> getAll() throws ServiceException
+	public List<Group> getAll() throws ServiceException
 	{
 		try
 		{

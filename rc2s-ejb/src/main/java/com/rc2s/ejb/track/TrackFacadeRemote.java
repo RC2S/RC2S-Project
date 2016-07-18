@@ -10,11 +10,11 @@ import java.util.List;
 @Remote
 public interface TrackFacadeRemote
 {
-    public Track add(final User caller, final Track track) throws EJBException;
+    public Track add(final Track track) throws EJBException;
     
-    public Track update(final User caller, final Track track) throws EJBException;
+    public Track update(final Track track) throws EJBException;
     
-    public void delete(final User caller, final Track track) throws EJBException;
+    public void delete(final Track track) throws EJBException;
 
-    public List<Track> getTracksByUser(final User caller) throws EJBException;
+    public List<Track> getTracksByUser(final User user) throws EJBException;
 }

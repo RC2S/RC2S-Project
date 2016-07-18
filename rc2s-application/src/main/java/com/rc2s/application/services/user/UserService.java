@@ -13,6 +13,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -22,9 +24,39 @@ public class UserService implements IUserService
     @EJB
     private IUserDAO userDAO;
     
-    private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy";
-	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:";
+    @Inject
+    private Logger log;
     
+    private final String SALT   = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy";
+	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:";
+    
+    @Override
+    public User getAuthenticatedUser(final String username, final String password) throws ServiceException
+    {
+        try
+		{
+			User user = null;
+			
+			if (username != null && password != null)
+			{
+				user = userDAO.getAuthenticatedUser(username, Hash.sha1(SALT + password + PEPPER));
+				
+				if (user != null)
+				{
+					int code = userDAO.setLastLogin(user);
+				
+					if (code != 1)
+						log.error("Unable to update user's last IP address. Return code is: " + code);
+				}
+			}
+			
+			return user;
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+    }
     
     @Override
     public List<User> getAll() throws ServiceException
@@ -45,9 +77,8 @@ public class UserService implements IUserService
 		try
 		{
 			user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
-			System.out.println(user.getPassword());
-			
 			user.setCreated(new Date());
+            
 			return userDAO.save(user);
 		}
 		catch(DAOException e)
@@ -61,10 +92,10 @@ public class UserService implements IUserService
 	{
 		try
 		{
-			if(passwordUpdated)
+			if (passwordUpdated)
 				user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
-			
 			user.setUpdated(new Date());
+            
 			return userDAO.update(user);
 		}
 		catch(DAOException e)

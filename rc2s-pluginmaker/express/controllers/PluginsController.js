@@ -11,6 +11,7 @@ var recursive 			= require('recursive-readdir-sync');
 function PluginsController() {};
 
 PluginsController.prototype.getAllPlugins = function(callback) {
+
 	WorkspaceController.findByName(config.che.workspace, function(workspace, errors) {
 		var projects = [];
 
@@ -81,6 +82,7 @@ PluginsController.prototype.addPlugin = function(req, callback) {
 };
 
 PluginsController.prototype.removePlugin = function(pluginName, callback) {
+
 	WorkspaceController.findByName(config.che.workspace, function(workspace, errWs) {
 		if (errWs)
 			return callback(false, errWs);
@@ -154,37 +156,6 @@ PluginsController.prototype.importTemplateToProject = function(wsID, pluginName,
 		.catch(function(error) {
 			callback(false, error);
 		});
-
-	// Async problems : files are created before folders in some cases
-	/*recursive(config.che.template, function(errListFiles, files) {
-		if (errListFiles)
-			return callback(false, errListFiles);
-
-		if (files) {
-			files.forEach(function(absoluteFilePath) {
-				var relativeFilePath 	= absoluteFilePath.substr(config.che.template.length, absoluteFilePath.length);
-				var folders 			= relativeFilePath.substr(0, relativeFilePath.lastIndexOf('/'));
-				var file 				= relativeFilePath.substr((folders ? relativeFilePath.lastIndexOf('/') : 0), relativeFilePath.length);
-
-				WorkspaceController.addFolderToProject(wsID, pluginName, folders, function(resFolder, errFolder) {
-					console.log(resFolder);
-					if (errFolder)
-						return callback(false, errFolder);
-
-					var data = fs.readFileSync(absoluteFilePath, 'utf-8');
-					
-					if (!data) 
-						return callback(false, 'no data');
-
-					WorkspaceController.addFileToProject(wsID, pluginName, folders, file, data, function(resFile, errFile) {
-						if (errFile)
-							return callback(false, errFile);
-					});
-				});
-			});
-		}
-		callback(true, undefined);
-	});*/
 };
 
 PluginsController.prototype.downloadZip = function(pluginName, callback) {
@@ -227,7 +198,6 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 				}
 
 				if (counter == filenames.length) {
-						
 					del(serverPluginPath + '/*');
 
 					var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';

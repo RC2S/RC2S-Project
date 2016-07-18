@@ -14,11 +14,16 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.Map;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 public class DaemonService implements IDaemonService
 {
-	private static final int DAEMON_PORT = 1337;
+	@Inject
+    private Logger log;
+    
+    private static final int DAEMON_PORT = 1337;
 	private static final int BUFFER_LENGTH = 1024;
 	private static final int SOCKET_TIMEOUT = 1;
 	private static final int SOCKET_LISTEN_TIMEOUT = 1000;
@@ -29,7 +34,7 @@ public class DaemonService implements IDaemonService
 		// Set packet duration to 1 ms: we want it to be played just once!
 		final long packetDuration = 1L;
 
-		for(Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
+		for (Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
 		{
 			Cube cube = entry.getKey();
 			CubeState cubeState = entry.getValue();
@@ -75,9 +80,9 @@ public class DaemonService implements IDaemonService
 	@Override
 	public boolean[][][] formatStatesArray(final boolean[][][] states)
 	{
-		for(int y = 0 ; y < states.length ; y++)
+		for (int y = 0 ; y < states.length ; y++)
 		{
-			for(int z = 0 ; z < states[y].length / 2 ; z++)
+			for (int z = 0; z < states[y].length / 2; z++)
 			{
 				int zOpposite = states[y].length - 1 - z;
 
@@ -96,7 +101,7 @@ public class DaemonService implements IDaemonService
 		byte[] response = sendPacket(ipAddress, "status".getBytes(), true);
 		boolean isUp = false;
 		
-		if(response != null)
+		if (response != null)
 			isUp = new String(response).trim().equalsIgnoreCase("up");
 		
 		return isUp;
@@ -112,7 +117,7 @@ public class DaemonService implements IDaemonService
 	@Override
 	public byte[] createPacket(final Long duration, final Size size, final boolean[][][] states) throws ServiceException
 	{
-		try(ByteArrayOutputStream bos = new ByteArrayOutputStream())
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream())
 		{
 			DataOutputStream dos = new DataOutputStream(bos);
 			
@@ -122,11 +127,11 @@ public class DaemonService implements IDaemonService
 			dos.writeInt(size.getZ());
 			
 			// Write the Cube's state to the buffer
-			for(int i = 0 ; i < size.getY() ; i++)
+			for (int i = 0; i < size.getY(); i++)
 			{
-				for(int j = 0 ; j < size.getZ() ; j++)
+				for (int j = 0; j < size.getZ(); j++)
 				{
-					for(int k = 0 ; k < size.getX() ; k++)
+					for (int k = 0; k < size.getX(); k++)
 					{
 						dos.writeBoolean(states[i][j][k]);
 					}
@@ -145,7 +150,7 @@ public class DaemonService implements IDaemonService
 	@Override
 	public byte[] sendPacket(final String ipAddress, final byte[] data, final boolean response) throws ServiceException
 	{
-		try(DatagramSocket socket = new DatagramSocket())
+		try (DatagramSocket socket = new DatagramSocket())
 		{
 			InetAddress daemonIp = InetAddress.getByName(ipAddress);
 			

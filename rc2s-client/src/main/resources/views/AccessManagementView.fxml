@@ -35,7 +35,7 @@
                   <TableColumn fx:id="usernameColumn" maxWidth="6000.0" prefWidth="75.0" text="Username" />
                 <TableColumn fx:id="activatedColumn" maxWidth="4000.0" prefWidth="75.0" text="Activated" />
                 <TableColumn fx:id="lockedColumn" maxWidth="4000.0" prefWidth="75.0" text="Locked" />
-                  <TableColumn fx:id="roleColumn" prefWidth="75.0" text="Role" />
+                  <TableColumn fx:id="groupColumn" prefWidth="75.0" text="Group" />
                   <TableColumn fx:id="lastLoginColumn" maxWidth="6000.0" prefWidth="75.0" text="Last Login" />
                   <TableColumn fx:id="createdColumn" maxWidth="1000.0" prefWidth="150.0" text="Created" />
                   <TableColumn fx:id="updatedColumn" maxWidth="1000.0" prefWidth="49.0" text="Updated" />
@@ -65,9 +65,9 @@
                         <TextField fx:id="usernameField" GridPane.columnIndex="1" />
                         <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <PasswordField fx:id="confirmPassField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Role" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <Label text="Group" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                         <Label text="Cubic Access" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="rolesBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" />
+                        <ComboBox fx:id="groupsBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" />
                         <ComboBox fx:id="cubicAccessBox" prefHeight="26.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddEvent" text="Add!" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                      </children>

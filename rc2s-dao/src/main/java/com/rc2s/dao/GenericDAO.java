@@ -11,6 +11,7 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 {
 	@PersistenceContext
     private EntityManager em;
+    
 	private final Class<T> type;
 	
 	@SuppressWarnings("unchecked")
