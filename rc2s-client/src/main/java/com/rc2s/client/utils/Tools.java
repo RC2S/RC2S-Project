@@ -32,4 +32,23 @@ public class Tools
         
         return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
     }
+    
+    public static String replaceFile(final String toBeReplace)
+    {
+		String str = null;
+        
+        if (toBeReplace != null)
+		{
+            str = new String(toBeReplace);
+            
+			if(str.startsWith("file:\\"))
+				str = str.replace("file:\\", "");
+			else if(str.startsWith("file://"))
+				str = str.replace("file://", "");
+			else if(str.startsWith("file:/"))
+				str = str.replace("file:", "");
+		}
+		
+		return str;
+	}
 }

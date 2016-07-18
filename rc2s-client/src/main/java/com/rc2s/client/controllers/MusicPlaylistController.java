@@ -4,6 +4,7 @@ import com.rc2s.client.Main;
 import com.rc2s.client.test.Streaming;
 import com.rc2s.client.test.StreamingHandler;
 import com.rc2s.client.utils.Dialog;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Synchronization;
@@ -45,15 +46,15 @@ public class MusicPlaylistController extends TabController implements Initializa
     private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
 
-	private final String META_TITLE = "title";
-	private final String META_ARTIST = "xmpDM:artist";
-	private final String META_DURATION = "xmpDM:duration";
-	private final String META_GENRE = "xmpDM:genre";
+	private final String META_TITLE     = "title";
+	private final String META_ARTIST    = "xmpDM:artist";
+	private final String META_DURATION  = "xmpDM:duration";
+	private final String META_GENRE     = "xmpDM:genre";
 
 	private MediaPlayer mediaPlayer;
 	private StreamingHandler streamingHandler;
-	private boolean playing = false;
-	private int currentTrack = -1;
+	private boolean playing     = false;
+	private int currentTrack    = -1;
 
 	private Map<Track, Metadata> tracksMetadata;
 
@@ -142,7 +143,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			{
 				try
 				{
-					File file = new File(URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", ""));
+					File file = new File(Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8")));
 
 					Parser parser = new AutoDetectParser();
 					BodyContentHandler handler = new BodyContentHandler();
