@@ -11,6 +11,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import com.rc2s.dao.group.IGroupDAO;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -19,6 +21,9 @@ public class GroupService implements IGroupService
 {
 	@EJB
 	private IGroupDAO roleDAO;
+    
+    @Inject
+    private Logger log;
 	
 	@Override
 	public List<Group> getAll() throws ServiceException

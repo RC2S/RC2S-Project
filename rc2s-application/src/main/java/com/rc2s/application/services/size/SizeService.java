@@ -12,6 +12,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -20,6 +22,9 @@ public class SizeService implements ISizeService
 {
 	@EJB
 	private ISizeDAO sizeDAO;
+    
+    @Inject
+    private Logger log;
 	
 	@Override
 	public List<Size> getAll() throws ServiceException

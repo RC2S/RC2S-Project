@@ -27,9 +27,8 @@ public class UserService implements IUserService
     @Inject
     private Logger log;
     
-    private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy";
+    private final String SALT   = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy";
 	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:";
-    
     
     @Override
     public User getAuthenticatedUser(final String username, final String password) throws ServiceException
@@ -38,15 +37,15 @@ public class UserService implements IUserService
 		{
 			User user = null;
 			
-			if(username != null && password != null)
+			if (username != null && password != null)
 			{
 				user = userDAO.getAuthenticatedUser(username, Hash.sha1(SALT + password + PEPPER));
 				
-				if(user != null)
+				if (user != null)
 				{
 					int code = userDAO.setLastLogin(user);
 				
-					if(code != 1)
+					if (code != 1)
 						log.error("Unable to update user's last IP address. Return code is: " + code);
 				}
 			}
@@ -93,7 +92,7 @@ public class UserService implements IUserService
 	{
 		try
 		{
-			if(passwordUpdated)
+			if (passwordUpdated)
 				user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
 			user.setUpdated(new Date());
             

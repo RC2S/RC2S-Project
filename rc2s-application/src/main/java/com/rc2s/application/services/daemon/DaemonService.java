@@ -30,7 +30,7 @@ public class DaemonService implements IDaemonService
 	@Override
 	public void sendCubesStates(final Map<Cube, CubeState> cubesStates) throws ServiceException
 	{
-		for(Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
+		for (Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
 		{
 			Cube cube = entry.getKey();
 			CubeState cubeState = entry.getValue();
@@ -76,9 +76,9 @@ public class DaemonService implements IDaemonService
 	@Override
 	public boolean[][][] formatStatesArray(final boolean[][][] states)
 	{
-		for(int y = 0 ; y < states.length ; y++)
+		for (int y = 0 ; y < states.length ; y++)
 		{
-			for(int z = 0; z < states[y].length / 2; z++)
+			for (int z = 0; z < states[y].length / 2; z++)
 			{
 				int zOpposite = states[y].length - 1 - z;
 
@@ -97,7 +97,7 @@ public class DaemonService implements IDaemonService
 		byte[] response = sendPacket(ipAddress, "status".getBytes(), true);
 		boolean isUp = false;
 		
-		if(response != null)
+		if (response != null)
 			isUp = new String(response).trim().equalsIgnoreCase("up");
 		
 		return isUp;
@@ -113,7 +113,7 @@ public class DaemonService implements IDaemonService
 	@Override
 	public byte[] createPacket(final Long duration, final Size size, final boolean[][][] states) throws ServiceException
 	{
-		try(ByteArrayOutputStream bos = new ByteArrayOutputStream())
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream())
 		{
 			DataOutputStream dos = new DataOutputStream(bos);
 			
@@ -123,11 +123,11 @@ public class DaemonService implements IDaemonService
 			dos.writeInt(size.getZ());
 			
 			// Write the Cube's state to the buffer
-			for(int i = 0; i < size.getY(); i++)
+			for (int i = 0; i < size.getY(); i++)
 			{
-				for(int j = 0; j < size.getZ(); j++)
+				for (int j = 0; j < size.getZ(); j++)
 				{
-					for(int k = 0; k < size.getX(); k++)
+					for (int k = 0; k < size.getX(); k++)
 					{
 						dos.writeBoolean(states[i][j][k]);
 					}
@@ -146,14 +146,14 @@ public class DaemonService implements IDaemonService
 	@Override
 	public byte[] sendPacket(final String ipAddress, final byte[] data, final boolean response) throws ServiceException
 	{
-		try(DatagramSocket socket = new DatagramSocket())
+		try (DatagramSocket socket = new DatagramSocket())
 		{
 			InetAddress daemonIp = InetAddress.getByName(ipAddress);
 			
 			DatagramPacket packet = new DatagramPacket(data, data.length, daemonIp, DAEMON_PORT);
 			socket.send(packet);
 			
-			if(response)
+			if (response)
 			{
 				try
 				{
@@ -162,7 +162,7 @@ public class DaemonService implements IDaemonService
 				}
 				catch(SocketTimeoutException e)
 				{
-					log.error("Reached timeout...");
+					log.error("Reached timeout... for IP Address " + ipAddress);
 				}
 			}
 			
