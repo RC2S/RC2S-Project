@@ -198,16 +198,14 @@ public class JDBCRealm extends AppservRealm
 	 */
 	public String[] authenticate(String username, char[] password)
     {
-        LOG.log(Level.INFO, "authenticating username={0}", username);
+        LOG.log(Level.FINE, "authenticating username={0}", username);
 		String[] groups = null;
 		
         if (isUserValid(username, password))
         {
-            LOG.info("after user valid");
 			groups = findGroups(username);
 			groups = addAssignGroups(groups);
 			setGroupNames(username, groups);
-            LOG.info("after set groups");
 		}
         
 		return groups;

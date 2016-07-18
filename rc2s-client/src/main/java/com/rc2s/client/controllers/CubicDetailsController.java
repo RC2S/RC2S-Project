@@ -44,8 +44,8 @@ public class CubicDetailsController extends TabController implements Initializab
 {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 	
-	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
-	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote)EJB.lookup("SizeEJB");
+	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote) EJB.lookup("CubeEJB");
+	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote) EJB.lookup("SizeEJB");
 	private final SynchronizationFacadeRemote synchronizationEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	
 	private Cube cube;

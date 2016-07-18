@@ -30,9 +30,6 @@ import javax.net.ssl.X509TrustManager;
 
 /**
  * Classe utilitaire permettant l'exécution de requêtes HTTP.
- * 
- * @author Valentin Fries
- * @version 1.0
  */
 public class HttpRequest
 {

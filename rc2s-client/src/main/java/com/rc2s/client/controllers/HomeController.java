@@ -117,12 +117,8 @@ public class HomeController implements Initializable
 	private boolean isAdmin(final User user)
 	{
 		for(Group g : user.getGroups())
-		{
 			if(g.getName().equalsIgnoreCase("rc2s-admingrp"))
-			{
 				return true;
-			}
-		}
 		
 		return false;
 	}

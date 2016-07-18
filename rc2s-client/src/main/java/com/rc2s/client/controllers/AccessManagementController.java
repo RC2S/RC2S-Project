@@ -84,9 +84,9 @@ public class AccessManagementController extends TabController implements Initial
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
 		lockedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isLocked() ? "Yes" : "No"));
 		groupColumn.setCellValueFactory(data -> new SimpleStringProperty((data.getValue().getGroups() != null) ? data.getValue().getGroups().get(0).getName() : "None"));
-		lastLoginColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getLastLogin())));
-		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getCreated())));
-		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getUpdated())));
+		lastLoginColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getLastLogin())));
+		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getCreated())));
+		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getUpdated())));
 		
 		usersTable.setRowFactory(table -> {
 			TableRow<User> row = new TableRow<>();
@@ -354,13 +354,5 @@ public class AccessManagementController extends TabController implements Initial
 		cubicAccessBox.getSelectionModel().select(null);
 		activatedCheckbox.setSelected(false);
 		lockedCheckbox.setSelected(false);
-	}
-	
-	private String formatDate(Date date)
-	{
-		if(date == null)
-			return "";
-		
-		return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
-	}
+	}	
 }

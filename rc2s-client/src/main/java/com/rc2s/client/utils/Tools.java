@@ -1,6 +1,8 @@
 package com.rc2s.client.utils;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 import java.util.regex.Pattern;
 import javax.validation.ConstraintViolation;
@@ -22,4 +24,12 @@ public class Tools
 	{
 		return VALIDATOR.validate(vo);
 	}
+
+    public static String formatDate(final Date date)
+    {
+        if (date == null)
+            return "";
+        
+        return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
+    }
 }

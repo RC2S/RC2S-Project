@@ -2,6 +2,7 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.client.utils.Dialog;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
@@ -73,8 +74,8 @@ public class PluginsManagementController extends TabController implements Initia
 		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthor()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
 		accessColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAccess().toUpperCase()));
-		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getCreated())));
-		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getUpdated())));
+		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getCreated())));
+		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getUpdated())));
 	}
 	
 	@Override
@@ -200,15 +201,7 @@ public class PluginsManagementController extends TabController implements Initia
 			}
 		}
 	}
-	
-	private String formatDate(final Date date)
-	{
-		if(date == null)
-			return "";
-		
-		return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
-	}
-	
+
 	private void error(final String err)
 	{
 		statusLabel.setText(err);
