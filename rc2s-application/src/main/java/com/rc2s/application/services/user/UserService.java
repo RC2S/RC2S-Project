@@ -27,6 +27,35 @@ public class UserService implements IUserService
     
     
     @Override
+    public User getAuthenticatedUser(final String username, final String password) throws ServiceException
+    {
+        try
+		{
+			User user = null;
+			
+			if(username != null && password != null)
+			{
+				String securedPassword = Hash.sha1(SALT + password + PEPPER);
+				user = userDAO.getAuthenticatedUser(username, securedPassword);
+				
+				if(user != null)
+				{
+					int code = userDAO.setLastLogin(user);
+				
+					if(code != 1)
+						System.err.println("Unable to update user's last IP address. Return code is: " + code);
+				}
+			}
+			
+			return user;
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+    }
+    
+    @Override
     public List<User> getAll() throws ServiceException
     {
 		try

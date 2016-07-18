@@ -8,6 +8,8 @@ import javax.ejb.Remote;
 @Remote
 public interface UserFacadeRemote
 {
+    public User getAuthenticatedUser(final String username, final String password) throws EJBException;
+    
     public List<User> getAll() throws EJBException;
     
 	public User add(final User user) throws EJBException;

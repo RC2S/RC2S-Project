@@ -16,6 +16,20 @@ public class UserFacadeBean implements UserFacadeRemote
     private IUserService userService;
     
     @Override
+    @RolesAllowed({"user"})
+    public User getAuthenticatedUser(String username, String password) throws EJBException
+    {
+        try
+		{
+			return userService.getAuthenticatedUser(username, password);
+		}
+		catch(ServiceException e)
+		{
+			throw new EJBException(e);
+		}
+    }
+    
+    @Override
     @RolesAllowed({"admin"})
     public List<User> getAll() throws EJBException
     {
