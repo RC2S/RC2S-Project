@@ -87,6 +87,4 @@ public class PluginService implements IPluginService
 			throw new ServiceException(e);
 		}
 	}
-	
-	
 }

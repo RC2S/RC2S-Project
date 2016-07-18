@@ -13,6 +13,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -21,6 +23,9 @@ public class UserService implements IUserService
 {
     @EJB
     private IUserDAO userDAO;
+    
+    @Inject
+    private Logger log;
     
     private final String SALT = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy";
 	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:";
@@ -35,15 +40,14 @@ public class UserService implements IUserService
 			
 			if(username != null && password != null)
 			{
-				String securedPassword = Hash.sha1(SALT + password + PEPPER);
-				user = userDAO.getAuthenticatedUser(username, securedPassword);
+				user = userDAO.getAuthenticatedUser(username, Hash.sha1(SALT + password + PEPPER));
 				
 				if(user != null)
 				{
 					int code = userDAO.setLastLogin(user);
 				
 					if(code != 1)
-						System.err.println("Unable to update user's last IP address. Return code is: " + code);
+						log.error("Unable to update user's last IP address. Return code is: " + code);
 				}
 			}
 			
@@ -74,9 +78,8 @@ public class UserService implements IUserService
 		try
 		{
 			user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
-			System.out.println(user.getPassword());
-			
 			user.setCreated(new Date());
+            
 			return userDAO.save(user);
 		}
 		catch(DAOException e)
@@ -92,8 +95,8 @@ public class UserService implements IUserService
 		{
 			if(passwordUpdated)
 				user.setPassword(Hash.sha1(SALT + user.getPassword() + PEPPER));
-			
 			user.setUpdated(new Date());
+            
 			return userDAO.update(user);
 		}
 		catch(DAOException e)

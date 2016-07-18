@@ -14,11 +14,16 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.Map;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 public class DaemonService implements IDaemonService
 {
-	private static final int DAEMON_PORT = 1337;
+	@Inject
+    private Logger log;
+    
+    private static final int DAEMON_PORT = 1337;
 	private static final int BUFFER_LENGTH = 1024;
 	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
 
@@ -73,7 +78,7 @@ public class DaemonService implements IDaemonService
 	{
 		for(int y = 0 ; y < states.length ; y++)
 		{
-			for(int z = 0 ; z < states[y].length / 2 ; z++)
+			for(int z = 0; z < states[y].length / 2; z++)
 			{
 				int zOpposite = states[y].length - 1 - z;
 
@@ -118,11 +123,11 @@ public class DaemonService implements IDaemonService
 			dos.writeInt(size.getZ());
 			
 			// Write the Cube's state to the buffer
-			for(int i = 0 ; i < size.getY() ; i++)
+			for(int i = 0; i < size.getY(); i++)
 			{
-				for(int j = 0 ; j < size.getZ() ; j++)
+				for(int j = 0; j < size.getZ(); j++)
 				{
-					for(int k = 0 ; k < size.getX() ; k++)
+					for(int k = 0; k < size.getX(); k++)
 					{
 						dos.writeBoolean(states[i][j][k]);
 					}
@@ -157,7 +162,7 @@ public class DaemonService implements IDaemonService
 				}
 				catch(SocketTimeoutException e)
 				{
-					System.err.println("Reached timeout...");
+					log.error("Reached timeout...");
 				}
 			}
 			
