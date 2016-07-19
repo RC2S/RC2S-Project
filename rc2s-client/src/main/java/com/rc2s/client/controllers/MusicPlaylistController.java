@@ -73,7 +73,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @Override
     public void initialize(final URL url, final ResourceBundle rb)
     {
-		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 
 		tracksMetadata = new HashMap<>();
@@ -103,11 +103,11 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		Metadata metadata = tracksMetadata.get(track);
 
-		if(metadata != null)
+		if (metadata != null)
 		{
 			String value = metadata.get(metadataName);
 
-			if(metadataName.equalsIgnoreCase(META_DURATION))
+			if (metadataName.equalsIgnoreCase(META_DURATION))
 			{
 				double duration = Double.parseDouble(value) / 1000.;
 				int minutes = (int)(duration / 60.);
@@ -139,7 +139,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			tracksMetadata.clear();
 
 			// Gather metadata
-			for(Track track : tracks)
+			for (Track track : tracks)
 			{
 				try
 				{
@@ -161,7 +161,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			tracksTable.getItems().clear();
 			tracksTable.getItems().addAll(tracks);
         }
-        catch(EJBException e)
+        catch (EJBException e)
         {
             Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -176,7 +176,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 			syncBox.getSelectionModel().selectFirst();
         }
-        catch(EJBException e)
+        catch (EJBException e)
         {
             Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -187,13 +187,13 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		Synchronization sync = syncBox.getSelectionModel().getSelectedItem();
 
-		if(sync == null)
+		if (sync == null)
 		{
 			playPauseButton.setDisable(true);
 			nextButton.setDisable(true);
 			previousButton.setDisable(true);
 		}
-		else if(playPauseButton.isDisabled())
+		else if (playPauseButton.isDisabled())
 		{
 			playPauseButton.setDisable(false);
 			nextButton.setDisable(false);
@@ -206,9 +206,9 @@ public class MusicPlaylistController extends TabController implements Initializa
 	@FXML
 	private void onKeyPressedEvent(final KeyEvent e)
 	{
-		if(e.getEventType() == KeyEvent.KEY_PRESSED)
+		if (e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
-			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
+			if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
 				try
 				{
@@ -216,7 +216,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 					ButtonType answer = Dialog.confirm("Are you sure you want to remove this track from your playlist?");
 
-					if(answer == ButtonType.OK)
+					if (answer == ButtonType.OK)
 					{
 						trackEJB.delete(track);
 						updateTracks();
@@ -237,7 +237,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		Dragboard db = event.getDragboard();
 
-		if(db.hasFiles())
+		if (db.hasFiles())
 			event.acceptTransferModes(TransferMode.COPY);
 		else
 			event.consume();
@@ -249,11 +249,11 @@ public class MusicPlaylistController extends TabController implements Initializa
 		Dragboard db = event.getDragboard();
 		boolean success = false;
 
-		if(db.hasFiles())
+		if (db.hasFiles())
 		{
 			success = true;
 
-			for(File file : db.getFiles())
+			for (File file : db.getFiles())
 			{
 				try
 				{
@@ -261,7 +261,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 					trackEJB.add(track);
 					updateTracks();
 				}
-				catch(EJBException | MediaException e)
+				catch (EJBException | MediaException e)
 				{
 					Dialog.message("Error", e.getMessage(), Alert.AlertType.ERROR);
 				}
@@ -288,11 +288,11 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		short next = 0;
 
-		if(tracksTable.getItems() != null && tracksTable.getItems().size() != 0)
+		if (tracksTable.getItems() != null && tracksTable.getItems().size() != 0)
 		{
 			for (Track t : tracksTable.getItems())
 			{
-				if(t.getOrder() >= next)
+				if (t.getOrder() >= next)
 					next = (short) (t.getOrder() + 1);
 			}
 		}
@@ -303,7 +303,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	@FXML
 	private void onPreviousEvent(final ActionEvent e)
 	{
-		if(currentTrack != -1 && currentTrack > 0)
+		if (currentTrack != -1 && currentTrack > 0)
 		{
 			setTrack(currentTrack - 1);
 			play();
@@ -313,7 +313,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	@FXML
 	private void onNextEvent(final ActionEvent e)
 	{
-		if(currentTrack != -1 && currentTrack + 1 < tracksTable.getItems().size())
+		if (currentTrack != -1 && currentTrack + 1 < tracksTable.getItems().size())
 		{
 			setTrack(currentTrack + 1);
 			play();
@@ -323,7 +323,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @FXML
     private void onPlayPauseEvent(final ActionEvent e)
     {
-		if(mediaPlayer == null)
+		if (mediaPlayer == null)
 		{
 			if(tracksTable.getItems().size() > 0)
 			{
@@ -333,7 +333,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			else
 				Dialog.message("Music Playlist", "You have no music tracks in your playlist at the moment", Alert.AlertType.INFORMATION);
 		}
-		else if(playing)
+		else if (playing)
 			pause();
 		else
 			play();
@@ -344,7 +344,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		Track track = tracksTable.getItems().get(trackIndex);
 		Media media = new Media(track.getPath());
 
-		if(mediaPlayer != null)
+		if (mediaPlayer != null)
 		{
 			mediaPlayer.stop();
 			mediaPlayer.dispose();
@@ -360,7 +360,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 					play();
 				}
 			}
-			catch(IndexOutOfBoundsException e)
+			catch (IndexOutOfBoundsException e)
 			{
 				synchronized (streamingHandler) {
 					// End of the playlist
@@ -391,7 +391,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			);
 			streamingHandler.setDaemon(true);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -403,7 +403,8 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		mediaPlayer.pause();
 
-		if (streamingHandler != null && streamingHandler.isPlaying()) {
+		if (streamingHandler != null && streamingHandler.isPlaying())
+        {
 			synchronized (streamingHandler) {
 				streamingHandler.pauseStreaming();
 			}
@@ -417,13 +418,14 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		mediaPlayer.play();
 
-		if (streamingHandler != null) {
-			synchronized (streamingHandler) {
+		if (streamingHandler != null)
+        {
+			synchronized (streamingHandler)
+            {
 				if (streamingHandler.getStreamingState() == Streaming.StreamingState.INIT)
 					streamingHandler.start();
-				else if (!streamingHandler.isPlaying()) {
+				else if (!streamingHandler.isPlaying())
 					streamingHandler.resumeStreaming();
-				}
 			}
 		}
 

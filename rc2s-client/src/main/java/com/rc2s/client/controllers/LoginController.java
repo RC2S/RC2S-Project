@@ -28,7 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 public class LoginController implements Initializable
 {
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger log = LogManager.getLogger(this.getClass());
 	
     @FXML private TextField ipField; 
     @FXML private TextField usernameField; 
@@ -42,7 +42,7 @@ public class LoginController implements Initializable
     @FXML
     private void handleReturnPressed(final KeyEvent event)
     {
-        if(event.getEventType() == KeyEvent.KEY_PRESSED
+        if (event.getEventType() == KeyEvent.KEY_PRESSED
         && event.getCode() == KeyCode.ENTER)
             connect(event);
     }
@@ -56,7 +56,7 @@ public class LoginController implements Initializable
     @FXML
     private boolean validateIpAddress(final KeyEvent event)
     {
-        if(!Tools.matchIP(ipField.getText()))
+        if (!Tools.matchIP(ipField.getText()))
         {
             errorLabel.setText("Invalid IP address");
             return false;
@@ -74,7 +74,7 @@ public class LoginController implements Initializable
 		
 		disable(true);
 
-        if(validateIpAddress(null))
+        if (validateIpAddress(null))
         {
 			try
 			{
@@ -91,9 +91,11 @@ public class LoginController implements Initializable
 					// Get the authenticated user
 					User user = userEJB.getAuthenticatedUser(username, password);
                     
-					if(user != null)
+					if (user != null)
 					{
-						Main.setAuthenticatedUser(user);
+                        Main.setAuthenticatedUser(user);
+                        
+                        log.info("Access granted for user " + user.getUsername());
 						
 						FXMLLoader loader = Resources.loadFxml("HomeView");
 						Scene scene = new Scene((Parent)loader.getRoot());
@@ -106,17 +108,18 @@ public class LoginController implements Initializable
 					else
 					{
 						errorLabel.setText("Authentication failed");
+                        log.error("Authentication failed");
 					}
 				}
-				catch(EJBException e)
+				catch (EJBException e)
 				{
-					logger.error(e.getMessage());
+					log.error(e.getMessage());
 					errorLabel.setText("Authentication failed");
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
-				e.printStackTrace();
+				log.error(e.getMessage());
 				errorLabel.setText("Unable to connect to the server");
 			}
         }

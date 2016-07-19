@@ -9,9 +9,13 @@ public class Led extends Sphere
     public static final double SIZE_MODIFIER = 4.;
     
     private double x, y, z;
+    
     private double size;
+    
     private boolean activated;
+    
     private Color color;
+    
 	private LedEvent ledEvent;
 	
     public Led(final double x, final double y, final double z, 
@@ -37,7 +41,7 @@ public class Led extends Sphere
         material.setSpecularColor(Color.BLACK);
         this.setMaterial(material);
 		
-		if(this.ledEvent != null)
+		if (this.ledEvent != null)
 		{
 			this.setOnMouseClicked((e) -> {
 				this.setActivated(!isActivated());
