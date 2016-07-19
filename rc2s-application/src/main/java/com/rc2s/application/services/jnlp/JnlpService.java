@@ -1,9 +1,12 @@
 package com.rc2s.application.services.jnlp;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.apache.logging.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
@@ -14,12 +17,11 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 @Stateless
 public class JnlpService implements IJnlpService
@@ -111,9 +113,8 @@ public class JnlpService implements IJnlpService
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source        = new DOMSource(doc);
-            StreamResult result     = new StreamResult(new File(
-                    jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)));
-            
+            StreamResult result     = new StreamResult(Paths.get(jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)).toUri().toASCIIString());
+
             transformer.transform(source, result);
         }
         catch (ParserConfigurationException

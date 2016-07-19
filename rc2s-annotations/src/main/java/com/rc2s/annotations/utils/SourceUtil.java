@@ -2,19 +2,23 @@ package com.rc2s.annotations.utils;
 
 import com.rc2s.annotations.mappers.ElementMapper;
 import com.rc2s.annotations.mappers.ParameterMapper;
-import java.io.File;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 public class SourceUtil
 {	
@@ -147,14 +151,12 @@ public class SourceUtil
 	}
 	
 	public static void displayInfo(String f) throws IOException {
-		File file = new File(f);
+		Path path = Paths.get(f);
 		System.out.println("========================================");
-		System.out.println("          name : " + file.getName());
-		System.out.println("  is directory : " + file.isDirectory());
-		System.out.println("        exists : " + file.exists());
-		System.out.println("          path : " + file.getPath());
-		System.out.println(" absolute path : " + file.getAbsolutePath());
-		System.out.println("canonical path : " + file.getCanonicalPath());
+		System.out.println("          name : " + path.getFileName().toString());
+		System.out.println("  is directory : " + Files.isDirectory(path));
+		System.out.println("        exists : " + Files.exists(path));
+		System.out.println("          path : " + path.toString());
 	}
 
 	private void verifyRoot(String[] packageParts) throws SourceControlException
@@ -472,30 +474,44 @@ public class SourceUtil
 		controllersList.add(mainClass.getName());
 	}
 	
-	private void getAllControllersNames()
+	private void getAllControllersNames() throws SourceControlException
 	{
-		File testDirectory = new File(controllersFolderPath);
-		File[] files = testDirectory.listFiles(
-			(File pathname) -> pathname.getName().endsWith(".java") 
-							&& pathname.isFile()
-		);
-		
-		// Get all Views names
-		for (File file : files)
-			initialControllersList.add(file.getName());
+		Path controllersPath = Paths.get(controllersFolderPath);
+
+		try (DirectoryStream<Path> ds = Files.newDirectoryStream(controllersPath))
+		{
+			for (Path file : ds)
+			{
+				String filename = file.getFileName().toString();
+
+				if (filename.endsWith(".java") && Files.isRegularFile(file))
+					initialControllersList.add(filename);
+			}
+		}
+		catch(IOException e)
+		{
+			throw new SourceControlException("Unable to open a stream to Controllers package folder");
+		}
 	}
 
 	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
 	{
-		File testDirectory = new File(viewsFolderPath);
-		File[] files = testDirectory.listFiles(
-			(File pathname) -> pathname.getName().endsWith(".fxml") 
-							&& pathname.isFile()
-		);
-		
-		// Get all Views names
-		for (File file : files)
-			viewsList.add(file.getName());
+		Path viewsPath = Paths.get(viewsFolderPath);
+
+		try (DirectoryStream<Path> ds = Files.newDirectoryStream(viewsPath))
+		{
+			for (Path file : ds)
+			{
+				String filename = file.getFileName().toString();
+
+				if (filename.endsWith(".fxml") && Files.isRegularFile(file))
+					viewsList.add(filename);
+			}
+		}
+		catch(IOException e)
+		{
+			throw new SourceControlException("Unable to open a stream to Views package folder");
+		}
 		
 		// Get associated Controllers
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

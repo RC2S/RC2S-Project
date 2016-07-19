@@ -7,14 +7,13 @@ import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Group;
 import com.rc2s.dao.plugin.IPluginDAO;
-import java.nio.file.StandardCopyOption;
+
+import java.nio.file.*;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.ejb.EJB;
@@ -46,20 +45,20 @@ public class PluginLoaderService implements IPluginLoaderService
     @Override
     public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws ServiceException
     {
-		File tmpZip = null;
-		File unzipedDir = null;
+		Path tmpZip = null;
+		Path unzipedDir = null;
 		
 		try
 		{
 			String simpleName = pluginName.toLowerCase().replace(" ", "");
 			
-			tmpZip = File.createTempFile(simpleName, ".zip");
-			Files.write(tmpZip.toPath(), binaryPlugin);
+			tmpZip = Files.createTempFile(simpleName, ".zip");
+			Files.write(tmpZip, binaryPlugin);
 			
-			unzipedDir = unzipPlugin(tmpZip.getAbsolutePath());
+			unzipedDir = unzipPlugin(tmpZip.toString());
 			
-			File tmpEar = checkServerPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
-			File tmpJar = checkClientPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
+			Path tmpEar = checkServerPlugin(simpleName, unzipedDir.toString());
+			Path tmpJar = checkClientPlugin(simpleName, unzipedDir.toString());
 			
 			if (tmpEar != null && tmpJar != null)
 			{
@@ -74,28 +73,37 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		finally 
 		{
-			if (tmpZip != null)
-				tmpZip.delete();
-			
-			if (unzipedDir != null)
+			try
 			{
-				for(File tmp : unzipedDir.listFiles())
-					tmp.delete();
-				unzipedDir.delete();
+				if (tmpZip != null)
+					Files.delete(tmpZip);
+
+				if (unzipedDir != null) {
+					try (DirectoryStream<Path> ds = Files.newDirectoryStream(unzipedDir))
+					{
+						for (Path file : ds)
+							Files.delete(file);
+					}
+					catch(IOException e) { /* Ignore and try to delete the directory */ }
+					Files.delete(unzipedDir);
+				}
+			}
+			catch(IOException e)
+			{
+				throw new ServiceException(e);
 			}
 		}
     }
 
     @Override
-    public File unzipPlugin(final String zipFile) throws IOException
-    {   	
+    public Path unzipPlugin(final String zipFile) throws IOException
+    {
         try
         {
             Path folderPath = Files.createTempDirectory("plugins");
-            File folder = folderPath.toFile();
             
-            if (!folder.exists())
-                folder.mkdir();
+            if (!Files.exists(folderPath))
+                Files.createDirectory(folderPath);
 
             ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFile));
             ZipEntry entry = zipIn.getNextEntry();
@@ -117,15 +125,15 @@ public class PluginLoaderService implements IPluginLoaderService
                 }
                 else
                 {
-                    File dir = new File(filePath);
-                    dir.mkdir();
+                    Path dir = Paths.get(filePath);
+                    Files.createDirectory(dir);
                 }
                 zipIn.closeEntry();
                 entry = zipIn.getNextEntry();
             }
             zipIn.close();
 			
-			return folderPath.toFile();
+			return folderPath;
         }
         catch(IOException e)
         {
@@ -134,13 +142,13 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public File checkServerPlugin(final String simpleName, final String tmpDir) throws Exception
+    public Path checkServerPlugin(final String simpleName, final String tmpDir) throws Exception
     {
         try
 		{
-			File tmpEar = new File(tmpDir + simpleName + "_server.ear");
+			Path tmpEar = Paths.get(tmpDir, simpleName + "_server.ear");
 			
-			if (!tmpEar.exists())
+			if (!Files.exists(tmpEar))
 				return null;
 			
 			// TODO: Check the EAR content
@@ -154,13 +162,13 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
     @Override
-    public File checkClientPlugin(final String simpleName, final String tmpDir) throws Exception
+    public Path checkClientPlugin(final String simpleName, final String tmpDir) throws Exception
     {
         try
 		{
-			File tmpJar = new File(tmpDir + simpleName + "_client.jar");
+			Path tmpJar = Paths.get(tmpDir, simpleName + "_client.jar");
 			
-			if (!tmpJar.exists())
+			if (!Files.exists(tmpJar))
 				return null;
 			
 			// TODO: Check the JAR content
@@ -174,20 +182,20 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	@Override
-    public void deployServerPlugin(final String simpleName, final File tmpEar) throws IOException
+    public void deployServerPlugin(final String simpleName, final Path tmpEar) throws IOException
     {		
 		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
-		File pluginFile = new File(autodeployDir + simpleName + "_server.ear");
-		Files.copy(tmpEar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		Path pluginPath = Paths.get(autodeployDir, simpleName + "_server.ear");
+		Files.copy(tmpEar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
-    public void deployClientPlugin(final String simpleName, final File tmpJar) throws IOException
+    public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException
     {
 		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
-		jnlpService.signJar(tmpJar.getAbsolutePath());
-        File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
-		Files.copy(tmpJar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		jnlpService.signJar(tmpJar.toString());
+        Path pluginPath = Paths.get(jnlpLibsDir, simpleName + "_client.jar");
+		Files.copy(tmpJar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
         jnlpService.updateJNLP(simpleName + "_client.jar", false);
     }
 	
