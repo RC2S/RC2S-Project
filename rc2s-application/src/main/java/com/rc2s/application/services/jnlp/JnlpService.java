@@ -18,6 +18,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
@@ -29,11 +30,11 @@ public class JnlpService implements IJnlpService
     @Inject
     private Logger log;
     
-    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications/rc2s-jnlp/rc2s-client.jnlp";
+    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications" + File.separator + "rc2s-jnlp" + File.separator + "rc2s-client.jnlp";
     
-    private final String jnlpLibsFolder = "libs/";
+    private final String jnlpLibsFolder = "libs" + File.separator;
     
-    private final String jarSignerPath = System.getenv("JAVA_HOME") + "/bin/jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
+    private final String jarSignerPath = System.getenv("JAVA_HOME") + File.separator + "bin" + File.separator + "jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
     
     private final String signKeyStore = JnlpService.class.getResource("/RC2S.jks").getPath();
     

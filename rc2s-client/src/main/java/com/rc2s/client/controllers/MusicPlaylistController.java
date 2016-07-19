@@ -387,7 +387,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			streamingHandler = new StreamingHandler(
 				streamingEJB,
 				Main.getAuthenticatedUser().getUsername(),
-				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
+				Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8"))
 			);
 			streamingHandler.setDaemon(true);
 		}

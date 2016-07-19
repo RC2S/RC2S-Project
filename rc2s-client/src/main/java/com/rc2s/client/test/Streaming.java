@@ -7,6 +7,8 @@ import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
+import java.io.File;
+
 public class Streaming extends Thread
 {
 	public static enum StreamingState {
@@ -33,7 +35,7 @@ public class Streaming extends Thread
 		this.id = id;
 
 		if(System.getProperty("os.name").toLowerCase().contains("windows"))
-			this.media = media.replace('/', '\\');
+			this.media = media.replace('/', File.separatorChar);
 		else
 			this.media = media;
 

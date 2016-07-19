@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -528,7 +529,7 @@ public class SourceUtil
 			}
 			
 			// Parse fxml file
-			Document doc = docBuilder.parse(viewsFolderPath + "/" + fileName);
+			Document doc = docBuilder.parse(viewsFolderPath + File.separator + fileName);
 			
 			// Retrieve first AnchorPane Node element
 			Node anchorNode = doc.getElementsByTagName("AnchorPane").item(0);
