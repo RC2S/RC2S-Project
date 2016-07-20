@@ -170,7 +170,8 @@ public class StreamingService implements IStreamingService
 	@Override
 	public int[] getSyncSize()
 	{
-		int[] syncSize = new int[] {0, 0, 0};
+		int[] syncSize = new int[] {0, 0, 0, 0};
+		int nCubes = 0;
 
 		if(synchronization != null)
 		{
@@ -178,6 +179,9 @@ public class StreamingService implements IStreamingService
 
 			for(Cube cube : synchronization.getCubes())
 			{
+				System.out.println("LOG : ncubes + 1");
+				nCubes++;
+				
 				syncSize[0] += cube.getSize().getX();
 
 				if(first)
@@ -193,11 +197,11 @@ public class StreamingService implements IStreamingService
 					syncSize[2] = Math.min(cube.getSize().getZ(), syncSize[2]);
 				}
 			}
+			
+			// Get number of cubes
+			syncSize[3] = nCubes;
 		}
 		
-		// Get number of cubes
-		syncSize[3] = synchronization.getCubes().size();
-
 		return syncSize;
 	}
 

@@ -54,7 +54,9 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		lightening = 'S';
 		
-		positionsToLighten = new int[algoEffect.getSize()][3];
+		int algoNeededSize = lightening == 'L' ? algoEffect.getSize() : 1;
+		
+		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
 		lighteningIndex = 0;
 		
 		lineMinAnalysis = new ArrayList<>();
@@ -67,7 +69,25 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		syncWidth	= syncDimensions[0];
 		syncHeight	= syncDimensions[1];
 		syncDepth	= syncDimensions[2];
+		System.out.println("LOG : Dimension set size : ");
+		System.out.println(syncDimensions[3]);
 		numCubes	= syncDimensions[3];
+	}
+
+	private int getLighteningSize(char lightening)
+	{
+		switch (lightening)
+		{
+			case 'C':
+				return (syncDepth * syncHeight * syncWidth) / numCubes;
+				
+			case 'S':
+				return (syncDepth * syncWidth) / numCubes;
+				
+			case 'L':
+			default:
+				return 1;
+		}
 	}
 	
 	private AlgoEffectEnum getAlgoEffect(final int value)

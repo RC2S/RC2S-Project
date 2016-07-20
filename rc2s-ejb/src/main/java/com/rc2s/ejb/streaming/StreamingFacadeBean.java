@@ -14,21 +14,21 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
     private IStreamingService streamingService;
     
     @Override
-    @RolesAllowed({"user"})
+    //@RolesAllowed({"user"})
     public void startStreaming(final User caller, final String mrl)
     {
         streamingService.start(mrl);
     }
 
     @Override
-    @RolesAllowed({"user"})
+    //@RolesAllowed({"user"})
     public void stopStreaming(final User caller)
     {
         streamingService.stop();
     }
 
 	@Override
-    @RolesAllowed({"user"})
+    //@RolesAllowed({"user"})
     public void setSynchronization(final Synchronization synchronization)
 	{
 		streamingService.setSynchronization(synchronization);
