@@ -32,7 +32,7 @@ public class JnlpService implements IJnlpService
     
     private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications" + File.separator + "rc2s-jnlp" + File.separator + "rc2s-client.jnlp";
     
-    private final String jnlpLibsFolder = "libs" + File.separator;
+    private final String jnlpLibsFolder = "libs/";
     
     private final String jarSignerPath = System.getenv("JAVA_HOME") + File.separator + "bin" + File.separator + "jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
     
@@ -114,7 +114,12 @@ public class JnlpService implements IJnlpService
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source        = new DOMSource(doc);
-            StreamResult result     = new StreamResult(Paths.get(jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)).toUri().toASCIIString());
+
+			String filePath 		= jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5);
+			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+				filePath 			= filePath.substring(1); // Remove leading slash on Windows
+
+            StreamResult result     = new StreamResult(Paths.get(filePath).toUri().toASCIIString());
 
             transformer.transform(source, result);
         }

@@ -261,6 +261,9 @@ public class PluginLoaderService implements IPluginLoaderService
 				domainRoot = domainRoot.replace("file://", "");
 			else if(domainRoot.startsWith("file:/"))
 				domainRoot = domainRoot.replace("file:", "");
+
+			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+				domainRoot = domainRoot.substring(1); // Remove leading slash on Windows
 		}
 		
 		return domainRoot;
