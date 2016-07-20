@@ -13,19 +13,36 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.Elements;
 
+/**
+ * Analysor 
+ * 
+ * @author RC2S
+ */
 public class Analysor
 {
 	private final Elements elementUtils;
-	private final Messager messager;		// Message lors de la compilation
+	
+	// Compile messager
+	private final Messager messager;
 
 	public static List<String> processedClasses = new ArrayList();
 	
+	/**
+	 * 
+	 * @param els
+	 * @param msgr 
+	 */
 	public Analysor(final Elements els, final Messager msgr)
 	{
 		this.elementUtils = els;
 		this.messager = msgr;
 	}
 	
+	/**
+	 * 
+	 * @param mainElement
+	 * @return ElementMapper containing class elements 
+	 */
 	public ElementMapper classAnalysor(final Element mainElement)
     {
     	ElementMapper mainClass;
@@ -86,6 +103,12 @@ public class Analysor
         return mainClass;
     }
 	
+	/**
+	 * 
+	 * @param element
+	 * @param key
+	 * @return Object value of the annotation 
+	 */
 	private Object getAnnotationValue(final Element element, final String key)
     {
         Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
@@ -103,6 +126,11 @@ public class Analysor
         return null;
     }
 	
+	/**
+	 * 
+	 * @param element
+	 * @return List<String> all annotations on the class 
+	 */
 	private List<String> getClassAnnotations(final Element element)
 	{
 		Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
@@ -120,6 +148,11 @@ public class Analysor
 		return annotations;
 	}
     
+	/**
+	 * 
+	 * @param el
+	 * @return List<ParameterMapper> tuples representing the class elements  
+	 */
     private List<ParameterMapper> getElementParameters(final Element el)
     {
     	ExecutableElement execElement           = (ExecutableElement) el;

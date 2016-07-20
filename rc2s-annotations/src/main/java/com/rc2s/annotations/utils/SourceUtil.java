@@ -21,6 +21,10 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * @author RC2S
+ */
 public class SourceUtil
 {	
 	// Is it first verification ?
@@ -208,6 +212,12 @@ public class SourceUtil
 		}
 	}
 	
+	/**
+	 * 
+	 * @param packagePart
+	 * @return
+	 * @throws SourceControlException 
+	 */
 	private ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
 	{
 		switch (packagePart) 

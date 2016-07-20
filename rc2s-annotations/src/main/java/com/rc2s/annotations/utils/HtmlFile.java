@@ -13,8 +13,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * HtmlFile
+ * 
+ * @author RC2S
+ */
 public class HtmlFile
 {
+	/**
+	 * createJavaDocFile
+	 * 
+	 * Creates java documentation for the annotated class
+	 * 
+	 * @param mainClass
+	 * @return true if no Exception catched
+	 */
 	public static boolean createJavaDocFile(final ElementMapper mainClass)
 	{
 		Path path                       = Paths.get("rc2s-doc" + File.separator + mainClass.getName() + ".html");
@@ -47,6 +60,14 @@ public class HtmlFile
 		return true;
 	}
 	
+	/**
+	 * generateClassInfos
+	 * 
+	 * Generates basic information for the current class
+	 * 
+	 * @param mainClass
+	 * @return String content
+	 */
 	private static String generateClassInfos(final ElementMapper mainClass)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -65,6 +86,14 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
+	/**
+	 * generateFieldsSummary
+	 * 
+	 * Generate information for all fields found in the class
+	 * 
+	 * @param fields
+	 * @return String content
+	 */
 	private static String generateFieldsSummary(final List<ElementMapper> fields)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -95,6 +124,14 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
+	/**
+	 * generateMethodsSummary
+	 * 
+	 * Generate information for all methods found in the class
+	 * 
+	 * @param list
+	 * @return String content
+	 */
 	private static String generateMethodsSummary(final List<ElementMapper> list)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -151,7 +188,7 @@ public class HtmlFile
 				builder.append(el.getReturnType() + " " + el.getName() + "(");
 				if(el.getParameters() != null)
 				{
-					// Virgule à revoir
+					// Comma ?
 					for(ParameterMapper parameter : el.getParameters())
 						builder.append(parameter.getType() + " " + parameter.getName() + ",");
 				}
