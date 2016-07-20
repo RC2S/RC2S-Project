@@ -97,10 +97,7 @@ public class StreamingUtils extends Thread
 
 			} while(state != StreamingState.STOP);
 		}
-		catch(InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		catch(InterruptedException e) {}
 
 		System.err.println("------- Stop StreamingUtils RMI -------");
 		streamingEJB.stopStreaming(Main.getAuthenticatedUser());

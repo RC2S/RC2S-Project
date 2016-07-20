@@ -1,5 +1,6 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.client.Main;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 
 public class StreamingHandlerUtils
@@ -9,7 +10,9 @@ public class StreamingHandlerUtils
 	public StreamingHandlerUtils(StreamingFacadeRemote streamingEJB, String id, String media) throws Exception
 	{
 		this.streaming = new StreamingUtils(streamingEJB, id, media);
-		this.streaming.setDaemon(true);
+
+		// Register the streaming Thread in the RC2S-Client thread pool
+		Main.registerThread(streaming);
 	}
 
 	public void start()
@@ -44,6 +47,7 @@ public class StreamingHandlerUtils
 			System.err.println("------- Waiting for the current StreamingUtils process to stop... ------");
 			try {
 				streaming.join();
+				Main.releaseThread(streaming); // Release from the thread pool
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
