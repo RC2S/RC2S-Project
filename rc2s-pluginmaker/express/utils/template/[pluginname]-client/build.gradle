@@ -6,7 +6,7 @@ repositories {
 
 dependencies {
 	compile project(':[pluginname]-common')
-	compile name: "[pluginname]-interfaces-$version"
+	//compile name: "[pluginname]-interfaces-$version"
 }
 
 project.tasks.compileJava.dependsOn(
@@ -16,6 +16,20 @@ project.tasks.compileJava.dependsOn(
 		subproject -> "${subproject.getPath()}:build"
 	}
 )
+
+project.tasks.compileJava.doFirst {
+	def propFile = new File("${project.projectDir}/src/main/resources/gradle.properties")
+	propFile.createNewFile()
+	propFile.write("path=${project.projectDir}")
+}
+
+task cleanProperties(type : Delete) {
+	delete "${project.projectDir}/src/main/resources/gradle.properties"
+}
+
+project.tasks.compileJava.doLast {
+	//tasks.cleanProperties.execute()
+}
 
 // Create a FatJar (one jar with all dependencies)
 jar {
