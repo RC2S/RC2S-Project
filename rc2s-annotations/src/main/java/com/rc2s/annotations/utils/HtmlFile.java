@@ -2,6 +2,8 @@ package com.rc2s.annotations.utils;
 
 import com.rc2s.annotations.mappers.ElementMapper;
 import com.rc2s.annotations.mappers.ParameterMapper;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +17,7 @@ public class HtmlFile
 {
 	public static boolean createJavaDocFile(final ElementMapper mainClass)
 	{
-		Path path                       = Paths.get("rc2s-doc/" + mainClass.getName() + ".html");
+		Path path                       = Paths.get("rc2s-doc" + File.separator + mainClass.getName() + ".html");
         StringBuilder builder 			= new StringBuilder();
 		List<ElementMapper> mergedList 	= new ArrayList();
 		

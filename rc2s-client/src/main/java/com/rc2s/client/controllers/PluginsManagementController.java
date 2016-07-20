@@ -156,6 +156,7 @@ public class PluginsManagementController extends TabController implements Initia
 				catch (IOException | EJBException ex)
 				{
 					Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
+					log.error(ex);
 				}
 			}
 			else

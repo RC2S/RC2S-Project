@@ -65,8 +65,8 @@ public class HomeController implements Initializable
 			
 			for(Plugin plugin : availablePlugins)
 			{
-				if(plugin.getAccess().equalsIgnoreCase("user")
-				|| (plugin.getAccess().equalsIgnoreCase("admin") && isAdmin(Main.getAuthenticatedUser())))
+				if(plugin.getAccess().equalsIgnoreCase("rc2s-usergrp")
+				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(Main.getAuthenticatedUser())))
 				{
 					log.info("Initializing plugin " + plugin.getName());
                     

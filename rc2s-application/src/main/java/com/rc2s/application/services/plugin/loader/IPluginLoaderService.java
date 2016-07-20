@@ -5,6 +5,7 @@ import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Group;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import javax.ejb.Local;
 
 @Local
@@ -12,15 +13,15 @@ public interface IPluginLoaderService
 {
     public void uploadPlugin(final String pluginName, final Group accessGroup, final byte[] binaryPlugin) throws ServiceException;
     
-    public File unzipPlugin(final String zipFile) throws IOException;
+    public Path unzipPlugin(final String zipFile) throws IOException;
     
-    public File checkServerPlugin(final String simpleName, final String tmpDir) throws Exception;
+    public Path checkServerPlugin(final String simpleName, final String tmpDir) throws Exception;
     
-    public File checkClientPlugin(final String simpleName, final String tmpDir) throws Exception;
+    public Path checkClientPlugin(final String simpleName, final String tmpDir) throws Exception;
     
-    public void deployServerPlugin(final String simpleName, final File tmpEar) throws IOException;
+    public void deployServerPlugin(final String simpleName, final Path tmpEar) throws IOException;
     
-    public void deployClientPlugin(final String simpleName, final File tmpJar) throws IOException;
+    public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException;
 	
 	public Plugin persistPlugin(final String pluginName, final Group group) throws ServiceException;
 	

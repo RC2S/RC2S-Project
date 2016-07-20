@@ -143,12 +143,12 @@ public class MusicPlaylistController extends TabController implements Initializa
 			{
 				try
 				{
-					File file = new File(Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8")));
+					String filePath = Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8"));
 
 					Parser parser = new AutoDetectParser();
 					BodyContentHandler handler = new BodyContentHandler();
 					Metadata metadata = new Metadata();
-					FileInputStream is = new FileInputStream(file);
+					FileInputStream is = new FileInputStream(filePath);
 					ParseContext context = new ParseContext();
 
 					parser.parse(is, handler, metadata, context);
@@ -387,7 +387,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 			streamingHandler = new StreamingHandler(
 				streamingEJB,
 				Main.getAuthenticatedUser().getUsername(),
-				URLDecoder.decode(track.getPath(), "UTF-8").replace("file:/", "")
+				Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8"))
 			);
 			streamingHandler.setDaemon(true);
 		}
