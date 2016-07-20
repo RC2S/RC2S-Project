@@ -11,7 +11,7 @@ import javax.ejb.Local;
 @Local
 public interface IPluginLoaderService
 {
-    public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws ServiceException;
+    public void uploadPlugin(final String pluginName, final Group accessGroup, final byte[] binaryPlugin) throws ServiceException;
     
     public Path unzipPlugin(final String zipFile) throws IOException;
     
@@ -23,7 +23,7 @@ public interface IPluginLoaderService
     
     public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException;
 	
-	public Plugin persistPlugin(final String pluginName, final Group role) throws ServiceException;
+	public Plugin persistPlugin(final String pluginName, final Group group) throws ServiceException;
 	
 	public void deletePlugin(final Plugin plugin) throws ServiceException;
 }

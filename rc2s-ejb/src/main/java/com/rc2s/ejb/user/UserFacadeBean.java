@@ -8,12 +8,17 @@ import com.rc2s.common.exceptions.ServiceException;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless(mappedName = "UserEJB")
 public class UserFacadeBean implements UserFacadeRemote
 {
     @EJB
     private IUserService userService;
+    
+    @Inject
+    private Logger log;
     
     @Override
     @RolesAllowed({"user"})
@@ -25,6 +30,7 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
     }
@@ -39,6 +45,7 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
     }
@@ -53,6 +60,7 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -67,6 +75,7 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -81,6 +90,7 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}

@@ -40,13 +40,16 @@ import org.apache.logging.log4j.Logger;
 
 public class AccessManagementController extends TabController implements Initializable
 {
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger log = LogManager.getLogger(this.getClass());
     
 	private final UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
+    
 	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
+    
 	private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	
 	private List<User> users;
+    
 	private User element;
 	
 	@FXML private TableView<User> usersTable;
@@ -90,7 +93,7 @@ public class AccessManagementController extends TabController implements Initial
 			TableRow<User> row = new TableRow<>();
 			
 			row.setOnMouseClicked(e -> {
-				if(!row.isEmpty() && e.getClickCount() == 2)
+				if (!row.isEmpty() && e.getClickCount() == 2)
 				{
 					element = row.getItem();
 					onEditStarts(element);
@@ -114,8 +117,8 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		errorLabel.setText(err);
 		
-		if(!err.isEmpty())
-			logger.error(err);
+		if (!err.isEmpty())
+			log.error(err);
 	}
 	
 	private void updateUsers()
@@ -128,7 +131,7 @@ public class AccessManagementController extends TabController implements Initial
 			
 			emptyForm();
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			error(e.getMessage());
 		}
@@ -141,7 +144,7 @@ public class AccessManagementController extends TabController implements Initial
 			groupsBox.getItems().clear();
 			groupsBox.getItems().addAll(groupEJB.getAll());
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			error(e.getMessage());
 		}
@@ -154,7 +157,7 @@ public class AccessManagementController extends TabController implements Initial
 			cubicAccessBox.getItems().clear();
 			cubicAccessBox.getItems().addAll(syncEJB.getAll());
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			error(e.getMessage());
 		}
@@ -168,39 +171,39 @@ public class AccessManagementController extends TabController implements Initial
 	private void updateElement(final boolean isNew)
 	{
 		Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
-		Synchronization synchronization = (Synchronization)cubicAccessBox.getSelectionModel().getSelectedItem();
+		Synchronization synchronization = (Synchronization) cubicAccessBox.getSelectionModel().getSelectedItem();
 		
-		if(isNew)
+		if (isNew)
 			element.setUsername(usernameField.getText());
 		
-		if(isNew || (!isNew && !passwordField.getText().isEmpty()))
+		if (isNew || (!isNew && !passwordField.getText().isEmpty()))
 			element.setPassword(Hash.sha1(passwordField.getText()));
         
-		if(!isNew)
+		if (!isNew)
 		{
 			element.setActivated(activatedCheckbox.isSelected());
 			element.setLocked(lockedCheckbox.isSelected());
 		}
 		
-		if(group != null)
+		if (group != null)
 			element.setGroups(Arrays.asList(new Group[] {group}));
-		if(synchronization != null)
+		if (synchronization != null)
 			element.setSynchronizations(Arrays.asList(new Synchronization[] {synchronization}));
 	}
 	
 	@FXML
 	private void onAddEvent(final ActionEvent e)
 	{
-		if(passwordField.getText().equals(confirmPassField.getText()))
+		if (passwordField.getText().equals(confirmPassField.getText()))
 		{
 			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
-			if(group != null)
+			if (group != null)
 			{
 				updateElement(true);
 				Set<ConstraintViolation<User>> violations = Tools.validate(element);
 
-				if(violations.isEmpty())
+				if (violations.isEmpty())
 				{
 					try
 					{
@@ -210,14 +213,14 @@ public class AccessManagementController extends TabController implements Initial
 						updateUsers();
 						error("");
 					}
-					catch(EJBException ex)
+					catch (EJBException ex)
 					{
 						error(ex.getMessage());
 					}
 				}
 				else
 				{
-					for(ConstraintViolation<User> v : violations)
+					for (ConstraintViolation<User> v : violations)
 					{
 						error(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
 						break;
@@ -234,19 +237,19 @@ public class AccessManagementController extends TabController implements Initial
 	@FXML
 	private void onKeyPressedEvent(final KeyEvent e)
 	{
-		if(e.getEventType() == KeyEvent.KEY_PRESSED)
+		if (e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
-			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
+			if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
 				try
 				{
 					User user = usersTable.getSelectionModel().getSelectedItem();
 					
-					if(!Main.getAuthenticatedUser().equals(user))
+					if (!Main.getAuthenticatedUser().equals(user))
 					{
 						ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this user account?");
 
-						if(answer == ButtonType.OK)
+						if  (answer == ButtonType.OK)
 						{
 							userEJB.delete(user);
 							updateUsers();
@@ -256,7 +259,7 @@ public class AccessManagementController extends TabController implements Initial
 						Dialog.message("Error", "You cannot delete your own user account!", Alert.AlertType.ERROR);
 					
 				}
-				catch(EJBException ex)
+				catch (EJBException ex)
 				{
 					error(ex.getMessage());
 				}
@@ -308,12 +311,12 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		boolean passwordUpdated = !passwordField.getText().isEmpty();
 		
-		if(!passwordUpdated || (passwordUpdated && passwordField.getText().equals(confirmPassField.getText())))
+		if (!passwordUpdated || (passwordUpdated && passwordField.getText().equals(confirmPassField.getText())))
 		{
 			updateElement(false);
 			Set<ConstraintViolation<User>> violations = Tools.validate(element);
 
-			if(violations.isEmpty())
+			if (violations.isEmpty())
 			{
 				try
 				{
@@ -330,7 +333,7 @@ public class AccessManagementController extends TabController implements Initial
 			}
 			else
 			{
-				for(ConstraintViolation<User> v : violations)
+				for (ConstraintViolation<User> v : violations)
 				{
 					error(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
 					break;

@@ -43,7 +43,7 @@ public class PluginLoaderService implements IPluginLoaderService
     private Logger log;
 	
     @Override
-    public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws ServiceException
+    public void uploadPlugin(final String pluginName, final Group accessGroup, final byte[] binaryPlugin) throws ServiceException
     {
 		Path tmpZip = null;
 		Path unzipedDir = null;
@@ -64,7 +64,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			{
 				deployServerPlugin(simpleName, tmpEar);
 				deployClientPlugin(simpleName, tmpJar);
-				persistPlugin(pluginName, accessRole);
+				persistPlugin(pluginName, accessGroup);
 			}
 		}
 		catch(Exception e)
@@ -200,7 +200,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 	
 	@Override
-	public Plugin persistPlugin(final String pluginName, final Group role) throws ServiceException
+	public Plugin persistPlugin(final String pluginName, final Group group) throws ServiceException
 	{
 		boolean update = false;
 		Plugin plugin;
@@ -216,7 +216,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		
 		plugin.setName(pluginName);
-		plugin.setAccess(role.getName());
+		plugin.setAccess(group.getName());
 
 		plugin.setVersion("1.0");
 		plugin.setAuthor("John Doe");

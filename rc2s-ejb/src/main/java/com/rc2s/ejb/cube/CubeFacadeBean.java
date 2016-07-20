@@ -7,20 +7,23 @@ import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.User;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless(mappedName = "CubeEJB")
 public class CubeFacadeBean implements CubeFacadeRemote
 {
-	@EJB private ICubeService cubeService;
-	@EJB private IDaemonService daemonService;
+	@EJB
+    private ICubeService cubeService;
     
-    @Resource
-    private SessionContext context;
+	@EJB 
+    private IDaemonService daemonService;
+    
+    @Inject
+    private Logger log;
 	
 	@Override
     @RolesAllowed({"user"})
@@ -32,6 +35,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -46,6 +50,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -60,6 +65,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -74,6 +80,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -88,6 +95,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -102,6 +110,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -116,6 +125,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -130,6 +140,7 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
