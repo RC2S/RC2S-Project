@@ -134,14 +134,17 @@ public class PluginsManagementController extends TabController implements Initia
 		{
 			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
-			if(group != null)
+			if (group != null)
 			{
 				try
 				{
 					pluginLoaderEJB.uploadPlugin("Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
 					updatePlugins();
+                    
+                    log.info("Plugin successfully uploaded");
+                    
 					ButtonType updateJnlp = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Do you wish to restart your client now?");
-						
+					
 					if (updateJnlp == ButtonType.OK)
 					{
 						String url = SERVER_PROTOCOL + "://" + EJB.getServerAddress() + ":" + SERVER_PORT + SERVER_JNLP;
@@ -180,6 +183,9 @@ public class PluginsManagementController extends TabController implements Initia
 					if (answer == ButtonType.OK)
 					{
 						pluginLoaderEJB.deletePlugin(plugin);
+                        
+                        log.info("Delete plugin " + plugin.getName());
+                        
 						hidePluginTab(plugin.getName());
 						updatePlugins();
 					}

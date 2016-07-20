@@ -276,9 +276,9 @@ public class CubicDetailsController extends TabController implements Initializab
 				
 				Set<ConstraintViolation<Size>> violations = Tools.validate(size);
 				
-				if(!violations.isEmpty())
+				if (!violations.isEmpty())
 				{
-					for(ConstraintViolation<Size> v : violations)
+					for (ConstraintViolation<Size> v : violations)
 					{
 						errorLabel.setText(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
 						break;
@@ -288,7 +288,7 @@ public class CubicDetailsController extends TabController implements Initializab
 					return false;
 				}
 			}
-			catch(NumberFormatException e)
+			catch (NumberFormatException e)
 			{
 				errorLabel.setText(e.getMessage());
 				cube.setSize(null);
@@ -314,7 +314,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		ToggleButton btn = (ToggleButton)e.getSource();
 		errorLabel.setText("");
 			
-		if(!btn.isSelected())
+		if (!btn.isSelected())
 		{
 			boolean update = updateCube();
 			
@@ -373,10 +373,11 @@ public class CubicDetailsController extends TabController implements Initializab
 						cube.setSize(newSize);
 					}
 					cubeEJB.add(cube);
+                    log.info("Add cube " + cube.getName());
 					
 					onBackEvent(null);
 				}
-				catch(EJBException ex)
+				catch (EJBException ex)
 				{
 					error(ex.getMessage());
 				}
@@ -402,6 +403,8 @@ public class CubicDetailsController extends TabController implements Initializab
 			try
 			{
 				cubeEJB.remove(cube);
+                log.info("Remove cube " + cube.getName());
+                
 				onBackEvent(null);
 			}
 			catch (EJBException ex)
@@ -463,6 +466,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				cube.getSynchronization().getCubes().add(c);
 				
 				cubeEJB.update(cube);
+                log.info("Update cube " + cube.getName());
 			}
 			catch (EJBException ex)
 			{
@@ -490,6 +494,7 @@ public class CubicDetailsController extends TabController implements Initializab
 					}
 
 					cubeEJB.update(cube);
+                    log.info("Update cube " + cube.getName());
 				}
 				catch (EJBException ex)
 				{
@@ -508,6 +513,8 @@ public class CubicDetailsController extends TabController implements Initializab
 		{
 			cubeEJB.updateAllLed(cube, true);
 			ledCube.setActivated(true);
+            
+            log.info("Enable all LEDs for cube " + cube.getName());
 		}
 		catch (EJBException ex)
 		{
@@ -522,6 +529,8 @@ public class CubicDetailsController extends TabController implements Initializab
 		{
 			cubeEJB.updateAllLed(cube, false);
 			ledCube.setActivated(false);
+            
+            log.info("Disable all LEDs for cube " + cube.getName());
 		}
 		catch (EJBException ex)
 		{
@@ -538,6 +547,8 @@ public class CubicDetailsController extends TabController implements Initializab
 				try
 				{
 					cubeEJB.updateAllLed(cube, ledCube.getStateArray());
+                    
+                    log.info("Toggle all LEDs for cube " + cube.getName());
 				}
 				catch(EJBException e)
 				{

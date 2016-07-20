@@ -48,6 +48,8 @@ public class CubicListController extends TabController implements Initializable
 		{
 			GridPane grid = new GridPane();
 			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
+            
+            log.info("Getting Cubes List");
 
 			int i = 0, j = 0;
 			for (Cube cube : cubes)
@@ -69,7 +71,7 @@ public class CubicListController extends TabController implements Initializable
 
 			scroller.setContent(grid);
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			log.error(e.getMessage());
 		}

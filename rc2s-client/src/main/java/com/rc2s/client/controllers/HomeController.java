@@ -5,7 +5,6 @@ import com.rc2s.client.utils.Resources;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Group;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.plugin.PluginFacadeRemote;
 import java.net.URL;
@@ -50,7 +49,7 @@ public class HomeController implements Initializable
 	
 	private void initAdminTabs()
 	{
-		if(isAdmin(Main.getAuthenticatedUser()))
+		if (isAdmin(Main.getAuthenticatedUser()))
 		{
 			loadTab("Access Management", Resources.loadFxml("AccessManagementView"));
 			loadTab("Plugins Management", Resources.loadFxml("PluginsManagementView"));
@@ -63,9 +62,9 @@ public class HomeController implements Initializable
 		{
 			List<Plugin> availablePlugins = pluginEJB.getAvailables();
 			
-			for(Plugin plugin : availablePlugins)
+			for (Plugin plugin : availablePlugins)
 			{
-				if(plugin.getAccess().equalsIgnoreCase("user")
+				if (plugin.getAccess().equalsIgnoreCase("user")
 				|| (plugin.getAccess().equalsIgnoreCase("admin") && isAdmin(Main.getAuthenticatedUser())))
 				{
 					log.info("Initializing plugin " + plugin.getName());
@@ -73,12 +72,12 @@ public class HomeController implements Initializable
                     String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/views/MainView.fxml";
 					FXMLLoader loader = Resources.loadFxml(mainView);
 
-					if(loader != null)
+					if (loader != null)
 						tabPane.getTabs().add(new Tab(plugin.getName(), loader.getRoot()));
 				}
 			}
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			log.error(e.getMessage());
 		}
@@ -98,7 +97,7 @@ public class HomeController implements Initializable
 
 		Object rawController = loader.getController();
 
-		if(rawController instanceof TabController)
+		if (rawController instanceof TabController)
 		{
 			TabController controller = (TabController)rawController;
 			controller.setTab(tab);
@@ -119,10 +118,6 @@ public class HomeController implements Initializable
 	 */
 	private boolean isAdmin(final User user)
 	{
-		for(Group g : user.getGroups())
-			if(g.getName().equalsIgnoreCase("rc2s-admingrp"))
-				return true;
-		
-		return false;
+		return user.getGroups().stream().anyMatch((g) -> (g.getName().equalsIgnoreCase("rc2s-admingrp")));
 	}
 }

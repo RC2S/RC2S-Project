@@ -187,6 +187,7 @@ public class AccessManagementController extends TabController implements Initial
 		
 		if (group != null)
 			element.setGroups(Arrays.asList(new Group[] {group}));
+        
 		if (synchronization != null)
 			element.setSynchronizations(Arrays.asList(new Synchronization[] {synchronization}));
 	}
@@ -208,6 +209,8 @@ public class AccessManagementController extends TabController implements Initial
 					try
 					{
 						userEJB.add(element);
+                        
+                        log.info("Add user " + element.getUsername());
 
 						clearElement();
 						updateUsers();
@@ -252,6 +255,7 @@ public class AccessManagementController extends TabController implements Initial
 						if  (answer == ButtonType.OK)
 						{
 							userEJB.delete(user);
+                            log.info("Delete user " + user.getUsername());
 							updateUsers();
 						}
 					}
@@ -321,6 +325,8 @@ public class AccessManagementController extends TabController implements Initial
 				try
 				{
 					userEJB.update(element, passwordUpdated);
+                    
+                    log.info("Edit user " + element.getUsername());
 
 					clearElement();
 					updateUsers();

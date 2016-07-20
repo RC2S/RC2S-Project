@@ -3,6 +3,10 @@ package com.rc2s.client.test;
 import com.rc2s.client.Main;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
@@ -32,12 +36,12 @@ public class Streaming extends Thread
 
 		this.id = id;
 
-		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			this.media = media.replace('/', '\\');
 		else
 			this.media = media;
 
-		this.options = formatRtspStream(EJB.getServerAddress(), EJB.getRtspPort(), id);
+		this.options = formatRtspStream(InetAddress.getLocalHost().getHostAddress(), EJB.getRtspPort(), id);
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
@@ -62,7 +66,14 @@ public class Streaming extends Thread
 		);
 
 		System.err.println("------- MRL -------");
-		String mrl = new RtspMrl().host(EJB.getServerAddress()).port(EJB.getRtspPort()).path("/" + id).value();
+		String mrl = "";
+        try
+        {
+            mrl = new RtspMrl().host(InetAddress.getLocalHost().getHostAddress()).port(EJB.getRtspPort()).path("/" + id).value();
+        } catch (UnknownHostException ex)
+        {
+            Logger.getLogger(Streaming.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 		System.err.println("------- Start Streaming RMI -------");
 		streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
@@ -76,7 +87,7 @@ public class Streaming extends Thread
 				wait();
 				System.err.println("------ After wait, state is: " + state.toString() + " ------");
 
-				switch(state)
+				switch (state)
 				{
 					case PLAY:
 						if(!mediaPlayer.isPlaying())
@@ -95,9 +106,9 @@ public class Streaming extends Thread
 						break;
 				}
 
-			} while(state != StreamingState.STOP);
+			} while (state != StreamingState.STOP);
 		}
-		catch(InterruptedException e)
+		catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}

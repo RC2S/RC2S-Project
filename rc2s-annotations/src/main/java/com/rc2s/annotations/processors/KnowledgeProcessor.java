@@ -46,11 +46,11 @@ public class KnowledgeProcessor extends AbstractProcessor
 		Analysor analysor = new Analysor(elementUtils, messager);
 		ElementMapper mainClass = null;
 		
-        for(TypeElement te : annotations)
+        for (TypeElement te : annotations)
         {           
-            for(Element annotated : roundEnv.getElementsAnnotatedWith(te))
+            for (Element annotated : roundEnv.getElementsAnnotatedWith(te))
             {
-                if(annotated.getKind() == ElementKind.CLASS)
+                if (annotated.getKind() == ElementKind.CLASS)
                 	mainClass = analysor.classAnalysor(annotated);
                 else
                 	mainClass = analysor.classAnalysor(annotated.getEnclosingElement());
