@@ -194,6 +194,9 @@ public class StreamingService implements IStreamingService
 				}
 			}
 		}
+		
+		// Get number of cubes
+		syncSize[3] = synchronization.getCubes().size();
 
 		return syncSize;
 	}
