@@ -1,25 +1,23 @@
 package com.rc2s.ejb.plugin;
 
-import com.rc2s.application.services.authentication.SecurityInterceptor;
 import com.rc2s.application.services.plugin.IPluginService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.User;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
 
 @Stateless(mappedName = "PluginEJB")
-@Interceptors(SecurityInterceptor.class)
 public class PluginFacadeBean implements PluginFacadeRemote
 {
 	@EJB
 	private IPluginService pluginService;
 
 	@Override
-	public List<Plugin> getAll(final User caller) throws EJBException
+    @RolesAllowed({"admin"})
+	public List<Plugin> getAll() throws EJBException
 	{
 		try
 		{
@@ -32,7 +30,8 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public List<Plugin> getAvailables(final User caller) throws EJBException
+    @RolesAllowed({"admin"})
+	public List<Plugin> getAvailables() throws EJBException
 	{
 		try
 		{
@@ -45,7 +44,8 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public Plugin add(final User caller, final Plugin plugin) throws EJBException
+    @RolesAllowed({"admin"})
+	public Plugin add(final Plugin plugin) throws EJBException
 	{
 		try
 		{
@@ -58,7 +58,8 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public Plugin update(final User caller, final Plugin plugin) throws EJBException
+    @RolesAllowed({"admin"})
+	public Plugin update(final Plugin plugin) throws EJBException
 	{
 		try
 		{
@@ -71,7 +72,8 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-	public void delete(final User caller, final Plugin plugin) throws EJBException
+    @RolesAllowed({"admin"})
+	public void delete(final Plugin plugin) throws EJBException
 	{
 		try
 		{

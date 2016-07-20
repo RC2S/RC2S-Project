@@ -31,11 +31,11 @@ public class User implements Serializable
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-		name = "link_user_role",
+		name = "link_user_group",
 		joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
+		inverseJoinColumns = @JoinColumn(name = "\"group\"", referencedColumnName = "id")
 	)
-	private List<Role> roles;
+	private List<Group> groups;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Track> tracks;
@@ -154,14 +154,14 @@ public class User implements Serializable
 		this.synchronizations = synchronizations;
 	}
 
-	public List<Role> getRoles()
+	public List<Group> getGroups()
 	{
-		return roles;
+		return groups;
 	}
 
-	public void setRoles(final List<Role> roles)
+	public void setGroups(final List<Group> groups)
 	{
-		this.roles = roles;
+		this.groups = groups;
 	}
 
     public List<Track> getTracks()

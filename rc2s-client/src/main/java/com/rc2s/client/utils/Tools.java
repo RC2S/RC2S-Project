@@ -1,6 +1,8 @@
 package com.rc2s.client.utils;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 import java.util.regex.Pattern;
 import javax.validation.ConstraintViolation;
@@ -21,5 +23,32 @@ public class Tools
 	public static <T extends Serializable> Set<ConstraintViolation<T>> validate(final T vo)
 	{
 		return VALIDATOR.validate(vo);
+	}
+
+    public static String formatDate(final Date date)
+    {
+        if (date == null)
+            return "";
+        
+        return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
+    }
+    
+    public static String replaceFile(final String toBeReplace)
+    {
+		String str = null;
+        
+        if (toBeReplace != null)
+		{
+            str = new String(toBeReplace);
+            
+			if(str.startsWith("file:\\"))
+				str = str.replace("file:\\", "");
+			else if(str.startsWith("file://"))
+				str = str.replace("file://", "");
+			else if(str.startsWith("file:/"))
+				str = str.replace("file:", "");
+		}
+		
+		return str;
 	}
 }

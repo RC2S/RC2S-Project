@@ -10,9 +10,9 @@ import javax.ejb.Remote;
 @Remote
 public interface SynchronizationFacadeRemote
 {
-	public List<Synchronization> getAll(final User caller) throws EJBException;
+	public List<Synchronization> getAll() throws EJBException;
     
-	public List<Synchronization> getByUser(final User caller) throws EJBException;
+	public List<Synchronization> getByUser(final User user) throws EJBException;
     
-	public void add(final User caller, Synchronization synchronization) throws EJBException;
+	public void add(Synchronization synchronization) throws EJBException;
 }

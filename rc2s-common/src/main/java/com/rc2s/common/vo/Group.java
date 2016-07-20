@@ -12,8 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "role")
-public class Role implements Serializable
+@Table(name = "\"group\"")
+public class Group implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +21,12 @@ public class Role implements Serializable
 	
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
 	private List<User> users;
 	
-	public Role() {}
+	public Group() {}
 
-	public Role(final String name)
+	public Group(final String name)
 	{
 		this.name = name;
 	}
@@ -79,9 +79,9 @@ public class Role implements Serializable
 	@Override
 	public boolean equals(final Object o)
 	{
-		if(o != null && o instanceof Role)
+		if(o != null && o instanceof Group)
 		{
-			Role r = (Role)o;
+			Group r = (Group)o;
 			
 			if(r.getId() != null && this.getId() != null)
 				return Objects.equals(r.getId(), this.getId());

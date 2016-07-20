@@ -2,13 +2,14 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.client.utils.Dialog;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.ejb.plugin.PluginFacadeRemote;
 import com.rc2s.ejb.plugin.loader.PluginLoaderFacadeRemote;
-import com.rc2s.ejb.role.RoleFacadeRemote;
+import com.rc2s.ejb.group.GroupFacadeRemote;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,9 +44,9 @@ public class PluginsManagementController extends TabController implements Initia
 	private static final String SERVER_PORT = "8080";
 	private static final String SERVER_JNLP = "/rc2s-jnlp/rc2s-client.jnlp";
 	
-	private final RoleFacadeRemote roleEJB = (RoleFacadeRemote)EJB.lookup("RoleEJB");
-	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote)EJB.lookup("PluginEJB");
-	private final PluginLoaderFacadeRemote pluginLoaderEJB = (PluginLoaderFacadeRemote)EJB.lookup("PluginLoaderEJB");
+	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
+	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote) EJB.lookup("PluginEJB");
+	private final PluginLoaderFacadeRemote pluginLoaderEJB = (PluginLoaderFacadeRemote) EJB.lookup("PluginLoaderEJB");
 	
     private final FileChooser fileChooser = new FileChooser();
 	private File pluginFile;
@@ -61,7 +62,7 @@ public class PluginsManagementController extends TabController implements Initia
 	@FXML private TableColumn<Plugin, String> updatedColumn;
 	
 	@FXML private Button explorerButton;
-	@FXML private ComboBox rolesBox;
+	@FXML private ComboBox groupsBox;
 	@FXML private Button addButton;
 	@FXML private Label statusLabel;
 
@@ -73,24 +74,24 @@ public class PluginsManagementController extends TabController implements Initia
 		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthor()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
 		accessColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAccess().toUpperCase()));
-		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getCreated())));
-		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getUpdated())));
+		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getCreated())));
+		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getUpdated())));
 	}
 	
 	@Override
 	public void updateContent()
 	{
 		pluginFile = null;
-		updateRoles();
+		updateGroups();
 		updatePlugins();
 	}
 	
-	private void updateRoles()
+	private void updateGroups()
 	{
 		try
 		{
-			rolesBox.getItems().clear();
-			rolesBox.getItems().addAll(roleEJB.getAll(Main.getAuthenticatedUser()));
+			groupsBox.getItems().clear();
+			groupsBox.getItems().addAll(groupEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -103,7 +104,7 @@ public class PluginsManagementController extends TabController implements Initia
 		try
 		{
 			pluginsTable.getItems().clear();
-			pluginsTable.getItems().addAll(pluginEJB.getAll(Main.getAuthenticatedUser()));
+			pluginsTable.getItems().addAll(pluginEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -126,13 +127,13 @@ public class PluginsManagementController extends TabController implements Initia
 		error("");
 		if(pluginFile != null)
 		{
-			Role role = (Role)rolesBox.getSelectionModel().getSelectedItem();
+			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
-			if(role != null)
+			if(group != null)
 			{
 				try
 				{
-					pluginLoaderEJB.uploadPlugin(Main.getAuthenticatedUser(), "Test Plugin", role, Files.readAllBytes(pluginFile.toPath()));
+					pluginLoaderEJB.uploadPlugin("Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
 					updatePlugins();
 					ButtonType updateJnlp = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Do you wish to restart your client now?");
 						
@@ -171,7 +172,7 @@ public class PluginsManagementController extends TabController implements Initia
 		
 					if(answer == ButtonType.OK)
 					{
-						pluginLoaderEJB.deletePlugin(Main.getAuthenticatedUser(), plugin);
+						pluginLoaderEJB.deletePlugin(plugin);
 						hidePluginTab(plugin.getName());
 						updatePlugins();
 					}
@@ -200,15 +201,7 @@ public class PluginsManagementController extends TabController implements Initia
 			}
 		}
 	}
-	
-	private String formatDate(final Date date)
-	{
-		if(date == null)
-			return "";
-		
-		return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
-	}
-	
+
 	private void error(final String err)
 	{
 		statusLabel.setText(err);

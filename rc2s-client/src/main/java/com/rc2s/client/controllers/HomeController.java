@@ -5,7 +5,7 @@ import com.rc2s.client.utils.Resources;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.common.vo.User;
 import com.rc2s.ejb.plugin.PluginFacadeRemote;
 import java.net.URL;
@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
 public class HomeController implements Initializable
 {
 	private final Logger logger = LogManager.getLogger(this.getClass());
-	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote)EJB.lookup("PluginEJB");
+	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote) EJB.lookup("PluginEJB");
 	
     @FXML
     private TabPane tabPane;
@@ -60,7 +60,7 @@ public class HomeController implements Initializable
 	{
 		try
 		{
-			List<Plugin> availablePlugins = pluginEJB.getAvailables(Main.getAuthenticatedUser());
+			List<Plugin> availablePlugins = pluginEJB.getAvailables();
 			
 			for(Plugin plugin : availablePlugins)
 			{
@@ -116,13 +116,9 @@ public class HomeController implements Initializable
 	 */
 	private boolean isAdmin(final User user)
 	{
-		for(Role r : user.getRoles())
-		{
-			if(r.getName().equalsIgnoreCase("admin"))
-			{
+		for(Group g : user.getGroups())
+			if(g.getName().equalsIgnoreCase("rc2s-admingrp"))
 				return true;
-			}
-		}
 		
 		return false;
 	}

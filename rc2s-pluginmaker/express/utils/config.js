@@ -14,8 +14,8 @@ module.exports = {
 		port			: 3306,
 		user			: 'root',
 		password		: 'root',
-		salt	 		: 'c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.=:ge[nc>Trs|Fxy',
-		pepper			: '>m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+=ZEl#pt:'
+		salt			: 'c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy',
+		pepper			: '>m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:'
 	},
 	che : {
 		host			: '192.168.1.108',

@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
+import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.User;
+import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
@@ -13,9 +15,14 @@ public class Main extends Application
 {
     private static Stage stage;
 	private static User user;
+    private static ProgrammaticLogin pm;
     
     public static void main(String[] args)
     {
+        System.setProperty("java.security.auth.login.config", Main.class.getResource("/jaas.config").toString());
+        
+        Main.pm = new ProgrammaticLogin();
+        
         Resources.setViewsPackage(Config.VIEWS_PACKAGE);
         Resources.setCssPackage(Config.CSS_PACKAGE);
         Resources.setResourcesPackage(Config.RESOURCES_PACKAGE);
@@ -38,6 +45,13 @@ public class Main extends Application
         
         Main.stage.setScene(scene);
         Main.stage.show();
+        
+        Main.stage.setOnCloseRequest((event) -> {
+            if(Main.user != null && Main.pm != null) 
+                Main.pm.logout();
+            
+            EJB.closeContext();
+        });
     }
 
     @Override
@@ -60,4 +74,9 @@ public class Main extends Application
 	{
 		return Main.user;
 	}
+    
+    public static ProgrammaticLogin getProgrammaticLogin()
+    {
+        return Main.pm;
+    }
 }

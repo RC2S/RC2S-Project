@@ -13,6 +13,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -21,6 +23,9 @@ public class SynchronizationService implements ISynchronizationService
 {
 	@EJB
 	private ISynchronizationDAO synchronizationDAO;
+    
+    @Inject
+    private Logger log;
 
 	@Override
 	public List<Synchronization> getAll() throws ServiceException

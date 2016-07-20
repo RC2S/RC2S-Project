@@ -12,6 +12,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -20,6 +22,9 @@ public class PluginService implements IPluginService
 {
 	@EJB
 	private IPluginDAO pluginDAO;
+    
+    @Inject
+    private Logger log;
 
 	@Override
 	public List<Plugin> getAll() throws ServiceException
@@ -87,6 +92,4 @@ public class PluginService implements IPluginService
 			throw new ServiceException(e);
 		}
 	}
-	
-	
 }

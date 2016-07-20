@@ -4,9 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,6 +14,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +24,9 @@ import org.xml.sax.SAXException;
 @Stateless
 public class JnlpService implements IJnlpService
 {
+    @Inject
+    private Logger log;
+    
     private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications/rc2s-jnlp/rc2s-client.jnlp";
     
     private final String jnlpLibsFolder = "libs/";
@@ -39,6 +42,8 @@ public class JnlpService implements IJnlpService
     @Override
     public void signJar(final String jarPath)
     {        
+        Process p;
+        
         String args[] = {
             jarSignerPath,
             "-keystore", signKeyStore,
@@ -48,23 +53,23 @@ public class JnlpService implements IJnlpService
         };
         
         StringBuilder output = new StringBuilder();
-
-		Process p;
-		try {
+        
+		try
+        {
 			p = Runtime.getRuntime().exec(args);
 			p.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            String line = "";			
-			while ((line = reader.readLine())!= null) {
+            String line = "";
+            
+			while ((line = reader.readLine())!= null)
 				output.append(line + "\n");
-			}
-
-		} catch (IOException | InterruptedException ex) {
-			Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
+		}
+        catch (IOException | InterruptedException e)
+        {
+			log.error(e);
 		}
         
-        System.out.println(output.toString());
+        log.info(output.toString());
     }
 
     @Override
@@ -86,7 +91,7 @@ public class JnlpService implements IJnlpService
                 Element element = (Element) searchJar.item(i);
                 if (element.getAttribute("href").equals(jnlpLibsFolder + jarName))
                 {
-                    if(removeJar)
+                    if (removeJar)
                         element.getParentNode().removeChild(element);
                     else
                         return;
@@ -105,8 +110,10 @@ public class JnlpService implements IJnlpService
             // Save changes
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)));
+            DOMSource source        = new DOMSource(doc);
+            StreamResult result     = new StreamResult(new File(
+                    jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)));
+            
             transformer.transform(source, result);
         }
         catch (ParserConfigurationException
@@ -114,7 +121,7 @@ public class JnlpService implements IJnlpService
               | IOException
               | TransformerException e)
         {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }   
 }

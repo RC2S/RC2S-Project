@@ -50,7 +50,10 @@ public class CubicItemController extends TabController implements Initializable
 	{
 		this.cube = cube;
 		
-		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 5., Color.web(cube.getColor()), null);
+		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), 
+                cube.getSize().getY(), cube.getSize().getZ(), 
+                5., Color.web(cube.getColor()), null);
+        
 		this.display.getChildren().add(ledCube);
 		
 		this.name.setText(cube.getName());
@@ -58,7 +61,7 @@ public class CubicItemController extends TabController implements Initializable
 		
 		try
 		{
-			boolean state = cubeEJB.getStatus(Main.getAuthenticatedUser(), cube);
+			boolean state = cubeEJB.getStatus(cube);
 			this.status.setText(state ? "Online" : "Offline");
 		}
 		catch(EJBException e)

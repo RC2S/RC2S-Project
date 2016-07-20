@@ -8,6 +8,8 @@ import javax.ejb.Local;
 @Local
 public interface IUserService
 {
+    public User getAuthenticatedUser(final String username, final String password) throws ServiceException;
+    
     public List<User> getAll() throws ServiceException;
     
 	public User add(final User user) throws ServiceException;

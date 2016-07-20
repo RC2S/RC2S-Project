@@ -9,19 +9,19 @@ import javax.ejb.Remote;
 @Remote
 public interface CubeFacadeRemote
 {
-	public List<Cube> getAllCubes(final User caller) throws EJBException;
+	public List<Cube> getAllCubes() throws EJBException;
     
-	public List<Cube> getCubes(final User caller) throws EJBException;
+	public List<Cube> getCubes(final User user) throws EJBException;
     
-	public void add(final User caller, final Cube c) throws EJBException;
+	public void add(final Cube c) throws EJBException;
     
-	public void remove(final User caller, final Cube c) throws EJBException;
+	public void remove(final Cube c) throws EJBException;
     
-	public Cube update(final User caller, final Cube cube) throws EJBException;
+	public Cube update(final Cube cube) throws EJBException;
 	
-	public boolean getStatus(final User caller, final Cube c) throws EJBException;
+	public boolean getStatus(final Cube c) throws EJBException;
     
-	public void updateAllLed(final User caller, final Cube c, final boolean state) throws EJBException;
+	public void updateAllLed(final Cube c, final boolean state) throws EJBException;
     
-	public void updateAllLed(final User caller, final Cube c, final boolean[][][] states) throws EJBException;
+	public void updateAllLed(final Cube c, final boolean[][][] states) throws EJBException;
 }

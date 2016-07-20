@@ -6,16 +6,14 @@ import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.utils.Hash;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.User;
-import com.rc2s.ejb.role.RoleFacadeRemote;
+import com.rc2s.ejb.group.GroupFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -44,9 +42,9 @@ public class AccessManagementController extends TabController implements Initial
 {
 	private final Logger logger = LogManager.getLogger(this.getClass());
     
-	private final UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");
-	private final RoleFacadeRemote roleEJB = (RoleFacadeRemote)EJB.lookup("RoleEJB");
-	private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote)EJB.lookup("SynchronizationEJB");
+	private final UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
+	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
+	private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	
 	private List<User> users;
 	private User element;
@@ -56,7 +54,7 @@ public class AccessManagementController extends TabController implements Initial
 	@FXML private TableColumn<User, String> usernameColumn;
 	@FXML private TableColumn<User, String> activatedColumn;
 	@FXML private TableColumn<User, String> lockedColumn;
-	@FXML private TableColumn<User, String> roleColumn;
+	@FXML private TableColumn<User, String> groupColumn;
 	@FXML private TableColumn<User, String> lastLoginColumn;
 	@FXML private TableColumn<User, String> createdColumn;
 	@FXML private TableColumn<User, String> updatedColumn;
@@ -71,7 +69,7 @@ public class AccessManagementController extends TabController implements Initial
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPassField;
 
-    @FXML private ComboBox rolesBox;
+    @FXML private ComboBox groupsBox;
     @FXML private ComboBox cubicAccessBox;
 
     @FXML private Button addButton;
@@ -83,10 +81,10 @@ public class AccessManagementController extends TabController implements Initial
 		usernameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUsername()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
 		lockedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isLocked() ? "Yes" : "No"));
-		roleColumn.setCellValueFactory(data -> new SimpleStringProperty((data.getValue().getRoles() != null) ? data.getValue().getRoles().get(0).getName() : "None"));
-		lastLoginColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getLastLogin())));
-		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getCreated())));
-		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDate(data.getValue().getUpdated())));
+		groupColumn.setCellValueFactory(data -> new SimpleStringProperty((data.getValue().getGroups() != null) ? data.getValue().getGroups().get(0).getName() : "None"));
+		lastLoginColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getLastLogin())));
+		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getCreated())));
+		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getUpdated())));
 		
 		usersTable.setRowFactory(table -> {
 			TableRow<User> row = new TableRow<>();
@@ -108,7 +106,7 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		updateUsers();
 		clearElement();
-		updateRoles();
+		updateGroups();
 		updateSync();
 	}
 	
@@ -124,7 +122,7 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		try
 		{
-			users = userEJB.getAll(Main.getAuthenticatedUser());
+			users = userEJB.getAll();
 			usersTable.getItems().clear();
 			usersTable.getItems().addAll(users);
 			
@@ -136,12 +134,12 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
-	private void updateRoles()
+	private void updateGroups()
 	{
 		try
 		{
-			rolesBox.getItems().clear();
-			rolesBox.getItems().addAll(roleEJB.getAll(Main.getAuthenticatedUser()));
+			groupsBox.getItems().clear();
+			groupsBox.getItems().addAll(groupEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -154,7 +152,7 @@ public class AccessManagementController extends TabController implements Initial
 		try
 		{
 			cubicAccessBox.getItems().clear();
-			cubicAccessBox.getItems().addAll(syncEJB.getAll(Main.getAuthenticatedUser()));
+			cubicAccessBox.getItems().addAll(syncEJB.getAll());
 		}
 		catch(EJBException e)
 		{
@@ -169,24 +167,23 @@ public class AccessManagementController extends TabController implements Initial
 	
 	private void updateElement(final boolean isNew)
 	{
-		Role role = (Role)rolesBox.getSelectionModel().getSelectedItem();
+		Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 		Synchronization synchronization = (Synchronization)cubicAccessBox.getSelectionModel().getSelectedItem();
 		
 		if(isNew)
 			element.setUsername(usernameField.getText());
 		
-		if(isNew || (!isNew && !passwordField.getText().isEmpty())) {
-			System.out.println("Pass: " + passwordField.getText());
+		if(isNew || (!isNew && !passwordField.getText().isEmpty()))
 			element.setPassword(Hash.sha1(passwordField.getText()));
-		}
+        
 		if(!isNew)
 		{
 			element.setActivated(activatedCheckbox.isSelected());
 			element.setLocked(lockedCheckbox.isSelected());
 		}
 		
-		if(role != null)
-			element.setRoles(Arrays.asList(new Role[] {role}));
+		if(group != null)
+			element.setGroups(Arrays.asList(new Group[] {group}));
 		if(synchronization != null)
 			element.setSynchronizations(Arrays.asList(new Synchronization[] {synchronization}));
 	}
@@ -196,9 +193,9 @@ public class AccessManagementController extends TabController implements Initial
 	{
 		if(passwordField.getText().equals(confirmPassField.getText()))
 		{
-			Role role = (Role)rolesBox.getSelectionModel().getSelectedItem();
+			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
-			if(role != null)
+			if(group != null)
 			{
 				updateElement(true);
 				Set<ConstraintViolation<User>> violations = Tools.validate(element);
@@ -207,7 +204,7 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					try
 					{
-						userEJB.add(Main.getAuthenticatedUser(), element);
+						userEJB.add(element);
 
 						clearElement();
 						updateUsers();
@@ -228,7 +225,7 @@ public class AccessManagementController extends TabController implements Initial
 				}
 			}
 			else
-				error("Please select a role for this user");
+				error("Please select a group for this user");
 		}
 		else
 			error("Passwords don't match");
@@ -251,7 +248,7 @@ public class AccessManagementController extends TabController implements Initial
 
 						if(answer == ButtonType.OK)
 						{
-							userEJB.delete(Main.getAuthenticatedUser(), user);
+							userEJB.delete(user);
 							updateUsers();
 						}
 					}
@@ -286,7 +283,7 @@ public class AccessManagementController extends TabController implements Initial
 		usernameField.setText(user.getUsername());
 		usernameField.setDisable(true);
 		
-		rolesBox.getSelectionModel().select(user.getRoles().get(0));
+		groupsBox.getSelectionModel().select(user.getGroups().get(0));
 	}
 	
 	@FXML
@@ -320,7 +317,7 @@ public class AccessManagementController extends TabController implements Initial
 			{
 				try
 				{
-					userEJB.update(Main.getAuthenticatedUser(), element, passwordUpdated);
+					userEJB.update(element, passwordUpdated);
 
 					clearElement();
 					updateUsers();
@@ -351,17 +348,9 @@ public class AccessManagementController extends TabController implements Initial
 		usernameField.clear();
 		passwordField.clear();
 		confirmPassField.clear();
-		rolesBox.getSelectionModel().select(null);
+		groupsBox.getSelectionModel().select(null);
 		cubicAccessBox.getSelectionModel().select(null);
 		activatedCheckbox.setSelected(false);
 		lockedCheckbox.setSelected(false);
-	}
-	
-	private String formatDate(Date date)
-	{
-		if(date == null)
-			return "";
-		
-		return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
-	}
+	}	
 }

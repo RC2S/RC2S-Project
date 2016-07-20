@@ -6,7 +6,7 @@ var config	= require('../utils/config');
 function UserController() {};
 
 UserController.prototype.login = function(req, callback) {
-	
+
 	req.checkBody('username', 'Invalid username').notEmpty().len(5, 20);
 	req.checkBody('password', 'Invalid password').notEmpty().len(5, 20);
 
@@ -34,13 +34,13 @@ UserController.prototype.login = function(req, callback) {
 	});
 
 	var query = '\
-		SELECT r.name \
-		FROM role r \
-		INNER JOIN link_user_role ur ON ur.role = r.id \
+		SELECT g.name \
+		FROM `group` g \
+		INNER JOIN link_user_group ur ON ur.group = g.id \
 		INNER JOIN user u ON u.id = ur.user \
 		AND u.username = ? AND u.password = ? \
 		AND u.activated = 1 AND u.locked = 0 \
-	';	
+	';
 
 	var shaPass = crypto.createHash('sha1').update(req.body.password).digest('hex');
 	var password = crypto.createHash('sha1').update(config.database.salt + shaPass + config.database.pepper).digest('hex');
@@ -55,7 +55,7 @@ UserController.prototype.login = function(req, callback) {
 		if (rows.length == 0) {
 			logger.writeQueryLog('User not found !', query);
 			return callback(false, 'Invalid Login');
-		} else if (rows[0]["name"] == 'ADMIN') {
+		} else if (rows[0]["name"] == 'rc2s-admingrp') {
 
 			// Ensure hash uniqueness
 			var currentDate = (new Date()).valueOf().toString();
@@ -66,13 +66,13 @@ UserController.prototype.login = function(req, callback) {
 				.update(currentDate + random)
 				.digest('hex');
 
-            logger.writeQueryLog('User found. Creating new token : ' + shaToken, query);
+			logger.writeQueryLog('User found. Creating new token : ' + shaToken, query);
 
 			req.session.token = shaToken;
 			return callback(true, undefined);
 		} else {
 			logger.writeQueryLog('User not Admin !', query);
-			res.redirect("/login");
+			res.redirect('/login');
 		}
 	});
 };

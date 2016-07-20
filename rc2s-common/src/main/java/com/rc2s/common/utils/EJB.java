@@ -19,9 +19,9 @@ public class EJB
 	{
         try
 		{
-			if(ip != null)
+			if (ip != null)
 				EJB.setServerAddress(ip);
-			if(port != null)
+			if (port != null)
 				EJB.setServerPort(port);
 			
 			Properties props = new Properties();
@@ -50,6 +50,16 @@ public class EJB
 			return null;
 		}
 	}
+    
+    public static void closeContext()
+    {
+        try {
+            if (context != null)
+                context.close();
+        } catch (NamingException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 	
 	private static void setServerAddress(final String ip)
 	{

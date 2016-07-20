@@ -13,6 +13,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -21,6 +23,9 @@ public class CubeService implements ICubeService
 {
 	@EJB
 	private ICubeDAO cubeDAO;
+    
+    @Inject
+    private Logger log;
     
     @Override
     public List<Cube> getCubes() throws ServiceException
