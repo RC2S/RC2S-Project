@@ -22,6 +22,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * SourceUtil
+ * 
+ * Core of the SourceControl annotation.
+ * Processes the content of the class, package included,
+ * in order to verify that the class follow the rules 
+ * required to integrate a RC2S plugin.
  * 
  * @author RC2S
  */
@@ -52,6 +58,11 @@ public class SourceUtil
 	private final static String localPackage			= "javax.ejb.Local";
 	private final static String entityPackage			= "javax.persistence.Entity";
 	
+	/**
+	 * SourceUtil constructor
+	 * 
+	 * Initializes lists for first check
+	 */
 	public SourceUtil()
 	{
 		if (expectedControllersList == null)
@@ -67,6 +78,22 @@ public class SourceUtil
 			viewsList = new ArrayList<>();
 	}
 	
+	/**
+	 * verifySource
+	 * 
+	 * Core of the verfication process
+	 * 
+	 * If it's the first annotated class, we begin to check
+	 * expected views and controllers, in order to be able to
+	 * couple every each (except controllers than can be alone).
+	 * 
+	 * A MainView and a MainController are expected
+	 * 
+	 * Verifications are based on package name and class naming.
+	 * Some classes need more verifications such as Controllers.
+	 * 
+	 * @param mainClass 
+	 */
 	public void verifySource(ElementMapper mainClass)
 	{
 		String[] packageParts = mainClass.getPackageName().split("\\.");
@@ -211,13 +238,7 @@ public class SourceUtil
 				throw new SourceControlException("Invalid package naming after plugin name - Expected (ejb|application|dao|common|client), got '" + packageParts[3] + "'");
 		}
 	}
-	
-	/**
-	 * 
-	 * @param packagePart
-	 * @return
-	 * @throws SourceControlException 
-	 */
+
 	private ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
 	{
 		switch (packagePart) 
@@ -270,34 +291,38 @@ public class SourceUtil
 		
 		return packageParts[4];
 	}
-
+	
 	/**
-	* void verifyClassStandards(mainClass, cne, entityName)
-	* 
-	* pn.ejb.entityName			OK -> shall be 'NameFacadeRemote' & 'NameFacadeBean'
-	*							OK -> annotation @Stateless or @Stateful for 'NameFacadeBean' 
-	*							OK -> annotation @Remote for 'NameFacadeRemote'
-	*
-	* pn.application.entityName	OK -> shall be 'INameService' & 'NameService'
-	*							OK -> annotation @Stateless or @Stateful for 'NameService'
-	*							OK -> annotation @Local for 'INameService'
-	*
-	* pn.dao.entityName			OK -> shall be 'INameDAO' & 'NameDAO'
-	*							OK -> annotation @Stateless or @Stateful for 'NameDAO'
-	*							OK -> annotation @Local for 'INameDAO'
-	* 
-	* pn.common.vo				OK -> shall be 'Name' & annotation @Entity
-	* pn.common.sql				-> pluginname.sql - different analysis because it's a file and not a class
-	* 
-	* pn.client.controllers		OK -> shall be 'NameController' (shall have an initialize() method with parameters url & rb)
-	*							OK -> save controller's name to verify later whether he has a linked view
-	*							OK -> shall contain a 'MainController'
-	* pn.client.views			OK -> retrieve views and expected controllers
-	*							OK -> shall contain a 'MainView'
-	* pn.client.utils			OK -> void (utils for plugin creation, shall only have annotation @SourceControl)
-	* pn.client.css				OK -> void
-	* pn.client.images			OK -> void
-	*/
+	 * verifyClassStandards
+	 * 
+	 * pn.ejb.entityName			-> shall be 'NameFacadeRemote' & 'NameFacadeBean'
+	 *								-> annotation @Stateless or @Stateful for 'NameFacadeBean' 
+	 *								-> annotation @Remote for 'NameFacadeRemote'
+	 *
+	 * pn.application.entityName	-> shall be 'INameService' & 'NameService'
+	 *								-> annotation @Stateless or @Stateful for 'NameService'
+	 *								-> annotation @Local for 'INameService'
+	 *
+	 * pn.dao.entityName			-> shall be 'INameDAO' & 'NameDAO'
+	 *								-> annotation @Stateless or @Stateful for 'NameDAO'
+	 *								-> annotation @Local for 'INameDAO'
+	 * 
+	 * pn.common.vo					-> shall be 'Name' & annotation @Entity
+	 * pn.common.sql				-> pluginname.sql - different analysis because it's a file and not a class
+	 * 
+	 * pn.client.controllers		-> shall be 'NameController' (shall have an initialize() method with parameters url & rb)
+	 *								-> save controller's name to verify later whether he has a linked view
+	 *								-> shall contain a 'MainController'
+	 * pn.client.views				-> shall contain a 'MainView'
+	 * pn.client.utils				-> void (utils for plugin creation, shall only have annotation @SourceControl)
+	 * pn.client.css				-> void
+	 * pn.client.images				-> void
+	 * 
+	 * @param mainClass
+	 * @param cne
+	 * @param entityName
+	 * @throws SourceControlException 
+	 */
 	private void verifyClassStandards(ElementMapper mainClass, ClassNamesEnum cne, String entityName) throws SourceControlException
 	{
 		if (cne != null)
@@ -337,6 +362,12 @@ public class SourceUtil
 		}
 	}
 
+	/**
+	 * 
+	 * @param mainClass
+	 * @param entityName
+	 * @throws SourceControlException 
+	 */
 	private void verifyEjbStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
 		if (mainClass.getName().equals(entityName + "FacadeRemote"))
@@ -355,6 +386,12 @@ public class SourceUtil
 		}
 	}
 
+	/**
+	 * 
+	 * @param mainClass
+	 * @param entityName
+	 * @throws SourceControlException 
+	 */
 	private void verifyApplicationStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
 		if (mainClass.getName().equals("I" + entityName + "Service"))
@@ -373,6 +410,12 @@ public class SourceUtil
 		}
 	}
 
+	/**
+	 * 
+	 * @param mainClass
+	 * @param entityName
+	 * @throws SourceControlException 
+	 */
 	private void verifyDaoStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
 		if (mainClass.getName().equals("I" + entityName + "DAO"))
@@ -391,6 +434,11 @@ public class SourceUtil
 		}
 	}
 	
+	/**
+	 * 
+	 * @param mainClass
+	 * @throws SourceControlException 
+	 */
 	private void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
 	{
 		Boolean hasStateless	= mainClass.getAnnotations().contains(statelessPackage);
@@ -409,6 +457,11 @@ public class SourceUtil
 		}
 	}
 
+	/**
+	 * 
+	 * @param mainClass
+	 * @throws SourceControlException 
+	 */
 	private void verifyVoStandards(ElementMapper mainClass) throws SourceControlException
 	{
 		// Compile the regex
@@ -431,6 +484,11 @@ public class SourceUtil
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	/**
+	 * 
+	 * @param mainClass
+	 * @throws SourceControlException 
+	 */
 	private void verifyControllerStandards(ElementMapper mainClass) throws SourceControlException
 	{
 		// We shall find initialize(URL, ResourceBundle)
