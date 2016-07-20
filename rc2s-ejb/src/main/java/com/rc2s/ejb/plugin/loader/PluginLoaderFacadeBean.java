@@ -8,12 +8,17 @@ import com.rc2s.common.vo.Group;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless(mappedName = "PluginLoaderEJB")
 public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 {
     @EJB
     private IPluginLoaderService pluginLoaderService;
+    
+    @Inject
+    private Logger log;
     
     @Override
     @RolesAllowed({"admin"})
@@ -25,6 +30,7 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
     }
@@ -39,6 +45,7 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}

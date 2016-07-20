@@ -10,15 +10,23 @@ import com.rc2s.common.vo.User;
 import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main extends Application
 {
     private static Stage stage;
+    
 	private static User user;
+    
     private static ProgrammaticLogin pm;
+    
+    private static final Logger log = LogManager.getLogger(Main.class);
     
     public static void main(String[] args)
     {
+        log.info("Starting RC2S Client");
+        
         System.setProperty("java.security.auth.login.config", Main.class.getResource("/jaas.config").toString());
         
         Main.pm = new ProgrammaticLogin();
@@ -47,10 +55,14 @@ public class Main extends Application
         Main.stage.show();
         
         Main.stage.setOnCloseRequest((event) -> {
+            log.info("Logout and close lookup context");
+            
             if(Main.user != null && Main.pm != null) 
                 Main.pm.logout();
             
             EJB.closeContext();
+            
+            log.info("Closing RC2S Client");
         });
     }
 

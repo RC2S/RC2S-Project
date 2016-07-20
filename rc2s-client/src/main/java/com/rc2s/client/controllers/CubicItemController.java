@@ -17,10 +17,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CubicItemController extends TabController implements Initializable
 {
-	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
+	private final Logger log = LogManager.getLogger(this.getClass());
+    
+    private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	
 	private Cube cube;
 	
@@ -66,7 +70,7 @@ public class CubicItemController extends TabController implements Initializable
 		}
 		catch(EJBException e)
 		{
-			System.err.println(e.getMessage());
+			log.error(e.getMessage());
 			this.status.setText("Offline");
 		}
 	}

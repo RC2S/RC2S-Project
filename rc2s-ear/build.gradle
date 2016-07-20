@@ -5,7 +5,6 @@ dependencies {
     deploy project(':rc2s-ejb')
     deploy project(':rc2s-dao')
     deploy project(':rc2s-application')
-    //earlib project(path: ':rc2s-ejb', configuration: 'compile')
 }
 
 ear {

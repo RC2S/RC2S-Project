@@ -14,8 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -39,16 +37,22 @@ import org.apache.logging.log4j.Logger;
 
 public class PluginsManagementController extends TabController implements Initializable
 {
-    private static final Logger logger = LogManager.getLogger(PluginsManagementController.class);
+    private static final Logger log = LogManager.getLogger(PluginsManagementController.class);
+    
 	private static final String SERVER_PROTOCOL = "http";
+    
 	private static final String SERVER_PORT = "8080";
+    
 	private static final String SERVER_JNLP = "/rc2s-jnlp/rc2s-client.jnlp";
 	
 	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
+    
 	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote) EJB.lookup("PluginEJB");
+    
 	private final PluginLoaderFacadeRemote pluginLoaderEJB = (PluginLoaderFacadeRemote) EJB.lookup("PluginLoaderEJB");
 	
     private final FileChooser fileChooser = new FileChooser();
+    
 	private File pluginFile;
 	
     @FXML private TableView<Plugin> pluginsTable;
@@ -93,7 +97,7 @@ public class PluginsManagementController extends TabController implements Initia
 			groupsBox.getItems().clear();
 			groupsBox.getItems().addAll(groupEJB.getAll());
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			error(e.getMessage());
 		}
@@ -106,7 +110,7 @@ public class PluginsManagementController extends TabController implements Initia
 			pluginsTable.getItems().clear();
 			pluginsTable.getItems().addAll(pluginEJB.getAll());
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			error(e.getMessage());
 		}
@@ -117,7 +121,7 @@ public class PluginsManagementController extends TabController implements Initia
     {
         pluginFile = fileChooser.showOpenDialog(Main.getStage());
 		
-		if(pluginFile != null)
+		if (pluginFile != null)
 			explorerButton.setText(pluginFile.getName());
 	}
 	
@@ -125,7 +129,8 @@ public class PluginsManagementController extends TabController implements Initia
 	private void onAddEvent(final ActionEvent e)
 	{
 		error("");
-		if(pluginFile != null)
+        
+		if (pluginFile != null)
 		{
 			Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
 			
@@ -137,16 +142,18 @@ public class PluginsManagementController extends TabController implements Initia
 					updatePlugins();
 					ButtonType updateJnlp = Dialog.confirm("Upload success!", "Your plugin has been successfully uploaded to the server! Do you wish to restart your client now?");
 						
-					if(updateJnlp == ButtonType.OK)
+					if (updateJnlp == ButtonType.OK)
 					{
 						String url = SERVER_PROTOCOL + "://" + EJB.getServerAddress() + ":" + SERVER_PORT + SERVER_JNLP;
 						String jwsCmd = "javaws " + url;
-						System.out.println("JavaWS cmd: " + jwsCmd);
+                        
+						log.info("JavaWS cmd: " + jwsCmd);
+                        
 						Runtime.getRuntime().exec(jwsCmd);
 						Platform.exit();
 					}
 				}
-				catch(IOException | EJBException ex)
+				catch (IOException | EJBException ex)
 				{
 					Dialog.message("Error", ex.getMessage(), Alert.AlertType.ERROR);
 				}
@@ -161,16 +168,16 @@ public class PluginsManagementController extends TabController implements Initia
 	@FXML
 	private void onKeyPressedEvent(final KeyEvent e)
 	{
-		if(e.getEventType() == KeyEvent.KEY_PRESSED)
+		if (e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
-			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
+			if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
 				try
 				{
 					Plugin plugin = pluginsTable.getSelectionModel().getSelectedItem();
 					ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this plugin from the RC2S Server?");
 		
-					if(answer == ButtonType.OK)
+					if (answer == ButtonType.OK)
 					{
 						pluginLoaderEJB.deletePlugin(plugin);
 						hidePluginTab(plugin.getName());
@@ -178,7 +185,7 @@ public class PluginsManagementController extends TabController implements Initia
 					}
 					
 				}
-				catch(EJBException ex)
+				catch (EJBException ex)
 				{
 					error(ex.getMessage());
 				}
@@ -192,9 +199,9 @@ public class PluginsManagementController extends TabController implements Initia
 	{
 		TabPane tabPane = getTab().getTabPane();
 		
-		for(Tab tab : tabPane.getTabs())
+		for (Tab tab : tabPane.getTabs())
 		{
-			if(tab.getText().equals(pluginName))
+			if (tab.getText().equals(pluginName))
 			{
 				tabPane.getTabs().remove(tab);
 				break;
@@ -207,6 +214,6 @@ public class PluginsManagementController extends TabController implements Initia
 		statusLabel.setText(err);
 		
 		if(!err.isEmpty())
-			logger.error(err);
+			log.error(err);
 	}
 }

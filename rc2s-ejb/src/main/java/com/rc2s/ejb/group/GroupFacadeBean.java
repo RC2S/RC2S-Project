@@ -8,12 +8,17 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import com.rc2s.application.services.group.IGroupService;
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless(mappedName = "GroupEJB")
 public class GroupFacadeBean implements GroupFacadeRemote
 {
 	@EJB
 	private IGroupService groupService;
+    
+    @Inject
+    private Logger log;
 
 	@Override
     @RolesAllowed({"admin"})
@@ -25,6 +30,7 @@ public class GroupFacadeBean implements GroupFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
