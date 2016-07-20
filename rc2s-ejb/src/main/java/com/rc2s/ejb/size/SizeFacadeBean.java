@@ -8,12 +8,17 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless(mappedName = "SizeEJB")
 public class SizeFacadeBean implements SizeFacadeRemote
 {
 	@EJB
 	private ISizeService sizeService;
+    
+    @Inject
+    private Logger log;
 
 	@Override
     @RolesAllowed({"user"})
@@ -25,6 +30,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -39,6 +45,7 @@ public class SizeFacadeBean implements SizeFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}

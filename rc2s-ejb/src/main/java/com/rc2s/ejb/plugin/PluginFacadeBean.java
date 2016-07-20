@@ -8,12 +8,17 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
 @Stateless(mappedName = "PluginEJB")
 public class PluginFacadeBean implements PluginFacadeRemote
 {
 	@EJB
 	private IPluginService pluginService;
+    
+    @Inject
+    private Logger log;
 
 	@Override
     @RolesAllowed({"admin"})
@@ -25,6 +30,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -39,6 +45,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -53,6 +60,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -67,6 +75,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}
@@ -81,6 +90,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}

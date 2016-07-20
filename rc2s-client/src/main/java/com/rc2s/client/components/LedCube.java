@@ -10,16 +10,21 @@ import javafx.scene.transform.Rotate;
 public class LedCube extends Group
 {
     private static final double MIN_SIZE = 3.;
+    
     private static final double MAX_SIZE = 20.;
 
     private final Parent parent;
 	
     private double mx, my;
+    
     private double x, y, z;
+    
     private Rotate rx, ry, rz;
+    
     private double size;
     
 	private LedEvent ledEvent;
+    
     private Color color;
     
     public LedCube(final Parent parent, final double x, final double y, 
@@ -31,7 +36,7 @@ public class LedCube extends Group
         drawCube(x, y, z, size, color);
 		
         this.parent.setOnMouseDragged((e) -> {
-            if(e.isPrimaryButtonDown())
+            if (e.isPrimaryButtonDown())
             {
                 double oldx = mx;
                 double oldy = my;
@@ -50,7 +55,7 @@ public class LedCube extends Group
             }
         });
 		
-		if(this.ledEvent != null)
+		if (this.ledEvent != null)
 		{
 			this.parent.setOnScroll((e) -> {
 				if(e.getDeltaY() == 0
@@ -108,11 +113,11 @@ public class LedCube extends Group
         this.size = size;
         this.color = color;
         
-        for(int i = 0 ; i < x ; i++)
+        for (int i = 0 ; i < x ; i++)
         {
-            for(int j = 0 ; j < y ; j++)
+            for (int j = 0 ; j < y ; j++)
             {
-                for(int k = 0 ; k < z ; k++)
+                for (int k = 0 ; k < z ; k++)
                 {
                     Led led = new Led(i, j, k, size, true, color, this.ledEvent);
                     this.getChildren().add(led);
@@ -186,7 +191,7 @@ public class LedCube extends Group
 	
     public void updateAxis()
     {
-        for(int i = 0 ; i < 3 ; i++)
+        for (int i = 0 ; i < 3 ; i++)
         {
             Rotate axis = (Rotate)this.getTransforms().get(i);
             axis.setPivotX(((x-1) * size * Led.SIZE_MODIFIER) / 2);
@@ -204,7 +209,7 @@ public class LedCube extends Group
     {
         this.size = size;
 
-        for(Node n : this.getChildren())
+        for (Node n : this.getChildren())
         {
             Led l = (Led)n;
             l.setSize(this.size);
@@ -216,7 +221,7 @@ public class LedCube extends Group
     {
         this.color = color;
 
-        for(Node n : this.getChildren())
+        for (Node n : this.getChildren())
         {
             Led l = (Led)n;
             l.setColor(this.color);
@@ -225,7 +230,7 @@ public class LedCube extends Group
 	
 	public void setActivated(final boolean activated)
 	{
-		for(Node n : this.getChildren())
+		for (Node n : this.getChildren())
         {
             Led l = (Led)n;
             l.setActivated(activated);
@@ -236,9 +241,9 @@ public class LedCube extends Group
     {
         boolean[][][] states = new boolean[(int)getY()][(int)getZ()][(int)getX()];
 
-        for(Node n : this.getChildren())
+        for (Node n : this.getChildren())
         {
-            if(n instanceof Led)
+            if (n instanceof Led)
             {
                 Led l = (Led) n;
                 states[(int)l.getY()][(int)l.getZ()][(int)l.getX()] = l.isActivated();

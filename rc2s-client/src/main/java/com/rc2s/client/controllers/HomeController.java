@@ -24,7 +24,8 @@ import org.apache.logging.log4j.Logger;
 
 public class HomeController implements Initializable
 {
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger log = LogManager.getLogger(this.getClass());
+    
 	private final PluginFacadeRemote pluginEJB = (PluginFacadeRemote) EJB.lookup("PluginEJB");
 	
     @FXML
@@ -67,7 +68,9 @@ public class HomeController implements Initializable
 				if(plugin.getAccess().equalsIgnoreCase("user")
 				|| (plugin.getAccess().equalsIgnoreCase("admin") && isAdmin(Main.getAuthenticatedUser())))
 				{
-					String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/views/MainView.fxml";
+					log.info("Initializing plugin " + plugin.getName());
+                    
+                    String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/views/MainView.fxml";
 					FXMLLoader loader = Resources.loadFxml(mainView);
 
 					if(loader != null)
@@ -77,7 +80,7 @@ public class HomeController implements Initializable
 		}
 		catch(EJBException e)
 		{
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 	

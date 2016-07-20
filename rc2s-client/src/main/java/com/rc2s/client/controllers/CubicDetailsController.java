@@ -42,13 +42,16 @@ import org.apache.logging.log4j.Logger;
 
 public class CubicDetailsController extends TabController implements Initializable
 {
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	private final Logger log = LogManager.getLogger(this.getClass());
 	
 	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote) EJB.lookup("CubeEJB");
+    
 	private final SizeFacadeRemote sizeEJB = (SizeFacadeRemote) EJB.lookup("SizeEJB");
+    
 	private final SynchronizationFacadeRemote synchronizationEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
 	
 	private Cube cube;
+    
 	private LedCube ledCube;
 	
 	@FXML private HBox display;
@@ -168,7 +171,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			boolean status = cubeEJB.getStatus(cube);
 			statusLabel.setText(status ? "Online" : "Offline");
 		}
-		catch(EJBException e)
+		catch (EJBException e)
 		{
 			error(e.getMessage());
 			statusLabel.setText("Offline");
@@ -179,16 +182,14 @@ public class CubicDetailsController extends TabController implements Initializab
 		synchronizedList.getItems().clear();
 		synchronizedList.getItems().addAll(cube.getSynchronization().getCubes());
 		
-		if(cube.getId() != null)
+		if (cube.getId() != null)
 		{
 			cubesBox.getItems().remove(cube);
 			synchronizedList.getItems().remove(cube);
 		}
 
-		for(Cube sync : cube.getSynchronization().getCubes())
-		{
+		for (Cube sync : cube.getSynchronization().getCubes())
 			cubesBox.getItems().remove(sync);
-		}
 	}
 	
 	private void updateDisplay()
@@ -255,12 +256,13 @@ public class CubicDetailsController extends TabController implements Initializab
 										? nameField.getText()
 										: synchronizedField.getText());
 		
-		String color = (String)colorBox.getSelectionModel().getSelectedItem();
-		if(color != null)
+		String color = (String) colorBox.getSelectionModel().getSelectedItem();
+		
+        if (color != null)
 			cube.setColor(color);
 		
 		// If we created a new Size value
-		if(newSizeBox.isVisible())
+		if (newSizeBox.isVisible())
 		{
 			Size size = new Size();
 			size.setName(newSizeName.getText());
@@ -298,8 +300,8 @@ public class CubicDetailsController extends TabController implements Initializab
 		// Using an existing Size
 		else
 		{
-			Size size = (Size)sizeBox.getSelectionModel().getSelectedItem();
-			if(size != null)
+			Size size = (Size) sizeBox.getSelectionModel().getSelectedItem();
+			if (size != null)
 				cube.setSize(size);
 		}
 		
@@ -316,18 +318,18 @@ public class CubicDetailsController extends TabController implements Initializab
 		{
 			boolean update = updateCube();
 			
-			if(update)
+			if (update)
 			{
 				Set<ConstraintViolation<Cube>> violations = Tools.validate(cube);
 
-				if(violations.isEmpty())
+				if (violations.isEmpty())
 				{
 					try
 					{
 						cube = cubeEJB.update(cube);
 						toggleEditCube();
 					}
-					catch(EJBException ex)
+					catch (EJBException ex)
 					{
 						error(ex.getMessage());
 					}
@@ -335,7 +337,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				else
 				{
 					btn.setSelected(true);
-					for(ConstraintViolation<Cube> v : violations)
+					for (ConstraintViolation<Cube> v : violations)
 					{
 						errorLabel.setText(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
 						break;
@@ -357,15 +359,15 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		boolean update = updateCube();
 		
-		if(update)
+		if (update)
 		{
 			Set<ConstraintViolation<Cube>> violations = Tools.validate(cube);
 
-			if(violations.isEmpty())
+			if (violations.isEmpty())
 			{
 				try
 				{
-					if(newSizeBox.isVisible())
+					if (newSizeBox.isVisible())
 					{
 						Size newSize = sizeEJB.add(cube.getSize());
 						cube.setSize(newSize);
@@ -381,7 +383,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			}
 			else
 			{
-				for(ConstraintViolation<Cube> v : violations)
+				for (ConstraintViolation<Cube> v : violations)
 				{
 					errorLabel.setText(v.getRootBeanClass().getSimpleName() + "." + v.getPropertyPath() + " " + v.getMessage());
 					break;
@@ -395,14 +397,14 @@ public class CubicDetailsController extends TabController implements Initializab
 	{
 		ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this cube from the RC2S Server?");
 		
-		if(answer == ButtonType.OK)
+		if (answer == ButtonType.OK)
 		{
 			try
 			{
 				cubeEJB.remove(cube);
 				onBackEvent(null);
 			}
-			catch(EJBException ex)
+			catch (EJBException ex)
 			{
 				error(ex.getMessage());
 			}
@@ -412,10 +414,10 @@ public class CubicDetailsController extends TabController implements Initializab
 	@FXML
 	private void onColorChanged(final ActionEvent e)
 	{
-		ComboBox box = (ComboBox)e.getSource();
+		ComboBox box = (ComboBox) e.getSource();
 		Object o = box.getSelectionModel().getSelectedItem();
 		
-		if(o != null && o instanceof String)
+		if (o != null && o instanceof String)
 		{
 			cube.setColor((String)o.toString());
 			updateDisplay();
@@ -425,10 +427,10 @@ public class CubicDetailsController extends TabController implements Initializab
 	@FXML
 	private void onSizeChanged(final ActionEvent e)
 	{
-		ComboBox box = (ComboBox)e.getSource();
+		ComboBox box = (ComboBox) e.getSource();
 		Object o = box.getSelectionModel().getSelectedItem();
 		
-		if(o != null && o instanceof Size)
+		if (o != null && o instanceof Size)
 		{
 			cube.setSize((Size)o);
 			updateDisplay();
@@ -450,9 +452,9 @@ public class CubicDetailsController extends TabController implements Initializab
 	@FXML
 	private void onAddCubeEvent(final ActionEvent e)
 	{
-		Cube c = (Cube)cubesBox.getSelectionModel().getSelectedItem();
+		Cube c = (Cube) cubesBox.getSelectionModel().getSelectedItem();
 		
-		if(c != null)
+		if (c != null)
 		{
 			try
 			{
@@ -462,7 +464,7 @@ public class CubicDetailsController extends TabController implements Initializab
 				
 				cubeEJB.update(cube);
 			}
-			catch(EJBException ex)
+			catch (EJBException ex)
 			{
 				error(ex.getMessage());
 			}
@@ -472,15 +474,15 @@ public class CubicDetailsController extends TabController implements Initializab
 	@FXML
 	private void onListKeyEvent(final KeyEvent e)
 	{
-		if(e.getEventType() == KeyEvent.KEY_PRESSED)
+		if (e.getEventType() == KeyEvent.KEY_PRESSED)
 		{
-			if(e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
+			if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE)
 			{
 				try
 				{
 					ObservableList<Cube> cubes = synchronizedList.getSelectionModel().getSelectedItems();
 
-					for(Cube c : cubes)
+					for (Cube c : cubes)
 					{
 						synchronizedList.getItems().remove(c);
 						cubesBox.getItems().add(c);
@@ -489,7 +491,7 @@ public class CubicDetailsController extends TabController implements Initializab
 
 					cubeEJB.update(cube);
 				}
-				catch(EJBException ex)
+				catch (EJBException ex)
 				{
 					error(ex.getMessage());
 				}
@@ -507,7 +509,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			cubeEJB.updateAllLed(cube, true);
 			ledCube.setActivated(true);
 		}
-		catch(EJBException ex)
+		catch (EJBException ex)
 		{
 			error(ex.getMessage());
 		}
@@ -521,7 +523,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			cubeEJB.updateAllLed(cube, false);
 			ledCube.setActivated(false);
 		}
-		catch(EJBException ex)
+		catch (EJBException ex)
 		{
 			error(ex.getMessage());
 		}
@@ -547,7 +549,7 @@ public class CubicDetailsController extends TabController implements Initializab
 	
 	private void error(String err)
 	{
-		logger.error(err);
+		log.error(err);
 		errorLabel.setText(err);
 	}
 }
