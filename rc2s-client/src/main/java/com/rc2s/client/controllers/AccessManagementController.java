@@ -13,6 +13,7 @@ import com.rc2s.ejb.group.GroupFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -251,7 +252,10 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					try
 					{
-						userEJB.add(element);
+						if (group.getName().equals("rc2s-admingrp"))
+                            element.setGroups(groupEJB.getAll());
+                        
+                        userEJB.add(element);
                         
                         log.info("Add user " + element.getUsername());
 
