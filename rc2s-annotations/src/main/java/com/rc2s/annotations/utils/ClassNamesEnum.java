@@ -1,5 +1,13 @@
 package com.rc2s.annotations.utils;
 
+/**
+ * ClassNamesEnum
+ * 
+ * Classes allowed (expected) to have the @SourceControl annotation,
+ * used for plugin code construction recognition.
+ * 
+ * @author RC2S
+ */
 public enum ClassNamesEnum
 {
 	// EJB Class
@@ -13,12 +21,7 @@ public enum ClassNamesEnum
 	
 	// Common Classes
 	VO,
-	SQL,
 	
 	// Client Classes
 	CONTROLLERS,
-	VIEWS,
-	CSS,
-	IMAGES,
-	UTILS
 }

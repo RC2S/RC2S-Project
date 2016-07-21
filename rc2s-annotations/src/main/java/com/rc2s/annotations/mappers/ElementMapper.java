@@ -6,6 +6,11 @@ import java.util.Set;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 
+/**
+ * ElementMapper
+ * 
+ * @author captp
+ */
 public class ElementMapper
 {
     // Element Package name
@@ -37,6 +42,14 @@ public class ElementMapper
 	// Class Annotations
 	private final List<String> annotations;
 
+	/**
+	 * Constructs an ElementMapper
+	 * 
+	 * @param packageName
+	 * @param modifiers
+	 * @param kind
+	 * @param name 
+	 */
     public ElementMapper(final String packageName, final Set<Modifier> modifiers,
         final ElementKind kind, final String name)
     {
@@ -67,11 +80,6 @@ public class ElementMapper
         return returnType;
     }
 
-    public void setReturnType(final String returnType)
-    {
-        this.returnType = returnType;
-    }
-
     public ElementKind getKind()
     {
         return kind;
@@ -91,17 +99,7 @@ public class ElementMapper
     {
         return description;
     }
-
-    public void setParameters(final List<ParameterMapper> parameters)
-    {
-        this.parameters = parameters;
-    }
-
-    public void setDescription(final String description)
-    {
-        this.description = description;
-    }
-
+	
 	public List<ElementMapper> getFields()
 	{
 		return fields;
@@ -121,4 +119,19 @@ public class ElementMapper
 	{
 		return annotations;
 	}
+	
+    public void setReturnType(final String returnType)
+    {
+        this.returnType = returnType;
+    }
+
+    public void setParameters(final List<ParameterMapper> parameters)
+    {
+        this.parameters = parameters;
+    }
+
+    public void setDescription(final String description)
+    {
+        this.description = description;
+    }
 }
