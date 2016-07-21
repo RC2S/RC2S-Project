@@ -1,0 +1,35 @@
+dependencies {   
+    compile group: 'javax', name: 'javaee-api', version: '7.0'
+    compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.162'
+}
+
+task deleteOldRealmLib(type: Delete) {
+	delete fileTree(dir: "$System.env.RC2S_HOME/lib/").matching {
+		include 'rc2s-realm-*.jar'
+	}
+}
+
+task copyRealmLib(type: Copy, dependsOn: deleteOldRealmLib) {
+    from("$buildDir/libs/")
+    into("$System.env.RC2S_HOME/lib")
+}
+
+jar {
+    doLast {
+        if(!project.hasProperty('skipServerAutodeploy')) {
+            try {
+                tasks.deleteOldRealmLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+
+            try {
+                tasks.copyRealmLib.execute();
+            }
+            catch(Throwable t) {
+                println t.getMessage();
+            }
+        }
+    }
+}

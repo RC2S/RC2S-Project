@@ -1,5 +1,14 @@
 package com.rc2s.client;
 
+/**
+ * Config
+ * 
+ * Configuration for the client application
+ * Contains all the constant attributes for
+ * the application and its packages
+ * 
+ * @author RC2S
+ */
 public final class Config
 {
     // Attributs principaux de l'application

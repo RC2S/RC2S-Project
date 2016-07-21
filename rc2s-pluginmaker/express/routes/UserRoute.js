@@ -11,7 +11,7 @@ module.exports = function(app) {
 		res.render('login', {
 			title	: 'Connexion | RC2S-PluginMaker',
 			css 	: ['login'],
-			js		: ['login','TweenLite.min'],
+			js		: ['login', 'TweenLite.min'],
 			flash	: {error : CommonUtils.formatFormErrors(errors)}
 		});
 		errors = null;
@@ -31,9 +31,9 @@ module.exports = function(app) {
 	app.get('/logout', function(req, res, next) {
 		if (req.session) {
 			req.session.token = undefined;
-			
+
 			req.session.destroy(function(err) {
-				if(err)
+				if (err)
 					console.log(err);
 				else {
 					errors = null;

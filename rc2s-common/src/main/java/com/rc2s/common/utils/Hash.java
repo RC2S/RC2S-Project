@@ -3,9 +3,25 @@ package com.rc2s.common.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Hash
+ * 
+ * Class used for hash process
+ * Uses sha1
+ * 
+ * @author captp
+ */
 public class Hash
 {
-	public static String sha1(String str)
+	/**
+	 * sha1
+	 * 
+	 * Hashes a string in sha1
+	 * 
+	 * @param str
+	 * @return String sha1 hash
+	 */
+	public static String sha1(final String str)
 	{
 		String sha1 = null;
 		

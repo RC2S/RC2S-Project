@@ -19,7 +19,7 @@ public class Listener extends Thread
 	 * @param daemon
 	 * @param port 
 	 */
-    public Listener(Daemon daemon, int port)
+    public Listener(final Daemon daemon, final int port)
     {
 		this.daemon = daemon;
 		this.port = port;

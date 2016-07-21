@@ -9,13 +9,40 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
+/**
+ * CubeService
+ * 
+ * Service for cube management
+ * Acces to database via ICubeDAO
+ * 
+ * @author RC2S
+ */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class CubeService implements ICubeService
 {
 	@EJB
 	private ICubeDAO cubeDAO;
     
+    @Inject
+    private Logger log;
+    
+	/**
+	 * getCubes
+	 * 
+	 * Get all cubes
+	 * 
+	 * @return List<Cube>
+	 * @throws ServiceException 
+	 */
     @Override
     public List<Cube> getCubes() throws ServiceException
     {
@@ -29,8 +56,17 @@ public class CubeService implements ICubeService
 		}
     }
     
+	/**
+	 * getCube
+	 * 
+	 * Get a user's cubes
+	 * 
+	 * @param user
+	 * @return List<Cube>
+	 * @throws ServiceException 
+	 */
     @Override
-    public List<Cube> getCubes(User user) throws ServiceException
+    public List<Cube> getCubes(final User user) throws ServiceException
     {
 		try
 		{
@@ -42,22 +78,30 @@ public class CubeService implements ICubeService
 		}
     }
 	
+	/**
+	 * add
+	 * 
+	 * Add a new cube to db
+	 * 
+	 * @param cube
+	 * @throws ServiceException 
+	 */
 	@Override
-	public void add(Cube c) throws ServiceException
+	public void add(final Cube cube) throws ServiceException
 	{
 		try
 		{
 			try
 			{
-				Cube existing = cubeDAO.getByIp(c.getIp());
+				Cube existing = cubeDAO.getByIp(cube.getIp());
 
 				if (existing != null)
 					throw new ServiceException("Cube " + existing.getName() + " already uses the IP address " + existing.getIp());
 			}
 			catch(DAOException e) { /* Ignore getSingleResult() exception */ }
 
-			c.setCreated(new Date());
-			cubeDAO.save(c);
+			cube.setCreated(new Date());
+			cubeDAO.save(cube);
 		}
 		catch(DAOException e)
 		{
@@ -65,12 +109,20 @@ public class CubeService implements ICubeService
 		}
 	}
 	
+	/**
+	 * remove
+	 * 
+	 * Remove a cube from db
+	 * 
+	 * @param cube
+	 * @throws ServiceException 
+	 */
 	@Override
-	public void remove(Cube c) throws ServiceException
+	public void remove(final Cube cube) throws ServiceException
 	{
 		try
 		{
-			cubeDAO.delete(c.getId());
+			cubeDAO.delete(cube.getId());
 		}
 		catch(DAOException e)
 		{
@@ -78,8 +130,17 @@ public class CubeService implements ICubeService
 		}
 	}
 	
+	/**
+	 * update
+	 * 
+	 * Update a cube from db
+	 * 
+	 * @param cube
+	 * @return Cube (updated)
+	 * @throws ServiceException 
+	 */
 	@Override
-	public Cube update(Cube cube) throws ServiceException
+	public Cube update(final Cube cube) throws ServiceException
 	{
 		try
 		{

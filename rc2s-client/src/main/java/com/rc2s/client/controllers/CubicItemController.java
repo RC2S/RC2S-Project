@@ -8,6 +8,8 @@ import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,10 +18,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CubicItemController extends TabController implements Initializable
 {
-	private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
+	private final Logger log = LogManager.getLogger(this.getClass());
+    
+    private final CubeFacadeRemote cubeEJB = (CubeFacadeRemote)EJB.lookup("CubeEJB");
 	
 	private Cube cube;
 	
@@ -30,7 +36,7 @@ public class CubicItemController extends TabController implements Initializable
 	@FXML private Label status;
 	
 	@Override
-    public void initialize(URL url, ResourceBundle rb)
+    public void initialize(final URL url, final ResourceBundle rb)
 	{
 		root.setOnMouseClicked((MouseEvent e) -> {
 			FXMLLoader loader = Resources.loadFxml("CubicDetailsView");
@@ -45,25 +51,39 @@ public class CubicItemController extends TabController implements Initializable
 	@Override
 	public void updateContent() {}
 	
-	public void update(Cube cube)
+	public void update(final Cube cube)
 	{
 		this.cube = cube;
 		
-		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), cube.getSize().getY(), cube.getSize().getZ(), 5., Color.web(cube.getColor()), null);
+		LedCube ledCube = new LedCube(this.display, cube.getSize().getX(), 
+                cube.getSize().getY(), cube.getSize().getZ(), 
+                5., Color.web(cube.getColor()), null);
+        
 		this.display.getChildren().add(ledCube);
 		
 		this.name.setText(cube.getName());
 		this.ip.setText(cube.getIp());
-		
-		try
+
+		this.status.setText("Probing...");
+		new Thread()
 		{
-			boolean state = cubeEJB.getStatus(cube);
-			this.status.setText(state ? "Online" : "Offline");
-		}
-		catch(EJBException e)
-		{
-			System.err.println(e.getMessage());
-			this.status.setText("Offline");
-		}
+			@Override
+			public void run()
+			{
+				Platform.runLater(() -> {
+					try
+					{
+						String state = cubeEJB.getStatus(cube) ? "Online" : "Offline";
+						status.setText(state);
+						log.info("Cube " + cube.getName() + " on " + cube.getIp() + " is " + state);
+					}
+					catch (EJBException e)
+					{
+						System.err.println(e.getMessage());
+						status.setText("Offline");
+					}
+				});
+			}
+		}.start();
 	}
 }

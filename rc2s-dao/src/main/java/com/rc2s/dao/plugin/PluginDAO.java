@@ -25,7 +25,7 @@ public class PluginDAO extends GenericDAO<Plugin> implements IPluginDAO
 	}
 	
 	@Override
-	public Plugin getByName(String name) throws DAOException
+	public Plugin getByName(final String name) throws DAOException
 	{
 		try
 		{

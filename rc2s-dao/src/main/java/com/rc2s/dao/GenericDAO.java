@@ -11,6 +11,7 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 {
 	@PersistenceContext
     private EntityManager em;
+    
 	private final Class<T> type;
 	
 	@SuppressWarnings("unchecked")
@@ -33,7 +34,7 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 	}
 	
 	@Override
-	public <V extends Serializable> T getById(V id) throws DAOException
+	public <V extends Serializable> T getById(final V id) throws DAOException
 	{
 		try
 		{
@@ -46,7 +47,7 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 	}
 	
 	@Override
-	public T save(T entity) throws DAOException
+	public T save(final T entity) throws DAOException
 	{
 		try
 		{
@@ -61,7 +62,7 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 	}
 	
 	@Override
-	public T update(T entity) throws DAOException
+	public T update(final T entity) throws DAOException
 	{
 		try
 		{
@@ -76,7 +77,7 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 	}
 	
 	@Override
-	public <V extends Serializable> void delete(V id) throws DAOException
+	public <V extends Serializable> void delete(final V id) throws DAOException
 	{
 		try
 		{

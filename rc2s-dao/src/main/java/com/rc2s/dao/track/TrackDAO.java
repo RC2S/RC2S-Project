@@ -13,7 +13,7 @@ import java.util.List;
 public class TrackDAO extends GenericDAO<Track> implements ITrackDAO
 {
     @Override
-    public List<Track> getTracksByUser(User user) throws DAOException
+    public List<Track> getTracksByUser(final User user) throws DAOException
     {
         try
         {

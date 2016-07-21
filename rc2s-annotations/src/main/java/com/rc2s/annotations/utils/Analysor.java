@@ -13,20 +13,38 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.Elements;
 
+/**
+ * Analysor 
+ * 
+ * @author RC2S
+ */
 public class Analysor
 {
 	private final Elements elementUtils;
-	private final Messager messager;		// Message lors de la compilation
+	
+	// Compile messager
+	private final Messager messager;
 
 	public static List<String> processedClasses = new ArrayList();
 	
-	public Analysor(Elements els, Messager msgr)
+	/**
+	 * 
+	 * @param els
+	 * @param msgr 
+	 */
+	public Analysor(final Elements els, final Messager msgr)
 	{
 		this.elementUtils = els;
 		this.messager = msgr;
 	}
 	
-	public ElementMapper classAnalysor(Element mainElement)
+	/**
+	 * classAnalysor
+	 * 
+	 * @param mainElement
+	 * @return ElementMapper containing class elements 
+	 */
+	public ElementMapper classAnalysor(final Element mainElement)
     {
     	ElementMapper mainClass;
         
@@ -86,7 +104,14 @@ public class Analysor
         return mainClass;
     }
 	
-	private Object getAnnotationValue(Element element, String key)
+	/**
+	 * getAnnotationValue
+	 * 
+	 * @param element
+	 * @param key
+	 * @return Object value of the annotation 
+	 */
+	private Object getAnnotationValue(final Element element, final String key)
     {
         Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
         
@@ -96,14 +121,20 @@ public class Analysor
 			
             for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> param : properties.entrySet())
             {
-				if(param.getKey().toString().equals(key))
+				if (param.getKey().toString().equals(key))
                     return param.getValue();
             }
         }
         return null;
     }
 	
-	private List<String> getClassAnnotations(Element element)
+	/**
+	 * getClassAnnotations
+	 * 
+	 * @param element
+	 * @return List<String> all annotations on the class 
+	 */
+	private List<String> getClassAnnotations(final Element element)
 	{
 		Map<? extends ExecutableElement, ? extends AnnotationValue> properties;
         List<String> annotations = new ArrayList<>();
@@ -120,23 +151,29 @@ public class Analysor
 		return annotations;
 	}
     
-    private List<ParameterMapper> getElementParameters(Element el)
+	/**
+	 * getElementParameters
+	 * 
+	 * @param el
+	 * @return List<ParameterMapper> tuples representing the class elements  
+	 */
+    private List<ParameterMapper> getElementParameters(final Element el)
     {
     	ExecutableElement execElement           = (ExecutableElement) el;
         List<ParameterMapper> params            = new ArrayList();
         List<AnnotationValue> paramsAnnoDesc    = null;
         int i = 0;
         
-        if(getAnnotationValue(el, "parametersDescription()") != null)
+        if (getAnnotationValue(el, "parametersDescription()") != null)
         {
             AnnotationValue val = (AnnotationValue) getAnnotationValue(el, "parametersDescription()");
-            paramsAnnoDesc = (List<AnnotationValue>)val.getValue();
+            paramsAnnoDesc = (List<AnnotationValue>) val.getValue();
         }
         
-        for(Element param : execElement.getParameters())
+        for (Element param : execElement.getParameters())
         {
             String desc = null;
-            if(paramsAnnoDesc != null && i < paramsAnnoDesc.size())
+            if (paramsAnnoDesc != null && i < paramsAnnoDesc.size())
                 desc = (String) paramsAnnoDesc.get(i++).getValue();
             
             params.add(new ParameterMapper(

@@ -6,7 +6,20 @@ dependencies {
     compile project(':rc2s-common')
     compile project(':rc2s-annotations')
     compile group: 'com.rc2s', name: 'rc2s-interfaces', version: version
-    compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
+    compile group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.162'
+    compile group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
+    compile group: 'org.apache.tika', name: 'tika-bundle', version: '1.13'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir "src/main/resources/"
+            exclude "dev"
+            exclude "uat"
+            exclude "prod"
+        }
+    }
 }
 
 jar {
@@ -19,4 +32,13 @@ jar {
             "Application-Name" : project.name
         )
     }
+}
+
+project.tasks.compileJava.doFirst {
+    tasks.copyEnvResources.execute()
+}
+
+task copyEnvResources(type: Copy) {
+    from("src/main/resources/${env}")
+    into('build/resources/main')
 }

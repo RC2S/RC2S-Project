@@ -9,13 +9,40 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
+/**
+ * SynchronizationService
+ * 
+ * Service for synchronisation management
+ * Works with the ISynchronizationDAO
+ * 
+ * @author RC2S
+ */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class SynchronizationService implements ISynchronizationService
 {
 	@EJB
 	private ISynchronizationDAO synchronizationDAO;
+    
+    @Inject
+    private Logger log;
 
+	/**
+	 * getAll
+	 * 
+	 * Get all the synchronisations from db
+	 * 
+	 * @return List<Synchronization>
+	 * @throws ServiceException 
+	 */
 	@Override
 	public List<Synchronization> getAll() throws ServiceException
 	{
@@ -29,8 +56,17 @@ public class SynchronizationService implements ISynchronizationService
 		}
 	}
 
+	/**
+	 * getByUser
+	 * 
+	 * Get all the synchronisations from db for a given user
+	 * 
+	 * @param user
+	 * @return List<Synchronization>
+	 * @throws ServiceException 
+	 */
 	@Override
-	public List<Synchronization> getByUser(User user) throws ServiceException
+	public List<Synchronization> getByUser(final User user) throws ServiceException
 	{
 		try
 		{
@@ -42,8 +78,16 @@ public class SynchronizationService implements ISynchronizationService
 		}
 	}
 
+	/**
+	 * add
+	 * 
+	 * Add a synchronization in db
+	 * 
+	 * @param synchronization
+	 * @throws ServiceException 
+	 */
 	@Override
-	public void add(Synchronization synchronization) throws ServiceException
+	public void add(final Synchronization synchronization) throws ServiceException
 	{
 		try
 		{

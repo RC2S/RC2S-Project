@@ -4,18 +4,42 @@ import com.rc2s.application.services.plugin.loader.IPluginLoaderService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
+/**
+ * PluginLoaderFacadeBean
+ * 
+ * PluginLoader EJB, bridge to PluginLoaderService
+ * 
+ * @author RC2S
+ */
 @Stateless(mappedName = "PluginLoaderEJB")
 public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 {
     @EJB
     private IPluginLoaderService pluginLoaderService;
     
+    @Inject
+    private Logger log;
+    
+	/**
+	 * uploadPlugin
+	 * 
+	 * Uploads the given plugin via the pluginLoaderService
+	 * 
+	 * @param pluginName
+	 * @param accessRole
+	 * @param binaryPlugin
+	 * @throws EJBException 
+	 */
     @Override
-    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws EJBException
+    @RolesAllowed({"admin"})
+    public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws EJBException
     {
 		try
 		{
@@ -23,12 +47,22 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
     }
 
+	/**
+	 * deletePlugin
+	 * 
+	 * Deletes the given plugin via pluginLoaderService
+	 * 
+	 * @param plugin
+	 * @throws EJBException 
+	 */
 	@Override
-	public void deletePlugin(Plugin plugin) throws EJBException
+    @RolesAllowed({"admin"})
+	public void deletePlugin(final Plugin plugin) throws EJBException
 	{
 		try
 		{
@@ -36,6 +70,7 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 		}
 		catch(ServiceException e)
 		{
+            log.error(e);
 			throw new EJBException(e);
 		}
 	}

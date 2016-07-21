@@ -11,7 +11,7 @@ import javax.persistence.Query;
 public class UserDAO extends GenericDAO<User> implements IUserDAO
 {	
 	@Override
-	public User getAuthenticatedUser(String username, String password) throws DAOException
+	public User getAuthenticatedUser(final String username, final String password) throws DAOException
 	{
 		try
 		{
@@ -27,7 +27,7 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO
 	}
 	
 	@Override
-	public int setLastLogin(User user) throws DAOException
+	public int setLastLogin(final User user) throws DAOException
 	{
 		try
 		{

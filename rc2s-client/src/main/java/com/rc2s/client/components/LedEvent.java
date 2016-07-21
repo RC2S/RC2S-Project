@@ -1,5 +1,12 @@
 package com.rc2s.client.components;
 
+/**
+ * LedEvent
+ * 
+ * Abstract runnable class for led event handling
+ * 
+ * @author RC2S
+ */
 public abstract class LedEvent implements Runnable
 {
 	private Led led;
@@ -12,7 +19,7 @@ public abstract class LedEvent implements Runnable
 		return led;
 	}
 
-	public void setLed(Led led)
+	public void setLed(final Led led)
 	{
 		this.led = led;
 	}

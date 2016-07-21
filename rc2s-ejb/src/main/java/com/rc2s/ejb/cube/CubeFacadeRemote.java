@@ -6,16 +6,29 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Remote;
 
+/**
+ * CubeFacadeRemote
+ * 
+ * EJB remote interface for Cube EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface CubeFacadeRemote
 {
 	public List<Cube> getAllCubes() throws EJBException;
-	public List<Cube> getCubes(User user) throws EJBException;
-	public void add(Cube c) throws EJBException;
-	public void remove(Cube c) throws EJBException;
-	public Cube update(Cube cube) throws EJBException;
+    
+	public List<Cube> getCubes(final User user) throws EJBException;
+    
+	public void add(final Cube c) throws EJBException;
+    
+	public void remove(final Cube c) throws EJBException;
+    
+	public Cube update(final Cube cube) throws EJBException;
 	
-	public boolean getStatus(Cube c) throws EJBException;
-	public void updateAllLed(Cube c, boolean state) throws EJBException;
-	public void updateAllLed(Cube c, boolean[][][] states) throws EJBException;
+	public boolean getStatus(final Cube c) throws EJBException;
+    
+	public void updateAllLed(final Cube c, final boolean state) throws EJBException;
+    
+	public void updateAllLed(final Cube c, final boolean[][][] states) throws EJBException;
 }

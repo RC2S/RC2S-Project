@@ -21,17 +21,27 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
+/**
+ * KnowledgeProcessor
+ * 
+ * @author RC2S
+ */
 public class KnowledgeProcessor extends AbstractProcessor
 {	
     private Types       typeUtils;
     private Elements    elementUtils;
-    private Filer       filer;      // Création dynamique de classe, package, res, ...
-    private Messager    messager;   // Message lors de la compilation
+    private Filer       filer;
+    private Messager    messager;
 	
 	public static List<String> processedClasses = new ArrayList();
 	
+	/**
+	 * Initialize KnowledgeProcessor
+	 * 
+	 * @param processingEnv 
+	 */
     @Override
-    public synchronized void init(ProcessingEnvironment processingEnv)
+    public synchronized void init(final ProcessingEnvironment processingEnv)
     {
         super.init(processingEnv);
         typeUtils       = processingEnv.getTypeUtils();
@@ -40,17 +50,24 @@ public class KnowledgeProcessor extends AbstractProcessor
         messager        = processingEnv.getMessager();
     }
 
+	/**
+	 * Process the annotation
+	 * 
+	 * @param annotations
+	 * @param roundEnv
+	 * @return true 
+	 */
     @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)
+    public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv)
     {
 		Analysor analysor = new Analysor(elementUtils, messager);
 		ElementMapper mainClass = null;
 		
-        for(TypeElement te : annotations)
+        for (TypeElement te : annotations)
         {           
-            for(Element annotated : roundEnv.getElementsAnnotatedWith(te))
+            for (Element annotated : roundEnv.getElementsAnnotatedWith(te))
             {
-                if(annotated.getKind() == ElementKind.CLASS)
+                if (annotated.getKind() == ElementKind.CLASS)
                 	mainClass = analysor.classAnalysor(annotated);
                 else
                 	mainClass = analysor.classAnalysor(annotated.getEnclosingElement());
@@ -64,6 +81,9 @@ public class KnowledgeProcessor extends AbstractProcessor
         return true;
     }
 
+	/**
+	 * @return 
+	 */
     @Override
     public Set<String> getSupportedAnnotationTypes()
     {
@@ -72,6 +92,9 @@ public class KnowledgeProcessor extends AbstractProcessor
         return annotations;
     }
     
+	/**
+	 * @return 
+	 */
     @Override
     public SourceVersion getSupportedSourceVersion()
     {

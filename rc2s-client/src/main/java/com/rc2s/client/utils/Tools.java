@@ -1,6 +1,10 @@
 package com.rc2s.client.utils;
 
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 import java.util.regex.Pattern;
 import javax.validation.ConstraintViolation;
@@ -13,13 +17,50 @@ public class Tools
 	
     private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
     
-    public static boolean matchIP(String ip)
+    public static boolean matchIP(final String ip)
 	{
         return IP_PATTERN.matcher(ip).matches();
     }
 	
-	public static <T extends Serializable> Set<ConstraintViolation<T>> validate(T vo)
+	public static <T extends Serializable> Set<ConstraintViolation<T>> validate(final T vo)
 	{
 		return VALIDATOR.validate(vo);
 	}
+
+    public static String formatDate(final Date date)
+    {
+        if (date == null)
+            return "";
+        
+        return new SimpleDateFormat("MM-dd-YYYY hh:mm").format(date);
+    }
+    
+    public static String replaceFile(final String toBeReplace)
+    {
+		String str = null;
+        
+        if (toBeReplace != null)
+		{
+            str = new String(toBeReplace);
+            
+			if(str.startsWith("file:\\"))
+				str = str.replace("file:\\", "");
+			else if(str.startsWith("file://"))
+				str = str.replace("file://", "");
+			else if(str.startsWith("file:/"))
+				str = str.replace("file:", "");
+		}
+		
+		return str;
+	}
+    
+    public static String getIPAdress() throws UnknownHostException
+    {
+        return InetAddress.getLocalHost().getHostAddress();
+    }
+    
+    public static boolean isLoopBackAdress() throws UnknownHostException
+    {
+        return InetAddress.getLocalHost().isLoopbackAddress();
+    }
 }

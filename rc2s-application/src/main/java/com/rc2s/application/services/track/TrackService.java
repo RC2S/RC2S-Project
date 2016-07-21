@@ -10,15 +10,43 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
+/**
+ * TrackService
+ * 
+ * Service for tracks management
+ * Works with the ITrackDAO
+ * 
+ * @author RC2S
+ */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class TrackService implements ITrackService
 {
     @EJB
     private ITrackDAO trackDAO;
+    
+    @Inject
+    private Logger log;
 
+	/**
+	 * add
+	 * 
+	 * Adds a new given track in db
+	 * 
+	 * @param track
+	 * @return Track added
+	 * @throws ServiceException 
+	 */
     @Override
-    public Track add(Track track) throws ServiceException
+    public Track add(final Track track) throws ServiceException
     {
         try
         {
@@ -31,8 +59,17 @@ public class TrackService implements ITrackService
         }
     }
 
+	/**
+	 * update
+	 * 
+	 * Updates a given track in db
+	 * 
+	 * @param track
+	 * @return Track updated
+	 * @throws ServiceException 
+	 */
     @Override
-    public Track update(Track track) throws ServiceException
+    public Track update(final Track track) throws ServiceException
     {
         try
         {
@@ -44,8 +81,16 @@ public class TrackService implements ITrackService
         }
     }
 
+	/**
+	 * delete
+	 * 
+	 * Delete a given track in db
+	 * 
+	 * @param track
+	 * @throws ServiceException 
+	 */
     @Override
-    public void delete(Track track) throws ServiceException
+    public void delete(final Track track) throws ServiceException
     {
         try
         {
@@ -57,8 +102,17 @@ public class TrackService implements ITrackService
 		}
     }
 
+	/**
+	 * getTracksByUser
+	 * 
+	 * Get all the tracks for the specified user
+	 * 
+	 * @param user
+	 * @return List<Track>
+	 * @throws ServiceException 
+	 */
     @Override
-    public List<Track> getTracksByUser(User user) throws ServiceException
+    public List<Track> getTracksByUser(final User user) throws ServiceException
     {
         try
         {

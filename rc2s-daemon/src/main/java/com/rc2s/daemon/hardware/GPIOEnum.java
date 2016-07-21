@@ -26,15 +26,15 @@ public enum GPIOEnum
     private final String info;
     private final boolean invertedState;
 
-    private GPIOEnum(Pin pin, String info)
+    private GPIOEnum(final Pin pin, final String info)
     {
         this(pin, info, false);
     }
     
-    private GPIOEnum(Pin pin, String info, boolean invertedState)
+    private GPIOEnum(final Pin pin, final String info, final boolean invertedState)
     {
-        this.pin = pin;
-        this.info = info;
+        this.pin    = pin;
+        this.info   = info;
         this.invertedState = invertedState;
     }
 

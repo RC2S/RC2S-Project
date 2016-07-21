@@ -24,7 +24,7 @@ public class PacketProcessor extends Thread
 	 * @param socket
 	 * @param packet 
 	 */
-	public PacketProcessor(Daemon daemon, DatagramSocket socket, DatagramPacket packet)
+	public PacketProcessor(final Daemon daemon, final DatagramSocket socket, final DatagramPacket packet)
 	{
 		this.daemon = daemon;
 		
@@ -63,7 +63,7 @@ public class PacketProcessor extends Thread
 		}
 	}
 
-	public Packet forgePacket(byte[] bytes) throws IOException
+	public Packet forgePacket(final byte[] bytes) throws IOException
 	{
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		DataInputStream dis = new DataInputStream(bis);

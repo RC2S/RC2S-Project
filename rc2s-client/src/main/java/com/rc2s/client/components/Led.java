@@ -4,17 +4,41 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
+/**
+ * Led
+ * 
+ * Javafx extended LED component for LED display
+ * 
+ * @author RC2S
+ */
 public class Led extends Sphere
 {
     public static final double SIZE_MODIFIER = 4.;
     
     private double x, y, z;
+    
     private double size;
+    
     private boolean activated;
+    
     private Color color;
+    
 	private LedEvent ledEvent;
 	
-    public Led(double x, double y, double z, double size, boolean activated, Color color, LedEvent ledEvent)
+	/**
+	 * Led
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param size
+	 * @param activated
+	 * @param color
+	 * @param ledEvent 
+	 */
+    public Led(final double x, final double y, final double z, 
+            final double size, final boolean activated, 
+            final Color color, final LedEvent ledEvent)
     {
         super(size);
         
@@ -35,7 +59,7 @@ public class Led extends Sphere
         material.setSpecularColor(Color.BLACK);
         this.setMaterial(material);
 		
-		if(this.ledEvent != null)
+		if (this.ledEvent != null)
 		{
 			this.setOnMouseClicked((e) -> {
 				this.setActivated(!isActivated());
@@ -51,7 +75,7 @@ public class Led extends Sphere
         return x;
     }
 
-    public void setX(double x)
+    public void setX(final double x)
     {
         this.x = x;
         this.setTranslateX(x * size * Led.SIZE_MODIFIER);
@@ -62,7 +86,7 @@ public class Led extends Sphere
         return y;
     }
 
-    public void setY(double y)
+    public void setY(final double y)
     {
         this.y = y;
         this.setTranslateY(y * size * Led.SIZE_MODIFIER);
@@ -73,7 +97,7 @@ public class Led extends Sphere
         return z;
     }
 
-    public void setZ(double z)
+    public void setZ(final double z)
     {
         this.z = z;
         this.setTranslateZ(z * size * Led.SIZE_MODIFIER);
@@ -84,7 +108,7 @@ public class Led extends Sphere
         return size;
     }
 
-    public void setSize(double size)
+    public void setSize(final double size)
     {
         this.size = size;
         super.setRadius(size);
@@ -98,7 +122,7 @@ public class Led extends Sphere
         return activated;
     }
 
-    public void setActivated(boolean activated)
+    public void setActivated(final boolean activated)
     {
 		PhongMaterial newColor = new PhongMaterial();
 		newColor.setSpecularColor(Color.BLACK);
@@ -113,7 +137,7 @@ public class Led extends Sphere
         return color;
     }
 
-    public void setColor(Color color)
+    public void setColor(final Color color)
     {
         PhongMaterial newColor = new PhongMaterial();
         newColor.setSpecularColor(Color.BLACK);

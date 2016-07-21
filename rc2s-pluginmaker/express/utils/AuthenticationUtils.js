@@ -6,7 +6,7 @@ module.exports = function(app) {
 
 		if (req.session.token) {
 			// Log every access to /plugins*
-			//logger.writeAuthAccess(req.originalUrl, req.session.token);
+			logger.writeAuthAccess(req.originalUrl, req.session.token);
 			next();
 		} else {
 			res.redirect('/');

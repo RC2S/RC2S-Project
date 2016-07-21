@@ -5,51 +5,84 @@ import com.rc2s.application.services.plugin.IPluginService;
 import com.rc2s.common.exceptions.DAOException;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
-import com.rc2s.common.vo.Role;
+import com.rc2s.common.vo.Group;
 import com.rc2s.dao.plugin.IPluginDAO;
-import java.nio.file.StandardCopyOption;
+
+import java.nio.file.*;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import org.apache.logging.log4j.Logger;
 
+/**
+ * PluginLoaderService
+ * 
+ * Service for plugin loading management
+ * Access to databse via IPluginService
+ * 
+ * @author RC2S
+ */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class PluginLoaderService implements IPluginLoaderService
 {
-	@EJB private IPluginService pluginService;
-	@EJB private IPluginDAO pluginDAO;
-    @EJB private IJnlpService jnlpService;
+	@EJB 
+    private IPluginService pluginService;
+    
+	@EJB
+    private IPluginDAO pluginDAO;
+    
+    @EJB
+    private IJnlpService jnlpService;
+    
+    @Inject
+    private Logger log;
 	
+	/**
+	 * uploadPlugin
+	 * 
+	 * Upload the given plugin
+	 * 
+	 * @param pluginName
+	 * @param accessGroup
+	 * @param binaryPlugin
+	 * @throws ServiceException 
+	 */
     @Override
-    public void uploadPlugin(String pluginName, Role accessRole, byte[] binaryPlugin) throws ServiceException
+    public void uploadPlugin(final String pluginName, final Group accessGroup, final byte[] binaryPlugin) throws ServiceException
     {
-		File tmpZip = null;
-		File unzipedDir = null;
+		Path tmpZip = null;
+		Path unzipedDir = null;
 		
 		try
 		{
 			String simpleName = pluginName.toLowerCase().replace(" ", "");
 			
-			tmpZip = File.createTempFile(simpleName, ".zip");
-			Files.write(tmpZip.toPath(), binaryPlugin);
+			tmpZip = Files.createTempFile(simpleName, ".zip");
+			Files.write(tmpZip, binaryPlugin);
 			
-			unzipedDir = unzipPlugin(tmpZip.getAbsolutePath());
+			unzipedDir = unzipPlugin(tmpZip.toString());
 			
-			File tmpEar = checkServerPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
-			File tmpJar = checkClientPlugin(simpleName, unzipedDir.getAbsolutePath() + File.separator);
+			Path tmpEar = checkServerPlugin(simpleName, unzipedDir.toString());
+			Path tmpJar = checkClientPlugin(simpleName, unzipedDir.toString());
 			
-			if(tmpEar != null && tmpJar != null)
+			if (tmpEar != null && tmpJar != null)
 			{
 				deployServerPlugin(simpleName, tmpEar);
 				deployClientPlugin(simpleName, tmpJar);
-				persistPlugin(pluginName, accessRole);
+				persistPlugin(pluginName, accessGroup);
 			}
 		}
 		catch(Exception e)
@@ -58,28 +91,46 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		finally 
 		{
-			if(tmpZip != null)
-				tmpZip.delete();
-			
-			if(unzipedDir != null)
+			try
 			{
-				for(File tmp : unzipedDir.listFiles())
-					tmp.delete();
-				unzipedDir.delete();
+				if (tmpZip != null)
+					Files.delete(tmpZip);
+
+				if (unzipedDir != null) {
+					try (DirectoryStream<Path> ds = Files.newDirectoryStream(unzipedDir))
+					{
+						for (Path file : ds)
+							Files.delete(file);
+					}
+					catch(IOException e) { /* Ignore and try to delete the directory */ }
+					Files.delete(unzipedDir);
+				}
+			}
+			catch(IOException e)
+			{
+				throw new ServiceException(e);
 			}
 		}
     }
 
+	/**
+	 * unzipPlugin
+	 * 
+	 * Unzips a given file that should contain a plugin
+	 * 
+	 * @param zipFile
+	 * @return folderPath
+	 * @throws IOException 
+	 */
     @Override
-    public File unzipPlugin(String zipFile) throws IOException
-    {   	
+    public Path unzipPlugin(final String zipFile) throws IOException
+    {
         try
         {
             Path folderPath = Files.createTempDirectory("plugins");
-            File folder = folderPath.toFile();
             
-            if (!folder.exists())
-                folder.mkdir();
+            if (!Files.exists(folderPath))
+                Files.createDirectory(folderPath);
 
             ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFile));
             ZipEntry entry = zipIn.getNextEntry();
@@ -101,15 +152,15 @@ public class PluginLoaderService implements IPluginLoaderService
                 }
                 else
                 {
-                    File dir = new File(filePath);
-                    dir.mkdir();
+                    Path dir = Paths.get(filePath);
+                    Files.createDirectory(dir);
                 }
                 zipIn.closeEntry();
                 entry = zipIn.getNextEntry();
             }
             zipIn.close();
 			
-			return folderPath.toFile();
+			return folderPath;
         }
         catch(IOException e)
         {
@@ -117,14 +168,24 @@ public class PluginLoaderService implements IPluginLoaderService
         }
     }
 
+	/**
+	 * checkServerPlugin
+	 * 
+	 * Check if the plugin is present on server side
+	 * 
+	 * @param simpleName
+	 * @param tmpDir
+	 * @return earPath
+	 * @throws Exception 
+	 */
     @Override
-    public File checkServerPlugin(String simpleName, String tmpDir) throws Exception
+    public Path checkServerPlugin(final String simpleName, final String tmpDir) throws Exception
     {
         try
 		{
-			File tmpEar = new File(tmpDir + simpleName + "_server.ear");
+			Path tmpEar = Paths.get(tmpDir, simpleName + "_server.ear");
 			
-			if(!tmpEar.exists())
+			if (!Files.exists(tmpEar))
 				return null;
 			
 			// TODO: Check the EAR content
@@ -137,14 +198,24 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
     }
 
+	/**
+	 * checkClientPlugin
+	 * 
+	 * Check if the plugin is present on client side
+	 * 
+	 * @param simpleName
+	 * @param tmpDir
+	 * @return jarPath
+	 * @throws Exception 
+	 */
     @Override
-    public File checkClientPlugin(String simpleName, String tmpDir) throws Exception
+    public Path checkClientPlugin(final String simpleName, final String tmpDir) throws Exception
     {
         try
 		{
-			File tmpJar = new File(tmpDir + simpleName + "_client.jar");
+			Path tmpJar = Paths.get(tmpDir, simpleName + "_client.jar");
 			
-			if(!tmpJar.exists())
+			if (!Files.exists(tmpJar))
 				return null;
 			
 			// TODO: Check the JAR content
@@ -157,26 +228,50 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
     }
 
+	/**
+	 * deployServerPlugin
+	 * 
+	 * @param simpleName
+	 * @param tmpEar
+	 * @throws IOException 
+	 */
 	@Override
-    public void deployServerPlugin(String simpleName, File tmpEar) throws IOException
+    public void deployServerPlugin(final String simpleName, final Path tmpEar) throws IOException
     {		
 		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
-		File pluginFile = new File(autodeployDir + simpleName + "_server.ear");
-		Files.copy(tmpEar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		Path pluginPath = Paths.get(autodeployDir, simpleName + "_server.ear");
+		Files.copy(tmpEar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
     }
 
+	/**
+	 * deployClientPlugin
+	 * 
+	 * @param simpleName
+	 * @param tmpJar
+	 * @throws IOException 
+	 */
     @Override
-    public void deployClientPlugin(String simpleName, File tmpJar) throws IOException
+    public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException
     {
 		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
-		jnlpService.signJar(tmpJar.getAbsolutePath());
-        File pluginFile = new File(jnlpLibsDir + simpleName + "_client.jar");
-		Files.copy(tmpJar.toPath(), pluginFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		jnlpService.signJar(tmpJar.toString());
+        Path pluginPath = Paths.get(jnlpLibsDir, simpleName + "_client.jar");
+		Files.copy(tmpJar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
         jnlpService.updateJNLP(simpleName + "_client.jar", false);
     }
 	
+	/**
+	 * persistPlugin
+	 * 
+	 * Make the plugin persistent
+	 * 
+	 * @param pluginName
+	 * @param group
+	 * @return pluginAddedOrUpdated
+	 * @throws ServiceException 
+	 */
 	@Override
-	public Plugin persistPlugin(String pluginName, Role role) throws ServiceException
+	public Plugin persistPlugin(final String pluginName, final Group group) throws ServiceException
 	{
 		boolean update = false;
 		Plugin plugin;
@@ -192,7 +287,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
 		
 		plugin.setName(pluginName);
-		plugin.setAccess(role.getName());
+		plugin.setAccess(group.getName());
 
 		plugin.setVersion("1.0");
 		plugin.setAuthor("John Doe");
@@ -201,8 +296,14 @@ public class PluginLoaderService implements IPluginLoaderService
 		return (update ? pluginService.update(plugin) : pluginService.add(plugin));
 	}
 	
+	/**
+	 * deletePlugin
+	 * 
+	 * @param plugin
+	 * @throws ServiceException 
+	 */
 	@Override
-	public void deletePlugin(Plugin plugin) throws ServiceException
+	public void deletePlugin(final Plugin plugin) throws ServiceException
 	{
 		String simpleName = plugin.getName().toLowerCase().replace(" ", "");
 		
@@ -225,11 +326,16 @@ public class PluginLoaderService implements IPluginLoaderService
 		pluginService.delete(plugin);
 	}
 
+	/**
+	 * getDomainRoot
+	 * 
+	 * @return String domainRoot 
+	 */
 	private String getDomainRoot()
 	{
 		String domainRoot = System.getProperty("com.sun.aas.instanceRootURI");
 		
-		if(domainRoot != null)
+		if (domainRoot != null)
 		{
 			if(domainRoot.startsWith("file:\\"))
 				domainRoot = domainRoot.replace("file:\\", "");
@@ -237,6 +343,9 @@ public class PluginLoaderService implements IPluginLoaderService
 				domainRoot = domainRoot.replace("file://", "");
 			else if(domainRoot.startsWith("file:/"))
 				domainRoot = domainRoot.replace("file:", "");
+
+			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+				domainRoot = domainRoot.substring(1); // Remove leading slash on Windows
 		}
 		
 		return domainRoot;

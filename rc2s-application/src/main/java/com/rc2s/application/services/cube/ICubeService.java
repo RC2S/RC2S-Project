@@ -6,12 +6,23 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * ICubeService interface
+ * 
+ * Service interface for cube manipulation via ICubeDAO
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ICubeService
 {
 	public List<Cube> getCubes() throws ServiceException;
-	public List<Cube> getCubes(User user) throws ServiceException;
-	public void add(Cube c) throws ServiceException;
-	public void remove(Cube c) throws ServiceException;
-	public Cube update(Cube cube) throws ServiceException;
+    
+	public List<Cube> getCubes(final User user) throws ServiceException;
+    
+	public void add(final Cube c) throws ServiceException;
+    
+	public void remove(final Cube c) throws ServiceException;
+    
+	public Cube update(final Cube cube) throws ServiceException;
 }

@@ -2,6 +2,8 @@ package com.rc2s.client.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,11 +25,12 @@ import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoginController implements Initializable
 {
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private final Logger log = LogManager.getLogger(this.getClass());
 	
     @FXML private TextField ipField; 
     @FXML private TextField usernameField; 
@@ -36,26 +39,26 @@ public class LoginController implements Initializable
     @FXML private Label errorLabel;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(final URL url, final ResourceBundle rb) {}
 
     @FXML
-    private void handleReturnPressed(KeyEvent event)
+    private void handleReturnPressed(final KeyEvent event)
     {
-        if(event.getEventType() == KeyEvent.KEY_PRESSED
+        if (event.getEventType() == KeyEvent.KEY_PRESSED
         && event.getCode() == KeyCode.ENTER)
             connect(event);
     }
 	
     @FXML
-    private void handleConnectButton(ActionEvent event)
+    private void handleConnectButton(final ActionEvent event)
     {
         connect(event);
     }
 	
     @FXML
-    private boolean validateIpAddress(KeyEvent event)
+    private boolean validateIpAddress(final KeyEvent event)
     {
-        if(!Tools.matchIP(ipField.getText()))
+        if (!Tools.matchIP(ipField.getText()))
         {
             errorLabel.setText("Invalid IP address");
             return false;
@@ -65,7 +68,7 @@ public class LoginController implements Initializable
         return true;
     }
 	
-    private void connect(Event event)
+    private void connect(final Event event)
     {
 		String ip = ipField.getText();
         String username = usernameField.getText();
@@ -73,47 +76,63 @@ public class LoginController implements Initializable
 		
 		disable(true);
 
-        if(validateIpAddress(null))
+        if (validateIpAddress(null))
         {
-			try
+			new Thread()
 			{
-				// Init EJB context
-				EJB.initContext(ip, null);
-				UserFacadeRemote userEJB = (UserFacadeRemote)EJB.lookup("UserEJB");
-
-				try
+				@Override
+				public void run()
 				{
-					// Get the authenticated user
-					User user = userEJB.login(username, password);
+					Platform.runLater(() -> {
+						try
+						{
+							// Init Programmatic Login
+							Main.getProgrammaticLogin().login(username, password.toCharArray());
 
-					if(user != null)
-					{
-						Main.setAuthenticatedUser(user);
-						
-						FXMLLoader loader = Resources.loadFxml("HomeView");
-						Scene scene = new Scene((Parent)loader.getRoot());
+							// Init EJB context
+							EJB.initContext(ip, null);
 
-						Main.getStage().setScene(scene);
-						Main.getStage().setMinWidth(scene.getWidth());
-						Main.getStage().setMinHeight(scene.getHeight());
-						Main.getStage().show();
-					}
-					else
-					{
-						errorLabel.setText("Authentication failed");
-					}
+							UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
+
+							try
+							{
+								// Get the authenticated user
+								User user = userEJB.getAuthenticatedUser(username, password);
+
+								if(user != null)
+								{
+									Main.setAuthenticatedUser(user);
+
+									log.info("Access granted for user " + user.getUsername());
+
+									FXMLLoader loader = Resources.loadFxml("HomeView");
+									Scene scene = new Scene((Parent) loader.getRoot());
+
+									Main.getStage().setScene(scene);
+									Main.getStage().setMinWidth(scene.getWidth());
+									Main.getStage().setMinHeight(scene.getHeight());
+									Main.getStage().show();
+								}
+								else
+								{
+									errorLabel.setText("Authentication failed");
+								}
+							}
+							catch (EJBException e)
+							{
+								log.error(e.getMessage());
+								errorLabel.setText("Authentication failed");
+								log.error("Authentication failed");
+							}
+						}
+						catch (Exception e)
+						{
+							log.error(e.getMessage());
+							errorLabel.setText("Unable to connect to the server");
+						}
+					});
 				}
-				catch(EJBException e)
-				{
-					logger.error(e.getMessage());
-					errorLabel.setText("Authentication failed");
-				}
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				errorLabel.setText("Unable to connect to the server");
-			}
+			}.start();
         }
         else
 		{
@@ -123,7 +142,7 @@ public class LoginController implements Initializable
 		disable(false);
     }
 	
-	private void disable(boolean state)
+	private void disable(final boolean state)
 	{
 		ipField.setDisable(state);
 		usernameField.setDisable(state);

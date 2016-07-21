@@ -53,7 +53,8 @@ public class Cube implements Serializable
 	
 	public Cube() {}
 
-	public Cube(Integer id, String name, String ip, String color, Size size, Date created, Date updated)
+	public Cube(final Integer id, final String name, final String ip, 
+            final String color, final Size size, final Date created, final Date updated)
 	{
 		this.id = id;
 		this.name = name;
@@ -79,7 +80,7 @@ public class Cube implements Serializable
 		return name;
 	}
 
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
@@ -89,7 +90,7 @@ public class Cube implements Serializable
 		return ip;
 	}
 
-	public void setIp(String ip)
+	public void setIp(final String ip)
 	{
 		this.ip = ip;
 	}
@@ -99,7 +100,7 @@ public class Cube implements Serializable
 		return color;
 	}
 
-	public void setColor(String color)
+	public void setColor(final String color)
 	{
 		this.color = color;
 	}
@@ -109,7 +110,7 @@ public class Cube implements Serializable
 		return size;
 	}
 
-	public void setSize(Size size)
+	public void setSize(final Size size)
 	{
 		this.size = size;
 	}
@@ -119,7 +120,7 @@ public class Cube implements Serializable
 		return created;
 	}
 
-	public void setCreated(Date created)
+	public void setCreated(final Date created)
 	{
 		this.created = created;
 	}
@@ -129,7 +130,7 @@ public class Cube implements Serializable
 		return updated;
 	}
 
-	public void setUpdated(Date updated)
+	public void setUpdated(final Date updated)
 	{
 		this.updated = updated;
 	}
@@ -139,7 +140,7 @@ public class Cube implements Serializable
 		return synchronization;
 	}
 
-	public void setSynchronization(Synchronization synchronization)
+	public void setSynchronization(final Synchronization synchronization)
 	{
 		this.synchronization = synchronization;
 	}
@@ -149,7 +150,7 @@ public class Cube implements Serializable
 		return synchronizations;
 	}
 
-	public void setSynchronizations(List<Synchronization> synchronizations)
+	public void setSynchronizations(final List<Synchronization> synchronizations)
 	{
 		this.synchronizations = synchronizations;
 	}
@@ -175,7 +176,7 @@ public class Cube implements Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
+	public boolean equals(final Object o)
 	{
 		if(o != null && o instanceof Cube)
 		{

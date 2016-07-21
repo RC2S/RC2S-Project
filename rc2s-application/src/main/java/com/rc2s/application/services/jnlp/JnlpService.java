@@ -1,12 +1,14 @@
 package com.rc2s.application.services.jnlp;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,20 +17,31 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
 
+/**
+ * GroupService
+ * 
+ * Service for group (jaas) retrieving
+ * Uses an IGroupDAO for db access
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class JnlpService implements IJnlpService
 {
-    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications/rc2s-jnlp/rc2s-client.jnlp";
+    @Inject
+    private Logger log;
+    
+    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications" + File.separator + "rc2s-jnlp" + File.separator + "rc2s-client.jnlp";
     
     private final String jnlpLibsFolder = "libs/";
     
-    private final String jarSignerPath = System.getenv("JAVA_HOME") + "/bin/jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
+    private final String jarSignerPath = System.getenv("JAVA_HOME") + File.separator + "bin" + File.separator + "jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
     
     private final String signKeyStore = JnlpService.class.getResource("/RC2S.jks").getPath();
     
@@ -36,9 +49,19 @@ public class JnlpService implements IJnlpService
     
     private final String signAlias = "RC2S";
     
+	/**
+	 * signJar
+	 * 
+	 * Signs the jars in jarPath
+	 * Used in gradle task sign
+	 * 
+	 * @param jarPath 
+	 */
     @Override
-    public void signJar(String jarPath)
+    public void signJar(final String jarPath)
     {        
+        Process p;
+        
         String args[] = {
             jarSignerPath,
             "-keystore", signKeyStore,
@@ -48,27 +71,37 @@ public class JnlpService implements IJnlpService
         };
         
         StringBuilder output = new StringBuilder();
-
-		Process p;
-		try {
+        
+		try
+        {
 			p = Runtime.getRuntime().exec(args);
 			p.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            String line = "";			
-			while ((line = reader.readLine())!= null) {
+            String line = "";
+            
+			while ((line = reader.readLine())!= null)
 				output.append(line + "\n");
-			}
-
-		} catch (IOException | InterruptedException ex) {
-			Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, ex);
+		}
+        catch (IOException | InterruptedException e)
+        {
+			log.error(e);
 		}
         
-        System.out.println(output.toString());
+        log.info(output.toString());
     }
 
+	/**
+	 * updateJNLP
+	 * 
+	 * Update the jnlp from jarName
+	 * If the jar is not removed, then it is
+	 * added in the Jnlp resources
+	 * 
+	 * @param jarName
+	 * @param removeJar 
+	 */
     @Override
-    public void updateJNLP(String jarName, boolean removeJar)
+    public void updateJNLP(final String jarName, final boolean removeJar)
     {
         try
         {
@@ -86,7 +119,7 @@ public class JnlpService implements IJnlpService
                 Element element = (Element) searchJar.item(i);
                 if (element.getAttribute("href").equals(jnlpLibsFolder + jarName))
                 {
-                    if(removeJar)
+                    if (removeJar)
                         element.getParentNode().removeChild(element);
                     else
                         return;
@@ -105,8 +138,14 @@ public class JnlpService implements IJnlpService
             // Save changes
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5)));
+            DOMSource source        = new DOMSource(doc);
+
+			String filePath 		= jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5);
+			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+				filePath 			= filePath.substring(1); // Remove leading slash on Windows
+
+            StreamResult result     = new StreamResult(Paths.get(filePath).toUri().toASCIIString());
+
             transformer.transform(source, result);
         }
         catch (ParserConfigurationException
@@ -114,7 +153,7 @@ public class JnlpService implements IJnlpService
               | IOException
               | TransformerException e)
         {
-            Logger.getLogger(JnlpService.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }   
 }

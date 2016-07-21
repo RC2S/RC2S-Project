@@ -14,13 +14,13 @@ public class StatesProcessor implements Runnable
     private final Daemon daemon;
     private final LinkedBlockingQueue<Packet> queue;
 
-    public StatesProcessor(Daemon daemon)
+    public StatesProcessor(final Daemon daemon)
     {
         this.daemon = daemon;
         this.queue = new LinkedBlockingQueue<>();
     }
 
-    public void add(Packet packet)
+    public void add(final Packet packet)
     {
         queue.add(packet);
     }
@@ -32,23 +32,17 @@ public class StatesProcessor implements Runnable
         {
 			try
 			{
-				try
-				{
-					Packet packet = queue.remove();
-					sweep(packet);
+				Packet packet = queue.remove();
+				sweep(packet);
 
-					daemon.getHardware().clear();
-					daemon.getHardware().send();
-				}
-				catch(NoSuchElementException e) {}
-				
-				Thread.sleep(50l);
+				daemon.getHardware().clear();
+				daemon.getHardware().send();
 			}
-			catch(InterruptedException e) {}
+			catch(NoSuchElementException e) {}
         } while(daemon.isRunning());
     }
 
-    private void sweep(Packet packet)
+    private void sweep(final Packet packet)
     {
         long start = new Date().getTime();
 
@@ -58,11 +52,14 @@ public class StatesProcessor implements Runnable
             {
                 handle(i, packet.getStages().length, packet.getStages()[i]);
             }
+            
+            daemon.getHardware().resetState(false);
+            
         } while ((packet.getDuration() > 0 && (new Date().getTime() - start < packet.getDuration()))
                 || (packet.getDuration() <= 0 && queue.isEmpty()));
     }
 
-    private void handle(int level, int maxStage, Stage stage)
+    private void handle(final int level, final int maxStage, final Stage stage)
     {
         boolean[][] states = stage.getStates();
 
@@ -75,14 +72,10 @@ public class StatesProcessor implements Runnable
                 if(states[i][j])
                 {
                     gpdo = daemon.getHardware().bit();
-                    System.out.print("1 ");
                 }
-				else
-					System.out.print("0 ");
 				
                 daemon.getHardware().shift(gpdo);
             }
-			System.out.println("");
         }
 
         daemon.getHardware().send();

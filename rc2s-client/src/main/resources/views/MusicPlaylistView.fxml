@@ -38,9 +38,10 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
               <columns>
-                <TableColumn fx:id="musicColumn" maxWidth="18000.0" prefWidth="206.0" text="Music" />
+                <TableColumn fx:id="musicColumn" maxWidth="18000.0" prefWidth="185.0" text="Music" />
+                <TableColumn fx:id="authorColumn" maxWidth="6000.0" prefWidth="156.0" text="Author" />
                 <TableColumn fx:id="timeColumn" maxWidth="2000.0" prefWidth="235.0" text="Time" />
-                <TableColumn fx:id="authorColumn" maxWidth="6000.0" prefWidth="104.0" text="Author" />
+                  <TableColumn fx:id="genreColumn" maxWidth="6000.0" prefWidth="90.0" text="Genre" />
               </columns>
             </TableView>
             <GridPane fx:id="mainGridGridPane" GridPane.rowIndex="6">
@@ -53,7 +54,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ComboBox fx:id="syncBox" prefWidth="150.0" promptText="Synchronization lists" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ComboBox fx:id="syncBox" onAction="#onSyncSelected" prefWidth="150.0" promptText="Select a synchronization list..." GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <GridPane fx:id="midGridButtonGrid" GridPane.columnIndex="1">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -69,22 +70,7 @@
                         <Button fx:id="nextButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onNextEvent" styleClass="gridGridButton3" text="&gt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
-                  <GridPane fx:id="midGridSoundGrid" GridPane.columnIndex="2">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Slider fx:id="soundSlider" GridPane.columnIndex="1" GridPane.columnSpan="4" />
-                        <ImageView fx:id="soundGridImageView" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </GridPane>
+                  <Label fx:id="playingLabel" contentDisplay="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
          </children>

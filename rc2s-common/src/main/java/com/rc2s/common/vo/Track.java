@@ -30,7 +30,7 @@ public class Track implements Serializable
 
     public Track() {}
 
-    public Track(String path, short order, Date created)
+    public Track(final String path, final short order, final Date created)
     {
         this.path = path;
         this.order = order;
@@ -42,7 +42,7 @@ public class Track implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -52,7 +52,7 @@ public class Track implements Serializable
         return path;
     }
 
-    public void setPath(String path)
+    public void setPath(final String path)
     {
         this.path = path;
     }
@@ -62,7 +62,7 @@ public class Track implements Serializable
         return order;
     }
 
-    public void setOrder(short order)
+    public void setOrder(final short order)
     {
         this.order = order;
     }
@@ -72,7 +72,7 @@ public class Track implements Serializable
         return created;
     }
 
-    public void setCreated(Date created)
+    public void setCreated(final Date created)
     {
         this.created = created;
     }
@@ -82,7 +82,7 @@ public class Track implements Serializable
         return user;
     }
 
-    public void setUser(User user)
+    public void setUser(final User user)
     {
         this.user = user;
     }
@@ -105,7 +105,7 @@ public class Track implements Serializable
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         if(o != null && o instanceof Track)
         {

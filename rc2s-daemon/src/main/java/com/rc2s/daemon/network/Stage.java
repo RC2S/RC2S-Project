@@ -4,7 +4,7 @@ public class Stage
 {
     private boolean[][] states;
 	
-    public Stage(boolean[][] states)
+    public Stage(final boolean[][] states)
     {
         this.states = states;
     }
@@ -14,7 +14,7 @@ public class Stage
         return states;
     }
 
-    public void setStates(boolean[][] states)
+    public void setStates(final boolean[][] states)
     {
         this.states = states;
     }
