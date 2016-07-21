@@ -3,6 +3,10 @@ package com.rc2s.client.test;
 import com.rc2s.client.Main;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
@@ -28,18 +32,18 @@ public class Streaming extends Thread
 	private String options;
 
     // For Server : sudo apt-get install libvlc-dev libvlccore-dev
-    public Streaming(StreamingFacadeRemote streamingEJB, String id, String media) throws Exception
+    public Streaming(final StreamingFacadeRemote streamingEJB, final String id, final String media) throws Exception
     {
 		this.streamingEJB = streamingEJB;
 
 		this.id = id;
 
-		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			this.media = media.replace('/', File.separatorChar);
 		else
 			this.media = media;
 
-		this.options = formatRtspStream(EJB.getServerAddress(), EJB.getRtspPort(), id);
+		this.options = formatRtspStream(InetAddress.getLocalHost().getHostAddress(), EJB.getRtspPort(), id);
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
@@ -64,7 +68,14 @@ public class Streaming extends Thread
 		);
 
 		System.err.println("------- MRL -------");
-		String mrl = new RtspMrl().host(EJB.getServerAddress()).port(EJB.getRtspPort()).path("/" + id).value();
+		String mrl = "";
+        try
+        {
+            mrl = new RtspMrl().host(InetAddress.getLocalHost().getHostAddress()).port(EJB.getRtspPort()).path("/" + id).value();
+        } catch (UnknownHostException ex)
+        {
+            Logger.getLogger(Streaming.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 		System.err.println("------- Start Streaming RMI -------");
 		streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
@@ -78,7 +89,7 @@ public class Streaming extends Thread
 				wait();
 				System.err.println("------ After wait, state is: " + state.toString() + " ------");
 
-				switch(state)
+				switch (state)
 				{
 					case PLAY:
 						if(!mediaPlayer.isPlaying())
@@ -97,9 +108,9 @@ public class Streaming extends Thread
 						break;
 				}
 
-			} while(state != StreamingState.STOP);
+			} while (state != StreamingState.STOP);
 		}
-		catch(InterruptedException e)
+		catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
@@ -111,7 +122,7 @@ public class Streaming extends Thread
 		mediaPlayer.release();
 	}
 
-	public synchronized void setStreamingState(StreamingState state)
+	public synchronized void setStreamingState(final StreamingState state)
 	{
 		this.state = state;
 	}
@@ -126,7 +137,8 @@ public class Streaming extends Thread
 		return mediaPlayer.isPlaying();
 	}
 
-	private String formatRtspStream(String serverAddress, int serverPort, String id)
+	private String formatRtspStream(final String serverAddress,
+            final int serverPort, final String id)
 	{
 		StringBuilder sb = new StringBuilder(60);
 		sb.append(":sout=#rtp{sdp=rtsp://@");
@@ -136,6 +148,7 @@ public class Streaming extends Thread
 		sb.append('/');
 		sb.append(id);
 		sb.append("}");
+        
 		return sb.toString();
 	}
 }

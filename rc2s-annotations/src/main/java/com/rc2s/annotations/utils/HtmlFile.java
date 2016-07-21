@@ -52,13 +52,13 @@ public class HtmlFile
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append("<div class=\"classInfos\">");
-		if(mainClass.getPackageName() != null)
+		if (mainClass.getPackageName() != null)
 			builder.append("<div class=\"packageName\">" + mainClass.getPackageName() + "</div>");
 		
-		if(mainClass.getName() != null)
+		if (mainClass.getName() != null)
 			builder.append("<h2 class=\"className\">Class " + mainClass.getName() + "</h2>");
 		
-		if(mainClass.getDescription() != null)
+		if (mainClass.getDescription() != null)
 			builder.append("<div class=\"classDesc\">" + mainClass.getDescription() + "</div>");
 		builder.append("</div>");
 		
@@ -69,7 +69,7 @@ public class HtmlFile
 	{
 		StringBuilder builder = new StringBuilder();
 		
-		if(!fields.isEmpty())
+		if (!fields.isEmpty())
 		{
 			// Title Section
 			builder.append("<div class=\"fieldsSummary\">");
@@ -78,7 +78,7 @@ public class HtmlFile
 			// Table Section
 			builder.append("<table><thead><th>Modifier and Type</th><th>Field</th></thead><tbody>");
 			
-			for(ElementMapper el : fields)
+			for (ElementMapper el : fields)
 			{
 				// First column : modifier + type
 				builder.append("<tr><td>" + el.getModifiers().toString() + " " + el.getReturnType() + "</td>");
@@ -99,7 +99,7 @@ public class HtmlFile
 	{
 		StringBuilder builder = new StringBuilder();
 		
-		if(!list.isEmpty())
+		if (!list.isEmpty())
 		{
 			// Title Section
 			builder.append("<div class=\"methodsSummary\">");
@@ -133,14 +133,14 @@ public class HtmlFile
 	{
 		StringBuilder builder = new StringBuilder();
 		
-		if(!list.isEmpty())
+		if (!list.isEmpty())
 		{
 			// Title Section
 			builder.append("<div class=\"methodsDetails\">");
 			builder.append("<h3>Methods Details</h3>");
 			
 			// Constructors / Methods
-			for(ElementMapper el : list)
+			for (ElementMapper el : list)
 			{
 				// Name Section
 				builder.append("<div class=\"method\">");
@@ -149,21 +149,21 @@ public class HtmlFile
 				// How to use Section
 				builder.append("<div class=\"methodUse\">");
 				builder.append(el.getReturnType() + " " + el.getName() + "(");
-				if(el.getParameters() != null)
+				if (el.getParameters() != null)
 				{
 					// Virgule à revoir
-					for(ParameterMapper parameter : el.getParameters())
+					for (ParameterMapper parameter : el.getParameters())
 						builder.append(parameter.getType() + " " + parameter.getName() + ",");
 				}
 				builder.append(")");
 				builder.append("</div>");
 				
 				// Description Section
-				if(el.getDescription() != null)
+				if (el.getDescription() != null)
 					builder.append("<div class=\"methodDesc\">" + el.getDescription() + "</div>");
 				
 				// Parameters Section
-				if(el.getParameters() != null)
+				if (el.getParameters() != null)
 				{
 					builder.append("<div class=\"parameters\">");
 					for(ParameterMapper parameter : el.getParameters())

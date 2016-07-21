@@ -43,7 +43,9 @@ import java.util.ResourceBundle;
 public class MusicPlaylistController extends TabController implements Initializable
 {
     private final TrackFacadeRemote trackEJB = (TrackFacadeRemote) EJB.lookup("TrackEJB");
+    
     private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
+    
 	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
 
 	private final String META_TITLE     = "title";
@@ -99,7 +101,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		});
     }
 
-	private SimpleStringProperty getValueFromMetadata(Track track, String metadataName)
+	private SimpleStringProperty getValueFromMetadata(final Track track, final String metadataName)
 	{
 		Metadata metadata = tracksMetadata.get(track);
 

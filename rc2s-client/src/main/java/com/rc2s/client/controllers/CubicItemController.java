@@ -65,8 +65,9 @@ public class CubicItemController extends TabController implements Initializable
 		
 		try
 		{
-			boolean state = cubeEJB.getStatus(cube);
-			this.status.setText(state ? "Online" : "Offline");
+			String state = cubeEJB.getStatus(cube) ? "Online" :  "Offline";
+			this.status.setText(state);
+            log.info("Cube " + cube.getName() + " on " + cube.getIp() + " is " + state);
 		}
 		catch(EJBException e)
 		{

@@ -96,7 +96,7 @@ public class Analysor
 			
             for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> param : properties.entrySet())
             {
-				if(param.getKey().toString().equals(key))
+				if (param.getKey().toString().equals(key))
                     return param.getValue();
             }
         }
@@ -127,16 +127,16 @@ public class Analysor
         List<AnnotationValue> paramsAnnoDesc    = null;
         int i = 0;
         
-        if(getAnnotationValue(el, "parametersDescription()") != null)
+        if (getAnnotationValue(el, "parametersDescription()") != null)
         {
             AnnotationValue val = (AnnotationValue) getAnnotationValue(el, "parametersDescription()");
-            paramsAnnoDesc = (List<AnnotationValue>)val.getValue();
+            paramsAnnoDesc = (List<AnnotationValue>) val.getValue();
         }
         
-        for(Element param : execElement.getParameters())
+        for (Element param : execElement.getParameters())
         {
             String desc = null;
-            if(paramsAnnoDesc != null && i < paramsAnnoDesc.size())
+            if (paramsAnnoDesc != null && i < paramsAnnoDesc.size())
                 desc = (String) paramsAnnoDesc.get(i++).getValue();
             
             params.add(new ParameterMapper(
