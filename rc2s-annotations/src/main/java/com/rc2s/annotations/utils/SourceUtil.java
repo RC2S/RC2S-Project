@@ -569,7 +569,7 @@ public class SourceUtil
 	
 	private boolean checkClassIsUtilComponent(String className)
 	{
-		return className.endsWith("Util");
+		return (className.endsWith("Util") || className.endsWith("Utils"));
 	}
 
 	/**
