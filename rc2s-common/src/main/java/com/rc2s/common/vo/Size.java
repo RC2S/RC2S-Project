@@ -21,8 +21,8 @@ public class Size implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@NotNull
+
+	@javax.validation.constraints.Size(min = 1)
 	private String name;
 	
 	@Min(1)

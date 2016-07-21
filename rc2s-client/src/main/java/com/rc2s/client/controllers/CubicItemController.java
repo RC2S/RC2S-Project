@@ -65,18 +65,25 @@ public class CubicItemController extends TabController implements Initializable
 		this.ip.setText(cube.getIp());
 
 		this.status.setText("Probing...");
-		Platform.runLater(() -> {
-			try
+		new Thread()
+		{
+			@Override
+			public void run()
 			{
-				String state = cubeEJB.getStatus(cube) ? "Online" : "Offline";
-				status.setText(state);
-                log.info("Cube " + cube.getName() + " on " + cube.getIp() + " is " + state);
+				Platform.runLater(() -> {
+					try
+					{
+						String state = cubeEJB.getStatus(cube) ? "Online" : "Offline";
+						status.setText(state);
+						log.info("Cube " + cube.getName() + " on " + cube.getIp() + " is " + state);
+					}
+					catch (EJBException e)
+					{
+						System.err.println(e.getMessage());
+						status.setText("Offline");
+					}
+				});
 			}
-			catch (EJBException e)
-			{
-				System.err.println(e.getMessage());
-				status.setText("Offline");
-			}
-		});
+		}.start();
 	}
 }
