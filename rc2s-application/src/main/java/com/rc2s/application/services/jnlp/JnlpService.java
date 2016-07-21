@@ -141,7 +141,7 @@ public class JnlpService implements IJnlpService
             DOMSource source        = new DOMSource(doc);
 
 			String filePath 		= jnlpFilePath.substring(jnlpFilePath.indexOf("file:") + 5);
-			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			if (System.getProperty("os.name").toLowerCase().contains("windows"))
 				filePath 			= filePath.substring(1); // Remove leading slash on Windows
 
             StreamResult result     = new StreamResult(Paths.get(filePath).toUri().toASCIIString());

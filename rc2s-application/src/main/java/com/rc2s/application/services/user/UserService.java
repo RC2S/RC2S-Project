@@ -70,7 +70,7 @@ public class UserService implements IUserService
 			
 			return user;
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -91,7 +91,7 @@ public class UserService implements IUserService
 		{
 			return userDAO.getAll();
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -116,7 +116,7 @@ public class UserService implements IUserService
             
 			return userDAO.save(user);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -144,7 +144,7 @@ public class UserService implements IUserService
             
 			return userDAO.update(user);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -165,7 +165,7 @@ public class UserService implements IUserService
 		{
 			userDAO.delete(user.getId());
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
