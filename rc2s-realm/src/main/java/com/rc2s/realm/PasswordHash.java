@@ -3,6 +3,14 @@ package com.rc2s.realm;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * PasswordHash
+ * 
+ * Class to encrypt password
+ * Sha1 is used with salt + pepper
+ * 
+ * @author RC2S
+ */
 public class PasswordHash
 {
     private final String HASH_SALT;

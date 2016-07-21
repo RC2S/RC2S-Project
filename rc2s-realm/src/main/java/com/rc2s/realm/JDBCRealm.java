@@ -30,6 +30,11 @@ import org.glassfish.hk2.api.ActiveDescriptor;
 import org.glassfish.hk2.api.MultiException;
 import org.glassfish.hk2.utilities.BuilderHelper;
 
+/**
+ * JDBCRealm
+ * 
+ * @author RC2S
+ */
 public class JDBCRealm extends AppservRealm
 {
     protected static final Logger LOG = LogDomains.getLogger(Realm.class,

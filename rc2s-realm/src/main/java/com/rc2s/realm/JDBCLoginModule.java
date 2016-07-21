@@ -5,9 +5,21 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import javax.security.auth.login.LoginException;
 
+/**
+ * JDBCLoginModule
+ * 
+ * @author RC2S
+ */
 public class JDBCLoginModule extends BasePasswordLoginModule
 {
-
+	/**
+	 * authenticateUser
+	 * 
+	 * Base user authentication method
+	 * on JDBC Realm with Params configuration
+	 * 
+	 * @throws LoginException 
+	 */
     @Override
 	protected void authenticateUser() throws LoginException
     {
