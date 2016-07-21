@@ -169,18 +169,25 @@ public class CubicDetailsController extends TabController implements Initializab
 		sizeBox.getSelectionModel().select(cube.getSize());
 
 		statusLabel.setText("Probing...");
-		Platform.runLater(() ->  {
-			try
+		new Thread()
+		{
+			@Override
+			public void run()
 			{
-				boolean state = cubeEJB.getStatus(cube);
-				statusLabel.setText(state ? "Online" : "Offline");
+				Platform.runLater(() ->  {
+					try
+					{
+						boolean state = cubeEJB.getStatus(cube);
+						statusLabel.setText(state ? "Online" : "Offline");
+					}
+					catch (EJBException e)
+					{
+						error(e.getMessage());
+						statusLabel.setText("Offline");
+					}
+				});
 			}
-			catch (EJBException e)
-			{
-				error(e.getMessage());
-				statusLabel.setText("Offline");
-			}
-		});
+		}.start();
 		
 		synchronizedLabel.setText(cube.getSynchronization().getName());
 		synchronizedField.setText(cube.getSynchronization().getName());
@@ -234,6 +241,9 @@ public class CubicDetailsController extends TabController implements Initializab
 		
 		synchronizedLabel.setVisible(!synchronizedLabel.isVisible());
 		synchronizedField.setVisible(!synchronizedField.isVisible());
+
+		if(synchronizedLabel.isVisible() && newSizeBox.isVisible())
+			toggleEditSize();
 	}
 	
 	private void toggleEditSize()
