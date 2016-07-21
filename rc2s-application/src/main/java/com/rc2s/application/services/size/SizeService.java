@@ -35,7 +35,7 @@ public class SizeService implements ISizeService
     private Logger log;
 	
 	/**
-	 * getAll()
+	 * getAll
 	 * 
 	 * Get all sizes in db
 	 * 
@@ -56,7 +56,7 @@ public class SizeService implements ISizeService
 	}
 
 	/**
-	 * add(Size)
+	 * add
 	 * 
 	 * Adds a new specified cube size in db
 	 * 

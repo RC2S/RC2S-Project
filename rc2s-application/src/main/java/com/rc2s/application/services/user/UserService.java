@@ -39,7 +39,7 @@ public class UserService implements IUserService
 	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:";
     
 	/**
-	 * getAuthenticatedUser(username, password)
+	 * getAuthenticatedUser
 	 * 
 	 * Retrieve a User object on the usernamepassword control basis
 	 * 
@@ -77,7 +77,7 @@ public class UserService implements IUserService
     }
     
 	/**
-	 * getAll()
+	 * getAll
 	 * 
 	 * Get all the users in db
 	 * 
@@ -98,7 +98,7 @@ public class UserService implements IUserService
     }
 	
 	/**
-	 * add(User)
+	 * add
 	 * 
 	 * Add a given user to db
 	 * 
@@ -123,7 +123,7 @@ public class UserService implements IUserService
 	}
 	
 	/**
-	 * update(User, passwordUpdated)
+	 * update
 	 * 
 	 * Update a given user
 	 * If password needs update process we have to recompute the hash
@@ -151,7 +151,7 @@ public class UserService implements IUserService
 	}
 	
 	/**
-	 * delete(User)
+	 * delete
 	 * 
 	 * Delete the given user
 	 * 

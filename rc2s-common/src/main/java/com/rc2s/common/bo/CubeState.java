@@ -2,6 +2,14 @@ package com.rc2s.common.bo;
 
 import java.io.Serializable;
 
+/**
+ * CubeState
+ * 
+ * Business Object representing the cube state
+ * A cube state is a 3D reprensentation of its LEDs
+ * 
+ * @author RC2S
+ */
 public class CubeState implements Serializable
 {
 	private boolean[][][] states;

@@ -62,7 +62,7 @@ public class StreamingService implements IStreamingService
 	}
 
 	/**
-	 * start(mrl)
+	 * start
 	 * 
 	 * Start streaming on the given mrl
 	 * 
@@ -126,7 +126,7 @@ public class StreamingService implements IStreamingService
     }
 
 	/**
-	 * stop()
+	 * stop
 	 * 
 	 * Stop streaming
 	 */
@@ -147,7 +147,7 @@ public class StreamingService implements IStreamingService
     }
 
 	/**
-	 * processCoordinates(coordinates)
+	 * processCoordinates
 	 * 
 	 * Process coordinates retrieved from the sound algorithm
 	 * and send them to the daemon service
@@ -197,7 +197,7 @@ public class StreamingService implements IStreamingService
 	}
 
 	/**
-	 * getSyncSize()
+	 * getSyncSize
 	 * 
 	 * Get the synchronisation (x, y, z) size in order to be able
 	 * to compute the algorithm on several cubes

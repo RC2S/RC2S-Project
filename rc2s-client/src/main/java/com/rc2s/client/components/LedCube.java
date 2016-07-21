@@ -7,6 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
+/**
+ * LedCube
+ * 
+ * Component to create the LED cube effect
+ * Uses Led class for light display
+ * 
+ * @author RC2S
+ */
 public class LedCube extends Group
 {
     private static final double MIN_SIZE = 3.;
@@ -27,6 +35,20 @@ public class LedCube extends Group
     
     private Color color;
     
+	/**
+	 * LedCube
+	 * 
+	 * Constructs a LedCube and attach it to the application
+	 * Cube dimensions are based on given dimensions
+	 * 
+	 * @param parent
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param size
+	 * @param color
+	 * @param ledEvent 
+	 */
     public LedCube(final Parent parent, final double x, final double y, 
             final double z, final double size, 
             final Color color, final LedEvent ledEvent)
@@ -73,6 +95,15 @@ public class LedCube extends Group
         this.setCursor(Cursor.HAND);
     }
 	
+	/**
+	 * drawCube
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param size
+	 * @param color 
+	 */
     private void drawCube(final double x, final double y, 
             final double z, final double size, final Color color)
     {
@@ -189,6 +220,11 @@ public class LedCube extends Group
         getTransforms().set(2, rz);
     }
 	
+	/**
+	 * updateAxis
+	 * 
+	 * Allow axis movements
+	 */
     public void updateAxis()
     {
         for (int i = 0 ; i < 3 ; i++)
@@ -237,6 +273,11 @@ public class LedCube extends Group
         }
 	}
 
+	/**
+	 * getStateArray
+	 * 
+	 * @return boolean[][][] representing a cube state 
+	 */
     public boolean[][][] getStateArray()
     {
         boolean[][][] states = new boolean[(int)getY()][(int)getZ()][(int)getX()];

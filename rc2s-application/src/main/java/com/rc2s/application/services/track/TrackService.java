@@ -37,7 +37,7 @@ public class TrackService implements ITrackService
     private Logger log;
 
 	/**
-	 * add(Track)
+	 * add
 	 * 
 	 * Adds a new given track in db
 	 * 
@@ -60,7 +60,7 @@ public class TrackService implements ITrackService
     }
 
 	/**
-	 * update(Track)
+	 * update
 	 * 
 	 * Updates a given track in db
 	 * 
@@ -82,7 +82,7 @@ public class TrackService implements ITrackService
     }
 
 	/**
-	 * delete(Track)
+	 * delete
 	 * 
 	 * Delete a given track in db
 	 * 
@@ -103,7 +103,7 @@ public class TrackService implements ITrackService
     }
 
 	/**
-	 * getTracksByUser(User)
+	 * getTracksByUser
 	 * 
 	 * Get all the tracks for the specified user
 	 * 

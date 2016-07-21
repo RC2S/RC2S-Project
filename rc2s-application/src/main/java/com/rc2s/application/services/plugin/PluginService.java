@@ -35,7 +35,7 @@ public class PluginService implements IPluginService
     private Logger log;
 
 	/**
-	 * getAll()
+	 * getAll
 	 * 
 	 * Retrieve all the plugins from db
 	 * 
@@ -56,7 +56,7 @@ public class PluginService implements IPluginService
 	}
 	
 	/**
-	 * getAvailables()
+	 * getAvailables
 	 * 
 	 * Get the list of all available plugins
 	 * 
@@ -77,7 +77,7 @@ public class PluginService implements IPluginService
 	}
 
 	/**
-	 * add(Plugin)
+	 * add
 	 * 
 	 * Add a new plugin to db
 	 * 
@@ -100,7 +100,7 @@ public class PluginService implements IPluginService
 	}
 
 	/**
-	 * update(Plugin)
+	 * update
 	 * 
 	 * Update a specified plugin in db
 	 * 
@@ -123,7 +123,7 @@ public class PluginService implements IPluginService
 	}
 
 	/**
-	 * delete(Plugin)
+	 * delete
 	 * 
 	 * Delete a specified plugin in db
 	 * 

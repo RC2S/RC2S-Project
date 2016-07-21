@@ -50,7 +50,7 @@ public class JnlpService implements IJnlpService
     private final String signAlias = "RC2S";
     
 	/**
-	 * signJar(jarPath)
+	 * signJar
 	 * 
 	 * Signs the jars in jarPath
 	 * Used in gradle task sign
@@ -91,7 +91,7 @@ public class JnlpService implements IJnlpService
     }
 
 	/**
-	 * updateJNLP(jarName, removeJar)
+	 * updateJNLP
 	 * 
 	 * Update the jnlp from jarName
 	 * If the jar is not removed, then it is

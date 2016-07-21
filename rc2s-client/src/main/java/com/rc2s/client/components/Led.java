@@ -4,6 +4,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
+/**
+ * Led
+ * 
+ * Javafx extended LED component for LED display
+ * 
+ * @author RC2S
+ */
 public class Led extends Sphere
 {
     public static final double SIZE_MODIFIER = 4.;
@@ -18,6 +25,17 @@ public class Led extends Sphere
     
 	private LedEvent ledEvent;
 	
+	/**
+	 * Led
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param size
+	 * @param activated
+	 * @param color
+	 * @param ledEvent 
+	 */
     public Led(final double x, final double y, final double z, 
             final double size, final boolean activated, 
             final Color color, final LedEvent ledEvent)

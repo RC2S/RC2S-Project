@@ -36,7 +36,7 @@ public class SynchronizationService implements ISynchronizationService
     private Logger log;
 
 	/**
-	 * getAll()
+	 * getAll
 	 * 
 	 * Get all the synchronisations from db
 	 * 
@@ -57,7 +57,7 @@ public class SynchronizationService implements ISynchronizationService
 	}
 
 	/**
-	 * getByuser(User)
+	 * getByUser
 	 * 
 	 * Get all the synchronisations from db for a given user
 	 * 
@@ -79,7 +79,7 @@ public class SynchronizationService implements ISynchronizationService
 	}
 
 	/**
-	 * add(Synchronization)
+	 * add
 	 * 
 	 * Add a synchronization in db
 	 * 

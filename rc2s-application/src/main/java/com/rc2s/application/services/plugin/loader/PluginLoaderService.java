@@ -51,7 +51,7 @@ public class PluginLoaderService implements IPluginLoaderService
     private Logger log;
 	
 	/**
-	 * uploadPlugin(pluginName, accessGroup, binaryPlugin)
+	 * uploadPlugin
 	 * 
 	 * Upload the given plugin
 	 * 
@@ -114,7 +114,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	/**
-	 * unzipPlugin(zipFile)
+	 * unzipPlugin
 	 * 
 	 * Unzips a given file that should contain a plugin
 	 * 
@@ -169,7 +169,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	/**
-	 * checkServerPlugin(simpleName, tmpDir)
+	 * checkServerPlugin
 	 * 
 	 * Check if the plugin is present on server side
 	 * 
@@ -199,7 +199,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	/**
-	 * checkClientPlugin(simpleName, tmpDir)
+	 * checkClientPlugin
 	 * 
 	 * Check if the plugin is present on client side
 	 * 
@@ -229,7 +229,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	/**
-	 * deployServerPlugin(simpleName, tmpEar)
+	 * deployServerPlugin
 	 * 
 	 * @param simpleName
 	 * @param tmpEar
@@ -244,7 +244,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 
 	/**
-	 * deployClientPlugin(simpleName, tmpjar)
+	 * deployClientPlugin
 	 * 
 	 * @param simpleName
 	 * @param tmpJar
@@ -261,7 +261,7 @@ public class PluginLoaderService implements IPluginLoaderService
     }
 	
 	/**
-	 * persistPlugin(pluginName, group)
+	 * persistPlugin
 	 * 
 	 * Make the plugin persistent
 	 * 
@@ -297,7 +297,7 @@ public class PluginLoaderService implements IPluginLoaderService
 	}
 	
 	/**
-	 * deletePlugin(Plugin)
+	 * deletePlugin
 	 * 
 	 * @param plugin
 	 * @throws ServiceException 
@@ -327,7 +327,7 @@ public class PluginLoaderService implements IPluginLoaderService
 	}
 
 	/**
-	 * getDomainRoot()
+	 * getDomainRoot
 	 * 
 	 * @return String domainRoot 
 	 */

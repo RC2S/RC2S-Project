@@ -63,7 +63,7 @@ public class DaemonService implements IDaemonService
 	}
 
 	/**
-	 * updateState(cube, duration, state)
+	 * updateState
 	 * 
 	 * Update a Cube's state during a given duration
 	 * 
@@ -80,7 +80,7 @@ public class DaemonService implements IDaemonService
 	}
 
 	/**
-	 * updateState(cube, duration, states)
+	 * updateState
 	 * 
 	 * Update several states in a Cube during a given duration
 	 * 
@@ -98,7 +98,7 @@ public class DaemonService implements IDaemonService
 	}
 
 	/**
-	 * generateBooleanArray(size, state)
+	 * generateBooleanArray
 	 * 
 	 * Get a 3D cube representation for a given state
 	 * 
@@ -126,7 +126,7 @@ public class DaemonService implements IDaemonService
 	}
 
 	/**
-	 * formatStatesArray(states)
+	 * formatStatesArray
 	 * 
 	 * Re-order the boolean array to adjust it to daemon's needs
 	 * 

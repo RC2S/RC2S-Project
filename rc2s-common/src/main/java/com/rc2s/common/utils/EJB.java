@@ -6,6 +6,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+/**
+ * EJB
+ * 
+ * Basic implementation to use EJBs
+ * Contains all the methods necessary to EJBs to be initializable,
+ * usable and set
+ * 
+ * @author RC2S
+ */
 public class EJB
 {
 	private static final Integer RTSP_PORT = 5555;
@@ -15,6 +24,15 @@ public class EJB
 
 	private static InitialContext context;
 
+	/**
+	 * initContext
+	 * 
+	 * Initializes the EJB following the initial context
+	 * 
+	 * @param ip
+	 * @param port
+	 * @throws RC2SException 
+	 */
 	public static void initContext(final String ip, final String port) throws RC2SException
 	{
         try
@@ -39,6 +57,14 @@ public class EJB
 		}
 	}
 
+	/**
+	 * lookup
+	 * 
+	 * Allows to retrieve an EJB by its name
+	 * 
+	 * @param ejbName
+	 * @return Object EJB retrieved 
+	 */
 	public static Object lookup(final String ejbName)
 	{
 		try
@@ -51,6 +77,11 @@ public class EJB
 		}
 	}
     
+	/**
+	 * closeContext()
+	 * 
+	 * End context after use
+	 */
     public static void closeContext()
     {
         try {

@@ -39,6 +39,7 @@ public class Analysor
 	}
 	
 	/**
+	 * classAnalysor
 	 * 
 	 * @param mainElement
 	 * @return ElementMapper containing class elements 
@@ -104,6 +105,7 @@ public class Analysor
     }
 	
 	/**
+	 * getAnnotationValue
 	 * 
 	 * @param element
 	 * @param key
@@ -127,6 +129,7 @@ public class Analysor
     }
 	
 	/**
+	 * getClassAnnotations
 	 * 
 	 * @param element
 	 * @return List<String> all annotations on the class 
@@ -149,6 +152,7 @@ public class Analysor
 	}
     
 	/**
+	 * getElementParameters
 	 * 
 	 * @param el
 	 * @return List<ParameterMapper> tuples representing the class elements  

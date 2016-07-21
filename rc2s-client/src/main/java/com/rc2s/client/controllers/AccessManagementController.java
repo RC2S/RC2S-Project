@@ -38,6 +38,13 @@ import javax.validation.ConstraintViolation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * AccessManagementController
+ * 
+ * Controller for the management of the access within the client
+ * 
+ * @author RC2S
+ */
 public class AccessManagementController extends TabController implements Initializable
 {
 	private final Logger log = LogManager.getLogger(this.getClass());
@@ -78,6 +85,14 @@ public class AccessManagementController extends TabController implements Initial
     @FXML private Button addButton;
 	@FXML private Label errorLabel;
 
+	/**
+	 * initialize
+	 * 
+	 * Initialize template values
+	 * 
+	 * @param location
+	 * @param resources 
+	 */
     @Override
     public void initialize(final URL location, final ResourceBundle resources)
 	{
@@ -121,6 +136,11 @@ public class AccessManagementController extends TabController implements Initial
 			log.error(err);
 	}
 	
+	/**
+	 * updateUsers
+	 * 
+	 * Uses the UserEJB to manage user data through application
+	 */
 	private void updateUsers()
 	{
 		try
@@ -137,6 +157,11 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
+	/**
+	 * updateGroups
+	 * 
+	 * Uses the GroupEJB to manage groups data through application
+	 */
 	private void updateGroups()
 	{
 		try
@@ -150,6 +175,12 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
+	/**
+	 * updateSync
+	 * 
+	 * Uses the SynchronizationEJB to manage synchronisation data
+	 * through application
+	 */
 	private void updateSync()
 	{
 		try
@@ -168,6 +199,13 @@ public class AccessManagementController extends TabController implements Initial
 		element = new User();
 	}
 	
+	/**
+	 * updateElement
+	 * 
+	 * Update an access management element 
+	 * 
+	 * @param isNew 
+	 */
 	private void updateElement(final boolean isNew)
 	{
 		Group group = (Group) groupsBox.getSelectionModel().getSelectedItem();
@@ -192,6 +230,11 @@ public class AccessManagementController extends TabController implements Initial
 			element.setSynchronizations(Arrays.asList(new Synchronization[] {synchronization}));
 	}
 	
+	/**
+	 * onAddEvent
+	 * 
+	 * @param e 
+	 */
 	@FXML
 	private void onAddEvent(final ActionEvent e)
 	{
@@ -237,6 +280,11 @@ public class AccessManagementController extends TabController implements Initial
 			error("Passwords don't match");
 	}
 	
+	/**
+	 * onKeyPressedEvent
+	 * 
+	 * @param e 
+	 */
 	@FXML
 	private void onKeyPressedEvent(final KeyEvent e)
 	{
@@ -273,6 +321,13 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
+	/**
+	 * onEditStarts
+	 * 
+	 * Begin event on update
+	 * 
+	 * @param user 
+	 */
 	private void onEditStarts(final User user)
 	{
 		error("");
@@ -293,6 +348,13 @@ public class AccessManagementController extends TabController implements Initial
 		groupsBox.getSelectionModel().select(user.getGroups().get(0));
 	}
 	
+	/**
+	 * onEditCanceled
+	 * 
+	 * Cancel event on update
+	 * 
+	 * @param e 
+	 */
 	@FXML
 	private void onEditCanceled(final ActionEvent e)
 	{
@@ -310,6 +372,13 @@ public class AccessManagementController extends TabController implements Initial
 		emptyForm();
 	}
 	
+	/**
+	 * onEditSubmit
+	 * 
+	 * Submit event on update
+	 * 
+	 * @param e 
+	 */
 	@FXML
 	private void onEditSubmit(final ActionEvent e)
 	{
@@ -352,6 +421,11 @@ public class AccessManagementController extends TabController implements Initial
 		}
 	}
 	
+	/**
+	 * emptyForm
+	 * 
+	 * Empties the form
+	 */
 	private void emptyForm()
 	{
 		usernameField.clear();

@@ -34,7 +34,7 @@ public class GroupService implements IGroupService
     private Logger log;
 	
 	/**
-	 * getAll()
+	 * getAll
 	 * 
 	 * Retrieve all groups
 	 * 

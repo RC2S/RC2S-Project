@@ -36,7 +36,7 @@ public class CubeService implements ICubeService
     private Logger log;
     
 	/**
-	 * getCubes()
+	 * getCubes
 	 * 
 	 * Get all cubes
 	 * 
@@ -57,7 +57,7 @@ public class CubeService implements ICubeService
     }
     
 	/**
-	 * getCube(User)
+	 * getCube
 	 * 
 	 * Get a user's cubes
 	 * 
@@ -79,7 +79,7 @@ public class CubeService implements ICubeService
     }
 	
 	/**
-	 * add(Cube)
+	 * add
 	 * 
 	 * Add a new cube to db
 	 * 
@@ -110,7 +110,7 @@ public class CubeService implements ICubeService
 	}
 	
 	/**
-	 * remove(Cube)
+	 * remove
 	 * 
 	 * Remove a cube from db
 	 * 
@@ -131,7 +131,7 @@ public class CubeService implements ICubeService
 	}
 	
 	/**
-	 * update(Cube)
+	 * update
 	 * 
 	 * Update a cube from db
 	 * 

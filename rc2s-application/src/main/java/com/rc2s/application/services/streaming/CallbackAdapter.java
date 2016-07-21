@@ -71,6 +71,14 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		lineAvgAnalysis = new ArrayList<>();
     }
 
+	/**
+	 * setDimensions
+	 * 
+	 * Sets the synchronisation list dimensions
+	 * Also gets the number of cubes
+	 * 
+	 * @param syncDimensions 
+	 */
 	public final void setDimensions(final int[] syncDimensions)
 	{
 		syncWidth	= syncDimensions[0];
@@ -81,6 +89,18 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		numCubes	= syncDimensions[3];
 	}
 
+	/**
+	 * getLighteningSize
+	 * 
+	 * Get the expected number of LEDs lightened for 1 data
+	 * e.g if size is 4x4x4
+	 * 'C'ube will light 64 leds
+	 * 'S'tage will light 16 leds
+	 * 'L'ight will light 1 led
+	 * 
+	 * @param lightening
+	 * @return int factor of LEDs lightening 
+	 */
 	private int getLighteningSize(final char lightening)
 	{
 		switch (lightening)
@@ -97,6 +117,14 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		}
 	}
 	
+	/**
+	 * getAlgoEffect
+	 * 
+	 * Choose the algo effect following random value
+	 * 
+	 * @param value
+	 * @return AlgoEffectEnum the algo effect asked
+	 */
 	private AlgoEffectEnum getAlgoEffect(final int value)
 	{
 		switch (value)
@@ -124,6 +152,17 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		}
 	}
 
+	/**
+	 * onPlay
+	 * 
+	 * Method retrieving byte data during music play
+	 * Computes the byte array then extracts data from it 
+	 * 
+	 * @param mediaPlayer
+	 * @param bytes
+	 * @param sampleCount
+	 * @param pts 
+	 */
     @Override
     protected void onPlay(final DirectAudioPlayer mediaPlayer, final byte[] bytes, final int sampleCount, final long pts)
     {

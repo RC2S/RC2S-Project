@@ -159,6 +159,12 @@ public class SourceUtil
 		}
 	}
 	
+	/**
+	 * builControllersAndViewsFolderPaths
+	 * 
+	 * Get folder paths for controllers and views
+	 * based on the expected path
+	 */
 	public void buildControllersAndViewsFoldersPaths()
 	{	
 		String pluginsRoot = System.getenv("RC2S_PLUGINS_ROOT");
@@ -239,65 +245,6 @@ public class SourceUtil
 		if (!hasMainView)
 			throw new SourceControlException("MainView.fxml expected in views package");
 	}
-    
-    /*
-    private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
-	{
-		Path viewsPath = Paths.get(viewsFolderPath);
-
-		try (DirectoryStream<Path> ds = Files.newDirectoryStream(viewsPath))
-		{
-			for (Path file : ds)
-			{
-				String filename = file.getFileName().toString();
-
-				if (filename.endsWith(".fxml") && Files.isRegularFile(file))
-					viewsList.add(filename);
-			}
-		}
-		catch(IOException e)
-		{
-			throw new SourceControlException("Unable to open a stream to Views package folder");
-		}
-		
-		// Get associated Controllers
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		
-		for (String fileName : viewsList)
-		{
-			if (fileName.equals("MainView.fxml"))
-			{
-				if (hasMainView)
-					throw new SourceControlException("Your plugin should only contain one MainView.fxml");
-				
-				hasMainView = true;
-			}
-			
-			// Parse fxml file
-			Document doc = docBuilder.parse(viewsFolderPath + File.separator + fileName);
-			
-			// Retrieve first AnchorPane Node element
-			Node anchorNode = doc.getElementsByTagName("AnchorPane").item(0);
-			
-			if (anchorNode != null
-				&& anchorNode.hasAttributes()
-				&& anchorNode.getAttributes().getNamedItem("fx:controller") != null)
-			{
-				expectedControllersList.add(
-					anchorNode
-					.getAttributes()
-					.getNamedItem("fx:controller")
-					.getNodeValue()
-					.split("controllers.")[1]
-					.concat(".java")
-				);
-			}
-			else
-				throw new SourceControlException("No fx:controller attribute has been found on main AnchorPane in " + fileName);
-		}
-	}
-    */
 
 	private void getAllControllersNames()
 	{
@@ -311,26 +258,6 @@ public class SourceUtil
 		for (File file : files)
 			initialControllersList.add(file.getName());
 	}
-    
-    /*private void getAllControllersNames() throws SourceControlException
-	{
-		Path controllersPath = Paths.get(controllersFolderPath);
-
-		try (DirectoryStream<Path> ds = Files.newDirectoryStream(controllersPath))
-		{
-			for (Path file : ds)
-			{
-				String filename = file.getFileName().toString();
-
-				if (filename.endsWith(".java") && Files.isRegularFile(file))
-					initialControllersList.add(filename);
-			}
-		}
-		catch(IOException e)
-		{
-			throw new SourceControlException("Unable to open a stream to Controllers package folder");
-		}
-	}*/
 
 	private void verifyRoot(String[] packageParts) throws SourceControlException
 	{
@@ -464,6 +391,7 @@ public class SourceUtil
 	}
 
 	/**
+	 * verifyEjbStandards
 	 * 
 	 * @param mainClass
 	 * @param entityName
@@ -491,6 +419,7 @@ public class SourceUtil
 	}
 
 	/**
+	 * verifyApplicationStandards
 	 * 
 	 * @param mainClass
 	 * @param entityName
@@ -518,6 +447,7 @@ public class SourceUtil
 	}
 
 	/**
+	 * verifyDaoStandards
 	 * 
 	 * @param mainClass
 	 * @param entityName
@@ -545,7 +475,7 @@ public class SourceUtil
 	}
 	
 	/**
-	 * 
+	 * checkClassHasStatelessOrStatefulAnnotation
 	 * @param mainClass
 	 * @throws SourceControlException 
 	 */
@@ -573,6 +503,7 @@ public class SourceUtil
 	}
 
 	/**
+	 * verifyVoStandards
 	 * 
 	 * @param mainClass
 	 * @throws SourceControlException 
@@ -597,6 +528,7 @@ public class SourceUtil
 	}
 
 	/**
+	 * verifyControllerStandards
 	 * 
 	 * @param mainClass
 	 * @throws SourceControlException 
