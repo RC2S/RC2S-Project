@@ -1,8 +1,6 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
-import com.rc2s.client.test.Streaming;
-import com.rc2s.client.test.StreamingHandler;
 import com.rc2s.client.utils.Dialog;
 import com.rc2s.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
@@ -54,7 +52,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 	private final String META_GENRE     = "xmpDM:genre";
 
 	private MediaPlayer mediaPlayer;
-	private StreamingHandler streamingHandler;
+	private StreamingHandlerUtils streamingHandler;
 	private boolean playing     = false;
 	private int currentTrack    = -1;
 
@@ -70,7 +68,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     @FXML private Button previousButton;
     @FXML private Button playPauseButton;
     @FXML private Button nextButton;
-    @FXML private Slider soundSlider;
+    @FXML private Label playingLabel;
 
     @Override
     public void initialize(final URL url, final ResourceBundle rb)
@@ -80,10 +78,10 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 		tracksMetadata = new HashMap<>();
 
-		musicColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_TITLE));
-		authorColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_ARTIST));
-		timeColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_DURATION));
-		genreColumn.setCellValueFactory(data -> getValueFromMetadata(data.getValue(), META_GENRE));
+		musicColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_TITLE)));
+		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_ARTIST)));
+		timeColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_DURATION)));
+		genreColumn.setCellValueFactory(data -> new SimpleStringProperty(getValueFromMetadata(data.getValue(), META_GENRE)));
 
 		tracksTable.setRowFactory(table -> {
 			TableRow<Track> row = new TableRow<>();
@@ -101,7 +99,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		});
     }
 
-	private SimpleStringProperty getValueFromMetadata(final Track track, final String metadataName)
+	private String getValueFromMetadata(final Track track, final String metadataName)
 	{
 		Metadata metadata = tracksMetadata.get(track);
 
@@ -118,10 +116,10 @@ public class MusicPlaylistController extends TabController implements Initializa
 				value = new StringBuilder().append(minutes).append(":").append(seconds).toString();
 			}
 
-			return new SimpleStringProperty(value);
+			return value;
 		}
 
-		return new SimpleStringProperty("No such metadata: " + metadataName);
+		return "No such metadata: " + metadataName;
 	}
 
 	@Override
@@ -386,18 +384,18 @@ public class MusicPlaylistController extends TabController implements Initializa
 				}
 			}
 
-			streamingHandler = new StreamingHandler(
+			streamingHandler = new StreamingHandlerUtils(
 				streamingEJB,
 				Main.getAuthenticatedUser().getUsername(),
 				Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8"))
 			);
-			streamingHandler.setDaemon(true);
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 
+		playingLabel.setText(getValueFromMetadata(track, META_TITLE));
 		currentTrack = trackIndex;
 	}
 
@@ -420,11 +418,9 @@ public class MusicPlaylistController extends TabController implements Initializa
 	{
 		mediaPlayer.play();
 
-		if (streamingHandler != null)
-        {
-			synchronized (streamingHandler)
-            {
-				if (streamingHandler.getStreamingState() == Streaming.StreamingState.INIT)
+		if (streamingHandler != null) {
+			synchronized (streamingHandler) {
+				if (streamingHandler.getStreamingState() == StreamingUtils.StreamingState.INIT)
 					streamingHandler.start();
 				else if (!streamingHandler.isPlaying())
 					streamingHandler.resumeStreaming();

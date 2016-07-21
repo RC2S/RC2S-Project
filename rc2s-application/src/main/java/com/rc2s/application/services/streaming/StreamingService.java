@@ -57,7 +57,7 @@ public class StreamingService implements IStreamingService
 	 */
 	public StreamingService()
     {
-		if(System.getProperty("os.name").toLowerCase().contains("windows"))
+		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 	}
 
@@ -78,7 +78,7 @@ public class StreamingService implements IStreamingService
 		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, callbackAdapter);
 
 		audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-			public void playing(MediaPlayer mediaPlayer) {
+            public void playing(MediaPlayer mediaPlayer) {
 				log.info("playing()");
 			}
 
@@ -108,12 +108,12 @@ public class StreamingService implements IStreamingService
 					// (but this is just a test so it's good enough)...
 					sync.acquire();
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					log.error(e);
 				}
 
 				log.info("Finished, releasing native resources...");
 
-				if(audioPlayer.isPlaying())
+				if (audioPlayer.isPlaying())
 				{
 					audioPlayer.release();
 					factory.release();
@@ -135,7 +135,8 @@ public class StreamingService implements IStreamingService
     {
 		synchronized (factory) {
 			log.info("Stop streaming");
-			if (audioPlayer.isPlaying()) {
+			
+            if (audioPlayer.isPlaying()) {
 				audioPlayer.stop();
 
 				sync.release();
@@ -161,18 +162,18 @@ public class StreamingService implements IStreamingService
 
 		Map<Cube, CubeState> cubesStates = new HashMap<>();
 
-		for(Cube cube : synchronization.getCubes())
+		for (Cube cube : synchronization.getCubes())
 		{
 			CubeState cubeState = new CubeState(daemonService.generateBooleanArray(cube.getSize(), false));
 
-			for(int[] position : coordinates)
+			for (int[] position : coordinates)
 			{
 				// Skip negative values
-				if(position[0] < 0)
+				if (position[0] < 0)
 					continue;
 
 				// If the position belongs to another Cube
-				if(position[0] >= cube.getSize().getX())
+				if (position[0] >= cube.getSize().getX())
 				{
 					position[0] -= cube.getSize().getX();
 					continue;
@@ -189,9 +190,9 @@ public class StreamingService implements IStreamingService
 		{
 			daemonService.sendCubesStates(cubesStates);
 		}
-		catch(ServiceException e)
+		catch (ServiceException e)
 		{
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 
@@ -212,18 +213,18 @@ public class StreamingService implements IStreamingService
 		int[] syncSize = new int[] {0, 0, 0, 0};
 		int nCubes = 0;
 
-		if(synchronization != null)
+		if (synchronization != null)
 		{
 			boolean first = true;
 
-			for(Cube cube : synchronization.getCubes())
+			for (Cube cube : synchronization.getCubes())
 			{
 				System.out.println("LOG : ncubes + 1");
 				nCubes++;
 				
 				syncSize[0] += cube.getSize().getX();
 
-				if(first)
+				if (first)
 				{
 					first = false;
 
@@ -255,7 +256,7 @@ public class StreamingService implements IStreamingService
 	{
 		this.synchronization = synchronization;
 
-		if(callbackAdapter != null)
+		if (callbackAdapter != null)
 			callbackAdapter.setDimensions(getSyncSize());
 	}
 }

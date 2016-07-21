@@ -252,7 +252,7 @@ public class AccessManagementController extends TabController implements Initial
 					{
 						ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this user account?");
 
-						if  (answer == ButtonType.OK)
+						if (answer == ButtonType.OK)
 						{
 							userEJB.delete(user);
                             log.info("Delete user " + user.getUsername());
@@ -332,7 +332,7 @@ public class AccessManagementController extends TabController implements Initial
 					updateUsers();
 					onEditCanceled(null);
 				}
-				catch(EJBException ex)
+				catch (EJBException ex)
 				{
 					error(ex.getMessage());
 				}

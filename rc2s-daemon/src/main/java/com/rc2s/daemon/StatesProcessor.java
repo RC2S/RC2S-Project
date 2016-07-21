@@ -32,19 +32,13 @@ public class StatesProcessor implements Runnable
         {
 			try
 			{
-				try
-				{
-					Packet packet = queue.remove();
-					sweep(packet);
+				Packet packet = queue.remove();
+				sweep(packet);
 
-					daemon.getHardware().clear();
-					daemon.getHardware().send();
-				}
-				catch(NoSuchElementException e) {}
-				
-				Thread.sleep(50l);
+				daemon.getHardware().clear();
+				daemon.getHardware().send();
 			}
-			catch(InterruptedException e) {}
+			catch(NoSuchElementException e) {}
         } while(daemon.isRunning());
     }
 
@@ -78,14 +72,10 @@ public class StatesProcessor implements Runnable
                 if(states[i][j])
                 {
                     gpdo = daemon.getHardware().bit();
-                    System.out.print("1 ");
                 }
-				else
-					System.out.print("0 ");
 				
                 daemon.getHardware().shift(gpdo);
             }
-			System.out.println("");
         }
 
         daemon.getHardware().send();

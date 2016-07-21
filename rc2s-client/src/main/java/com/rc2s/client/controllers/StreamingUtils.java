@@ -1,8 +1,9 @@
-package com.rc2s.client.test;
+package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -11,9 +12,7 @@ import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
-import java.io.File;
-
-public class Streaming extends Thread
+public class StreamingUtils extends Thread
 {
 	public static enum StreamingState {
 		INIT, PLAY, PAUSE, STOP;
@@ -32,7 +31,7 @@ public class Streaming extends Thread
 	private String options;
 
     // For Server : sudo apt-get install libvlc-dev libvlccore-dev
-    public Streaming(final StreamingFacadeRemote streamingEJB, final String id, final String media) throws Exception
+    public StreamingUtils(final StreamingFacadeRemote streamingEJB, final String id, final String media) throws Exception
     {
 		this.streamingEJB = streamingEJB;
 
@@ -45,7 +44,7 @@ public class Streaming extends Thread
 
 		this.options = formatRtspStream(InetAddress.getLocalHost().getHostAddress(), EJB.getRtspPort(), id);
 
-        System.out.println("Streaming '" + media + "' to '" + options + "'");
+        System.out.println("StreamingUtils '" + media + "' to '" + options + "'");
 
         mediaPlayerFactory = new MediaPlayerFactory();
         System.err.println("------- Launch Media Player -------");
@@ -74,10 +73,10 @@ public class Streaming extends Thread
             mrl = new RtspMrl().host(InetAddress.getLocalHost().getHostAddress()).port(EJB.getRtspPort()).path("/" + id).value();
         } catch (UnknownHostException ex)
         {
-            Logger.getLogger(Streaming.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StreamingUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-		System.err.println("------- Start Streaming RMI -------");
+		System.err.println("------- Start StreamingUtils RMI -------");
 		streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
 		setStreamingState(StreamingState.PLAY);
 		System.err.println("------- Thread join -------");
@@ -110,12 +109,9 @@ public class Streaming extends Thread
 
 			} while (state != StreamingState.STOP);
 		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-
-		System.err.println("------- Stop Streaming RMI -------");
+		catch (InterruptedException e) {}
+        
+		System.err.println("------- Stop StreamingUtils RMI -------");
 		streamingEJB.stopStreaming(Main.getAuthenticatedUser());
 		System.err.println("------- Stop Media Player -------");
 		mediaPlayer.stop();
