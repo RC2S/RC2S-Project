@@ -9,7 +9,7 @@ package com.rc2s.annotations.utils;
  * 
  * @author RC2S
  */
-public class SourceControlException extends Exception
+public class SourceControlException extends RuntimeException
 {
 	public SourceControlException()
 	{
@@ -19,5 +19,10 @@ public class SourceControlException extends Exception
 	public SourceControlException(final String message)
 	{
 		super(message);
+	}
+	
+	public SourceControlException(final Throwable throwable)
+	{
+		super(throwable);
 	}
 }

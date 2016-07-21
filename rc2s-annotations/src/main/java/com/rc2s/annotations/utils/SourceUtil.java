@@ -97,14 +97,7 @@ public class SourceUtil
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
 		{
-			try
-			{
-				verifyRoot(packageParts);
-			}
-			catch (SourceControlException ex)
-			{
-				ex.printStackTrace();
-			}
+			verifyRoot(packageParts);
 			
 			buildControllersAndViewsFoldersPaths();
 			
@@ -117,46 +110,37 @@ public class SourceUtil
 					if (!initialControllersList.contains(expectedControllerName))
 						throw new SourceControlException("Controller " + expectedControllerName + " was expected and wasn't found");
 			}
-			catch (SourceControlException | ParserConfigurationException | SAXException | IOException ex)
+			catch (ParserConfigurationException | SAXException | IOException ex)
 			{
-				System.err.println(ex.getMessage());
-				ex.printStackTrace();
+				throw new SourceControlException(ex);
 			}
 			
 			isFirstCheck = false;
 		}
 		
-		
-		try
+		// Verify root - shall be com.rc2s.{plugin_name}
+		verifyRoot(packageParts);
+
+		// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
+		ClassNamesEnum cne = findClassName(packageParts);
+
+		/**
+		 * Then verify remaining package parts depending on ClassNamesEnum retrieved
+		 * Those parts shall be :
+		 * (ejb | application | dao).name
+		 * Others types are already verified within ClassNames Enum
+		 */
+		String entityName = null;
+
+		if (ClassNamesEnum.APPLICATION.equals(cne)
+			|| ClassNamesEnum.DAO.equals(cne)
+			|| ClassNamesEnum.EJB.equals(cne))
 		{
-			// Verify root - shall be com.rc2s.{plugin_name}
-			verifyRoot(packageParts);
-			
-			// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
-			ClassNamesEnum cne = findClassName(packageParts);
-			
-			/**
-			 * Then verify remaining package parts depending on ClassNamesEnum retrieved
-			 * Those parts shall be :
-			 * (ejb | application | dao).name
-			 * Others types are already verified within ClassNames Enum
-			 */
-			String entityName = null;
-			
-			if (ClassNamesEnum.APPLICATION.equals(cne)
-				|| ClassNamesEnum.DAO.equals(cne)
-				|| ClassNamesEnum.EJB.equals(cne))
-			{
-				entityName = verifyPackageEnd(packageParts);
-			}
-			
-			// Then verify class compulsorys' (name, annotations..)
-			verifyClassStandards(mainClass, cne, entityName);
+			entityName = verifyPackageEnd(packageParts);
 		}
-		catch (SourceControlException scex)
-		{
-			System.err.println(scex.getMessage());
-		}
+
+		// Then verify class compulsorys' (name, annotations..)
+		verifyClassStandards(mainClass, cne, entityName);
 	}
 	
 	/**
