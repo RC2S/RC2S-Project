@@ -78,54 +78,61 @@ public class LoginController implements Initializable
 
         if (validateIpAddress(null))
         {
-			Platform.runLater(() -> {
-				try
+			new Thread()
+			{
+				@Override
+				public void run()
 				{
-					// Init Programmatic Login
-					Main.getProgrammaticLogin().login(username, password.toCharArray());
-
-					// Init EJB context
-					EJB.initContext(ip, null);
-
-					UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
-
-					try
-					{
-						// Get the authenticated user
-						User user = userEJB.getAuthenticatedUser(username, password);
-
-						if(user != null)
+					Platform.runLater(() -> {
+						try
 						{
-							Main.setAuthenticatedUser(user);
-                            
-                            log.info("Access granted for user " + user.getUsername());
+							// Init Programmatic Login
+							Main.getProgrammaticLogin().login(username, password.toCharArray());
 
-							FXMLLoader loader = Resources.loadFxml("HomeView");
-							Scene scene = new Scene((Parent) loader.getRoot());
+							// Init EJB context
+							EJB.initContext(ip, null);
 
-							Main.getStage().setScene(scene);
-							Main.getStage().setMinWidth(scene.getWidth());
-							Main.getStage().setMinHeight(scene.getHeight());
-							Main.getStage().show();
+							UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
+
+							try
+							{
+								// Get the authenticated user
+								User user = userEJB.getAuthenticatedUser(username, password);
+
+								if(user != null)
+								{
+									Main.setAuthenticatedUser(user);
+
+									log.info("Access granted for user " + user.getUsername());
+
+									FXMLLoader loader = Resources.loadFxml("HomeView");
+									Scene scene = new Scene((Parent) loader.getRoot());
+
+									Main.getStage().setScene(scene);
+									Main.getStage().setMinWidth(scene.getWidth());
+									Main.getStage().setMinHeight(scene.getHeight());
+									Main.getStage().show();
+								}
+								else
+								{
+									errorLabel.setText("Authentication failed");
+								}
+							}
+							catch (EJBException e)
+							{
+								log.error(e.getMessage());
+								errorLabel.setText("Authentication failed");
+								log.error("Authentication failed");
+							}
 						}
-						else
+						catch (Exception e)
 						{
-							errorLabel.setText("Authentication failed");
+							log.error(e.getMessage());
+							errorLabel.setText("Unable to connect to the server");
 						}
-					}
-					catch (EJBException e)
-					{
-						log.error(e.getMessage());
-						errorLabel.setText("Authentication failed");
-                        log.error("Authentication failed");
-					}
+					});
 				}
-				catch (Exception e)
-				{
-					log.error(e.getMessage());
-					errorLabel.setText("Unable to connect to the server");
-				}
-			});
+			}.start();
         }
         else
 		{

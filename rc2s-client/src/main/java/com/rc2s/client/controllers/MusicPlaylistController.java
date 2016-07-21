@@ -416,6 +416,14 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 	private void play()
 	{
+		Synchronization sync = syncBox.getSelectionModel().getSelectedItem();
+
+		if(sync == null)
+		{
+			Dialog.message("Music Playlist", "You cannot stream a track without selecting a synchronization list", Alert.AlertType.ERROR);
+			return;
+		}
+
 		mediaPlayer.play();
 
 		if (streamingHandler != null) {
