@@ -5,6 +5,13 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * IUserService interface
+ * 
+ * Service interface for user management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IUserService
 {

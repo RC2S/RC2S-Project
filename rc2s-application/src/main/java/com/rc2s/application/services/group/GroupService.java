@@ -14,6 +14,14 @@ import com.rc2s.dao.group.IGroupDAO;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * GroupService
+ * 
+ * Service for group (jaas) retrieving
+ * Uses an IGroupDAO for db access
+ * 
+ * @author RC2S
+ */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -25,6 +33,14 @@ public class GroupService implements IGroupService
     @Inject
     private Logger log;
 	
+	/**
+	 * getAll()
+	 * 
+	 * Retrieve all groups
+	 * 
+	 * @return List<Group>
+	 * @throws ServiceException 
+	 */
 	@Override
 	public List<Group> getAll() throws ServiceException
 	{

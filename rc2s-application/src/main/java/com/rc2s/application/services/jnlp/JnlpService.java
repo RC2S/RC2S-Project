@@ -21,9 +21,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
+/**
+ * GroupService
+ * 
+ * Service for group (jaas) retrieving
+ * Uses an IGroupDAO for db access
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class JnlpService implements IJnlpService
 {
@@ -42,6 +49,14 @@ public class JnlpService implements IJnlpService
     
     private final String signAlias = "RC2S";
     
+	/**
+	 * signJar(jarPath)
+	 * 
+	 * Signs the jars in jarPath
+	 * Used in gradle task sign
+	 * 
+	 * @param jarPath 
+	 */
     @Override
     public void signJar(final String jarPath)
     {        
@@ -75,6 +90,16 @@ public class JnlpService implements IJnlpService
         log.info(output.toString());
     }
 
+	/**
+	 * updateJNLP(jarName, removeJar)
+	 * 
+	 * Update the jnlp from jarName
+	 * If the jar is not removed, then it is
+	 * added in the Jnlp resources
+	 * 
+	 * @param jarName
+	 * @param removeJar 
+	 */
     @Override
     public void updateJNLP(final String jarName, final boolean removeJar)
     {

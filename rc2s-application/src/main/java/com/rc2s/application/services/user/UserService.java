@@ -16,6 +16,14 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * UserService
+ * 
+ * Service for users management
+ * Works with the IUserDAO
+ * 
+ * @author RC2S
+ */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -30,6 +38,16 @@ public class UserService implements IUserService
     private final String SALT   = "c33A0{-LO;<#CB `k:^+8DnxAa.BX74H07z:Qn+U0yD$3ar+.:ge[nc>Trs|Fxy";
 	private final String PEPPER = ">m9I}JqHTg:VZ}XISdcG;)yGu)t]7Qv5YT:ZWI^#]f06Aq<c]n7a? x+ZEl#pt:";
     
+	/**
+	 * getAuthenticatedUser(username, password)
+	 * 
+	 * Retrieve a User object on the usernamepassword control basis
+	 * 
+	 * @param username
+	 * @param password
+	 * @return User authenticated
+	 * @throws ServiceException 
+	 */
     @Override
     public User getAuthenticatedUser(final String username, final String password) throws ServiceException
     {
@@ -58,6 +76,14 @@ public class UserService implements IUserService
 		}
     }
     
+	/**
+	 * getAll()
+	 * 
+	 * Get all the users in db
+	 * 
+	 * @return List<User>
+	 * @throws ServiceException 
+	 */
     @Override
     public List<User> getAll() throws ServiceException
     {
@@ -71,6 +97,15 @@ public class UserService implements IUserService
 		}
     }
 	
+	/**
+	 * add(User)
+	 * 
+	 * Add a given user to db
+	 * 
+	 * @param user
+	 * @return User added
+	 * @throws ServiceException 
+	 */
 	@Override
 	public User add(final User user) throws ServiceException
 	{
@@ -87,6 +122,17 @@ public class UserService implements IUserService
 		}
 	}
 	
+	/**
+	 * update(User, passwordUpdated)
+	 * 
+	 * Update a given user
+	 * If password needs update process we have to recompute the hash
+	 * 
+	 * @param user
+	 * @param passwordUpdated
+	 * @return User updated
+	 * @throws ServiceException 
+	 */
 	@Override
 	public User update(final User user, final boolean passwordUpdated) throws ServiceException
 	{
@@ -104,6 +150,14 @@ public class UserService implements IUserService
 		}
 	}
 	
+	/**
+	 * delete(User)
+	 * 
+	 * Delete the given user
+	 * 
+	 * @param user
+	 * @throws ServiceException 
+	 */
 	@Override
 	public void delete(final User user) throws ServiceException
 	{

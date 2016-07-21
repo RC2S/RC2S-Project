@@ -17,6 +17,14 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * TrackService
+ * 
+ * Service for tracks management
+ * Works with the ITrackDAO
+ * 
+ * @author RC2S
+ */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -28,6 +36,15 @@ public class TrackService implements ITrackService
     @Inject
     private Logger log;
 
+	/**
+	 * add(Track)
+	 * 
+	 * Adds a new given track in db
+	 * 
+	 * @param track
+	 * @return Track added
+	 * @throws ServiceException 
+	 */
     @Override
     public Track add(final Track track) throws ServiceException
     {
@@ -42,6 +59,15 @@ public class TrackService implements ITrackService
         }
     }
 
+	/**
+	 * update(Track)
+	 * 
+	 * Updates a given track in db
+	 * 
+	 * @param track
+	 * @return Track updated
+	 * @throws ServiceException 
+	 */
     @Override
     public Track update(final Track track) throws ServiceException
     {
@@ -55,6 +81,14 @@ public class TrackService implements ITrackService
         }
     }
 
+	/**
+	 * delete(Track)
+	 * 
+	 * Delete a given track in db
+	 * 
+	 * @param track
+	 * @throws ServiceException 
+	 */
     @Override
     public void delete(final Track track) throws ServiceException
     {
@@ -68,6 +102,15 @@ public class TrackService implements ITrackService
 		}
     }
 
+	/**
+	 * getTracksByUser(User)
+	 * 
+	 * Get all the tracks for the specified user
+	 * 
+	 * @param user
+	 * @return List<Track>
+	 * @throws ServiceException 
+	 */
     @Override
     public List<Track> getTracksByUser(final User user) throws ServiceException
     {

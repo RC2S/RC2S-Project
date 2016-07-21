@@ -7,6 +7,13 @@ import com.rc2s.common.vo.User;
 import javax.ejb.Local;
 import java.util.List;
 
+/**
+ * ITrackService interface
+ * 
+ * Service interface for tracks management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ITrackService
 {

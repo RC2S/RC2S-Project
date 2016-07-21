@@ -5,6 +5,13 @@ import com.rc2s.common.vo.Plugin;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * IPluginService interface
+ * 
+ * Service interface for plugin management via IPluginDAO
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IPluginService
 {

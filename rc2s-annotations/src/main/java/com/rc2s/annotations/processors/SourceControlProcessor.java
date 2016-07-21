@@ -53,7 +53,7 @@ public class SourceControlProcessor extends AbstractProcessor
 	 * 
 	 * @param annotations
 	 * @param roundEnv
-	 * @return 
+	 * @return true
 	 */
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv)

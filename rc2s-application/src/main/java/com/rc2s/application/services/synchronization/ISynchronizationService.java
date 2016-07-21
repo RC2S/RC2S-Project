@@ -7,6 +7,13 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * ISynchronizationService interface
+ * 
+ * Service interface for synchronisations management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ISynchronizationService
 {

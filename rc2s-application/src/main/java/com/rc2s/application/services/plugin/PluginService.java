@@ -15,6 +15,14 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * PluginService
+ * 
+ * Service for plugin management
+ * Acces to database via IPluginDAO
+ * 
+ * @author RC2S
+ */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -26,6 +34,14 @@ public class PluginService implements IPluginService
     @Inject
     private Logger log;
 
+	/**
+	 * getAll()
+	 * 
+	 * Retrieve all the plugins from db
+	 * 
+	 * @return List<Plugin>
+	 * @throws ServiceException 
+	 */
 	@Override
 	public List<Plugin> getAll() throws ServiceException
 	{
@@ -39,6 +55,14 @@ public class PluginService implements IPluginService
 		}
 	}
 	
+	/**
+	 * getAvailables()
+	 * 
+	 * Get the list of all available plugins
+	 * 
+	 * @return List<Plugin>
+	 * @throws ServiceException 
+	 */
 	@Override
 	public List<Plugin> getAvailables() throws ServiceException
 	{
@@ -52,6 +76,15 @@ public class PluginService implements IPluginService
 		}
 	}
 
+	/**
+	 * add(Plugin)
+	 * 
+	 * Add a new plugin to db
+	 * 
+	 * @param plugin
+	 * @return Plugin create
+	 * @throws ServiceException 
+	 */
 	@Override
 	public Plugin add(final Plugin plugin) throws ServiceException
 	{
@@ -66,6 +99,15 @@ public class PluginService implements IPluginService
 		}
 	}
 
+	/**
+	 * update(Plugin)
+	 * 
+	 * Update a specified plugin in db
+	 * 
+	 * @param plugin
+	 * @return
+	 * @throws ServiceException 
+	 */
 	@Override
 	public Plugin update(final Plugin plugin) throws ServiceException
 	{
@@ -80,6 +122,14 @@ public class PluginService implements IPluginService
 		}
 	}
 
+	/**
+	 * delete(Plugin)
+	 * 
+	 * Delete a specified plugin in db
+	 * 
+	 * @param plugin
+	 * @throws ServiceException 
+	 */
 	@Override
 	public void delete(final Plugin plugin) throws ServiceException
 	{

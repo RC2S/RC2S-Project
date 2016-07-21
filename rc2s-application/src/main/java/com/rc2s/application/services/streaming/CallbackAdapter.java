@@ -8,6 +8,13 @@ import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CallbackAdapter
+ * 
+ * Used for sound algorithm computing
+ * 
+ * @author RC2S
+ */
 public class CallbackAdapter extends DefaultAudioCallbackAdapter
 {
 	private final StreamingService streamingService;
@@ -170,6 +177,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
     }
 
 	/**
+	 * getSampleDef(sampleBytes)
+	 * 
 	 * Transform the 4 bytes that represent the sample
 	 * to a 0 -> 28 representation used in a computeable line
 	 * 
@@ -189,6 +198,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
+	 * addLineWord(sampleLine, sampleCount)
+	 * 
 	 * Use a line of sampleCount bytes transformed to N coordinates
 	 * In order to graph a sound representation
 	 * 1 line is about 26ms which means 10 lines is 260ms ~
@@ -214,6 +225,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
+	 * computeAudioDataLine(sampleLine, sampleCount)
+	 * 
 	 * Gets analysable datas from audio data line
 	 * The line contains samples values taken from the
 	 * getSampleDef() function
@@ -244,6 +257,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
+	 * getLineVariation(datas, absolute)
+	 * 
 	 * Shall return the variation in an integer list
 	 * If absolute is set to true, take absolute variation
 	 * Otherwise take signed value
@@ -271,9 +286,12 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * Adds a tuple(x, y, z) which represents the coordinates of
-	 * a LED to lighten in the global LED-to-lighten list
-	 * Following the 'lightening' asked (Light/Stage/Cube)
+	 * addPositionsToLighteningList(x, y, z)
+	 * 
+	 * Adds one or several tuples(x, y, z) which represents
+	 * the coordinates of a LED to lighten in the global
+	 * LED-to-lighten list, following the 'lightening' asked
+	 * (Light/Stage/Cube)
 	 * 
 	 * @param pos_x
 	 * @param pos_y
@@ -298,6 +316,17 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		}
 	}
 	
+	/**
+	 * addLighteningPosition(x, y, z)
+	 * 
+	 * Adds a tuple(x, y, z) which represents the coordinates of
+	 * a LED to lighten in the global LED-to-lighten list, following
+	 * the 'lightening' asked (Light/Stage/Cube)
+	 * 
+	 * @param pos_x
+	 * @param pos_y
+	 * @param pos_z 
+	 */
 	private void addLighteningPosition(final int pos_x, final int pos_y, final int pos_z)
 	{
 		positionsToLighten[lighteningIndex][0] = pos_x;
@@ -308,6 +337,20 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		log.info(pos_x + ", " + pos_y + ", " + pos_z);
 	}
 	
+	/**
+	 * addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged, pos_z)
+	 * 
+	 * Adds all the position on the given range
+	 * X range is given by firstXLight && x_size
+	 * Y range is given by pos_y && isStaged (whole cube or only stage)
+	 * Z range is always full range
+	 * 
+	 * @param firstXLight
+	 * @param x_size
+	 * @param pos_y
+	 * @param isStaged
+	 * @param pos_z 
+	 */
 	private void addGroupPositionsToLighteningList(int firstXLight, int x_size, final int pos_y, boolean isStaged, final int pos_z)
 	{
 		int i, j, k;
@@ -327,9 +370,20 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 			for (j = y_begin; j < y_end; j++)
 				for (k = 0; k < syncDepth; k++)
 					addLighteningPosition(i, j, k);
-
 	}
 	
+	/**
+	 * addCubePositions(x, y, isStaged, z)
+	 * 
+	 * Used for Stage mode and Cube mode
+	 * From an initial LED coordinate, get the
+	 * coordinates for all the stage or the cube
+	 * 
+	 * @param pos_x
+	 * @param pos_y
+	 * @param isStaged
+	 * @param pos_z 
+	 */
 	private void addCubePositions(final int pos_x, final int pos_y, boolean isStaged, final int pos_z)
 	{
 		// More than 1 cube
@@ -352,6 +406,11 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 			addGroupPositionsToLighteningList(0, syncHeight, pos_y, isStaged, pos_z);
 	}
 	
+	/**
+	 * prepareCoordinates()
+	 * 
+	 * Get adapted coordinates to light from chosen effect
+	 */
 	private void prepareCoordinates()
 	{
 		int abs_x = (Math.abs(getLineVariation(lineMaxAnalysis, true)) % syncWidth);
@@ -388,6 +447,11 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		}
 	}
 
+	/**
+	 * produceClassicCoordinate()
+	 * 
+	 * A 'classic' coordinates is computed on non-absolute wave analysis basis
+	 */
 	private void produceClassicCoordinate()
 	{
 		int cla_x = (Math.abs(getLineVariation(lineMaxAnalysis, false)) % syncWidth);
@@ -397,6 +461,20 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		addPositionsToLighteningList(cla_x, cla_y, cla_z);
 	}
 	
+	/**
+	 * getMirrorCoordinateValue(origin, dimension)
+	 * 
+	 * Get the mirror coordinate value on a specified range
+	 * e.g if range is 8
+	 * 0 - 7
+	 * 1 - 6
+	 * 2 - 5
+	 * 3 - 4
+	 * 
+	 * @param origin
+	 * @param dimension
+	 * @return int mirror value on this range
+	 */
 	private int getMirrorCoordinateValue(final int origin, final int dimension)
 	{
 		return (-1 * origin) + dimension - 1;
@@ -423,6 +501,19 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		addPositionsToLighteningList(abs_x, abs_y, hei_z);
 	}
 	
+	/**
+	 * produceTripleMirrorCoordinate(x, y, z)
+	 * 
+	 * Add the mirror coordinate on every axis
+	 * to the existing coordinate
+	 * 
+	 * e.g if input is (0, 0, 0) and dimension 6
+	 * we add (5, 0, 0), (0, 5, 0), (0, 0, 5) 
+	 * 
+	 * @param abs_x
+	 * @param abs_y
+	 * @param abs_z 
+	 */
 	private void produceTripleMirrorCoordinate(final int abs_x, final int abs_y, final int abs_z)
 	{
 		produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
@@ -430,6 +521,20 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
 	}
 	
+	/**
+	 * produceEightifyCoordinates
+	 * 
+	 * Add all mirror coordinates on whole cube
+	 * to the existing coordinate
+	 * 
+	 * e.g if input is (0, 0, 0) and dimension 4
+	 * we add (0, 0, 4), (0, 4, 0), (0, 4, 4),
+	 * (4, 0, 0), (4, 0, 4), (4, 4, 0), (4, 4, 4)
+	 * 
+	 * @param abs_x
+	 * @param abs_y
+	 * @param abs_z 
+	 */
 	private void produceEightifyCoordinates(final int abs_x, final int abs_y, final int abs_z)
 	{
 		int new_x = abs_x,
@@ -459,6 +564,13 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		produceDepthMirrorCoordinate(new_x, new_y, new_z);
 	}
 	
+	/**
+	 * sendCoordinates()
+	 * 
+	 * Send retrieved coordinates during a certain time period
+	 * in order to light LED on the cube and prepare space for
+	 * the incoming datas.
+	 */
 	private void sendCoordinates()
 	{
 		streamingService.processCoordinates(positionsToLighten);

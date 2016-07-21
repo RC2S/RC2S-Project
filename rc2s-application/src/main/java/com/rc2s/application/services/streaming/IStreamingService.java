@@ -4,6 +4,13 @@ import com.rc2s.common.vo.Synchronization;
 
 import javax.ejb.Local;
 
+/**
+ * IStreamingService interface
+ * 
+ * Service interface for streaming via IDaemonService
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IStreamingService
 {

@@ -18,6 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
+/**
+ * StreamingService
+ * 
+ * Service for streaming
+ * Works with the IDaemonService
+ * 
+ * @author RC2S
+ */
 @Stateful
 public class StreamingService implements IStreamingService
 {
@@ -53,6 +61,13 @@ public class StreamingService implements IStreamingService
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 	}
 
+	/**
+	 * start(mrl)
+	 * 
+	 * Start streaming on the given mrl
+	 * 
+	 * @param mrl 
+	 */
     @Override
     public void start(final String mrl)
     {
@@ -110,6 +125,11 @@ public class StreamingService implements IStreamingService
 		thread.start();
     }
 
+	/**
+	 * stop()
+	 * 
+	 * Stop streaming
+	 */
     @Override
     public void stop()
     {
@@ -125,6 +145,14 @@ public class StreamingService implements IStreamingService
 		}
     }
 
+	/**
+	 * processCoordinates(coordinates)
+	 * 
+	 * Process coordinates retrieved from the sound algorithm
+	 * and send them to the daemon service
+	 * 
+	 * @param coordinates 
+	 */
 	@Override
 	public void processCoordinates(final int[][] coordinates)
 	{
@@ -167,6 +195,17 @@ public class StreamingService implements IStreamingService
 		}
 	}
 
+	/**
+	 * getSyncSize()
+	 * 
+	 * Get the synchronisation (x, y, z) size in order to be able
+	 * to compute the algorithm on several cubes
+	 * 
+	 * Also gets the number of cubes
+	 * 
+	 * @return int[4] containing the synchronisation list size
+	 * & number of cubes 
+	 */
 	@Override
 	public int[] getSyncSize()
 	{

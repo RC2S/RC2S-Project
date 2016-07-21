@@ -3,11 +3,19 @@ package com.rc2s.application.services.plugin.loader;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Group;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.ejb.Local;
 
+/**
+ * IPluginLoaderService interface
+ * 
+ * Service interface for loading plugins
+ * Uses the PluginService for plugin management
+ * Uses the JnlpService for Jnlp sign/update
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IPluginLoaderService
 {

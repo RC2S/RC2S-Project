@@ -9,6 +9,14 @@ import java.net.DatagramSocket;
 import java.util.Map;
 import javax.ejb.Local;
 
+/**
+ * IDaemonService interface
+ * 
+ * Service interface for daemon manipulation
+ * Does not need any DAO
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IDaemonService
 {

@@ -1,5 +1,13 @@
 package com.rc2s.application.services.streaming;
 
+/**
+ * AlgoEffectEnum
+ * 
+ * Association key/value to get the desired effect for the algorithm
+ * The value represents the number of LEDs that will be lightened
+ * 
+ * @author RC2S
+ */
 public enum AlgoEffectEnum
 {
 	// With non-absolute point

@@ -6,6 +6,13 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * ICubeService interface
+ * 
+ * Service interface for cube manipulation via ICubeDAO
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ICubeService
 {

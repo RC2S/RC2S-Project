@@ -25,6 +25,14 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * PluginLoaderService
+ * 
+ * Service for plugin loading management
+ * Access to databse via IPluginService
+ * 
+ * @author RC2S
+ */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -42,6 +50,16 @@ public class PluginLoaderService implements IPluginLoaderService
     @Inject
     private Logger log;
 	
+	/**
+	 * uploadPlugin(pluginName, accessGroup, binaryPlugin)
+	 * 
+	 * Upload the given plugin
+	 * 
+	 * @param pluginName
+	 * @param accessGroup
+	 * @param binaryPlugin
+	 * @throws ServiceException 
+	 */
     @Override
     public void uploadPlugin(final String pluginName, final Group accessGroup, final byte[] binaryPlugin) throws ServiceException
     {
@@ -95,6 +113,15 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
     }
 
+	/**
+	 * unzipPlugin(zipFile)
+	 * 
+	 * Unzips a given file that should contain a plugin
+	 * 
+	 * @param zipFile
+	 * @return folderPath
+	 * @throws IOException 
+	 */
     @Override
     public Path unzipPlugin(final String zipFile) throws IOException
     {
@@ -141,6 +168,16 @@ public class PluginLoaderService implements IPluginLoaderService
         }
     }
 
+	/**
+	 * checkServerPlugin(simpleName, tmpDir)
+	 * 
+	 * Check if the plugin is present on server side
+	 * 
+	 * @param simpleName
+	 * @param tmpDir
+	 * @return earPath
+	 * @throws Exception 
+	 */
     @Override
     public Path checkServerPlugin(final String simpleName, final String tmpDir) throws Exception
     {
@@ -161,6 +198,16 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
     }
 
+	/**
+	 * checkClientPlugin(simpleName, tmpDir)
+	 * 
+	 * Check if the plugin is present on client side
+	 * 
+	 * @param simpleName
+	 * @param tmpDir
+	 * @return jarPath
+	 * @throws Exception 
+	 */
     @Override
     public Path checkClientPlugin(final String simpleName, final String tmpDir) throws Exception
     {
@@ -181,6 +228,13 @@ public class PluginLoaderService implements IPluginLoaderService
 		}
     }
 
+	/**
+	 * deployServerPlugin(simpleName, tmpEar)
+	 * 
+	 * @param simpleName
+	 * @param tmpEar
+	 * @throws IOException 
+	 */
 	@Override
     public void deployServerPlugin(final String simpleName, final Path tmpEar) throws IOException
     {		
@@ -189,6 +243,13 @@ public class PluginLoaderService implements IPluginLoaderService
 		Files.copy(tmpEar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
     }
 
+	/**
+	 * deployClientPlugin(simpleName, tmpjar)
+	 * 
+	 * @param simpleName
+	 * @param tmpJar
+	 * @throws IOException 
+	 */
     @Override
     public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException
     {
@@ -199,6 +260,16 @@ public class PluginLoaderService implements IPluginLoaderService
         jnlpService.updateJNLP(simpleName + "_client.jar", false);
     }
 	
+	/**
+	 * persistPlugin(pluginName, group)
+	 * 
+	 * Make the plugin persistent
+	 * 
+	 * @param pluginName
+	 * @param group
+	 * @return pluginAddedOrUpdated
+	 * @throws ServiceException 
+	 */
 	@Override
 	public Plugin persistPlugin(final String pluginName, final Group group) throws ServiceException
 	{
@@ -225,6 +296,12 @@ public class PluginLoaderService implements IPluginLoaderService
 		return (update ? pluginService.update(plugin) : pluginService.add(plugin));
 	}
 	
+	/**
+	 * deletePlugin(Plugin)
+	 * 
+	 * @param plugin
+	 * @throws ServiceException 
+	 */
 	@Override
 	public void deletePlugin(final Plugin plugin) throws ServiceException
 	{
@@ -249,6 +326,11 @@ public class PluginLoaderService implements IPluginLoaderService
 		pluginService.delete(plugin);
 	}
 
+	/**
+	 * getDomainRoot()
+	 * 
+	 * @return String domainRoot 
+	 */
 	private String getDomainRoot()
 	{
 		String domainRoot = System.getProperty("com.sun.aas.instanceRootURI");

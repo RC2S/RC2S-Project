@@ -17,6 +17,13 @@ import java.util.Map;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * DaemonService
+ * 
+ * Service for communication with the RC2S daemon
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class DaemonService implements IDaemonService
 {
@@ -27,6 +34,18 @@ public class DaemonService implements IDaemonService
 	private static final int BUFFER_LENGTH = 1024;
 	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
 
+	/**
+	 * sendCubesStates
+	 * 
+	 * Send a list of states to the daemon
+	 * 
+	 * A map Cube - CubeState contains the 
+	 * informations daemon should receive
+	 * in order to manipulate their cube.
+	 * 
+	 * @param cubesStates
+	 * @throws ServiceException 
+	 */
 	@Override
 	public void sendCubesStates(final Map<Cube, CubeState> cubesStates) throws ServiceException
 	{
@@ -39,6 +58,16 @@ public class DaemonService implements IDaemonService
 		}
 	}
 
+	/**
+	 * updateState(cube, duration, state)
+	 * 
+	 * Update a Cube's state during a given duration
+	 * 
+	 * @param cube
+	 * @param duration
+	 * @param state
+	 * @throws ServiceException 
+	 */
 	@Override
 	public void updateState(final Cube cube, final Long duration, final boolean state) throws ServiceException
 	{
@@ -46,6 +75,16 @@ public class DaemonService implements IDaemonService
 		updateState(cube, duration, states);
 	}
 
+	/**
+	 * updateState(cube, duration, states)
+	 * 
+	 * Update several states in a Cube during a given duration
+	 * 
+	 * @param cube
+	 * @param duration
+	 * @param states
+	 * @throws ServiceException 
+	 */
 	@Override
 	public void updateState(final Cube cube, final Long duration, final boolean[][][] states) throws ServiceException
 	{
@@ -54,6 +93,15 @@ public class DaemonService implements IDaemonService
 		sendPacket(cube.getIp(), packetContent, false);
 	}
 
+	/**
+	 * generateBooleanArray(size, state)
+	 * 
+	 * Get a 3D cube representation for a given state
+	 * 
+	 * @param size
+	 * @param state
+	 * @return boolean[][][] representing a cube state 
+	 */
 	@Override
 	public boolean[][][] generateBooleanArray(final Size size, final boolean state)
 	{
@@ -73,6 +121,14 @@ public class DaemonService implements IDaemonService
 		return states;
 	}
 
+	/**
+	 * formatStatesArray(states)
+	 * 
+	 * Re-order the boolean array to adjust it to daemon's needs
+	 * 
+	 * @param states
+	 * @return boolean[][][] representing a cube state
+	 */
 	@Override
 	public boolean[][][] formatStatesArray(final boolean[][][] states)
 	{
@@ -91,6 +147,13 @@ public class DaemonService implements IDaemonService
 		return states;
 	}
 	
+	/**
+	 * isReachable
+	 * 
+	 * @param ipAddress
+	 * @return boolean daemon is reachable or not
+	 * @throws ServiceException 
+	 */
 	@Override
 	public boolean isReachable(final String ipAddress) throws ServiceException
 	{
@@ -104,10 +167,12 @@ public class DaemonService implements IDaemonService
 	}
 
 	/**
+	 * createPacket
+	 * 
 	 * @param duration
 	 * @param size
 	 * @param states
-	 * @return
+	 * @return byte[]
 	 * @throws ServiceException
      */
 	@Override
@@ -143,6 +208,15 @@ public class DaemonService implements IDaemonService
 		}
 	}
 	
+	/**
+	 * sendPacket
+	 * 
+	 * @param ipAddress
+	 * @param data
+	 * @param response
+	 * @return byte[]
+	 * @throws ServiceException 
+	 */
 	@Override
 	public byte[] sendPacket(final String ipAddress, final byte[] data, final boolean response) throws ServiceException
 	{
@@ -174,6 +248,13 @@ public class DaemonService implements IDaemonService
 		}
 	}
 	
+	/**
+	 * getResponse
+	 * 
+	 * @param socket
+	 * @return byte[]
+	 * @throws IOException 
+	 */
 	@Override
 	public byte[] getResponse(final DatagramSocket socket) throws IOException
 	{
