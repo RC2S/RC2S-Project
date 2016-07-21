@@ -22,6 +22,7 @@ public class Main extends Application
 	private static User user;
     
     private static ProgrammaticLogin pm;
+    
     private static ArrayList<Thread> threadPool;
     
     private static final Logger log = LogManager.getLogger(Main.class);
@@ -47,7 +48,7 @@ public class Main extends Application
         Scene scene;
         FXMLLoader loader;
 
-		Main.threadPool = new ArrayList<>();
+		Main.threadPool = new ArrayList();
         
         Main.stage = stage;
         Main.stage.setTitle(Config.APP_NAME);
