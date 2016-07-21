@@ -39,11 +39,11 @@ public class PluginsManagementController extends TabController implements Initia
 {
     private static final Logger log = LogManager.getLogger(PluginsManagementController.class);
     
-	private static final String SERVER_PROTOCOL = "http";
+	private static String SERVER_PROTOCOL;
     
-	private static final String SERVER_PORT = "8080";
+	private static String SERVER_PORT;
     
-	private static final String SERVER_JNLP = "/rc2s-jnlp/rc2s-client.jnlp";
+	private static String SERVER_JNLP;
 	
 	private final GroupFacadeRemote groupEJB = (GroupFacadeRemote) EJB.lookup("GroupEJB");
     
@@ -73,6 +73,12 @@ public class PluginsManagementController extends TabController implements Initia
     @Override
     public void initialize(URL location, ResourceBundle resources)
 	{
+		ResourceBundle clientBundle = ResourceBundle.getBundle("rc2s-client");
+
+		SERVER_PROTOCOL = clientBundle.getString("server.protocol");
+		SERVER_PORT = clientBundle.getString("server.port");
+		SERVER_JNLP = clientBundle.getString("server.jnlp");
+
 		nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 		versionColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getVersion()));
 		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthor()));
