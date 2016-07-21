@@ -1,6 +1,5 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
 import com.rc2s.client.components.LedCube;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.client.utils.Resources;
@@ -9,6 +8,8 @@ import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -62,17 +63,20 @@ public class CubicItemController extends TabController implements Initializable
 		
 		this.name.setText(cube.getName());
 		this.ip.setText(cube.getIp());
-		
-		try
-		{
-			String state = cubeEJB.getStatus(cube) ? "Online" :  "Offline";
-			this.status.setText(state);
-            log.info("Cube " + cube.getName() + " on " + cube.getIp() + " is " + state);
-		}
-		catch(EJBException e)
-		{
-			log.error(e.getMessage());
-			this.status.setText("Offline");
-		}
+
+		this.status.setText("Probing...");
+		Platform.runLater(() -> {
+			try
+			{
+				String state = cubeEJB.getStatus(cube) ? "Online" : "Offline";
+				status.setText(state);
+                log.info("Cube " + cube.getName() + " on " + cube.getIp() + " is " + state);
+			}
+			catch (EJBException e)
+			{
+				System.err.println(e.getMessage());
+				status.setText("Offline");
+			}
+		});
 	}
 }

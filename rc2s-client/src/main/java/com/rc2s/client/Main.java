@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+
 public class Main extends Application
 {
     private static Stage stage;
@@ -20,6 +22,7 @@ public class Main extends Application
 	private static User user;
     
     private static ProgrammaticLogin pm;
+    private static ArrayList<Thread> threadPool;
     
     private static final Logger log = LogManager.getLogger(Main.class);
     
@@ -43,6 +46,8 @@ public class Main extends Application
     {
         Scene scene;
         FXMLLoader loader;
+
+		Main.threadPool = new ArrayList<>();
         
         Main.stage = stage;
         Main.stage.setTitle(Config.APP_NAME);
@@ -57,9 +62,13 @@ public class Main extends Application
         Main.stage.setOnCloseRequest((event) -> {
             log.info("Logout and close lookup context");
             
+			// First interrupt all the children threads
+			interruptChildrenProcesses();
+
+			// Then logout and close the EJB context
             if(Main.user != null && Main.pm != null) 
                 Main.pm.logout();
-            
+
             EJB.closeContext();
             
             log.info("Closing RC2S Client");
@@ -91,4 +100,27 @@ public class Main extends Application
     {
         return Main.pm;
     }
+
+	private void interruptChildrenProcesses()
+	{
+		for (Thread t : threadPool)
+		{
+			try
+			{
+				t.interrupt();
+				t.join();
+			}
+			catch (InterruptedException e) {}
+		}
+	}
+
+	public static void registerThread(Thread t)
+	{
+		Main.threadPool.add(t);
+	}
+
+	public static void releaseThread(Thread t)
+	{
+		Main.threadPool.remove(t);
+	}
 }

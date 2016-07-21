@@ -2,6 +2,8 @@ package com.rc2s.client.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,52 +78,54 @@ public class LoginController implements Initializable
 
         if (validateIpAddress(null))
         {
-			try
-			{
-				// Init Programmatic Login
-                Main.getProgrammaticLogin().login(username, password.toCharArray());
-                
-                // Init EJB context
-				EJB.initContext(ip, null);
-                
-                UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
-                
+			Platform.runLater(() -> {
 				try
 				{
-					// Get the authenticated user
-					User user = userEJB.getAuthenticatedUser(username, password);
-                    
-					if (user != null)
-					{
-                        Main.setAuthenticatedUser(user);
-                        
-                        log.info("Access granted for user " + user.getUsername());
-						
-						FXMLLoader loader = Resources.loadFxml("HomeView");
-						Scene scene = new Scene((Parent)loader.getRoot());
+					// Init Programmatic Login
+					Main.getProgrammaticLogin().login(username, password.toCharArray());
 
-						Main.getStage().setScene(scene);
-						Main.getStage().setMinWidth(scene.getWidth());
-						Main.getStage().setMinHeight(scene.getHeight());
-						Main.getStage().show();
-					}
-					else
+					// Init EJB context
+					EJB.initContext(ip, null);
+
+					UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
+
+					try
 					{
+						// Get the authenticated user
+						User user = userEJB.getAuthenticatedUser(username, password);
+
+						if(user != null)
+						{
+							Main.setAuthenticatedUser(user);
+                            
+                            log.info("Access granted for user " + user.getUsername());
+
+							FXMLLoader loader = Resources.loadFxml("HomeView");
+							Scene scene = new Scene((Parent) loader.getRoot());
+
+							Main.getStage().setScene(scene);
+							Main.getStage().setMinWidth(scene.getWidth());
+							Main.getStage().setMinHeight(scene.getHeight());
+							Main.getStage().show();
+						}
+						else
+						{
+							errorLabel.setText("Authentication failed");
+						}
+					}
+					catch (EJBException e)
+					{
+						log.error(e.getMessage());
 						errorLabel.setText("Authentication failed");
                         log.error("Authentication failed");
 					}
 				}
-				catch (EJBException e)
+				catch (Exception e)
 				{
 					log.error(e.getMessage());
-					errorLabel.setText("Authentication failed");
+					errorLabel.setText("Unable to connect to the server");
 				}
-			}
-			catch (Exception e)
-			{
-				log.error(e.getMessage());
-				errorLabel.setText("Unable to connect to the server");
-			}
+			});
         }
         else
 		{

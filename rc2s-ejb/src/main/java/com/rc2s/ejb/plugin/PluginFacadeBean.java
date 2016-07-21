@@ -36,7 +36,7 @@ public class PluginFacadeBean implements PluginFacadeRemote
 	}
 
 	@Override
-    @RolesAllowed({"admin"})
+    @RolesAllowed({"user"})
 	public List<Plugin> getAvailables() throws EJBException
 	{
 		try

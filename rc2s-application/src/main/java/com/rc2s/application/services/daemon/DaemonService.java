@@ -25,17 +25,21 @@ public class DaemonService implements IDaemonService
     
     private static final int DAEMON_PORT = 1337;
 	private static final int BUFFER_LENGTH = 1024;
-	private static final int SOCKET_TIMEOUT = 1000; // Timeout in milliseconds
+	private static final int SOCKET_TIMEOUT = 1;
+	private static final int SOCKET_LISTEN_TIMEOUT = 1000;
 
 	@Override
 	public void sendCubesStates(final Map<Cube, CubeState> cubesStates) throws ServiceException
 	{
+		// Set packet duration to 1 ms: we want it to be played just once!
+		final long packetDuration = 1L;
+
 		for (Map.Entry<Cube, CubeState> entry : cubesStates.entrySet())
 		{
 			Cube cube = entry.getKey();
 			CubeState cubeState = entry.getValue();
 
-			updateState(cube, 0L, cubeState.getStates());
+			updateState(cube, packetDuration, cubeState.getStates());
 		}
 	}
 
@@ -59,11 +63,11 @@ public class DaemonService implements IDaemonService
 	{
 		boolean[][][] states = new boolean[size.getY()][size.getZ()][size.getX()];
 
-		for(int i = 0; i < size.getY(); i++)
+		for (int i = 0; i < size.getY(); i++)
 		{
-			for(int j = 0; j < size.getZ(); j++)
+			for (int j = 0; j < size.getZ(); j++)
 			{
-				for(int k = 0; k < size.getX(); k++)
+				for (int k = 0; k < size.getX(); k++)
 				{
 					states[i][j][k] = state;
 				}
@@ -133,11 +137,11 @@ public class DaemonService implements IDaemonService
 					}
 				}
 			}
-			
+
 			dos.flush(); // Flush stream to write its content
 			return bos.toByteArray();
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -152,23 +156,21 @@ public class DaemonService implements IDaemonService
 			
 			DatagramPacket packet = new DatagramPacket(data, data.length, daemonIp, DAEMON_PORT);
 			socket.send(packet);
-			
-			if (response)
+
+			try
 			{
-				try
-				{
-					socket.setSoTimeout(SOCKET_TIMEOUT);
-					return getResponse(socket);
-				}
-				catch(SocketTimeoutException e)
-				{
-					log.error("Reached timeout... for IP Address " + ipAddress);
-				}
+				// If we're waiting for a response, increase the timeout value from 1 ms to 1 second.
+				socket.setSoTimeout(response ? SOCKET_LISTEN_TIMEOUT : SOCKET_TIMEOUT);
+				return getResponse(socket);
+			}
+			catch (SocketTimeoutException e)
+			{
+				// Do not log the timeout 'cause we don't want to flood the server log file.
 			}
 			
 			return null;
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			throw new ServiceException(e);
 		}
