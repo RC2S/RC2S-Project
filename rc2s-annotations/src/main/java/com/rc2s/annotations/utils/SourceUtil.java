@@ -11,10 +11,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,8 +44,8 @@ public class SourceUtil
 	private static boolean hasMainView			= false;
 	
 	// Needed annotations package names & packages paths
-	private static String CONTROLLERS_FOLDER_PATH	= null;
-	private static String VIEWS_FOLDER_PATH		= null;
+	private static String CONTROLLERS_FOLDER_PATH		= null;
+	private static String VIEWS_FOLDER_PATH				= null;
 	private final static String STATELESS_PACKAGE		= "javax.ejb.Stateless";
 	private final static String STATEFUL_PACKAGE		= "javax.ejb.Stateful";
 	private final static String REMOTE_PACKAGE			= "javax.ejb.Remote";
@@ -118,14 +114,13 @@ public class SourceUtil
 				getAllControllersNames();
 				
 				for (String expectedControllerName : expectedControllersList)
-				{
 					if (!initialControllersList.contains(expectedControllerName))
 						throw new SourceControlException("Controller " + expectedControllerName + " was expected and wasn't found");
-				}
 			}
 			catch (SourceControlException | ParserConfigurationException | SAXException | IOException ex)
 			{
 				System.err.println(ex.getMessage());
+				ex.printStackTrace();
 			}
 			
 			isFirstCheck = false;
@@ -296,37 +291,19 @@ public class SourceUtil
 				return ClassNamesEnum.DAO;
 				
 			case "common":
-				return commonClassNameFromPackage(packageParts[4]);
+				if (packageParts[4].equals("vo"))
+					return ClassNamesEnum.VO;
+				else
+					throw new SourceControlException("Invalid common package naming - Expected (vo), got '" + packageParts[4] + "'");
 				
 			case "client":
-				return clientClassNameFromPackage(packageParts[4]);
+				if (packageParts[4].equals("controllers"))
+					return ClassNamesEnum.CONTROLLERS;
+				else
+					throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packageParts[4] + "'");
 				
 			default:
 				throw new SourceControlException("Invalid package naming after plugin name - Expected (ejb|application|dao|common|client), got '" + packageParts[3] + "'");
-		}
-	}
-
-	private ClassNamesEnum commonClassNameFromPackage(String packagePart) throws SourceControlException
-	{
-		switch (packagePart) 
-		{
-			case "vo":
-				return ClassNamesEnum.VO;
-				
-			default:
-				throw new SourceControlException("Invalid common package naming - Expected (vo), got '" + packagePart + "'");
-		}
-	}
-
-	private ClassNamesEnum clientClassNameFromPackage(String packagePart) throws SourceControlException
-	{
-		switch (packagePart) 
-		{
-			case "controllers":
-				return ClassNamesEnum.CONTROLLERS;
-				
-			default:
-				throw new SourceControlException("Invalid client package naming - Expected (controllers|views|css|images|utils), got '" + packagePart + "'");
 		}
 	}
 	
@@ -415,19 +392,22 @@ public class SourceUtil
 	 */
 	private void verifyEjbStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
-		if (mainClass.getName().equals(entityName + "FacadeRemote"))
+		if (!checkClassIsUtilComponent(mainClass.getName()))
 		{
-			if (!mainClass.getAnnotations().contains(REMOTE_PACKAGE))
-				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + REMOTE_PACKAGE + "'");
-		}
-		else if (mainClass.getName().equals(entityName + "FacadeBean"))
-		{
-			checkClassHasStatelessOrStatefulAnnotation(mainClass);
-		}
-		else
-		{
-			throw new SourceControlException("Invalid class name - "
-				+ "Expected '" + entityName + "FacadeRemote' or '" + entityName + "FacadeBean', got '" + mainClass.getName() + "'");
+			if (mainClass.getName().equals(entityName + "FacadeRemote"))
+			{
+				if (!mainClass.getAnnotations().contains(REMOTE_PACKAGE))
+					throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + REMOTE_PACKAGE + "'");
+			}
+			else if (mainClass.getName().equals(entityName + "FacadeBean"))
+			{
+				checkClassHasStatelessOrStatefulAnnotation(mainClass);
+			}
+			else
+			{
+				throw new SourceControlException("Invalid class name - "
+					+ "Expected '" + entityName + "FacadeRemote' or '" + entityName + "FacadeBean', got '" + mainClass.getName() + "'");
+			}
 		}
 	}
 
@@ -439,19 +419,22 @@ public class SourceUtil
 	 */
 	private void verifyApplicationStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
-		if (mainClass.getName().equals("I" + entityName + "Service"))
+		if (!checkClassIsUtilComponent(mainClass.getName()))
 		{
-			if (!mainClass.getAnnotations().contains(LOCAL_PACKAGE))
-				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + LOCAL_PACKAGE + "'");
-		}
-		else if (mainClass.getName().equals(entityName + "Service"))
-		{
-			checkClassHasStatelessOrStatefulAnnotation(mainClass);
-		}
-		else
-		{
-			throw new SourceControlException("Invalid class name - "
-				+ "Expected 'I" + entityName + "Service' or '" + entityName + "Service', got '" + mainClass.getName() + "'");
+			if (mainClass.getName().equals("I" + entityName + "Service"))
+			{
+				if (!mainClass.getAnnotations().contains(LOCAL_PACKAGE))
+					throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + LOCAL_PACKAGE + "'");
+			}
+			else if (mainClass.getName().equals(entityName + "Service"))
+			{
+				checkClassHasStatelessOrStatefulAnnotation(mainClass);
+			}
+			else
+			{
+				throw new SourceControlException("Invalid class name - "
+					+ "Expected 'I" + entityName + "Service' or '" + entityName + "Service', got '" + mainClass.getName() + "'");
+			}
 		}
 	}
 
@@ -463,19 +446,22 @@ public class SourceUtil
 	 */
 	private void verifyDaoStandards(ElementMapper mainClass, String entityName) throws SourceControlException
 	{
-		if (mainClass.getName().equals("I" + entityName + "DAO"))
+		if (!checkClassIsUtilComponent(mainClass.getName()))
 		{
-			if (!mainClass.getAnnotations().contains(LOCAL_PACKAGE))
-				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + LOCAL_PACKAGE + "'");
-		}
-		else if (mainClass.getName().equals(entityName + "DAO"))
-		{
-			checkClassHasStatelessOrStatefulAnnotation(mainClass);
-		}
-		else
-		{
-			throw new SourceControlException("Invalid class name - "
-				+ "Expected 'I" + entityName + "DAO' or '" + entityName + "DAO', got '" + mainClass.getName() + "'");
+			if (mainClass.getName().equals("I" + entityName + "DAO"))
+			{
+				if (!mainClass.getAnnotations().contains(LOCAL_PACKAGE))
+					throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + LOCAL_PACKAGE + "'");
+			}
+			else if (mainClass.getName().equals(entityName + "DAO"))
+			{
+				checkClassHasStatelessOrStatefulAnnotation(mainClass);
+			}
+			else
+			{
+				throw new SourceControlException("Invalid class name - "
+					+ "Expected 'I" + entityName + "DAO' or '" + entityName + "DAO', got '" + mainClass.getName() + "'");
+			}
 		}
 	}
 	
@@ -501,6 +487,11 @@ public class SourceUtil
 			throw new SourceControlException("Class " + mainClass.getName() + " requires " + STATELESS_PACKAGE + " or " + STATEFUL_PACKAGE + " annotation");
 		}
 	}
+	
+	private boolean checkClassIsUtilComponent(String className)
+	{
+		return className.endsWith("Util");
+	}
 
 	/**
 	 * 
@@ -509,18 +500,21 @@ public class SourceUtil
 	 */
 	private void verifyVoStandards(ElementMapper mainClass) throws SourceControlException
 	{
-		// Compile the regex
-		Pattern p = Pattern.compile("(([A-Z]+)([a-z]*))+");
-		// Create search engine
-		Matcher m = p.matcher(mainClass.getName());
-		// Search occurences
-		Boolean b = m.matches();
-		
-		if (!b)
-			throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
-		
-		if (!mainClass.getAnnotations().contains(ENTITY_PACKAGE))
-			throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + ENTITY_PACKAGE + "'");
+		if (!checkClassIsUtilComponent(mainClass.getName()))
+		{
+			// Compile the regex
+			Pattern p = Pattern.compile("(([A-Z]+)([a-z]*))+");
+			// Create search engine
+			Matcher m = p.matcher(mainClass.getName());
+			// Search occurences
+			Boolean b = m.matches();
+
+			if (!b)
+				throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
+
+			if (!mainClass.getAnnotations().contains(ENTITY_PACKAGE))
+				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + ENTITY_PACKAGE + "'");
+		}
 	}
 
 	/**
@@ -530,60 +524,63 @@ public class SourceUtil
 	 */
 	private void verifyControllerStandards(ElementMapper mainClass) throws SourceControlException
 	{
-		// We shall find initialize(URL, ResourceBundle)
-		boolean hasJavaNetURL = false;
-		boolean hasResourceBundle = false;
-		boolean hasInitializeMethod = false;
-		
-		String error = mainClass.getName() 
-				+ "'s initialize method shall contain exactly 2 args : '" 
-				+ URL_PACKAGE 
-				+ "' & '" 
-				+ RESOURCE_BUNDLE_PACKAGE 
-				+ "'";
-		
-		// MainController will be used for MainView.fxml
-		if (mainClass.getName().equals("MainController"))
+		if (!checkClassIsUtilComponent(mainClass.getName()))
 		{
-			if (hasMainController)
-				throw new SourceControlException("Found two MainController.java, your plugin should only contain one.");
-			
-			hasMainController = true;
-		}
-		
-		// Iterate over methods
-		for (ElementMapper em : mainClass.getMethods())
-		{
-			// If it's initialize(), check its args
-			if (em.getName().equals("initialize"))
+			// We shall find initialize(URL, ResourceBundle)
+			boolean hasJavaNetURL = false;
+			boolean hasResourceBundle = false;
+			boolean hasInitializeMethod = false;
+
+			String error = mainClass.getName() 
+					+ "'s initialize method shall contain exactly 2 args : '" 
+					+ URL_PACKAGE 
+					+ "' & '" 
+					+ RESOURCE_BUNDLE_PACKAGE 
+					+ "'";
+
+			// MainController will be used for MainView.fxml
+			if (mainClass.getName().equals("MainController"))
 			{
-				hasInitializeMethod = true;
-				
-				// Parameters URL & ResourceBundle are needed
-				if (em.getParameters().size() == 2)
+				if (hasMainController)
+					throw new SourceControlException("Found two MainController.java, your plugin should only contain one.");
+
+				hasMainController = true;
+			}
+
+			// Iterate over methods
+			for (ElementMapper em : mainClass.getMethods())
+			{
+				// If it's initialize(), check its args
+				if (em.getName().equals("initialize"))
 				{
-					for (ParameterMapper pm : em.getParameters())
+					hasInitializeMethod = true;
+
+					// Parameters URL & ResourceBundle are needed
+					if (em.getParameters().size() == 2)
 					{
-						if (pm.getType().equals(URL_PACKAGE))
-							hasJavaNetURL = true;
-						else if (pm.getType().equals(RESOURCE_BUNDLE_PACKAGE))
-							hasResourceBundle = true;
+						for (ParameterMapper pm : em.getParameters())
+						{
+							if (pm.getType().equals(URL_PACKAGE))
+								hasJavaNetURL = true;
+							else if (pm.getType().equals(RESOURCE_BUNDLE_PACKAGE))
+								hasResourceBundle = true;
+						}
+
+						if (!hasJavaNetURL || !hasResourceBundle)
+							throw new SourceControlException(error);
 					}
-					
-					if (!hasJavaNetURL || !hasResourceBundle)
+					else
 						throw new SourceControlException(error);
 				}
-				else
-					throw new SourceControlException(error);
 			}
+			if (!hasInitializeMethod)
+				throw new SourceControlException("Controller " + mainClass.getName() + " shall implement javafx.fxml.Initializable initialize() method.");
+
+			// Check if it already exists
+			if (controllersList.contains(mainClass.getName()))
+				throw new SourceControlException("Controller " + mainClass.getName() + " already in controllers list. You might have added two times the same controller.");
+
+			controllersList.add(mainClass.getName());
 		}
-		if (!hasInitializeMethod)
-			throw new SourceControlException("Controller " + mainClass.getName() + " shall implement javafx.fxml.Initializable initialize() method.");
-		
-		// Check if it already exists
-		if (controllersList.contains(mainClass.getName()))
-			throw new SourceControlException("Controller " + mainClass.getName() + " already in controllers list. You might have added two times the same controller.");
-		
-		controllersList.add(mainClass.getName());
 	}
 }
