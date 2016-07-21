@@ -1,13 +1,11 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
+import com.rc2s.client.utils.Tools;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import java.io.File;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
@@ -30,7 +28,7 @@ public class StreamingUtils extends Thread
 
 	private String options;
 
-    // For Server : sudo apt-get install libvlc-dev libvlccore-dev
+    // To use Streaming feature : sudo apt-get install vlc libvlc-dev libvlccore-dev
     public StreamingUtils(final StreamingFacadeRemote streamingEJB, final String id, final String media) throws Exception
     {
 		this.streamingEJB = streamingEJB;
@@ -42,7 +40,7 @@ public class StreamingUtils extends Thread
 		else
 			this.media = media;
 
-		this.options = formatRtspStream(InetAddress.getLocalHost().getHostAddress(), EJB.getRtspPort(), id);
+		this.options = formatRtspStream(Tools.getIPAdress(), EJB.getRtspPort(), id);
 
         System.out.println("StreamingUtils '" + media + "' to '" + options + "'");
 
@@ -66,23 +64,16 @@ public class StreamingUtils extends Thread
 			":sout-keep"
 		);
 
-		System.err.println("------- MRL -------");
-		String mrl = "";
         try
-        {
-            mrl = new RtspMrl().host(InetAddress.getLocalHost().getHostAddress()).port(EJB.getRtspPort()).path("/" + id).value();
-        } catch (UnknownHostException ex)
-        {
-            Logger.getLogger(StreamingUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-		System.err.println("------- Start StreamingUtils RMI -------");
-		streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
-		setStreamingState(StreamingState.PLAY);
-		System.err.println("------- Thread join -------");
-
-		try
 		{
+            System.err.println("------- MRL -------");
+            String mrl = new RtspMrl().host(Tools.getIPAdress()).port(EJB.getRtspPort()).path("/" + id).value();
+
+            System.err.println("------- Start StreamingUtils RMI -------");
+            streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
+            setStreamingState(StreamingState.PLAY);
+            System.err.println("------- Thread join -------");
+
 			do
 			{
 				wait();
@@ -109,7 +100,7 @@ public class StreamingUtils extends Thread
 
 			} while (state != StreamingState.STOP);
 		}
-		catch (InterruptedException e) {}
+		catch (InterruptedException | UnknownHostException e) {}
         
 		System.err.println("------- Stop StreamingUtils RMI -------");
 		streamingEJB.stopStreaming(Main.getAuthenticatedUser());
