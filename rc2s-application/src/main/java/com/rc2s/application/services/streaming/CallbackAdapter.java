@@ -18,6 +18,9 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	// Keep current time retrieved in onPlay
 	private static long currentTime;
 	
+	// (L)ight/(S)tage/(C)ube - what to light
+	private final char lightening;
+	
 	// Array containing the coordinates of the points to lighten
 	private int[][] positionsToLighten;
 	private int lighteningIndex;
@@ -25,10 +28,11 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	// Type of algorithm wanted
 	private final AlgoEffectEnum algoEffect;
 	
-	// Sync dimensions
+	// Sync dimensions & Cubes number
 	private static int syncWidth;
 	private static int syncHeight;
 	private static int syncDepth;
+	private static int numCubes;
 	
 	// Lists used to compute audio algorithm
 	private final List<Integer> lineMaxAnalysis;
@@ -48,7 +52,11 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		algoEffect = getAlgoEffect((int) (Math.random() * 6));
 		
-		positionsToLighten = new int[algoEffect.getSize()][3];
+		lightening = 'S';
+		
+		int algoNeededSize = lightening == 'L' ? algoEffect.getSize() : 1;
+		
+		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
 		lighteningIndex = 0;
 		
 		lineMinAnalysis = new ArrayList<>();
@@ -56,11 +64,30 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		lineAvgAnalysis = new ArrayList<>();
     }
 
-	public void setDimensions(final int[] syncDimensions)
+	public final void setDimensions(final int[] syncDimensions)
 	{
 		syncWidth	= syncDimensions[0];
 		syncHeight	= syncDimensions[1];
 		syncDepth	= syncDimensions[2];
+		System.out.println("LOG : Dimension set size : ");
+		System.out.println(syncDimensions[3]);
+		numCubes	= syncDimensions[3];
+	}
+
+	private int getLighteningSize(final char lightening)
+	{
+		switch (lightening)
+		{
+			case 'C':
+				return (syncDepth * syncHeight * syncWidth) / numCubes;
+				
+			case 'S':
+				return (syncDepth * syncWidth) / numCubes;
+				
+			case 'L':
+			default:
+				return 1;
+		}
 	}
 	
 	private AlgoEffectEnum getAlgoEffect(final int value)
@@ -246,6 +273,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	/**
 	 * Adds a tuple(x, y, z) which represents the coordinates of
 	 * a LED to lighten in the global LED-to-lighten list
+	 * Following the 'lightening' asked (Light/Stage/Cube)
 	 * 
 	 * @param pos_x
 	 * @param pos_y
@@ -253,12 +281,75 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	 */
 	private void addPositionsToLighteningList(final int pos_x, final int pos_y, final int pos_z)
 	{
+		switch (this.lightening)
+		{
+			case 'C':
+				addCubePositions(pos_x, pos_y, false, pos_z);
+				break;
+				
+			case 'S':
+				addCubePositions(pos_x, pos_y, true, pos_z);
+				break;
+				
+			case 'L':
+			default:				
+				addLighteningPosition(pos_x, pos_y, pos_z);
+				break;
+		}
+	}
+	
+	private void addLighteningPosition(final int pos_x, final int pos_y, final int pos_z)
+	{
 		positionsToLighten[lighteningIndex][0] = pos_x;
 		positionsToLighten[lighteningIndex][1] = pos_y;
 		positionsToLighten[lighteningIndex][2] = pos_z;
 		lighteningIndex++;
-
+		
 		log.info(pos_x + ", " + pos_y + ", " + pos_z);
+	}
+	
+	private void addGroupPositionsToLighteningList(int firstXLight, int x_size, final int pos_y, boolean isStaged, final int pos_z)
+	{
+		int i, j, k;
+		
+		int xThreshold = firstXLight + x_size;
+		
+		int y_begin = 0;
+		int y_end = syncHeight;
+		
+		if (isStaged)
+		{
+			y_begin = pos_y;
+			y_end = pos_y + 1;
+		}
+		
+		for (i = firstXLight; i < xThreshold; i++)
+			for (j = y_begin; j < y_end; j++)
+				for (k = 0; k < syncDepth; k++)
+					addLighteningPosition(i, j, k);
+
+	}
+	
+	private void addCubePositions(final int pos_x, final int pos_y, boolean isStaged, final int pos_z)
+	{
+		// More than 1 cube
+		if (numCubes != 1)
+		{
+			// Size in x = whole width / number of cubes
+			int x_size = syncWidth / numCubes;
+			
+			// Cube number to light
+			int lightCube = pos_x / x_size;
+			
+			// Cube first x axis light
+			int firstXLight = lightCube * x_size;
+			
+			// Now we shall light with firstXLight <= x <= firstXLight + x_size - 1
+			addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged, pos_z);
+		}
+		// Only one cube - Add everything on all ranges
+		else
+			addGroupPositionsToLighteningList(0, syncHeight, pos_y, isStaged, pos_z);
 	}
 	
 	private void prepareCoordinates()
