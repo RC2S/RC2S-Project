@@ -1,14 +1,7 @@
 package com.rc2s.application.services.daemon;
 
 import org.junit.*;
-
-import javax.ejb.EJB;
-import javax.ejb.embeddable.EJBContainer;
 import javax.naming.NamingException;
-
-import java.util.Properties;
-
-import static org.junit.Assert.*;
 
 public class DaemonServiceTest
 {

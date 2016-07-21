@@ -29,7 +29,8 @@ public class StreamingUtils extends Thread
 	private String options;
 
     // To use Streaming feature : sudo apt-get install vlc libvlc-dev libvlccore-dev
-    public StreamingUtils(final StreamingFacadeRemote streamingEJB, final String id, final String media) throws Exception
+    public StreamingUtils(final StreamingFacadeRemote streamingEJB,
+            final String id, final String media) throws Exception
     {
 		this.streamingEJB = streamingEJB;
 
@@ -82,7 +83,7 @@ public class StreamingUtils extends Thread
 				switch (state)
 				{
 					case PLAY:
-						if(!mediaPlayer.isPlaying())
+						if (!mediaPlayer.isPlaying())
 						{
 							mediaPlayer.play();
 							System.err.println("------ MediaPlayer resumed ------");
@@ -90,7 +91,7 @@ public class StreamingUtils extends Thread
 						break;
 
 					case PAUSE:
-						if(mediaPlayer.isPlaying())
+						if (mediaPlayer.isPlaying())
 						{
 							mediaPlayer.pause();
 							System.err.println("------ MediaPlayer paused ------");

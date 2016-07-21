@@ -23,9 +23,11 @@ import java.util.Properties;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
 import javax.sql.DataSource;
 import org.glassfish.hk2.api.ActiveDescriptor;
+import org.glassfish.hk2.api.MultiException;
 import org.glassfish.hk2.utilities.BuilderHelper;
 
 public class JDBCRealm extends AppservRealm
@@ -317,7 +319,7 @@ public class JDBCRealm extends AppservRealm
 
 			return connection;
 		}
-        catch (Exception ex)
+        catch (MultiException | NamingException | SQLException ex)
         {
 			String msg = sm.getString("jdbcrealm.cantconnect", dsJndi, dbUser);
 			LoginException loginEx = new LoginException(msg);
