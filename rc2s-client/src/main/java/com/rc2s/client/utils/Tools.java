@@ -1,6 +1,8 @@
 package com.rc2s.client.utils;
 
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -51,4 +53,14 @@ public class Tools
 		
 		return str;
 	}
+    
+    public static String getIPAdress() throws UnknownHostException
+    {
+        return InetAddress.getLocalHost().getHostAddress();
+    }
+    
+    public static boolean isLoopBackAdress() throws UnknownHostException
+    {
+        return InetAddress.getLocalHost().isLoopbackAddress();
+    }
 }
