@@ -11,6 +11,13 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * GroupFacadeBean
+ * 
+ * Group EJB, bridge to GroupService
+ * 
+ * @author RC2S
+ */
 @Stateless(mappedName = "GroupEJB")
 public class GroupFacadeBean implements GroupFacadeRemote
 {
@@ -20,6 +27,14 @@ public class GroupFacadeBean implements GroupFacadeRemote
     @Inject
     private Logger log;
 
+	/**
+	 * getAll
+	 * 
+	 * Get all the groups from db
+	 * 
+	 * @return List<Group>
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"admin"})
 	public List<Group> getAll() throws EJBException

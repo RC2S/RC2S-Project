@@ -6,6 +6,13 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Remote;
 
+/**
+ * CubeFacadeRemote
+ * 
+ * EJB remote interface for Cube EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface CubeFacadeRemote
 {

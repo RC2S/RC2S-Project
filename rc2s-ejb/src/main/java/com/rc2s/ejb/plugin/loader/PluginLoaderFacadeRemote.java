@@ -3,9 +3,15 @@ package com.rc2s.ejb.plugin.loader;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Plugin;
 import com.rc2s.common.vo.Group;
-import com.rc2s.common.vo.User;
 import javax.ejb.Remote;
 
+/**
+ * PluginLoaderFacadeRemote
+ * 
+ * EJB remote interface for PluginLoader EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface PluginLoaderFacadeRemote
 {

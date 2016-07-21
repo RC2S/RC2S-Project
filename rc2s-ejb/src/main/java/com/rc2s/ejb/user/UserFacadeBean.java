@@ -11,6 +11,13 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * UserFacadeBean
+ * 
+ * User EJB, bridge to UserService
+ * 
+ * @author RC2S
+ */
 @Stateless(mappedName = "UserEJB")
 public class UserFacadeBean implements UserFacadeRemote
 {
@@ -20,6 +27,16 @@ public class UserFacadeBean implements UserFacadeRemote
     @Inject
     private Logger log;
     
+	/**
+	 * getAuthenticatedUser
+	 * 
+	 * Get an authenticated user from db from classic credentials
+	 * 
+	 * @param username
+	 * @param password
+	 * @return User authenticated
+	 * @throws EJBException 
+	 */
     @Override
     @RolesAllowed({"user"})
     public User getAuthenticatedUser(String username, String password) throws EJBException
@@ -35,6 +52,14 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
     }
     
+	/**
+	 * getAll
+	 * 
+	 * Get all the users in db
+	 * 
+	 * @return List<User>
+	 * @throws EJBException 
+	 */
     @Override
     @RolesAllowed({"admin"})
     public List<User> getAll() throws EJBException
@@ -50,6 +75,15 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
     }
 	
+	/**
+	 * add
+	 * 
+	 * Adds a given user to db
+	 * 
+	 * @param user
+	 * @return User added
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"admin"})
 	public User add(final User user) throws EJBException
@@ -65,6 +99,16 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 	}
 
+	/**
+	 * update
+	 * 
+	 * Updates the given user in db
+	 * 
+	 * @param user
+	 * @param passwordUpdated
+	 * @return User updated
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"admin"})
 	public User update(final User user, final boolean passwordUpdated) throws EJBException
@@ -80,6 +124,14 @@ public class UserFacadeBean implements UserFacadeRemote
 		}
 	}
 
+	/**
+	 * delete
+	 * 
+	 * Deletes the given user in db
+	 * 
+	 * @param user
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"admin"})
 	public void delete(final User user) throws EJBException

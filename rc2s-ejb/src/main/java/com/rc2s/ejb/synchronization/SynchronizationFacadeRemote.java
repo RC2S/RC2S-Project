@@ -7,6 +7,13 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Remote;
 
+/**
+ * SynchronizationFacadeRemote
+ * 
+ * EJB remote interface for Synchronization EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface SynchronizationFacadeRemote
 {

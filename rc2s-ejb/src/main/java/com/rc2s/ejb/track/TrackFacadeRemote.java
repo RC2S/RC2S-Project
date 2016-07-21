@@ -7,6 +7,13 @@ import com.rc2s.common.vo.User;
 import javax.ejb.Remote;
 import java.util.List;
 
+/**
+ * TrackFacadeRemote
+ * 
+ * EJB remote interface for Track EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface TrackFacadeRemote
 {

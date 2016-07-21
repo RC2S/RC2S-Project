@@ -13,6 +13,13 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * SynchronizationFacadeBean
+ * 
+ * Synchronization EJB, bridge to SynchronizationService
+ * 
+ * @author RC2S
+ */
 @Stateless(mappedName = "SynchronizationEJB")
 public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 {
@@ -22,6 +29,14 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
     @Inject
     private Logger log;
 
+	/**
+	 * getAll
+	 * 
+	 * Get all the synchronizations in db
+	 * 
+	 * @return List<Synchronization>
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
 	public List<Synchronization> getAll() throws EJBException
@@ -37,6 +52,15 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 		}
 	}
 
+	/**
+	 * getByUser
+	 * 
+	 * Get all the synchronization in db for a given user
+	 * 
+	 * @param user
+	 * @return List<Synchronization>
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
 	public List<Synchronization> getByUser(final User user) throws EJBException
@@ -52,6 +76,14 @@ public class SynchronizationFacadeBean implements SynchronizationFacadeRemote
 		}
 	}
 
+	/**
+	 * add
+	 * 
+	 * Add the given synchronization to db
+	 * 
+	 * @param synchronization
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
 	public void add(final Synchronization synchronization) throws EJBException

@@ -13,6 +13,14 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * CubeFacadeBean
+ * 
+ * Cube EJB, bridge to CubeService
+ * Uses ICubeService & IDaemonService
+ * 
+ * @author RC2S
+ */
 @Stateless(mappedName = "CubeEJB")
 public class CubeFacadeBean implements CubeFacadeRemote
 {
@@ -25,6 +33,14 @@ public class CubeFacadeBean implements CubeFacadeRemote
     @Inject
     private Logger log;
 	
+	/**
+	 * getAllCubes
+	 * 
+	 * Get all cubes in db
+	 * 
+	 * @return List<Cube>
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
 	public List<Cube> getAllCubes() throws EJBException
@@ -40,6 +56,15 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 	
+	/**
+	 * getCubes
+	 * 
+	 * Get a given user's cubes
+	 * 
+	 * @param user
+	 * @return List<Cube>
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
 	public List<Cube> getCubes(final User user) throws EJBException
@@ -55,13 +80,21 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 	
+	/**
+	 * add
+	 * 
+	 * Adds a new cube to db
+	 * 
+	 * @param cube
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
-	public void add(final Cube c) throws EJBException
+	public void add(final Cube cube) throws EJBException
 	{
 		try
 		{
-			cubeService.add(c);
+			cubeService.add(cube);
 		}
 		catch(ServiceException e)
 		{
@@ -70,13 +103,21 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 	
+	/**
+	 * remove
+	 * 
+	 * Remove a given cube from db
+	 * 
+	 * @param cube
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
-	public void remove(final Cube c) throws EJBException
+	public void remove(final Cube cube) throws EJBException
 	{
 		try
 		{
-			cubeService.remove(c);
+			cubeService.remove(cube);
 		}
 		catch(ServiceException e)
 		{
@@ -85,6 +126,15 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 	
+	/**
+	 * update
+	 * 
+	 * Updates a given cube from db
+	 * 
+	 * @param cube
+	 * @return
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
 	public Cube update(final Cube cube) throws EJBException
@@ -100,13 +150,22 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 	
+	/**
+	 * getStatus
+	 * 
+	 * Gets a given cube's status
+	 * 
+	 * @param cube
+	 * @return boolean status
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
-	public boolean getStatus(final Cube c) throws EJBException
+	public boolean getStatus(final Cube cube) throws EJBException
 	{
 		try
 		{
-			return daemonService.isReachable(c.getIp());
+			return daemonService.isReachable(cube.getIp());
 		}
 		catch(ServiceException e)
 		{
@@ -115,13 +174,23 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 
+	/**
+	 * updateAllLed
+	 * 
+	 * Update all the leds of a given cube 
+	 * to a given state
+	 * 
+	 * @param cube
+	 * @param state
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
-	public void updateAllLed(final Cube c, final boolean state) throws EJBException
+	public void updateAllLed(final Cube cube, final boolean state) throws EJBException
 	{
 		try
 		{
-			daemonService.updateState(c, 0L, state);
+			daemonService.updateState(cube, 0L, state);
 		}
 		catch(ServiceException e)
 		{
@@ -130,13 +199,23 @@ public class CubeFacadeBean implements CubeFacadeRemote
 		}
 	}
 
+	/**
+	 * updateAllLed
+	 * 
+	 * Update all the leds of a given cube
+	 * to a given 3D global state
+	 * 
+	 * @param cube
+	 * @param states
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"user"})
-	public void updateAllLed(final Cube c, final boolean[][][] states) throws EJBException
+	public void updateAllLed(final Cube cube, final boolean[][][] states) throws EJBException
 	{
 		try
 		{
-			daemonService.updateState(c, 0L, states);
+			daemonService.updateState(cube, 0L, states);
 		}
 		catch(ServiceException e)
 		{

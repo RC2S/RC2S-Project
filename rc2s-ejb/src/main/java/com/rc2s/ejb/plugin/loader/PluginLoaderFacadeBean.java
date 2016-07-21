@@ -11,6 +11,13 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * PluginLoaderFacadeBean
+ * 
+ * PluginLoader EJB, bridge to PluginLoaderService
+ * 
+ * @author RC2S
+ */
 @Stateless(mappedName = "PluginLoaderEJB")
 public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 {
@@ -20,6 +27,16 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
     @Inject
     private Logger log;
     
+	/**
+	 * uploadPlugin
+	 * 
+	 * Uploads the given plugin via the pluginLoaderService
+	 * 
+	 * @param pluginName
+	 * @param accessRole
+	 * @param binaryPlugin
+	 * @throws EJBException 
+	 */
     @Override
     @RolesAllowed({"admin"})
     public void uploadPlugin(final String pluginName, final Group accessRole, final byte[] binaryPlugin) throws EJBException
@@ -35,6 +52,14 @@ public class PluginLoaderFacadeBean implements PluginLoaderFacadeRemote
 		}
     }
 
+	/**
+	 * deletePlugin
+	 * 
+	 * Deletes the given plugin via pluginLoaderService
+	 * 
+	 * @param plugin
+	 * @throws EJBException 
+	 */
 	@Override
     @RolesAllowed({"admin"})
 	public void deletePlugin(final Plugin plugin) throws EJBException

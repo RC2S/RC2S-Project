@@ -4,6 +4,13 @@ import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.User;
 import javax.ejb.Remote;
 
+/**
+ * StreamingFacadeRemote
+ * 
+ * EJB remote interface for Streaming EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface StreamingFacadeRemote
 {

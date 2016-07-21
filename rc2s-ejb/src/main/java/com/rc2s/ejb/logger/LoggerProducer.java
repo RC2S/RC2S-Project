@@ -6,6 +6,11 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * LoggerProducer
+ * 
+ * @author RC2S
+ */
 @Singleton
 public class LoggerProducer
 {

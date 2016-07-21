@@ -5,6 +5,13 @@ import com.rc2s.common.vo.User;
 import java.util.List;
 import javax.ejb.Remote;
 
+/**
+ * UserFacadeRemote
+ * 
+ * EJB remote interface for User EJB
+ * 
+ * @author RC2S
+ */
 @Remote
 public interface UserFacadeRemote
 {
