@@ -27,6 +27,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	
 	// (L)ight/(S)tage/(C)ube - what to light
 	private final char lightening;
+	private final int algoNeededSize;
 	
 	// Array containing the coordinates of the points to lighten
 	private int[][] positionsToLighten;
@@ -61,7 +62,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		lightening = 'S';
 		
-		int algoNeededSize = lightening == 'L' ? algoEffect.getSize() : 1;
+		algoNeededSize = (lightening == 'L' ? algoEffect.getSize() : 1);
 		
 		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
 		lighteningIndex = 0;
@@ -82,11 +83,20 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	public final void setDimensions(final int[] syncDimensions)
 	{
 		syncWidth	= syncDimensions[0];
+		if (syncWidth == 0)
+			syncWidth = 4;
+		
 		syncHeight	= syncDimensions[1];
+		if (syncHeight == 0)
+			syncHeight = 4;
+		
 		syncDepth	= syncDimensions[2];
-		System.out.println("LOG : Dimension set size : ");
-		System.out.println(syncDimensions[3]);
+		if (syncDepth == 0)
+			syncDepth = 4;
+		
 		numCubes	= syncDimensions[3];
+		if (numCubes == 0)
+			numCubes = 1;
 	}
 
 	/**
@@ -106,10 +116,10 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		switch (lightening)
 		{
 			case 'C':
-				return (syncDepth * syncHeight * syncWidth) / numCubes;
+				return (syncDepth * syncHeight * syncWidth) / this.numCubes;
 				
 			case 'S':
-				return (syncDepth * syncWidth) / numCubes;
+				return (syncDepth * syncWidth) / this.numCubes;
 				
 			case 'L':
 			default:
@@ -372,8 +382,6 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		positionsToLighten[lighteningIndex][1] = pos_y;
 		positionsToLighten[lighteningIndex][2] = pos_z;
 		lighteningIndex++;
-		
-		log.info(pos_x + ", " + pos_y + ", " + pos_z);
 	}
 	
 	/**
@@ -458,31 +466,34 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		addPositionsToLighteningList(abs_x, abs_y, abs_z);
 		
-		switch (this.algoEffect)
+		if (lightening == 'L')
 		{
-			case CLASSIC:
-				produceClassicCoordinate();
-				break;
-			
-			case MIRROR_WIDTH:
-				produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
-				break;
-			
-			case MIRROR_DEPTH:
-				produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
-				break;
-			
-			case MIRROR_HEIGHT:
-				produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
-				break;
-			
-			case MIRROR_TRIPLE:
-				produceTripleMirrorCoordinate(abs_x, abs_y, abs_z);
-				break;
-				
-			case EIGHTIFY:
-				produceEightifyCoordinates(abs_x, abs_y, abs_z);
-				break;
+			switch (this.algoEffect)
+			{
+				case CLASSIC:
+					produceClassicCoordinate();
+					break;
+
+				case MIRROR_WIDTH:
+					produceWidthMirrorCoordinate(abs_x, abs_y, abs_z);
+					break;
+
+				case MIRROR_DEPTH:
+					produceDepthMirrorCoordinate(abs_x, abs_y, abs_z);
+					break;
+
+				case MIRROR_HEIGHT:
+					produceHeightMirrorCoordinate(abs_x, abs_y, abs_z);
+					break;
+
+				case MIRROR_TRIPLE:
+					produceTripleMirrorCoordinate(abs_x, abs_y, abs_z);
+					break;
+
+				case EIGHTIFY:
+					produceEightifyCoordinates(abs_x, abs_y, abs_z);
+					break;
+			}
 		}
 	}
 
@@ -614,7 +625,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	{
 		streamingService.processCoordinates(positionsToLighten);
 
-		positionsToLighten = new int[algoEffect.getSize()][3];
+		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
 		lighteningIndex = 0;
 		
 		lineMaxAnalysis.clear();

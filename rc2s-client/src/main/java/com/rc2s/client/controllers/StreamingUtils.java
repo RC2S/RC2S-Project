@@ -71,6 +71,8 @@ public class StreamingUtils extends Thread
             String mrl = new RtspMrl().host(Tools.getIPAdress()).port(EJB.getRtspPort()).path("/" + id).value();
 
             System.err.println("------- Start StreamingUtils RMI -------");
+			System.err.println("User : " + Main.getAuthenticatedUser().toString());
+			System.err.println("MRL : " + mrl);
             streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
             setStreamingState(StreamingState.PLAY);
             System.err.println("------- Thread join -------");
