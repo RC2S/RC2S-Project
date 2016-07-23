@@ -7,6 +7,13 @@ import com.rc2s.dao.IGenericDAO;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * ICubeDAO
+ * 
+ * Interface for cubes management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ICubeDAO extends IGenericDAO<Cube>
 {

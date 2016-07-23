@@ -1,8 +1,8 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
-import com.rc2s.client.utils.Dialog;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.TabController;
+import com.rc2s.common.client.utils.Dialog;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.utils.Hash;
@@ -251,7 +251,10 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					try
 					{
-						userEJB.add(element);
+						if (group.getName().equals("rc2s-admingrp"))
+                            element.setGroups(groupEJB.getAll());
+                        
+                        userEJB.add(element);
                         
                         log.info("Add user " + element.getUsername());
 
@@ -296,7 +299,7 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					User user = usersTable.getSelectionModel().getSelectedItem();
 					
-					if (!Main.getAuthenticatedUser().equals(user))
+					if (!Tools.getAuthenticatedUser().equals(user))
 					{
 						ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this user account?");
 

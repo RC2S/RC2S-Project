@@ -15,7 +15,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-import javax.tools.Diagnostic;
 
 /**
  * SourceControlProcessor
@@ -28,7 +27,6 @@ import javax.tools.Diagnostic;
 public class SourceControlProcessor extends AbstractProcessor
 {
     private Elements    elementUtils;
-    private Messager    messager;
 
 	/**
 	 * Initialize SourceControlProcessor
@@ -41,8 +39,8 @@ public class SourceControlProcessor extends AbstractProcessor
     public synchronized void init(final ProcessingEnvironment processingEnv)
     {
         super.init(processingEnv);
+		
         elementUtils    = processingEnv.getElementUtils();
-        messager        = processingEnv.getMessager();
     }
     
 	/**
@@ -58,8 +56,9 @@ public class SourceControlProcessor extends AbstractProcessor
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv)
     {
-		Analysor analysor = new Analysor(elementUtils, messager);
-		ElementMapper mainClass = null;
+		Analysor analysor = new Analysor(elementUtils);
+		
+		ElementMapper mainClass;
 		
         for (TypeElement te : annotations)
         {
@@ -85,6 +84,9 @@ public class SourceControlProcessor extends AbstractProcessor
         return true;
     }
     
+	/**
+	 * @return Set<String> supported annotation types
+	 */
     @Override
     public Set<String> getSupportedAnnotationTypes()
     {
@@ -93,6 +95,9 @@ public class SourceControlProcessor extends AbstractProcessor
         return annotations;
     }
     
+	/**
+	 * @return SourceVersion the supported source version
+	 */
     @Override
     public SourceVersion getSupportedSourceVersion()
     {

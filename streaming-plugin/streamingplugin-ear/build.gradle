@@ -1,0 +1,25 @@
+apply plugin: 'ear'
+
+// Trick : exclude librairies already existing on the server
+configurations {
+	earlib.exclude group: 'javax'
+	earlib.exclude group: 'com.rc2s'
+}
+
+dependencies {
+	deploy project(':streamingplugin-server')
+
+	// Ask for the server's dependencies
+	earlib project(path: ':streamingplugin-server', configuration: 'compile')
+}
+
+ear {
+	appDirName 'META-INF/'
+	libDirName 'APP-INF/lib'
+	archiveName 'streamingplugin_server.ear'
+	deploymentDescriptor {
+		applicationName 	= 'streamingplugin-project'
+		initializeInOrder 	= true
+		displayName 		= 'streamingplugin Project'
+	}
+}

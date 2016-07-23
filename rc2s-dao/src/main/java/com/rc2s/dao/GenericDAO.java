@@ -7,6 +7,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ * GenericDAO
+ * 
+ * Generic DAO class for DAO implementations
+ * 
+ * @author captp
+ * @param <T> 
+ */
 public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 {
 	@PersistenceContext
@@ -91,10 +99,13 @@ public class GenericDAO<T extends Serializable> implements IGenericDAO<T>
 	}
 	
 	/**
+	 * em
+	 * 
 	 * This method is not specified in the IGenericDAO interface because we
 	 * want to keep it protected: another class must not be allowed to access
 	 * the persistence entity manager.
-	 * @return 
+	 * 
+	 * @return EntityManager
 	 */
 	protected EntityManager em()
 	{

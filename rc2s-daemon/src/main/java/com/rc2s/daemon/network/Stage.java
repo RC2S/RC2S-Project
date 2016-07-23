@@ -1,5 +1,12 @@
 package com.rc2s.daemon.network;
 
+/**
+ * Stage
+ * 
+ * Represents a cube stage 
+ * 
+ * @author RC2S
+ */
 public class Stage
 {
     private boolean[][] states;

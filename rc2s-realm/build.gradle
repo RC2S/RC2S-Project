@@ -17,15 +17,13 @@ task copyRealmLib(type: Copy, dependsOn: deleteOldRealmLib) {
 jar {
     doLast {
         if(!project.hasProperty('skipServerAutodeploy')) {
+            println '****** Deploying Realm ******'
+            
             try {
                 tasks.deleteOldRealmLib.execute();
-            }
-            catch(Throwable t) {
-                println t.getMessage();
-            }
-
-            try {
                 tasks.copyRealmLib.execute();
+                
+                println '****** Realm Library successfully deployed on Payara Server ******'
             }
             catch(Throwable t) {
                 println t.getMessage();

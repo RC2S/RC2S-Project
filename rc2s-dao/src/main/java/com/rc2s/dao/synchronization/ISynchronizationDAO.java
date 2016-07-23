@@ -7,6 +7,13 @@ import com.rc2s.dao.IGenericDAO;
 import javax.ejb.Local;
 import java.util.List;
 
+/**
+ * ISynchronizationDAO
+ * 
+ * Interface for synchronization management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ISynchronizationDAO extends IGenericDAO<Synchronization>
 {

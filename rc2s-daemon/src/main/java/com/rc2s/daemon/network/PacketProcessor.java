@@ -10,6 +10,13 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PacketProcessor
+ * 
+ * Class used for physical packet reception via sockets
+ * 
+ * @author RC2S
+ */
 public class PacketProcessor extends Thread
 {
 	private final Daemon daemon;
@@ -20,6 +27,7 @@ public class PacketProcessor extends Thread
 	/**
 	 * Init a new PacketProcessor in its own thread in order to handle the
 	 * packet's data.
+	 * 
 	 * @param daemon
 	 * @param socket
 	 * @param packet 
@@ -41,7 +49,7 @@ public class PacketProcessor extends Thread
 		String raw = new String(packet.getData()).trim();
 		System.out.println("Received: |" + raw + "|");
 		
-		if(raw.equals("status"))
+		if (raw.equals("status"))
 			validateStatus();
 		else
 			processPacket();
@@ -76,17 +84,13 @@ public class PacketProcessor extends Thread
 
 		List<Stage> stages = new ArrayList<>();
 
-		for(int i = 0 ; i < y ; i++)
+		for (int i = 0 ; i < y ; i++)
 		{
 			boolean[][] stageData = new boolean[x][z];
 
-			for(int j = 0 ; j < x ; j++)
-			{
-				for(int k = 0 ; k < z ; k++)
-				{
+			for (int j = 0 ; j < x ; j++)
+				for (int k = 0 ; k < z ; k++)
 					stageData[j][k] = dis.readBoolean();
-				}
-			}
 
 			stages.add(new Stage(stageData));
 		}

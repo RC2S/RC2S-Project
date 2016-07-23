@@ -53,8 +53,8 @@ public class HtmlFile
         }
 		catch (IOException ex)
 		{
-            Logger.getLogger(HtmlFile.class.getName()).log(Level.SEVERE, null,
-                ex);
+            Logger.getLogger(HtmlFile.class.getName())
+					.log(Level.SEVERE, null,ex);
             return false;
         }
 		return true;
@@ -114,7 +114,7 @@ public class HtmlFile
 				
 				// Second column : Name + Description
 				builder.append("<td>" + el.getName());
-				if(el.getDescription() != null)
+				if (el.getDescription() != null)
 					builder.append("<div class=\"fieldDesc\">" + el.getDescription() + "</div>");
 				builder.append("</td></tr>");
 			}
@@ -155,8 +155,8 @@ public class HtmlFile
 				
 				// Second column : name + parameter returnType + parameter Name
 				builder.append("<td>" + el.getName() + "(");
-				if(el.getParameters() != null)
-					for(ParameterMapper parameter : el.getParameters())
+				if (el.getParameters() != null)
+					for (ParameterMapper parameter : el.getParameters())
 						builder.append(parameter.getType() + " " + parameter.getName() + ",");
 				builder.append(")</td>");
 				builder.append("</tr>");
@@ -166,6 +166,14 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
+	/**
+	 * generateDetails
+	 * 
+	 * Generate all details (not methods & fields) found in the class
+	 * 
+	 * @param list
+	 * @return String content
+	 */
 	private static String generateDetails(final List<ElementMapper> list)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -203,7 +211,7 @@ public class HtmlFile
 				if (el.getParameters() != null)
 				{
 					builder.append("<div class=\"parameters\">");
-					for(ParameterMapper parameter : el.getParameters())
+					for (ParameterMapper parameter : el.getParameters())
 						builder.append("<div>" + parameter.getName() + ((parameter.getDescription() != null) ? " - " + parameter.getDescription() : "") + "</div>");
 					builder.append("</div>");
 				}
@@ -211,6 +219,7 @@ public class HtmlFile
 			}
 			builder.append("</div>");
 		}
+		
 		return builder.toString();
 	}
 }

@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
  * PluginLoaderService
  * 
  * Service for plugin loading management
- * Access to databse via IPluginService
+ * Access to database via IPluginService
  * 
  * @author RC2S
  */
@@ -85,7 +85,7 @@ public class PluginLoaderService implements IPluginLoaderService
 				persistPlugin(pluginName, accessGroup);
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new ServiceException(e);
 		}
@@ -96,17 +96,19 @@ public class PluginLoaderService implements IPluginLoaderService
 				if (tmpZip != null)
 					Files.delete(tmpZip);
 
-				if (unzipedDir != null) {
+				if (unzipedDir != null)
+				{
 					try (DirectoryStream<Path> ds = Files.newDirectoryStream(unzipedDir))
 					{
 						for (Path file : ds)
 							Files.delete(file);
 					}
-					catch(IOException e) { /* Ignore and try to delete the directory */ }
+					catch (IOException e) { /* Ignore and try to delete the directory */ }
+					
 					Files.delete(unzipedDir);
 				}
 			}
-			catch(IOException e)
+			catch (IOException e)
 			{
 				throw new ServiceException(e);
 			}
@@ -155,14 +157,16 @@ public class PluginLoaderService implements IPluginLoaderService
                     Path dir = Paths.get(filePath);
                     Files.createDirectory(dir);
                 }
+				
                 zipIn.closeEntry();
                 entry = zipIn.getNextEntry();
             }
+			
             zipIn.close();
 			
 			return folderPath;
         }
-        catch(IOException e)
+        catch (IOException e)
         {
 		   throw e;
         }
@@ -188,11 +192,9 @@ public class PluginLoaderService implements IPluginLoaderService
 			if (!Files.exists(tmpEar))
 				return null;
 			
-			// TODO: Check the EAR content
-			
 			return tmpEar;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw e;
 		}
@@ -218,11 +220,9 @@ public class PluginLoaderService implements IPluginLoaderService
 			if (!Files.exists(tmpJar))
 				return null;
 			
-			// TODO: Check the JAR content
-			
 			return tmpJar;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw e;
 		}
@@ -253,7 +253,9 @@ public class PluginLoaderService implements IPluginLoaderService
     @Override
     public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException
     {
-		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator
+				+ "rc2s-jnlp" + File.separator
+				+ "libs" + File.separator;
 		jnlpService.signJar(tmpJar.toString());
         Path pluginPath = Paths.get(jnlpLibsDir, simpleName + "_client.jar");
 		Files.copy(tmpJar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
@@ -262,8 +264,6 @@ public class PluginLoaderService implements IPluginLoaderService
 	
 	/**
 	 * persistPlugin
-	 * 
-	 * Make the plugin persistent
 	 * 
 	 * @param pluginName
 	 * @param group
@@ -281,7 +281,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			plugin = pluginDAO.getByName(pluginName);
 			update = true;
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			plugin = new Plugin();
 		}
@@ -299,6 +299,8 @@ public class PluginLoaderService implements IPluginLoaderService
 	/**
 	 * deletePlugin
 	 * 
+	 * Delete the given plugin from db
+	 * 
 	 * @param plugin
 	 * @throws ServiceException 
 	 */
@@ -308,10 +310,12 @@ public class PluginLoaderService implements IPluginLoaderService
 		String simpleName = plugin.getName().toLowerCase().replace(" ", "");
 		
 		// Remove Client Plugin
-		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator
+				+ "rc2s-jnlp" + File.separator
+				+ "libs" + File.separator;
 		File pluginClient = new File(jnlpLibsDir + simpleName + "_client.jar");
 		
-		if(pluginClient.exists())
+		if (pluginClient.exists())
 			pluginClient.delete();
         
         jnlpService.updateJNLP(simpleName + "_client.jar", true);
@@ -320,7 +324,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
 		File pluginServer = new File(autodeployDir + simpleName + "_server.ear");
 		
-		if(pluginServer.exists())
+		if (pluginServer.exists())
 			pluginServer.delete();
 		
 		pluginService.delete(plugin);
@@ -337,14 +341,14 @@ public class PluginLoaderService implements IPluginLoaderService
 		
 		if (domainRoot != null)
 		{
-			if(domainRoot.startsWith("file:\\"))
+			if (domainRoot.startsWith("file:\\"))
 				domainRoot = domainRoot.replace("file:\\", "");
-			else if(domainRoot.startsWith("file://"))
+			else if (domainRoot.startsWith("file://"))
 				domainRoot = domainRoot.replace("file://", "");
-			else if(domainRoot.startsWith("file:/"))
+			else if (domainRoot.startsWith("file:/"))
 				domainRoot = domainRoot.replace("file:", "");
 
-			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			if (System.getProperty("os.name").toLowerCase().contains("windows"))
 				domainRoot = domainRoot.substring(1); // Remove leading slash on Windows
 		}
 		

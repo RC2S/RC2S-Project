@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
@@ -18,7 +17,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 /**
@@ -28,9 +26,7 @@ import javax.tools.Diagnostic;
  */
 public class KnowledgeProcessor extends AbstractProcessor
 {	
-    private Types       typeUtils;
     private Elements    elementUtils;
-    private Filer       filer;
     private Messager    messager;
 	
 	public static List<String> processedClasses = new ArrayList();
@@ -44,9 +40,8 @@ public class KnowledgeProcessor extends AbstractProcessor
     public synchronized void init(final ProcessingEnvironment processingEnv)
     {
         super.init(processingEnv);
-        typeUtils       = processingEnv.getTypeUtils();
+		
         elementUtils    = processingEnv.getElementUtils();
-        filer           = processingEnv.getFiler();
         messager        = processingEnv.getMessager();
     }
 
@@ -60,7 +55,7 @@ public class KnowledgeProcessor extends AbstractProcessor
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv)
     {
-		Analysor analysor = new Analysor(elementUtils, messager);
+		Analysor analysor = new Analysor(elementUtils);
 		ElementMapper mainClass = null;
 		
         for (TypeElement te : annotations)
@@ -82,7 +77,7 @@ public class KnowledgeProcessor extends AbstractProcessor
     }
 
 	/**
-	 * @return 
+	 * @return Set<String> supported annotation types
 	 */
     @Override
     public Set<String> getSupportedAnnotationTypes()
@@ -93,7 +88,7 @@ public class KnowledgeProcessor extends AbstractProcessor
     }
     
 	/**
-	 * @return 
+	 * @return SourceVersion the supported source version
 	 */
     @Override
     public SourceVersion getSupportedSourceVersion()

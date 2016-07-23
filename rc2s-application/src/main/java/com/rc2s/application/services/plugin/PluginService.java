@@ -70,7 +70,7 @@ public class PluginService implements IPluginService
 		{
 			return pluginDAO.getAvailables();
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -93,7 +93,7 @@ public class PluginService implements IPluginService
 			plugin.setCreated(new Date());
 			return pluginDAO.save(plugin);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -116,7 +116,7 @@ public class PluginService implements IPluginService
 			plugin.setUpdated(new Date());
 			return pluginDAO.update(plugin);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -137,7 +137,7 @@ public class PluginService implements IPluginService
 		{
 			pluginDAO.delete(plugin.getId());
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}

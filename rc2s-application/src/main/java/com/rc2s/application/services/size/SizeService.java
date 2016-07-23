@@ -49,7 +49,7 @@ public class SizeService implements ISizeService
 		{
 			return sizeDAO.getAll();
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -72,7 +72,7 @@ public class SizeService implements ISizeService
 			size.setCreated(new Date());
 			return sizeDAO.save(size);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}

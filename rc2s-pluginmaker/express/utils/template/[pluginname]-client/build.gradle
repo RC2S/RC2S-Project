@@ -33,7 +33,7 @@ project.tasks.compileJava.doLast {
 
 // Create a FatJar (one jar with all dependencies)
 jar {
-	archiveName '[pluginname]-client.jar'
+	archiveName '[pluginname]_client.jar'
 	from {
 		(configurations.runtime - configurations.provided).collect {
 			it.isDirectory() ? it : zipTree(it)

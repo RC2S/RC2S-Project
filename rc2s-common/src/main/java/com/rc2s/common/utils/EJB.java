@@ -10,8 +10,8 @@ import javax.naming.NamingException;
  * EJB
  * 
  * Basic implementation to use EJBs
- * Contains all the methods necessary to EJBs to be initializable,
- * usable and set
+ * Contains all the methods necessary to EJBs
+ * to be initializable, usable and set
  * 
  * @author RC2S
  */
@@ -20,10 +20,11 @@ public class EJB
 	private static final Integer RTSP_PORT = 5555;
 
 	private static String serverIp = "127.0.0.1";
+    
 	private static String serverPort = "3700";
 
 	private static InitialContext context;
-
+    
 	/**
 	 * initContext
 	 * 
@@ -84,10 +85,13 @@ public class EJB
 	 */
     public static void closeContext()
     {
-        try {
+        try
+		{
             if (context != null)
                 context.close();
-        } catch (NamingException e) {
+        }
+		catch (NamingException e)
+		{
             System.err.println(e.getMessage());
         }
     }

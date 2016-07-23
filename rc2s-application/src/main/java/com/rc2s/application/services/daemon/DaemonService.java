@@ -32,7 +32,7 @@ public class DaemonService implements IDaemonService
     
     private static final int DAEMON_PORT = 1337;
 	private static final int BUFFER_LENGTH = 1024;
-	private static final int SOCKET_TIMEOUT = 1;
+	private static final int SOCKET_TIMEOUT = 250;
 	private static final int SOCKET_LISTEN_TIMEOUT = 1000;
 
 	/**
@@ -136,16 +136,34 @@ public class DaemonService implements IDaemonService
 	@Override
 	public boolean[][][] formatStatesArray(final boolean[][][] states)
 	{
-		for (int y = 0 ; y < states.length ; y++)
+		// Reverse on X
+		for (int y = 0 ; y < states.length / 2 ; y++)
 		{
-			for (int z = 0; z < states[y].length / 2; z++)
-			{
-				int zOpposite = states[y].length - 1 - z;
+			int yOpposite = states.length - 1 - y;
 
-				boolean[] zTmp = states[y][z];
-				states[y][z] = states[y][zOpposite];
-				states[y][zOpposite] = zTmp;
+			for (int z = 0; z < states[y].length; z++)
+			{
+				for (int x = 0 ; x < states[y][z].length / 2 ; x++)
+				{
+					// Reverse on Y
+					int xOpposite = states[y][z].length - 1 - x;
+					boolean xTmp = states[y][z][x];
+
+					states[y][z][x] = states[y][z][xOpposite];
+					states[y][z][xOpposite] = xTmp;
+
+					// Reverse on Y opposite
+					xOpposite = states[yOpposite][z].length - 1 - x;
+					xTmp = states[yOpposite][z][x];
+
+					states[yOpposite][z][x] = states[yOpposite][z][xOpposite];
+					states[yOpposite][z][xOpposite] = xTmp;
+				}
 			}
+
+			boolean[][] yTmp = states[y];
+			states[y] = states[yOpposite];
+			states[yOpposite] = yTmp;
 		}
 
 		return states;

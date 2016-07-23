@@ -72,7 +72,7 @@ public class CubeService implements ICubeService
 		{
 			return cubeDAO.getCubes(user);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -98,7 +98,7 @@ public class CubeService implements ICubeService
 				if (existing != null)
 					throw new ServiceException("Cube " + existing.getName() + " already uses the IP address " + existing.getIp());
 			}
-			catch(DAOException e) { /* Ignore getSingleResult() exception */ }
+			catch (DAOException e) { /* Ignore getSingleResult() exception */ }
 
 			cube.setCreated(new Date());
 			cubeDAO.save(cube);
@@ -124,7 +124,7 @@ public class CubeService implements ICubeService
 		{
 			cubeDAO.delete(cube.getId());
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -146,7 +146,7 @@ public class CubeService implements ICubeService
 		{
 			return cubeDAO.update(cube);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}

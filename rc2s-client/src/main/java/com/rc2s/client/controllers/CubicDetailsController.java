@@ -1,12 +1,12 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
+import com.rc2s.common.client.utils.TabController;
 import com.rc2s.client.components.LedCube;
 import com.rc2s.client.components.LedEvent;
-import com.rc2s.client.utils.Dialog;
+import com.rc2s.common.client.utils.Dialog;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.client.utils.Resources;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Resources;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.Size;
@@ -113,7 +113,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
 
 			// Gather cubes (all, only available for this user... ?)
-			cubesBox.getItems().addAll(cubeEJB.getCubes(Main.getAuthenticatedUser()));
+			cubesBox.getItems().addAll(cubeEJB.getCubes(Tools.getAuthenticatedUser()));
 		}
 		catch (EJBException e)
 		{
@@ -139,7 +139,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		cube.setSynchronization(new Synchronization());
 		cube.setSynchronizations(Arrays.asList(new Synchronization[] {cube.getSynchronization()}));
 		cube.getSynchronization().setCubes(Arrays.asList(new Cube[] {cube}));
-		cube.getSynchronization().setUsers(Arrays.asList(new User[] {Main.getAuthenticatedUser()}));
+		cube.getSynchronization().setUsers(Arrays.asList(new User[] {Tools.getAuthenticatedUser()}));
 		
 		cube.setCreated(new Date());
 		cube.getSynchronization().setCreated(new Date());
@@ -174,18 +174,18 @@ public class CubicDetailsController extends TabController implements Initializab
 			@Override
 			public void run()
 			{
-				Platform.runLater(() ->  {
-					try
-					{
-						boolean state = cubeEJB.getStatus(cube);
-						statusLabel.setText(state ? "Online" : "Offline");
-					}
-					catch (EJBException e)
-					{
+				try
+				{
+					boolean state = cubeEJB.getStatus(cube);
+					Platform.runLater(() -> statusLabel.setText(state ? "Online" : "Offline"));
+				}
+				catch (EJBException e)
+				{
+					Platform.runLater(() -> {
 						error(e.getMessage());
 						statusLabel.setText("Offline");
-					}
-				});
+					});
+				}
 			}
 		}.start();
 		

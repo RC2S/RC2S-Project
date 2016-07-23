@@ -1,13 +1,7 @@
 apply plugin: 'maven'
 
-configurations {
-    provided
-    compile.extendsFrom provided
-}
-
 dependencies {
     compile group: 'javax', name: 'javaee-api', version: '7.0'
-    // provided group: 'fish.payara.extras', name: 'payara-embedded-all', version: '4.1.1.161'
 }
 
 task deleteOldCommonLib(type: Delete) {
@@ -24,15 +18,13 @@ task copyCommonLib(type: Copy, dependsOn: deleteOldCommonLib) {
 jar {
     doLast {
         if(!project.hasProperty('skipServerAutodeploy')) {
+            println '****** Deploying Common Library ******'
+            
             try {
                 tasks.deleteOldCommonLib.execute();
-            }
-            catch(Throwable t) {
-                println t.getMessage();
-            }
-
-            try {
                 tasks.copyCommonLib.execute();
+                
+                println '****** Common Library successfully deployed on Payara Server ******'
             }
             catch(Throwable t) {
                 println t.getMessage();

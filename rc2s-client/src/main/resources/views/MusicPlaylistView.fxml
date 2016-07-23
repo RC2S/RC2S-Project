@@ -66,7 +66,7 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="previousButton" mnemonicParsing="false" onAction="#onPreviousEvent" styleClass="gridGridButton1" text="&lt;&lt;" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#onPlayPauseEvent" styleClass="gridGridButton2" text="Play" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#onPlayPauseEvent" styleClass="gridGridButton2" text="&gt;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <Button fx:id="nextButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onNextEvent" styleClass="gridGridButton3" text="&gt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
