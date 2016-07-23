@@ -364,11 +364,11 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		switch (this.lightening)
 		{
 			case 'C':
-				addCubePositions(pos_x, pos_y, false, pos_z);
+				addCubePositions(pos_x, pos_y, false);
 				break;
 				
 			case 'S':
-				addCubePositions(pos_x, pos_y, true, pos_z);
+				addCubePositions(pos_x, pos_y, true);
 				break;
 				
 			case 'L':
@@ -409,9 +409,8 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	 * @param x_size
 	 * @param pos_y
 	 * @param isStaged
-	 * @param pos_z 
 	 */
-	private void addGroupPositionsToLighteningList(int firstXLight, int x_size, final int pos_y, boolean isStaged, final int pos_z)
+	private void addGroupPositionsToLighteningList(int firstXLight, int x_size, final int pos_y, boolean isStaged)
 	{
 		int i, j, k;
 		
@@ -444,7 +443,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	 * @param isStaged
 	 * @param pos_z 
 	 */
-	private void addCubePositions(final int pos_x, final int pos_y, boolean isStaged, final int pos_z)
+	private void addCubePositions(final int pos_x, final int pos_y, boolean isStaged)
 	{
 		// More than 1 cube
 		if (numCubes != 1)
@@ -459,11 +458,11 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 			int firstXLight = lightCube * x_size;
 			
 			// Now we shall light with firstXLight <= x <= firstXLight + x_size - 1
-			addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged, pos_z);
+			addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged);
 		}
 		// Only one cube - Add everything on all ranges
 		else
-			addGroupPositionsToLighteningList(0, syncHeight, pos_y, isStaged, pos_z);
+			addGroupPositionsToLighteningList(0, syncHeight, pos_y, isStaged);
 	}
 	
 	/**
