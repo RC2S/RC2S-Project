@@ -413,7 +413,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		}
 
 		playing = false;
-		playPauseButton.setText("Play");
+		playPauseButton.setText(">");
 	}
 
 	private void play()
