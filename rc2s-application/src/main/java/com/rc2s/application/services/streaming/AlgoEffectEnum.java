@@ -24,7 +24,7 @@ public enum AlgoEffectEnum
 	// Triple Symettry
 	EIGHTIFY(8);
 
-	private int size;
+	private final int size;
 	
 	private AlgoEffectEnum(final int size)
 	{

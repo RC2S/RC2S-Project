@@ -78,24 +78,30 @@ public class StreamingService implements IStreamingService
 		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, callbackAdapter);
 
 		audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-            public void playing(MediaPlayer mediaPlayer) {
+			
+            public void playing(MediaPlayer mediaPlayer)
+			{
 				log.info("playing()");
 			}
 
-			public void finished(MediaPlayer mediaPlayer) {
+			public void finished(MediaPlayer mediaPlayer)
+			{
 				log.info("finished()");
 				log.info("Release waiter...");
 				sync.release();
 				log.info("After release waiter");
 			}
 
-			public void error(MediaPlayer mediaPlayer) {
+			public void error(MediaPlayer mediaPlayer)
+			{
 				log.info("error()");
 			}
 		});
 
 		Thread thread = new Thread() {
+			
 			public void run() {
+				
 				synchronized (audioPlayer) {
 					log.info("Begin start " + mrl);
 					audioPlayer.playMedia(mrl);
@@ -103,11 +109,14 @@ public class StreamingService implements IStreamingService
 
 				log.info("Waiting for finished...");
 
-				try {
+				try
+				{
 					// Slight race condition in theory possible if the audio finishes immediately
 					// (but this is just a test so it's good enough)...
 					sync.acquire();
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					log.error(e);
 				}
 
@@ -134,6 +143,7 @@ public class StreamingService implements IStreamingService
     public void stop()
     {
 		synchronized (factory) {
+			
 			log.info("Stop streaming");
 			
             if (audioPlayer.isPlaying()) {
