@@ -10,6 +10,13 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PacketProcessor
+ * 
+ * Class used for physical packet reception via sockets
+ * 
+ * @author RC2S
+ */
 public class PacketProcessor extends Thread
 {
 	private final Daemon daemon;
@@ -20,6 +27,7 @@ public class PacketProcessor extends Thread
 	/**
 	 * Init a new PacketProcessor in its own thread in order to handle the
 	 * packet's data.
+	 * 
 	 * @param daemon
 	 * @param socket
 	 * @param packet 

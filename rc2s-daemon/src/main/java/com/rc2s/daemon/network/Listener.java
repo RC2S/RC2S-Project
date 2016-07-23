@@ -6,6 +6,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+/**
+ * Listener
+ * 
+ * Daemon's runnable listener used for packets reception
+ * 
+ * @author captp
+ */
 public class Listener extends Thread
 {
 	private static final int BUFFER_LENGHT = 1024;

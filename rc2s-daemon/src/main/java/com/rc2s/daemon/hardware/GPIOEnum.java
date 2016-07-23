@@ -3,6 +3,16 @@ package com.rc2s.daemon.hardware;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
+/**
+ * GPIOEnum
+ * 
+ * GPIO used for the RC2S project
+ * 
+ * GPIOs are pins on the RaspberryPi, they allow programmers
+ * to manipulate the behaviour of electronics via the RPi
+ * 
+ * @author RC2S
+ */
 public enum GPIOEnum
 {
     // GPIO i/o

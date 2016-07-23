@@ -7,6 +7,16 @@ import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * StatesProcessor
+ * 
+ * Queue of 'packets' for the management of the sound algorithm
+ * 
+ * When packets can be read, they are, otherwise packets are
+ * stored during broadcast in a queue to be read later
+ * 
+ * @author RC2S
+ */
 public class StatesProcessor implements Runnable
 {
     private static final int RPI_GPIO_LIMIT = 9;

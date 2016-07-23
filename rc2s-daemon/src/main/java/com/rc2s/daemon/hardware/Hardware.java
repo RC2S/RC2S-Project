@@ -7,6 +7,14 @@ import com.pi4j.io.gpio.PinState;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Hardware
+ * 
+ * Class used for GPIO manipulation
+ * GPIOs need specific informations process in order to send data
+ * 
+ * @author RC2S
+ */
 public class Hardware
 {
     // Create a unique instance of GpioController
@@ -23,6 +31,14 @@ public class Hardware
         resetState(false);
     }
 
+	/**
+	 * getStageGpio
+	 * 
+	 * Retrieve GPIO for a specific stage
+	 * 
+	 * @param level
+	 * @return GPIOEnum the gpio for that stage 
+	 */
     private GPIOEnum getStageGpio(final int level)
     {
         switch (level)
@@ -40,13 +56,25 @@ public class Hardware
         }
     }
 
+	/**
+	 * pulse
+	 * 
+	 * Change the gpio state
+	 * 0 -> 1 | 1 -> 0
+	 * 
+	 * @param pin
+	 * @return 
+	 */
     public GpioPinDigitalOutput pulse(final GPIOEnum pin)
     {
         return pulse(pin, true);
     }
 
     /**
-     * Si revert = true l'état du pin est inversé 2 fois pour revenir à l'état initial
+	 * pulse
+	 * 
+	 * If revert is true, the pin state is reversed
+	 * two times to come back to initial state
      * 
      * @param pin
      * @param revert
@@ -84,6 +112,13 @@ public class Hardware
         return pulse(GPIOEnum.DATA_IN, false);
     }
 
+	/**
+	 * shift
+	 * 
+	 * Lower the given pin
+	 * 
+	 * @param gpdo 
+	 */
     public void shift(GpioPinDigitalOutput gpdo)
     {
         pulse(GPIOEnum.CLOCK);
@@ -92,21 +127,43 @@ public class Hardware
             gpdo.low();
     }
 
+	/**
+	 * send
+	 * 
+	 * Sends the buffer
+	 * The buffer is free, if there where datas in it,
+	 * leds are lightened
+	 */
     public void send()
     {
         pulse(GPIOEnum.LATCH);
     }
 
+	/**
+	 * clear
+	 * 
+	 * Clear the action put in buffer
+	 */
     public void clear()
     {
         pulse(GPIOEnum.CLEAR);
     }
 
+	/**
+	 * lock
+	 * 
+	 * Lock the buffer for future actions
+	 */
     public void lock()
     {
         lock = pulse(GPIOEnum.BLANK, false);
     }
 
+	/**
+	 * unlock
+	 * 
+	 * Unlocks the buffer
+	 */
     public void unlock()
     {
         if(lock != null)
@@ -139,8 +196,10 @@ public class Hardware
                     gpdo.high();
             }                
         }
+		
         send();
     }
+	
     public void shutdown()
     {
         resetState(true);        
