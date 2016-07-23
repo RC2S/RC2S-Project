@@ -80,7 +80,6 @@ public class StreamingUtils extends Thread
 			do
 			{
 				wait();
-				System.err.println("------ After wait, state is: " + state.toString() + " ------");
 
 				switch (state)
 				{
@@ -103,7 +102,11 @@ public class StreamingUtils extends Thread
 
 			} while (state != StreamingState.STOP);
 		}
-		catch (InterruptedException | UnknownHostException e) {}
+		catch (InterruptedException | UnknownHostException e)
+		{
+			if (mediaPlayer.isPlaying())
+				mediaPlayer.pause();
+		}
         
 		System.err.println("------- Stop StreamingUtils RMI -------");
 		streamingEJB.stopStreaming(Main.getAuthenticatedUser());

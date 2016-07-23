@@ -38,6 +38,7 @@ public class StreamingService implements IStreamingService
     
     // Synchronisation object to wait for the audio to finish.
     private Semaphore sync = new Semaphore(0);
+	private Thread syncThread;
 	private CallbackAdapter callbackAdapter;
 
     private MediaPlayerFactory factory;
@@ -71,6 +72,10 @@ public class StreamingService implements IStreamingService
     @Override
     public void start(final String mrl)
     {
+		if(factory != null) {
+			synchronized (factory) {}
+		}
+
 		factory = new MediaPlayerFactory();
 		callbackAdapter = new CallbackAdapter(this, 4, getSyncSize());
 
@@ -98,63 +103,62 @@ public class StreamingService implements IStreamingService
 			}
 		});
 
-		Thread thread = new Thread() {
+		syncThread = new Thread() {
 			
 			public void run() {
-				
-				synchronized (audioPlayer) {
-					log.info("Begin start " + mrl);
-					audioPlayer.playMedia(mrl);
-				}
+
+				log.info("Begin start " + mrl);
+				audioPlayer.playMedia(mrl);
 
 				log.info("Waiting for finished...");
 
 				try
 				{
-					// Slight race condition in theory possible if the audio finishes immediately
-					// (but this is just a test so it's good enough)...
 					sync.acquire();
 				}
-				catch (InterruptedException e)
-				{
-					log.error(e);
-				}
+				catch (InterruptedException e) {}
 
 				log.info("Finished, releasing native resources...");
-
-				if (audioPlayer.isPlaying())
-				{
-					audioPlayer.release();
-					factory.release();
-				}
-
+				cleanup();
 				log.info("All done");
 			}
 		};
-		thread.start();
+		syncThread.start();
     }
 
 	/**
 	 * stop
 	 * 
-	 * Stop streaming
+	 * Stop streaming by interrupting the Semaphore Thread.
 	 */
     @Override
     public void stop()
     {
-		synchronized (factory) {
-			
-			log.info("Stop streaming");
-			
-            if (audioPlayer.isPlaying()) {
-				audioPlayer.stop();
+		syncThread.interrupt();
+    }
 
+	/**
+	 * cleanup
+	 *
+	 * Release all the resources allocated to the current streaming session.
+	 */
+	public void cleanup()
+	{
+		synchronized (factory) {
+			log.info("Stop streaming");
+
+			if (audioPlayer.isPlaying()) {
+				log.info("Releasing sync...");
 				sync.release();
+				log.info("Releasing audio player...");
 				audioPlayer.release();
+				log.info("Releasing factory...");
 				factory.release();
 			}
+
+			log.info("Streaming stopped!");
 		}
-    }
+	}
 
 	/**
 	 * processCoordinates
@@ -228,7 +232,6 @@ public class StreamingService implements IStreamingService
 
 			for (Cube cube : synchronization.getCubes())
 			{
-				System.out.println("LOG : ncubes + 1");
 				syncSize[3]++;
 				
 				syncSize[0] += cube.getSize().getX();
