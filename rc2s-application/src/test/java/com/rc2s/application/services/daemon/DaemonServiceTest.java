@@ -10,9 +10,9 @@ public class DaemonServiceTest
 
 	public static boolean[][][] raw, expected;
 	
-	public final int sizeX				= 2;
-	public final int sizeY				= 2;
-	public final int sizeZ				= 2;
+	public final int sizeX				= 1;
+	public final int sizeY				= 10;
+	public final int sizeZ				= 100;
 	public final boolean expectedState	= false;
 
 	@BeforeClass
@@ -89,7 +89,7 @@ public class DaemonServiceTest
 	@Test
 	public void generateBooleanArrayTest()
 	{
-		Size testSize = new Size(0, "", sizeX, sizeZ, sizeZ, null, null);
+		Size testSize = new Size(0, null, sizeX, sizeY, sizeZ, null, null);
 		
 		boolean[][][] stateStages = daemonService.generateBooleanArray(testSize, expectedState);
 		

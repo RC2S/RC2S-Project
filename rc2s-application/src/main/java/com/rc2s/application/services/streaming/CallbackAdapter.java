@@ -230,7 +230,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
     }
 
 	/**
-	 * getSampleDef(sampleBytes)
+	 * getSampleDef
 	 * 
 	 * Transform the 4 bytes that represent the sample
 	 * to a 0 -> 28 representation used in a computeable line
@@ -251,7 +251,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * addLineWord(sampleLine, sampleCount)
+	 * addLineWord
 	 * 
 	 * Use a line of sampleCount bytes transformed to N coordinates
 	 * In order to graph a sound representation
@@ -278,7 +278,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * computeAudioDataLine(sampleLine, sampleCount)
+	 * computeAudioDataLine
 	 * 
 	 * Gets analysable datas from audio data line
 	 * The line contains samples values taken from the
@@ -310,7 +310,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * getLineVariation(datas, absolute)
+	 * getLineVariation
 	 * 
 	 * Shall return the variation in an integer list
 	 * If absolute is set to true, take absolute variation
@@ -348,7 +348,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * addPositionsToLighteningList(x, y, z)
+	 * addPositionsToLighteningList
 	 * 
 	 * Adds one or several tuples(x, y, z) which represents
 	 * the coordinates of a LED to lighten in the global
@@ -379,7 +379,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * addLighteningPosition(x, y, z)
+	 * addLighteningPosition
 	 * 
 	 * Adds a tuple(x, y, z) which represents the coordinates of
 	 * a LED to lighten in the global LED-to-lighten list, following
@@ -398,7 +398,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged, pos_z)
+	 * addGroupPositionsToLighteningList
 	 * 
 	 * Adds all the position on the given range
 	 * X range is given by firstXLight && x_size
@@ -432,7 +432,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * addCubePositions(x, y, isStaged, z)
+	 * addCubePositions
 	 * 
 	 * Used for Stage mode and Cube mode
 	 * From an initial LED coordinate, get the
@@ -466,7 +466,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * prepareCoordinates()
+	 * prepareCoordinates
 	 * 
 	 * Get adapted coordinates to light from chosen effect
 	 */
@@ -510,7 +510,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 
 	/**
-	 * produceClassicCoordinate()
+	 * produceClassicCoordinate
 	 * 
 	 * A 'classic' coordinates is computed on non-absolute wave analysis basis
 	 */
@@ -524,7 +524,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * getMirrorCoordinateValue(origin, dimension)
+	 * getMirrorCoordinateValue
 	 * 
 	 * Get the mirror coordinate value on a specified range
 	 * e.g if range is 8
@@ -564,7 +564,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * produceTripleMirrorCoordinate(x, y, z)
+	 * produceTripleMirrorCoordinate
 	 * 
 	 * Add the mirror coordinate on every axis
 	 * to the existing coordinate
@@ -627,7 +627,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	}
 	
 	/**
-	 * sendCoordinates()
+	 * sendCoordinates
 	 * 
 	 * Send retrieved coordinates during a certain time period
 	 * in order to light LED on the cube and prepare space for
