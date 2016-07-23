@@ -8,6 +8,13 @@ import com.rc2s.dao.IGenericDAO;
 import javax.ejb.Local;
 import java.util.List;
 
+/**
+ * ITrackDAO
+ * 
+ * Interface for tracks management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface ITrackDAO extends IGenericDAO<Track>
 {

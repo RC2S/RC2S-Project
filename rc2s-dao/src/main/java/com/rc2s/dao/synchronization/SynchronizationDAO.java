@@ -8,9 +8,25 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * SynchronizationDAO
+ * 
+ * ISynchronizationDAO implementation, bridge for database synchronizations management
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class SynchronizationDAO extends GenericDAO<Synchronization> implements ISynchronizationDAO
 {
+	/**
+	 * getByUser
+	 * 
+	 * Get all the synchronizations for the given user
+	 * 
+	 * @param user
+	 * @return List<Synchronization> the user's synchronizations
+	 * @throws DAOException 
+	 */
 	@Override
 	public List<Synchronization> getByUser(final User user) throws DAOException
 	{

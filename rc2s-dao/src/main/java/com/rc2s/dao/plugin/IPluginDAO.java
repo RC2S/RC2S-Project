@@ -6,6 +6,13 @@ import com.rc2s.dao.IGenericDAO;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * IPluginDAO
+ * 
+ * Interface for plugins management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IPluginDAO extends IGenericDAO<Plugin>
 {

@@ -7,9 +7,26 @@ import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+/**
+ * UserDAO
+ * 
+ * IUserDAO implementation, bridge for database users management
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class UserDAO extends GenericDAO<User> implements IUserDAO
 {	
+	/**
+	 * getAuthenticatedUser
+	 * 
+	 * Returns the authenticated used on username/password control basis
+	 * 
+	 * @param username
+	 * @param password
+	 * @return User authenticated
+	 * @throws DAOException 
+	 */
 	@Override
 	public User getAuthenticatedUser(final String username, final String password) throws DAOException
 	{
@@ -26,6 +43,15 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO
 		}
 	}
 	
+	/**
+	 * setLastLogin
+	 * 
+	 * Sets the given user's last login
+	 * 
+	 * @param user
+	 * @return int update state
+	 * @throws DAOException 
+	 */
 	@Override
 	public int setLastLogin(final User user) throws DAOException
 	{
