@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
  * PluginLoaderService
  * 
  * Service for plugin loading management
- * Access to databse via IPluginService
+ * Access to database via IPluginService
  * 
  * @author RC2S
  */
@@ -263,8 +263,6 @@ public class PluginLoaderService implements IPluginLoaderService
 	/**
 	 * persistPlugin
 	 * 
-	 * Make the plugin persistent
-	 * 
 	 * @param pluginName
 	 * @param group
 	 * @return pluginAddedOrUpdated
@@ -298,6 +296,8 @@ public class PluginLoaderService implements IPluginLoaderService
 	
 	/**
 	 * deletePlugin
+	 * 
+	 * Delete the given plugin from db
 	 * 
 	 * @param plugin
 	 * @throws ServiceException 

@@ -62,11 +62,15 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		lightening = 'S';
 		
+		// If lightening set to 'Light', we should take algoEffect
+		// in consideration to guess lightening size
 		algoNeededSize = (lightening == 'L' ? algoEffect.getSize() : 1);
 		
+		// Initialize our lightening coordinates array
 		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
 		lighteningIndex = 0;
 		
+		// Lists for sound computing
 		lineMinAnalysis = new ArrayList<>();
 		lineMaxAnalysis = new ArrayList<>();
 		lineAvgAnalysis = new ArrayList<>();

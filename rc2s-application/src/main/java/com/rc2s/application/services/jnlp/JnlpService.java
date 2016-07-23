@@ -24,10 +24,10 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
 /**
- * GroupService
+ * JnlpService
  * 
- * Service for group (jaas) retrieving
- * Uses an IGroupDAO for db access
+ * Service for jnlp management
+ * Used to sign the jar and update dependencies
  * 
  * @author RC2S
  */

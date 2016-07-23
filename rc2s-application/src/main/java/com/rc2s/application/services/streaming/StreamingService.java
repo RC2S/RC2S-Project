@@ -50,7 +50,7 @@ public class StreamingService implements IStreamingService
 	 * one's attribute values, leading to unknown behaviour.
 	 * In addition, the streamed content is read from a static URL : 127.0.0.1:5555/audio. What happens
 	 * if two people are streaming at the same time?
-	 *
+	 * 
 	 * 2. It is *NOT* possible to bundle the VLC native libs (libvlc, libvlccore) for one simple reason:
 	 * it requires to have access to the "plugins" directory content from VLC installation folder
 	 * in the same directory as the currently running native library (i.e. the temp directory).
@@ -211,8 +211,7 @@ public class StreamingService implements IStreamingService
 	public int[] getSyncSize()
 	{
 		int[] syncSize = new int[] {0, 0, 0, 0};
-		int nCubes = 0;
-
+		
 		if (synchronization != null)
 		{
 			boolean first = true;
@@ -220,7 +219,7 @@ public class StreamingService implements IStreamingService
 			for (Cube cube : synchronization.getCubes())
 			{
 				System.out.println("LOG : ncubes + 1");
-				nCubes++;
+				syncSize[3]++;
 				
 				syncSize[0] += cube.getSize().getX();
 
@@ -237,9 +236,6 @@ public class StreamingService implements IStreamingService
 					syncSize[2] = Math.min(cube.getSize().getZ(), syncSize[2]);
 				}
 			}
-			
-			// Get number of cubes
-			syncSize[3] = nCubes;
 		}
 		
 		return syncSize;
