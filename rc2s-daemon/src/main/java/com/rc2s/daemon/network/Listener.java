@@ -11,7 +11,7 @@ import java.net.SocketException;
  * 
  * Daemon's runnable listener used for packets reception
  * 
- * @author captp
+ * @author RC2S
  */
 public class Listener extends Thread
 {
