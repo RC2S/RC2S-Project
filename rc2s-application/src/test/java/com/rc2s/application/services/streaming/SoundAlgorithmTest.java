@@ -1,4 +1,5 @@
-import com.rc2s.application.services.streaming.CallbackAdapter;
+package com.rc2s.application.services.streaming;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
