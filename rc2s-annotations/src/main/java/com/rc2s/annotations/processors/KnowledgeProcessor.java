@@ -82,7 +82,7 @@ public class KnowledgeProcessor extends AbstractProcessor
     }
 
 	/**
-	 * @return 
+	 * @return Set<String> supported annotation types
 	 */
     @Override
     public Set<String> getSupportedAnnotationTypes()
@@ -93,7 +93,7 @@ public class KnowledgeProcessor extends AbstractProcessor
     }
     
 	/**
-	 * @return 
+	 * @return SourceVersion the supported source version
 	 */
     @Override
     public SourceVersion getSupportedSourceVersion()

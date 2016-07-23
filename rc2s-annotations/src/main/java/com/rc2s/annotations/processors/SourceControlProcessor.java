@@ -15,7 +15,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-import javax.tools.Diagnostic;
 
 /**
  * SourceControlProcessor
@@ -85,6 +84,9 @@ public class SourceControlProcessor extends AbstractProcessor
         return true;
     }
     
+	/**
+	 * @return Set<String> supported annotation types
+	 */
     @Override
     public Set<String> getSupportedAnnotationTypes()
     {
@@ -93,6 +95,9 @@ public class SourceControlProcessor extends AbstractProcessor
         return annotations;
     }
     
+	/**
+	 * @return SourceVersion the supported source version
+	 */
     @Override
     public SourceVersion getSupportedSourceVersion()
     {

@@ -166,6 +166,14 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
+	/**
+	 * generateDetails
+	 * 
+	 * Generate all details (not methods & fields) found in the class
+	 * 
+	 * @param list
+	 * @return String content
+	 */
 	private static String generateDetails(final List<ElementMapper> list)
 	{
 		StringBuilder builder = new StringBuilder();

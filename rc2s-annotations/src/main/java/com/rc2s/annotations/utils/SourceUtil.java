@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
  * SourceUtil
  * 
  * Core of the SourceControl annotation.
+ * 
  * Processes the content of the class, package included,
  * in order to verify that the class follow the rules 
  * required to integrate a RC2S plugin.
@@ -144,7 +145,7 @@ public class SourceUtil
 	}
 	
 	/**
-	 * builControllersAndViewsFolderPaths
+	 * buildControllersAndViewsFolderPaths
 	 * 
 	 * Get folder paths for controllers and views
 	 * based on the expected path
@@ -177,6 +178,17 @@ public class SourceUtil
 			.toString();
 	}
 
+	/**
+	 * getAllViewsName
+	 * 
+	 * Get expected views and check the name of the expected associated
+	 * controller in the first AnchorPane of the .fxml file
+	 * 
+	 * @throws SourceControlException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException 
+	 */
 	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
 	{
 		File testDirectory = new File(VIEWS_FOLDER_PATH);
@@ -230,6 +242,12 @@ public class SourceUtil
 			throw new SourceControlException("MainView.fxml expected in views package");
 	}
 
+	/**
+	 * getAllControllersNames
+	 * 
+	 * Get all the controllers names found in the controller package
+	 * Used later to check if expected controllers are present
+	 */
 	private void getAllControllersNames()
 	{
 		File testDirectory = new File(CONTROLLERS_FOLDER_PATH);
@@ -243,6 +261,14 @@ public class SourceUtil
 			initialControllersList.add(file.getName());
 	}
 
+	/**
+	 * verifyRoot
+	 * 
+	 * Verify first part of the package, shall be com.rc2s.[pluginName]
+	 * 
+	 * @param packageParts
+	 * @throws SourceControlException 
+	 */
 	private void verifyRoot(String[] packageParts) throws SourceControlException
 	{
 		if (packageParts.length < 3)
@@ -264,6 +290,15 @@ public class SourceUtil
 			throw new SourceControlException("Invalid plugin naming - Already retrieved '" + pluginName + "' and found '" + packageParts[2] + "' in this class");
 	}
 
+	/**
+	 * findClassName
+	 * 
+	 * With ClassNamesEnum, get which kind of class we're currently processing
+	 * 
+	 * @param packageParts
+	 * @return
+	 * @throws SourceControlException 
+	 */
 	private ClassNamesEnum findClassName(String[] packageParts) throws SourceControlException
 	{
 		if (packageParts.length < 5)
@@ -297,6 +332,17 @@ public class SourceUtil
 		}
 	}
 	
+	/**
+	 * verifyPackageEnd
+	 * 
+	 * Check the end of the package name (after [pluginName])
+	 * 
+	 * The package name is used later to expect a specific class name
+	 * 
+	 * @param packageParts
+	 * @return String excepted controller base name
+	 * @throws SourceControlException 
+	 */
 	private String verifyPackageEnd(String[] packageParts) throws SourceControlException
 	{
 		boolean hasUppers = !packageParts[4].equals(packageParts[4].toLowerCase());
@@ -372,6 +418,49 @@ public class SourceUtil
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * checkClassHasStatelessOrStatefulAnnotation
+	 * 
+	 * Verifies the class contains only one of the annotations
+	 * between @Stateless & @Stateful
+	 * 
+	 * @param mainClass
+	 * @throws SourceControlException 
+	 */
+	private void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
+	{
+		Boolean hasStateless	= mainClass.getAnnotations().contains(STATELESS_PACKAGE);
+		Boolean hasStateful		= mainClass.getAnnotations().contains(STATEFUL_PACKAGE);
+		Boolean hasBoth		= hasStateless && hasStateful;
+		Boolean hasNone		= !hasStateless && !hasStateful;
+
+		if (hasBoth)
+		{
+			throw new SourceControlException("Class " + mainClass.getName() + 
+				" has both " + STATELESS_PACKAGE + " & " + STATEFUL_PACKAGE + " annotations : it should only have one");
+		}
+		else if (hasNone)
+		{
+			throw new SourceControlException("Class " + mainClass.getName() + " requires " + STATELESS_PACKAGE + " or " + STATEFUL_PACKAGE + " annotation");
+		}
+	}
+	
+	/**
+	 * checkClassIsUtilComponent
+	 * 
+	 * SourceControl fiing : plugins should allow utils
+	 * 
+	 * Utils should be usable everywhere for any purpose,
+	 * they don't follow the usual SourceControl rules
+	 * 
+	 * @param className
+	 * @return true if class is Util component 
+	 */
+	private boolean checkClassIsUtilComponent(String className)
+	{
+		return (className.endsWith("Util") || className.endsWith("Utils"));
 	}
 
 	/**
@@ -456,34 +545,6 @@ public class SourceUtil
 					+ "Expected 'I" + entityName + "DAO' or '" + entityName + "DAO', got '" + mainClass.getName() + "'");
 			}
 		}
-	}
-	
-	/**
-	 * checkClassHasStatelessOrStatefulAnnotation
-	 * @param mainClass
-	 * @throws SourceControlException 
-	 */
-	private void checkClassHasStatelessOrStatefulAnnotation(ElementMapper mainClass) throws SourceControlException
-	{
-		Boolean hasStateless	= mainClass.getAnnotations().contains(STATELESS_PACKAGE);
-		Boolean hasStateful		= mainClass.getAnnotations().contains(STATEFUL_PACKAGE);
-		Boolean hasBoth		= hasStateless && hasStateful;
-		Boolean hasNone		= !hasStateless && !hasStateful;
-
-		if (hasBoth)
-		{
-			throw new SourceControlException("Class " + mainClass.getName() + 
-				" has both " + STATELESS_PACKAGE + " & " + STATEFUL_PACKAGE + " annotations : it should only have one");
-		}
-		else if (hasNone)
-		{
-			throw new SourceControlException("Class " + mainClass.getName() + " requires " + STATELESS_PACKAGE + " or " + STATEFUL_PACKAGE + " annotation");
-		}
-	}
-	
-	private boolean checkClassIsUtilComponent(String className)
-	{
-		return (className.endsWith("Util") || className.endsWith("Utils"));
 	}
 
 	/**

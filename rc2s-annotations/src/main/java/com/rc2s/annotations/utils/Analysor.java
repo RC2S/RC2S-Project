@@ -14,7 +14,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.Elements;
 
 /**
- * Analysor 
+ * Analysor (class analysor)
  * 
  * @author RC2S
  */
@@ -28,6 +28,7 @@ public class Analysor
 	public static List<String> processedClasses = new ArrayList();
 	
 	/**
+	 * Construct an Analysor
 	 * 
 	 * @param els
 	 * @param msgr 
