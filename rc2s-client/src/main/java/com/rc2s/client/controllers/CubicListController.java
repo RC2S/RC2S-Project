@@ -47,7 +47,7 @@ public class CubicListController extends TabController implements Initializable
 		try
 		{
 			GridPane grid = new GridPane();
-			List<Cube> cubes = cubeEJB.getCubes(Main.getAuthenticatedUser());
+			List<Cube> cubes = cubeEJB.getCubes(EJB.getAuthenticatedUser());
             
             log.info("Getting Cubes List");
 

@@ -113,7 +113,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
 
 			// Gather cubes (all, only available for this user... ?)
-			cubesBox.getItems().addAll(cubeEJB.getCubes(Main.getAuthenticatedUser()));
+			cubesBox.getItems().addAll(cubeEJB.getCubes(EJB.getAuthenticatedUser()));
 		}
 		catch (EJBException e)
 		{
@@ -139,7 +139,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		cube.setSynchronization(new Synchronization());
 		cube.setSynchronizations(Arrays.asList(new Synchronization[] {cube.getSynchronization()}));
 		cube.getSynchronization().setCubes(Arrays.asList(new Cube[] {cube}));
-		cube.getSynchronization().setUsers(Arrays.asList(new User[] {Main.getAuthenticatedUser()}));
+		cube.getSynchronization().setUsers(Arrays.asList(new User[] {EJB.getAuthenticatedUser()}));
 		
 		cube.setCreated(new Date());
 		cube.getSynchronization().setCreated(new Date());

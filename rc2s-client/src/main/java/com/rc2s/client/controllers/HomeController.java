@@ -49,7 +49,7 @@ public class HomeController implements Initializable
 	
 	private void initAdminTabs()
 	{
-		if (isAdmin(Main.getAuthenticatedUser()))
+		if (isAdmin(EJB.getAuthenticatedUser()))
 		{
 			loadTab("Access Management", Resources.loadFxml("AccessManagementView"));
 			loadTab("Plugins Management", Resources.loadFxml("PluginsManagementView"));
@@ -65,7 +65,7 @@ public class HomeController implements Initializable
 			for (Plugin plugin : availablePlugins)
 			{
 				if (plugin.getAccess().equalsIgnoreCase("rc2s-usergrp")
-				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(Main.getAuthenticatedUser())))
+				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(EJB.getAuthenticatedUser())))
 				{
 					log.info("Initializing plugin " + plugin.getName());
                     

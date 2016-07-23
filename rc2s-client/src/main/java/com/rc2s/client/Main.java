@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.rc2s.client.utils.Resources;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.common.vo.User;
 import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -18,9 +17,7 @@ import java.util.ArrayList;
 public class Main extends Application
 {
     private static Stage stage;
-    
-	private static User user;
-    
+        
     private static ProgrammaticLogin pm;
     
     private static ArrayList<Thread> threadPool;
@@ -67,7 +64,7 @@ public class Main extends Application
 			interruptChildrenProcesses();
 
 			// Then logout and close the EJB context
-            if(Main.user != null && Main.pm != null) 
+            if(EJB.getAuthenticatedUser() != null && Main.pm != null) 
                 Main.pm.logout();
 
             EJB.closeContext();
@@ -86,17 +83,7 @@ public class Main extends Application
     {
         return stage;
     }
-	
-	public static void setAuthenticatedUser(final User user)
-	{
-		Main.user = user;
-	}
-	
-	public static User getAuthenticatedUser()
-	{
-		return Main.user;
-	}
-    
+	    
     public static ProgrammaticLogin getProgrammaticLogin()
     {
         return Main.pm;

@@ -101,7 +101,7 @@ public class LoginController implements Initializable
 
 								if(user != null)
 								{
-									Main.setAuthenticatedUser(user);
+									EJB.setAuthenticatedUser(user);
 
 									log.info("Access granted for user " + user.getUsername());
 

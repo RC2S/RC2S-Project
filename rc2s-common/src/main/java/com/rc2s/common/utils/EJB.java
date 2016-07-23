@@ -1,6 +1,7 @@
 package com.rc2s.common.utils;
 
 import com.rc2s.common.exceptions.RC2SException;
+import com.rc2s.common.vo.User;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -20,10 +21,12 @@ public class EJB
 	private static final Integer RTSP_PORT = 5555;
 
 	private static String serverIp = "127.0.0.1";
+    
 	private static String serverPort = "3700";
 
 	private static InitialContext context;
 
+    private static User user;
 	/**
 	 * initContext
 	 * 
@@ -116,4 +119,14 @@ public class EJB
 	{
 		return EJB.RTSP_PORT;
 	}
+
+    public static User getAuthenticatedUser()
+    {
+        return EJB.user;
+    }
+
+    public static void setAuthenticatedUser(final User user)
+    {
+        EJB.user = user;
+    }
 }

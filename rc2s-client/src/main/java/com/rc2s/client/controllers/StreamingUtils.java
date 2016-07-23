@@ -71,9 +71,9 @@ public class StreamingUtils extends Thread
             String mrl = new RtspMrl().host(Tools.getIPAdress()).port(EJB.getRtspPort()).path("/" + id).value();
 
             System.err.println("------- Start StreamingUtils RMI -------");
-			System.err.println("User : " + Main.getAuthenticatedUser().toString());
+			System.err.println("User : " + EJB.getAuthenticatedUser().toString());
 			System.err.println("MRL : " + mrl);
-            streamingEJB.startStreaming(Main.getAuthenticatedUser(), mrl);
+            streamingEJB.startStreaming(EJB.getAuthenticatedUser(), mrl);
             setStreamingState(StreamingState.PLAY);
             System.err.println("------- Thread join -------");
 
@@ -106,7 +106,7 @@ public class StreamingUtils extends Thread
 		catch (InterruptedException | UnknownHostException e) {}
         
 		System.err.println("------- Stop StreamingUtils RMI -------");
-		streamingEJB.stopStreaming(Main.getAuthenticatedUser());
+		streamingEJB.stopStreaming(EJB.getAuthenticatedUser());
 		System.err.println("------- Stop Media Player -------");
 		mediaPlayer.stop();
 		mediaPlayer.release();

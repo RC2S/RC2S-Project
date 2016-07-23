@@ -300,7 +300,7 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					User user = usersTable.getSelectionModel().getSelectedItem();
 					
-					if (!Main.getAuthenticatedUser().equals(user))
+					if (!EJB.getAuthenticatedUser().equals(user))
 					{
 						ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this user account?");
 
