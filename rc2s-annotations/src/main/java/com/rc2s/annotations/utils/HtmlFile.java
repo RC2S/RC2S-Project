@@ -53,8 +53,8 @@ public class HtmlFile
         }
 		catch (IOException ex)
 		{
-            Logger.getLogger(HtmlFile.class.getName()).log(Level.SEVERE, null,
-                ex);
+            Logger.getLogger(HtmlFile.class.getName())
+					.log(Level.SEVERE, null,ex);
             return false;
         }
 		return true;
@@ -219,6 +219,7 @@ public class HtmlFile
 			}
 			builder.append("</div>");
 		}
+		
 		return builder.toString();
 	}
 }

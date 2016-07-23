@@ -27,7 +27,6 @@ import javax.lang.model.util.Elements;
 public class SourceControlProcessor extends AbstractProcessor
 {
     private Elements    elementUtils;
-    private Messager    messager;
 
 	/**
 	 * Initialize SourceControlProcessor
@@ -40,8 +39,8 @@ public class SourceControlProcessor extends AbstractProcessor
     public synchronized void init(final ProcessingEnvironment processingEnv)
     {
         super.init(processingEnv);
+		
         elementUtils    = processingEnv.getElementUtils();
-        messager        = processingEnv.getMessager();
     }
     
 	/**
@@ -57,8 +56,9 @@ public class SourceControlProcessor extends AbstractProcessor
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv)
     {
-		Analysor analysor = new Analysor(elementUtils, messager);
-		ElementMapper mainClass = null;
+		Analysor analysor = new Analysor(elementUtils);
+		
+		ElementMapper mainClass;
 		
         for (TypeElement te : annotations)
         {

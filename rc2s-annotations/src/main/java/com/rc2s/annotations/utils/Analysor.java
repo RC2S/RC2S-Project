@@ -21,9 +21,6 @@ import javax.lang.model.util.Elements;
 public class Analysor
 {
 	private final Elements elementUtils;
-	
-	// Compile messager
-	private final Messager messager;
 
 	public static List<String> processedClasses = new ArrayList();
 	
@@ -33,10 +30,9 @@ public class Analysor
 	 * @param els
 	 * @param msgr 
 	 */
-	public Analysor(final Elements els, final Messager msgr)
+	public Analysor(final Elements els)
 	{
 		this.elementUtils = els;
-		this.messager = msgr;
 	}
 	
 	/**
