@@ -102,11 +102,11 @@ public class PluginLoaderService implements IPluginLoaderService
 						for (Path file : ds)
 							Files.delete(file);
 					}
-					catch(IOException e) { /* Ignore and try to delete the directory */ }
+					catch (IOException e) { /* Ignore and try to delete the directory */ }
 					Files.delete(unzipedDir);
 				}
 			}
-			catch(IOException e)
+			catch (IOException e)
 			{
 				throw new ServiceException(e);
 			}
@@ -162,7 +162,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			
 			return folderPath;
         }
-        catch(IOException e)
+        catch (IOException e)
         {
 		   throw e;
         }
@@ -192,7 +192,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			
 			return tmpEar;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw e;
 		}
@@ -222,7 +222,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			
 			return tmpJar;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw e;
 		}
@@ -281,7 +281,7 @@ public class PluginLoaderService implements IPluginLoaderService
 			plugin = pluginDAO.getByName(pluginName);
 			update = true;
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			plugin = new Plugin();
 		}
@@ -311,7 +311,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
 		File pluginClient = new File(jnlpLibsDir + simpleName + "_client.jar");
 		
-		if(pluginClient.exists())
+		if (pluginClient.exists())
 			pluginClient.delete();
         
         jnlpService.updateJNLP(simpleName + "_client.jar", true);
@@ -320,7 +320,7 @@ public class PluginLoaderService implements IPluginLoaderService
 		String autodeployDir = getDomainRoot() + "autodeploy" + File.separator;
 		File pluginServer = new File(autodeployDir + simpleName + "_server.ear");
 		
-		if(pluginServer.exists())
+		if (pluginServer.exists())
 			pluginServer.delete();
 		
 		pluginService.delete(plugin);
@@ -337,14 +337,14 @@ public class PluginLoaderService implements IPluginLoaderService
 		
 		if (domainRoot != null)
 		{
-			if(domainRoot.startsWith("file:\\"))
+			if (domainRoot.startsWith("file:\\"))
 				domainRoot = domainRoot.replace("file:\\", "");
-			else if(domainRoot.startsWith("file://"))
+			else if (domainRoot.startsWith("file://"))
 				domainRoot = domainRoot.replace("file://", "");
-			else if(domainRoot.startsWith("file:/"))
+			else if (domainRoot.startsWith("file:/"))
 				domainRoot = domainRoot.replace("file:", "");
 
-			if(System.getProperty("os.name").toLowerCase().contains("windows"))
+			if (System.getProperty("os.name").toLowerCase().contains("windows"))
 				domainRoot = domainRoot.substring(1); // Remove leading slash on Windows
 		}
 		

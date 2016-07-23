@@ -53,7 +53,7 @@ public class TrackService implements ITrackService
             track.setCreated(new Date());
             return trackDAO.save(track);
         }
-        catch(DAOException e)
+        catch (DAOException e)
         {
             throw new ServiceException(e);
         }
@@ -75,7 +75,7 @@ public class TrackService implements ITrackService
         {
             return trackDAO.update(track);
         }
-        catch(DAOException e)
+        catch (DAOException e)
         {
             throw new ServiceException(e);
         }
@@ -96,7 +96,7 @@ public class TrackService implements ITrackService
         {
             trackDAO.delete(track.getId());
         }
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -118,7 +118,7 @@ public class TrackService implements ITrackService
         {
             return trackDAO.getTracksByUser(user);
         }
-        catch(DAOException e)
+        catch (DAOException e)
         {
             throw new ServiceException(e);
         }

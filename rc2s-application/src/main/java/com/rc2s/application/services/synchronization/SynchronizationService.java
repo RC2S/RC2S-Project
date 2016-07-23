@@ -50,7 +50,7 @@ public class SynchronizationService implements ISynchronizationService
 		{
 			return synchronizationDAO.getAll();
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -72,7 +72,7 @@ public class SynchronizationService implements ISynchronizationService
 		{
 			return synchronizationDAO.getByUser(user);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
@@ -94,7 +94,7 @@ public class SynchronizationService implements ISynchronizationService
 			synchronization.setCreated(new Date());
 			synchronizationDAO.save(synchronization);
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}

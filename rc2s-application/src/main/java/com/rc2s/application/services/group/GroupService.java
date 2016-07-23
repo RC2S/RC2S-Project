@@ -48,7 +48,7 @@ public class GroupService implements IGroupService
 		{
 			return roleDAO.getAll();
 		}
-		catch(DAOException e)
+		catch (DAOException e)
 		{
 			throw new ServiceException(e);
 		}
