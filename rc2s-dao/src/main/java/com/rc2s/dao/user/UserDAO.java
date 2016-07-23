@@ -35,6 +35,7 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO
 			Query query = em().createQuery("SELECT u from User as u WHERE u.username = :username AND u.password = :password AND u.activated = 1 AND u.locked = 0")
 							  .setParameter("username", username)
 							  .setParameter("password", password);
+			
 			return (User)query.getSingleResult();
 		}
 		catch(Exception e)
@@ -60,6 +61,7 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO
 			Query query = em().createQuery("UPDATE User SET lastLogin = :lastLogin WHERE id = :id")
 							  .setParameter("lastLogin", new Date())
 							  .setParameter("id", user.getId());
+			
 			return query.executeUpdate();
 		}
 		catch(Exception e)
