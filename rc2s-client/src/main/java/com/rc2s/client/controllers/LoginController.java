@@ -83,28 +83,28 @@ public class LoginController implements Initializable
 				@Override
 				public void run()
 				{
-					Platform.runLater(() -> {
+					try
+					{
+						// Init Programmatic Login
+						Main.getProgrammaticLogin().login(username, password.toCharArray());
+
+						// Init EJB context
+						EJB.initContext(ip, null);
+
+						UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
+
 						try
 						{
-							// Init Programmatic Login
-							Main.getProgrammaticLogin().login(username, password.toCharArray());
+							// Get the authenticated user
+							User user = userEJB.getAuthenticatedUser(username, password);
 
-							// Init EJB context
-							EJB.initContext(ip, null);
-
-							UserFacadeRemote userEJB = (UserFacadeRemote) EJB.lookup("UserEJB");
-
-							try
+							if(user != null)
 							{
-								// Get the authenticated user
-								User user = userEJB.getAuthenticatedUser(username, password);
+								Main.setAuthenticatedUser(user);
 
-								if(user != null)
-								{
-									Main.setAuthenticatedUser(user);
+								log.info("Access granted for user " + user.getUsername());
 
-									log.info("Access granted for user " + user.getUsername());
-
+								Platform.runLater(() -> {
 									FXMLLoader loader = Resources.loadFxml("HomeView");
 									Scene scene = new Scene((Parent) loader.getRoot());
 
@@ -112,41 +112,51 @@ public class LoginController implements Initializable
 									Main.getStage().setMinWidth(scene.getWidth());
 									Main.getStage().setMinHeight(scene.getHeight());
 									Main.getStage().show();
-								}
-								else
-								{
-									errorLabel.setText("Authentication failed");
-								}
+								});
+
+								disable(false);
 							}
-							catch (EJBException e)
+							else
 							{
-								log.error(e.getMessage());
-								errorLabel.setText("Authentication failed");
-								log.error("Authentication failed");
+								Platform.runLater(() -> errorLabel.setText("Authentication failed"));
+								disable(false);
 							}
 						}
-						catch (Exception e)
+						catch (EJBException e)
 						{
 							log.error(e.getMessage());
-							errorLabel.setText("Unable to connect to the server");
+							Platform.runLater(() -> errorLabel.setText("Authentication failed"));
+							log.error("Authentication failed");
+							disable(false);
 						}
-					});
+					}
+					catch (Exception e)
+					{
+						log.error(e.getMessage());
+						Platform.runLater(() -> errorLabel.setText("Unable to connect to the server"));
+						disable(false);
+					}
 				}
 			}.start();
         }
         else
 		{
             errorLabel.setText("Invalid IP address");
+			disable(false);
 		}
-		
-		disable(false);
     }
 	
 	private void disable(final boolean state)
 	{
-		ipField.setDisable(state);
-		usernameField.setDisable(state);
-		passwordField.setDisable(state);
-		connectButton.setDisable(state);
+		Platform.runLater(() -> {
+			ipField.setEditable(!state);
+			ipField.setDisable(state);
+			usernameField.setEditable(!state);
+			usernameField.setDisable(state);
+			passwordField.setEditable(!state);
+			passwordField.setDisable(state);
+
+			connectButton.setDisable(state);
+		});
 	}
 }

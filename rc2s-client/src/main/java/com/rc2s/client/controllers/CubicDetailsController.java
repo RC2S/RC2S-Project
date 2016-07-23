@@ -174,18 +174,18 @@ public class CubicDetailsController extends TabController implements Initializab
 			@Override
 			public void run()
 			{
-				Platform.runLater(() ->  {
-					try
-					{
-						boolean state = cubeEJB.getStatus(cube);
-						statusLabel.setText(state ? "Online" : "Offline");
-					}
-					catch (EJBException e)
-					{
+				try
+				{
+					boolean state = cubeEJB.getStatus(cube);
+					Platform.runLater(() -> statusLabel.setText(state ? "Online" : "Offline"));
+				}
+				catch (EJBException e)
+				{
+					Platform.runLater(() -> {
 						error(e.getMessage());
 						statusLabel.setText("Offline");
-					}
-				});
+					});
+				}
 			}
 		}.start();
 		
