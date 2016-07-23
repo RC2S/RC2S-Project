@@ -1,6 +1,6 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
+import com.rc2s.common.client.utils.TabController;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.client.utils.Resources;
 import com.rc2s.common.client.utils.Tools;

@@ -1,6 +1,5 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
 import com.rc2s.common.client.utils.ThreadPool;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 

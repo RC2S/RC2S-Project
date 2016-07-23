@@ -1,5 +1,6 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.common.client.utils.TabController;
 import com.rc2s.common.client.utils.Dialog;
 import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;

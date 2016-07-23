@@ -1,6 +1,6 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
+import com.rc2s.common.client.utils.TabController;
 import com.rc2s.client.components.LedCube;
 import com.rc2s.client.components.LedEvent;
 import com.rc2s.common.client.utils.Dialog;

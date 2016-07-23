@@ -1,4 +1,4 @@
-package com.rc2s.client.controllers;
+package com.rc2s.common.client.utils;
 
 import javafx.scene.control.Tab;
 
