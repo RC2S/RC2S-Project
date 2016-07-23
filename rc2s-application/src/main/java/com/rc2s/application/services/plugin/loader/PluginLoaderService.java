@@ -192,8 +192,6 @@ public class PluginLoaderService implements IPluginLoaderService
 			if (!Files.exists(tmpEar))
 				return null;
 			
-			// TODO: Check the EAR content
-			
 			return tmpEar;
 		}
 		catch (Exception e)
@@ -221,8 +219,6 @@ public class PluginLoaderService implements IPluginLoaderService
 			
 			if (!Files.exists(tmpJar))
 				return null;
-			
-			// TODO: Check the JAR content
 			
 			return tmpJar;
 		}
