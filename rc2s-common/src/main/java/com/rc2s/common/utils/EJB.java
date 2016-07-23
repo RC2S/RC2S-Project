@@ -10,8 +10,8 @@ import javax.naming.NamingException;
  * EJB
  * 
  * Basic implementation to use EJBs
- * Contains all the methods necessary to EJBs to be initializable,
- * usable and set
+ * Contains all the methods necessary to EJBs
+ * to be initializable, usable and set
  * 
  * @author RC2S
  */
