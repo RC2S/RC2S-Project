@@ -13,15 +13,11 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import com.rc2s.annotations.SourceControl;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
-import java.util.Properties;
-import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  * StreamingService
