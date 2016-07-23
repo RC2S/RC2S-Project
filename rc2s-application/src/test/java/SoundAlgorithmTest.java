@@ -46,10 +46,10 @@ public class SoundAlgorithmTest {
 		DATALINE.add(UNIQUE_VALUE);
 	}
 	
-	private static void prepareStableDecreasingData()
+	private static void prepareRandomData()
 	{
 		for (int val = 100; val > -1; val--)
-			DATALINE.add(val);
+			DATALINE.add((int) (Math.random() * 100));
 	}
 	/**
 	 * END Data preparation for line variation
@@ -91,20 +91,15 @@ public class SoundAlgorithmTest {
 	}
 	
 	@Test
-	public void getLineVariationStableData()
+	public void getLineVariationRandomData()
 	{
 		instanciateCallbackAdapter(CHOSEN_DIMENSIONS, LIGHT_MODE);
 		
-		prepareStableDecreasingData();
+		prepareRandomData();
 		
-		int notAbsResult	= callback.getLineVariation(DATALINE, NOT_ABSOLUTE);
 		int absResult		= callback.getLineVariation(DATALINE, ABSOLUTE);
 		
-		assertTrue(notAbsResult < 0);
 		assertTrue(absResult > 0);
-		
-		assertEquals(100, notAbsResult);
-		assertEquals(100, absResult);
 	}
 	/**
 	 * END getLineVariation() tests

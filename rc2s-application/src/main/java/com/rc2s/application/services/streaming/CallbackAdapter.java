@@ -325,13 +325,14 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		int variation = 0;
 		int prev = 0;
 		
-		if (datas.size() > 0)
-			prev = datas.get(0);
-		else
+		if (datas.size() < 1)
 			return 0;
-		
-		if (datas.size() > 1)
+		else if (datas.size() == 1)
+			return absolute ? Math.abs(datas.get(0)) : datas.get(0);
+		else
 		{
+			prev = datas.get(0);
+			
 			for (int index = 1; index < datas.size(); index++)
 			{
 				if (absolute)
@@ -344,8 +345,6 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 			
 			return variation;
 		}
-		else
-			return prev;
 	}
 	
 	/**
