@@ -9,6 +9,13 @@ import com.rc2s.annotations.SourceControl;
 import javax.ejb.Local;
 import java.util.List;
 
+/**
+ * ITrackDAO
+ * 
+ * Interface for tracks management
+ * 
+ * @author RC2S
+ */
 @Local
 //@SourceControl
 public interface ITrackDAO extends IGenericDAO<Track>

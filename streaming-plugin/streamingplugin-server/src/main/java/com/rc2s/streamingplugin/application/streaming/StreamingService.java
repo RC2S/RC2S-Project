@@ -45,41 +45,25 @@ public class StreamingService implements IStreamingService
     
     // Synchronisation object to wait for the audio to finish.
     private Semaphore sync = new Semaphore(0);
+
 	private CallbackUtils callbackUtils;
+
+	private Thread syncThread;
 
     private MediaPlayerFactory factory;
     private DirectAudioPlayer audioPlayer;
 
-	/**
-	 * 1. The attributes initialization was moved in the start method in order to be able to stream
-	 * multiple tracks one after another.
-	 * The major problem here is that when a new track is being played, it will overwrite the previous
-	 * one's attribute values, leading to unknown behaviour.
-	 * In addition, the streamed content is read from a static URL : 127.0.0.1:5555/audio. What happens
-	 * if two people are streaming at the same time?
-	 *
-	 * 2. It is *NOT* possible to bundle the VLC native libs (libvlc, libvlccore) for one simple reason:
-	 * it requires to have access to the "plugins" directory content from VLC installation folder
-	 * in the same directory as the currently running native library (i.e. the temp directory).
-	 */
 	public StreamingService()
     {
 		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
 			
 	    try
-		{
-			/*Properties props = new Properties();
-			props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
-			props.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
-			props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-			props.put("org.omg.CORBA.ORBInitialHost", EJB.serverIp);
-			props.put("org.omg.CORBA.ORBInitialPort", EJB.serverPort);*/
-            
+		{            
 			initialContext = new InitialContext();
 			daemonService = (DaemonFacadeRemote) initialContext.lookup("DaemonEJB");
 		}
-		catch (Exception e) { System.out.println("azeaze"); }
+		catch (Exception e) {}
 	}
 
 	/**
@@ -92,80 +76,94 @@ public class StreamingService implements IStreamingService
     @Override
     public void start(final String mrl)
     {
+		if(factory != null) {
+			synchronized (factory) {}
+		}
+
 		factory = new MediaPlayerFactory();
-		callbackUtils = new CallbackUtils(this, 4, getSyncSize());
+
+		callbackUtils = new CallbackUtils(this, 4, getSyncSize(), 'S');
 
 		// newDirectAudioPlayer(format, rate, channel, new callback(blocksize of samples))
 		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, callbackUtils);
 
 		audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-            public void playing(MediaPlayer mediaPlayer) {
+			
+            public void playing(MediaPlayer mediaPlayer)
+			{
 				log.info("playing()");
 			}
 
-			public void finished(MediaPlayer mediaPlayer) {
+			public void finished(MediaPlayer mediaPlayer)
+			{
 				log.info("finished()");
 				log.info("Release waiter...");
 				sync.release();
 				log.info("After release waiter");
 			}
 
-			public void error(MediaPlayer mediaPlayer) {
+			public void error(MediaPlayer mediaPlayer)
+			{
 				log.info("error()");
 			}
 		});
 
-		Thread thread = new Thread() {
+		syncThread = new Thread() {
+			
 			public void run() {
-				synchronized (audioPlayer) {
-					log.info("Begin start " + mrl);
-					audioPlayer.playMedia(mrl);
-				}
+
+				log.info("Begin start " + mrl);
+				audioPlayer.playMedia(mrl);
 
 				log.info("Waiting for finished...");
 
-				try {
-					// Slight race condition in theory possible if the audio finishes immediately
-					// (but this is just a test so it's good enough)...
+				try
+				{
 					sync.acquire();
-				} catch (InterruptedException e) {
-					log.error(e);
 				}
+				catch (InterruptedException e) {}
 
 				log.info("Finished, releasing native resources...");
-
-				if (audioPlayer.isPlaying())
-				{
-					audioPlayer.release();
-					factory.release();
-				}
-
+				cleanup();
 				log.info("All done");
 			}
 		};
-		thread.start();
+		syncThread.start();
     }
 
 	/**
 	 * stop
 	 * 
-	 * Stop streaming
+	 * Stop streaming by interrupting the Semaphore Thread.
 	 */
     @Override
     public void stop()
     {
+		syncThread.interrupt();
+    }
+
+	/**
+	 * cleanup
+	 *
+	 * Release all the resources allocated to the current streaming session.
+	 */
+	public void cleanup()
+	{
 		synchronized (factory) {
 			log.info("Stop streaming");
-			
-            if (audioPlayer.isPlaying()) {
-				audioPlayer.stop();
 
+			if (audioPlayer.isPlaying()) {
+				log.info("Releasing sync...");
 				sync.release();
+				log.info("Releasing audio player...");
 				audioPlayer.release();
+				log.info("Releasing factory...");
 				factory.release();
 			}
+
+			log.info("Streaming stopped!");
 		}
-    }
+	}
 
 	/**
 	 * processCoordinates
@@ -232,16 +230,14 @@ public class StreamingService implements IStreamingService
 	public int[] getSyncSize()
 	{
 		int[] syncSize = new int[] {0, 0, 0, 0};
-		int nCubes = 0;
-
+		
 		if (synchronization != null)
 		{
 			boolean first = true;
 
 			for (Cube cube : synchronization.getCubes())
 			{
-				System.out.println("LOG : ncubes + 1");
-				nCubes++;
+				syncSize[3]++;
 				
 				syncSize[0] += cube.getSize().getX();
 
@@ -258,9 +254,6 @@ public class StreamingService implements IStreamingService
 					syncSize[2] = Math.min(cube.getSize().getZ(), syncSize[2]);
 				}
 			}
-			
-			// Get number of cubes
-			syncSize[3] = nCubes;
 		}
 		
 		return syncSize;

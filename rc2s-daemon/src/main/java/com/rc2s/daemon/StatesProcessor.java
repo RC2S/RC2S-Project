@@ -7,6 +7,16 @@ import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * StatesProcessor
+ * 
+ * Queue of 'packets' for the management of the sound algorithm
+ * 
+ * When packets can be read, they are, otherwise packets are
+ * stored during broadcast in a queue to be read later
+ * 
+ * @author RC2S
+ */
 public class StatesProcessor implements Runnable
 {
     private static final int RPI_GPIO_LIMIT = 9;
@@ -38,8 +48,9 @@ public class StatesProcessor implements Runnable
 				daemon.getHardware().clear();
 				daemon.getHardware().send();
 			}
-			catch(NoSuchElementException e) {}
-        } while(daemon.isRunning());
+			catch (NoSuchElementException e) {}
+			
+        } while (daemon.isRunning());
     }
 
     private void sweep(final Packet packet)
@@ -63,13 +74,13 @@ public class StatesProcessor implements Runnable
     {
         boolean[][] states = stage.getStates();
 
-        for(int i = 0; i < states.length; i++)
+        for (int i = 0; i < states.length; i++)
         {
-            for(int j = 0; j < states[i].length; j++)
+            for (int j = 0; j < states[i].length; j++)
             {
                 GpioPinDigitalOutput gpdo = null;
 
-                if(states[i][j])
+                if (states[i][j])
                 {
                     gpdo = daemon.getHardware().bit();
                 }

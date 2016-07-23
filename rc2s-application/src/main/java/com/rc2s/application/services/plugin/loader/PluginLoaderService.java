@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
  * PluginLoaderService
  * 
  * Service for plugin loading management
- * Access to databse via IPluginService
+ * Access to database via IPluginService
  * 
  * @author RC2S
  */
@@ -96,13 +96,15 @@ public class PluginLoaderService implements IPluginLoaderService
 				if (tmpZip != null)
 					Files.delete(tmpZip);
 
-				if (unzipedDir != null) {
+				if (unzipedDir != null)
+				{
 					try (DirectoryStream<Path> ds = Files.newDirectoryStream(unzipedDir))
 					{
 						for (Path file : ds)
 							Files.delete(file);
 					}
 					catch (IOException e) { /* Ignore and try to delete the directory */ }
+					
 					Files.delete(unzipedDir);
 				}
 			}
@@ -155,9 +157,11 @@ public class PluginLoaderService implements IPluginLoaderService
                     Path dir = Paths.get(filePath);
                     Files.createDirectory(dir);
                 }
+				
                 zipIn.closeEntry();
                 entry = zipIn.getNextEntry();
             }
+			
             zipIn.close();
 			
 			return folderPath;
@@ -253,7 +257,9 @@ public class PluginLoaderService implements IPluginLoaderService
     @Override
     public void deployClientPlugin(final String simpleName, final Path tmpJar) throws IOException
     {
-		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator
+				+ "rc2s-jnlp" + File.separator
+				+ "libs" + File.separator;
 		jnlpService.signJar(tmpJar.toString());
         Path pluginPath = Paths.get(jnlpLibsDir, simpleName + "_client.jar");
 		Files.copy(tmpJar, pluginPath, StandardCopyOption.REPLACE_EXISTING);
@@ -262,8 +268,6 @@ public class PluginLoaderService implements IPluginLoaderService
 	
 	/**
 	 * persistPlugin
-	 * 
-	 * Make the plugin persistent
 	 * 
 	 * @param pluginName
 	 * @param group
@@ -299,6 +303,8 @@ public class PluginLoaderService implements IPluginLoaderService
 	/**
 	 * deletePlugin
 	 * 
+	 * Delete the given plugin from db
+	 * 
 	 * @param plugin
 	 * @throws ServiceException 
 	 */
@@ -308,7 +314,9 @@ public class PluginLoaderService implements IPluginLoaderService
 		String simpleName = plugin.getName().toLowerCase().replace(" ", "");
 		
 		// Remove Client Plugin
-		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator + "rc2s-jnlp" + File.separator + "libs" + File.separator;
+		String jnlpLibsDir = getDomainRoot() + "applications" + File.separator
+				+ "rc2s-jnlp" + File.separator
+				+ "libs" + File.separator;
 		File pluginClient = new File(jnlpLibsDir + simpleName + "_client.jar");
 		
 		if (pluginClient.exists())

@@ -6,6 +6,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+/**
+ * Listener
+ * 
+ * Daemon's runnable listener used for packets reception
+ * 
+ * @author RC2S
+ */
 public class Listener extends Thread
 {
 	private static final int BUFFER_LENGHT = 1024;
@@ -24,10 +31,12 @@ public class Listener extends Thread
 		this.daemon = daemon;
 		this.port = port;
 			
-		try {
+		try
+		{
 			this.socket = new DatagramSocket(port);
 		}
-		catch(SocketException e) {
+		catch(SocketException e)
+		{
 			e.printStackTrace();
 		}
     }

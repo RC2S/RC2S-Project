@@ -2,6 +2,15 @@ package com.rc2s.daemon.network;
 
 import java.io.Serializable;
 
+/**
+ * Packet
+ * 
+ * Represents a packet received by the daemon's listener
+ * Shall contain informations for GPIO manipulation, that
+ * will be followed by leds lightening
+ * 
+ * @author RC2S
+ */
 public class Packet implements Serializable
 {
     private long duration;

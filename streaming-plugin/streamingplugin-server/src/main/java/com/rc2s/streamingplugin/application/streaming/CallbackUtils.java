@@ -51,7 +51,8 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 	
     private final Logger log = LogManager.getLogger(CallbackUtils.class);
     
-    public CallbackUtils(final StreamingService streamingService, final int blockSize, final int[] syncDimensions)
+    public CallbackUtils(final StreamingService streamingService, 
+            final int blockSize, final int[] syncDimensions, char lighteningWanted)
     {
         super(blockSize);
 		this.streamingService = streamingService;
@@ -62,13 +63,17 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 		
 		algoEffect = getAlgoEffect((int) (Math.random() * 6));
 		
-		lightening = 'S';
+		lightening = lighteningWanted;
 		
+		// If lightening set to 'Light', we should take algoEffect
+		// in consideration to guess lightening size
 		algoNeededSize = (lightening == 'L' ? algoEffect.getSize() : 1);
 		
-		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
+		// Initialize our lightening coordinates array
+		positionsToLighten = new int[algoNeededSize * getLighteningSize()][3];
 		lighteningIndex = 0;
 		
+		// Lists for sound computing
 		lineMinAnalysis = new ArrayList<>();
 		lineMaxAnalysis = new ArrayList<>();
 		lineAvgAnalysis = new ArrayList<>();
@@ -113,7 +118,7 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 	 * @param lightening
 	 * @return int factor of LEDs lightening 
 	 */
-	private int getLighteningSize(final char lightening)
+	public int getLighteningSize()
 	{
 		switch (lightening)
 		{
@@ -318,22 +323,31 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 	 * @param absolute
 	 * @return Overall variation
 	 */
-	private int getLineVariation(final List<Integer> datas, final boolean absolute) // Let's keep absolute in case we want to generate 2 points and not 1
+	public int getLineVariation(final List<Integer> datas, final boolean absolute) // Keep absolute in case we want to generate 2 points and not 1
 	{
 		int variation = 0;
-		int prev = datas.get(0);
+		int prev = 0;
 		
-		for (int index = 1; index < datas.size(); index++)
+		if (datas.size() < 1)
+			return 0;
+		else if (datas.size() == 1)
+			return absolute ? Math.abs(datas.get(0)) : datas.get(0);
+		else
 		{
-			if (absolute)
-				variation += Math.abs(datas.get(index) - prev);
-			else
-				variation += datas.get(index) - prev;
+			prev = datas.get(0);
 			
-			prev = datas.get(index);
+			for (int index = 1; index < datas.size(); index++)
+			{
+				if (absolute)
+					variation += Math.abs(datas.get(index) - prev);
+				else
+					variation += datas.get(index) - prev;
+
+				prev = datas.get(index);
+			}
+			
+			return variation;
 		}
-		
-		return variation;
 	}
 	
 	/**
@@ -353,11 +367,11 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 		switch (this.lightening)
 		{
 			case 'C':
-				addCubePositions(pos_x, pos_y, false, pos_z);
+				addCubePositions(pos_x, pos_y, false);
 				break;
 				
 			case 'S':
-				addCubePositions(pos_x, pos_y, true, pos_z);
+				addCubePositions(pos_x, pos_y, true);
 				break;
 				
 			case 'L':
@@ -398,9 +412,8 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 	 * @param x_size
 	 * @param pos_y
 	 * @param isStaged
-	 * @param pos_z 
 	 */
-	private void addGroupPositionsToLighteningList(int firstXLight, int x_size, final int pos_y, boolean isStaged, final int pos_z)
+	private void addGroupPositionsToLighteningList(final int firstXLight, final int x_size, final int pos_y, boolean isStaged)
 	{
 		int i, j, k;
 		
@@ -433,7 +446,7 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 	 * @param isStaged
 	 * @param pos_z 
 	 */
-	private void addCubePositions(final int pos_x, final int pos_y, boolean isStaged, final int pos_z)
+	private void addCubePositions(final int pos_x, final int pos_y, boolean isStaged)
 	{
 		// More than 1 cube
 		if (numCubes != 1)
@@ -448,11 +461,11 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 			int firstXLight = lightCube * x_size;
 			
 			// Now we shall light with firstXLight <= x <= firstXLight + x_size - 1
-			addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged, pos_z);
+			addGroupPositionsToLighteningList(firstXLight, x_size, pos_y, isStaged);
 		}
 		// Only one cube - Add everything on all ranges
 		else
-			addGroupPositionsToLighteningList(0, syncHeight, pos_y, isStaged, pos_z);
+			addGroupPositionsToLighteningList(0, syncHeight, pos_y, isStaged);
 	}
 	
 	/**
@@ -627,7 +640,7 @@ public class CallbackUtils extends DefaultAudioCallbackAdapter
 	{
 		streamingService.processCoordinates(positionsToLighten);
 
-		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
+		positionsToLighten = new int[algoNeededSize * getLighteningSize()][3];
 		lighteningIndex = 0;
 		
 		lineMaxAnalysis.clear();

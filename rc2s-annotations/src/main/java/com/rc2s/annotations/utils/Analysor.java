@@ -14,28 +14,25 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.Elements;
 
 /**
- * Analysor 
+ * Analysor (class analysor)
  * 
  * @author RC2S
  */
 public class Analysor
 {
 	private final Elements elementUtils;
-	
-	// Compile messager
-	private final Messager messager;
 
 	public static List<String> processedClasses = new ArrayList();
 	
 	/**
+	 * Construct an Analysor
 	 * 
 	 * @param els
 	 * @param msgr 
 	 */
-	public Analysor(final Elements els, final Messager msgr)
+	public Analysor(final Elements els)
 	{
 		this.elementUtils = els;
-		this.messager = msgr;
 	}
 	
 	/**

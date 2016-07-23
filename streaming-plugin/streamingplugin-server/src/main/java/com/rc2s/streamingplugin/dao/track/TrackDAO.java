@@ -10,10 +10,26 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * TrackDAO
+ * 
+ * ITrackDAO implementation, bridge for database tracks management
+ * 
+ * @author RC2S
+ */
 @Stateless
 //@SourceControl
 public class TrackDAO extends GenericDAO<Track> implements ITrackDAO
 {
+	/**
+	 * getTracksByUser
+	 * 
+	 * Get all the tracks for the given user
+	 * 
+	 * @param user
+	 * @return List<Track> the user's tracks
+	 * @throws DAOException 
+	 */
     @Override
     public List<Track> getTracksByUser(final User user) throws DAOException
     {

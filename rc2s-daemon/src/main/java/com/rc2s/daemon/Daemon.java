@@ -5,6 +5,16 @@ import com.rc2s.daemon.network.Listener;
 import com.rc2s.daemon.network.Packet;
 import com.rc2s.daemon.network.Stage;
 
+/**
+ * Daemon
+ * 
+ * Main daemon runnable class
+ * 
+ * Listen on 1337, uses Hardware class for GPIO manipulation
+ * and StatesProcessor for sound algorithm management
+ * 
+ * @author RC2S
+ */
 public class Daemon implements Runnable
 {
     private final Hardware hardware;

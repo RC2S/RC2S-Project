@@ -41,7 +41,7 @@ public class UserService implements IUserService
 	/**
 	 * getAuthenticatedUser
 	 * 
-	 * Retrieve a User object on the usernamepassword control basis
+	 * Retrieve a User object on the username/password control basis
 	 * 
 	 * @param username
 	 * @param password

@@ -20,6 +20,8 @@ import javafx.scene.input.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -42,8 +44,10 @@ import java.util.ResourceBundle;
 //@SourceControl
 public class MainController extends TabController implements Initializable
 {
+	private final Logger log = LogManager.getLogger(this.getClass());
+
     private final TrackFacadeRemote trackEJB = (TrackFacadeRemote) EJB.lookup("TrackEJB");
-    
+
     private final SynchronizationFacadeRemote syncEJB = (SynchronizationFacadeRemote) EJB.lookup("SynchronizationEJB");
     
 	private final StreamingFacadeRemote streamingEJB = (StreamingFacadeRemote) EJB.lookup("StreamingEJB");
@@ -413,7 +417,7 @@ public class MainController extends TabController implements Initializable
 		}
 
 		playing = false;
-		playPauseButton.setText("Play");
+		playPauseButton.setText(">");
 	}
 
 	private void play()
