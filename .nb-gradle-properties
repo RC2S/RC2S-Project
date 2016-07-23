@@ -18,20 +18,6 @@
       <task-jvm-args/>
     </task>
     <task>
-      <display-name>sign</display-name>
-      <non-blocking>no</non-blocking>
-      <task-names>
-        <name must-exist="no">gradle</name>
-      </task-names>
-      <task-args>
-        <arg>clean</arg>
-        <arg>publishToMavenLocal</arg>
-        <arg>install</arg>
-        <arg>build</arg>
-      </task-args>
-      <task-jvm-args/>
-    </task>
-    <task>
       <display-name>prod</display-name>
       <non-blocking>no</non-blocking>
       <task-names>
@@ -43,6 +29,20 @@
         <arg>install</arg>
         <arg>build</arg>
         <arg>-Penv=prod</arg>
+      </task-args>
+      <task-jvm-args/>
+    </task>
+    <task>
+      <display-name>sign</display-name>
+      <non-blocking>no</non-blocking>
+      <task-names>
+        <name must-exist="no">gradle</name>
+      </task-names>
+      <task-args>
+        <arg>clean</arg>
+        <arg>publishToMavenLocal</arg>
+        <arg>install</arg>
+        <arg>build</arg>
       </task-args>
       <task-jvm-args/>
     </task>
