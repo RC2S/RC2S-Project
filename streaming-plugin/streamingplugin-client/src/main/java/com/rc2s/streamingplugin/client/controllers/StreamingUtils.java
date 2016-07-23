@@ -1,14 +1,16 @@
-package com.rc2s.client.controllers;
+package com.rc2s.streamingplugin.client.controllers;
 
 import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import com.rc2s.streamingplugin.ejb.streaming.StreamingFacadeRemote;
+import com.rc2s.annotations.SourceControl;
 import java.io.File;
 import java.net.UnknownHostException;
 import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
+//@SourceControl
 public class StreamingUtils extends Thread
 {
 	public static enum StreamingState {
@@ -72,7 +74,7 @@ public class StreamingUtils extends Thread
             System.err.println("------- Start StreamingUtils RMI -------");
 			System.err.println("User : " + Tools.getAuthenticatedUser().toString());
 			System.err.println("MRL : " + mrl);
-            streamingEJB.startStreaming(Tools.getAuthenticatedUser(), mrl);
+            streamingEJB.startStreaming(mrl);
             setStreamingState(StreamingState.PLAY);
             System.err.println("------- Thread join -------");
 
@@ -105,7 +107,7 @@ public class StreamingUtils extends Thread
 		catch (InterruptedException | UnknownHostException e) {}
         
 		System.err.println("------- Stop StreamingUtils RMI -------");
-		streamingEJB.stopStreaming(Tools.getAuthenticatedUser());
+		streamingEJB.stopStreaming();
 		System.err.println("------- Stop Media Player -------");
 		mediaPlayer.stop();
 		mediaPlayer.release();

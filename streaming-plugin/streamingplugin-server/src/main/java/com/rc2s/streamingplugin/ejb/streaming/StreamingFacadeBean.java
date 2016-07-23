@@ -1,8 +1,9 @@
-package com.rc2s.ejb.streaming;
+package com.rc2s.streamingplugin.ejb.streaming;
 
-import com.rc2s.application.services.streaming.IStreamingService;
+import com.rc2s.streamingplugin.application.streaming.IStreamingService;
 import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.User;
+import com.rc2s.annotations.SourceControl;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,6 +16,7 @@ import javax.ejb.Stateless;
  * @author RC2S
  */
 @Stateless(mappedName = "StreamingEJB")
+//@SourceControl
 public class StreamingFacadeBean implements StreamingFacadeRemote
 {
     @EJB
@@ -30,7 +32,7 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
 	 */
     @Override
     @RolesAllowed({"user"})
-    public void startStreaming(final User caller, final String mrl)
+    public void startStreaming(final String mrl)
     {
         streamingService.start(mrl);
     }
@@ -43,7 +45,7 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
 	 */
     @Override
     @RolesAllowed({"user"})
-    public void stopStreaming(final User caller)
+    public void stopStreaming()
     {
         streamingService.stop();
     }

@@ -1,10 +1,11 @@
-package com.rc2s.ejb.track;
+package com.rc2s.streamingplugin.ejb.track;
 
-import com.rc2s.application.services.track.ITrackService;
+import com.rc2s.streamingplugin.application.track.ITrackService;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.exceptions.ServiceException;
-import com.rc2s.common.vo.Track;
+import com.rc2s.streamingplugin.common.vo.Track;
 import com.rc2s.common.vo.User;
+import com.rc2s.annotations.SourceControl;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,6 +22,7 @@ import org.apache.logging.log4j.Logger;
  * @author RC2S
  */
 @Stateless(mappedName = "TrackEJB")
+//@SourceControl
 public class TrackFacadeBean implements TrackFacadeRemote
 {
     @EJB

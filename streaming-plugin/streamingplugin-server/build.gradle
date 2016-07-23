@@ -1,0 +1,18 @@
+dependencies {
+	compile project(':streamingplugin-common')
+	provided group: 'javax', name: 'javaee-api', version: '7.0'
+	compile group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
+    compile group: 'net.java.dev.jna', name: 'jna', version: '4.2.1'
+    compile group: 'net.java.dev.jna', name: 'jna-platform', version: '4.2.1'
+}
+
+jar {
+	doLast {
+		tasks.generateApi.execute()
+	}
+}
+
+task generateApi(type: Jar) {
+	baseName = 'streamingplugin-interfaces' // Nom du jar créé
+	from fileTree(dir: "$buildDir/classes/main/", include: 'com/rc2s/streamingplugin/ejb/**/*Remote.class')
+}

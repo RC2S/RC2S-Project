@@ -145,7 +145,8 @@ public class PluginsManagementController extends TabController implements Initia
 			{
 				try
 				{
-					pluginLoaderEJB.uploadPlugin("Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
+					String pluginName = pluginFile.getName().toLowerCase();
+                    pluginLoaderEJB.uploadPlugin(pluginName.substring(0, pluginName.indexOf(".")), group, Files.readAllBytes(pluginFile.toPath()));
 					updatePlugins();
                     
                     log.info("Plugin successfully uploaded");

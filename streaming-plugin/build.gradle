@@ -1,0 +1,35 @@
+apply plugin: 'base'
+
+allprojects {
+	group = 'com.rc2s.streamingplugin'
+	version = '0.1'
+}
+
+subprojects {
+	apply plugin: 'java'
+	
+	configurations {
+		provided
+		compile.extendsFrom provided
+	}
+
+	repositories {
+		mavenCentral();
+		
+		mavenLocal();
+
+		maven {
+			url "http://192.168.1.108"
+		}
+	}
+
+	// Java version - we compile with v1.8
+	sourceCompatibility = 1.8 
+	targetCompatibility = 1.8
+
+	dependencies {
+		provided group: 'com.rc2s', name: 'rc2s-annotations', version: 0.4
+		provided group: 'com.rc2s', name: 'rc2s-interfaces', version: 0.4
+		provided group: 'com.rc2s', name: 'rc2s-common', version: 0.4
+	}
+}

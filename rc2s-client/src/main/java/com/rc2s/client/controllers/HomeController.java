@@ -45,7 +45,6 @@ public class HomeController implements Initializable
 	private void initStaticTabs()
 	{
 		loadTab("Cubic List", Resources.loadFxml("CubicListView"));
-		loadTab("Music PlayList", Resources.loadFxml("MusicPlaylistView"));
 	}
 	
 	private void initAdminTabs()
@@ -70,11 +69,16 @@ public class HomeController implements Initializable
 				{
 					log.info("Initializing plugin " + plugin.getName());
                     
-                    String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/views/MainView.fxml";
+                    String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/client/views/MainView.fxml";
 					FXMLLoader loader = Resources.loadFxml(mainView);
 
 					if (loader != null)
-						tabPane.getTabs().add(new Tab(plugin.getName(), loader.getRoot()));
+                    {
+                        log.info("Loading plugin " + plugin.getName());
+                        loadTab(plugin.getName(), loader);
+                    }
+                    else
+                        log.error("Unable to load plugin " + plugin.getName());
 				}
 			}
 		}

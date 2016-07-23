@@ -85,7 +85,7 @@ public class PluginLoaderService implements IPluginLoaderService
 				persistPlugin(pluginName, accessGroup);
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new ServiceException(e);
 		}

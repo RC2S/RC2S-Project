@@ -36,9 +36,6 @@ public class User implements Serializable
 		inverseJoinColumns = @JoinColumn(name = "\"group\"", referencedColumnName = "id")
 	)
 	private List<Group> groups;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Track> tracks;
 	
     private Date created;
     private Date updated;
@@ -163,16 +160,6 @@ public class User implements Serializable
 	{
 		this.groups = groups;
 	}
-
-    public List<Track> getTracks()
-    {
-        return tracks;
-    }
-
-    public void setTracks(final List<Track> tracks)
-    {
-        this.tracks = tracks;
-    }
 	
 	@Override
 	public String toString()

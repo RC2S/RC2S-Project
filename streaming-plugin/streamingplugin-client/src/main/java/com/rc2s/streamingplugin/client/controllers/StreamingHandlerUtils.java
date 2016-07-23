@@ -1,8 +1,10 @@
-package com.rc2s.client.controllers;
+package com.rc2s.streamingplugin.client.controllers;
 
 import com.rc2s.common.client.utils.ThreadPool;
-import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import com.rc2s.streamingplugin.ejb.streaming.StreamingFacadeRemote;
+import com.rc2s.annotations.SourceControl;
 
+//@SourceControl
 public class StreamingHandlerUtils
 {
 	private StreamingUtils streaming;

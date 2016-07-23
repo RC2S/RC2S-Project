@@ -1,4 +1,4 @@
-package com.rc2s.client.controllers;
+package com.rc2s.streamingplugin.client.controllers;
 
 import com.rc2s.common.client.utils.TabController;
 import com.rc2s.common.client.utils.Dialog;
@@ -6,10 +6,11 @@ import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Synchronization;
-import com.rc2s.common.vo.Track;
-import com.rc2s.ejb.streaming.StreamingFacadeRemote;
+import com.rc2s.streamingplugin.common.vo.Track;
+import com.rc2s.streamingplugin.ejb.streaming.StreamingFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
-import com.rc2s.ejb.track.TrackFacadeRemote;
+import com.rc2s.streamingplugin.ejb.track.TrackFacadeRemote;
+import com.rc2s.annotations.SourceControl;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class MusicPlaylistController extends TabController implements Initializable
+//@SourceControl
+public class MainController extends TabController implements Initializable
 {
     private final TrackFacadeRemote trackEJB = (TrackFacadeRemote) EJB.lookup("TrackEJB");
     
