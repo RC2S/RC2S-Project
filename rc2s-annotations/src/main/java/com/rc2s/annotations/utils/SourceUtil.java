@@ -582,6 +582,9 @@ public class SourceUtil
 	{
 		if (!checkClassIsUtilComponent(mainClass.getName()))
 		{
+			if (!mainClass.getName().endsWith("Controller"))
+				throw new SourceControlException("Controller class name should end with 'Controller'.");
+				
 			// We shall find initialize(URL, ResourceBundle)
 			boolean hasJavaNetURL = false;
 			boolean hasResourceBundle = false;

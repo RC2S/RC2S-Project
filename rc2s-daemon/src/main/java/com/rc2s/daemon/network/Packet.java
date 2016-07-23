@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Shall contain informations for GPIO manipulation, that
  * will be followed by leds lightening
  * 
- * @author captp
+ * @author RC2S
  */
 public class Packet implements Serializable
 {
