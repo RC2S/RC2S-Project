@@ -49,7 +49,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	
     private final Logger log = LogManager.getLogger(CallbackAdapter.class);
     
-    public CallbackAdapter(final StreamingService streamingService, final int blockSize, final int[] syncDimensions)
+    public CallbackAdapter(final StreamingService streamingService, final int blockSize, final int[] syncDimensions, char lighteningWanted)
     {
         super(blockSize);
 		this.streamingService = streamingService;
@@ -60,14 +60,14 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 		
 		algoEffect = getAlgoEffect((int) (Math.random() * 6));
 		
-		lightening = 'S';
+		lightening = lighteningWanted;
 		
 		// If lightening set to 'Light', we should take algoEffect
 		// in consideration to guess lightening size
 		algoNeededSize = (lightening == 'L' ? algoEffect.getSize() : 1);
 		
 		// Initialize our lightening coordinates array
-		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
+		positionsToLighten = new int[algoNeededSize * getLighteningSize()][3];
 		lighteningIndex = 0;
 		
 		// Lists for sound computing
@@ -115,7 +115,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	 * @param lightening
 	 * @return int factor of LEDs lightening 
 	 */
-	private int getLighteningSize(final char lightening)
+	public int getLighteningSize()
 	{
 		switch (lightening)
 		{
@@ -320,22 +320,32 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	 * @param absolute
 	 * @return Overall variation
 	 */
-	private int getLineVariation(final List<Integer> datas, final boolean absolute) // Let's keep absolute in case we want to generate 2 points and not 1
+	public int getLineVariation(final List<Integer> datas, final boolean absolute) // Keep absolute in case we want to generate 2 points and not 1
 	{
 		int variation = 0;
-		int prev = datas.get(0);
+		int prev = 0;
 		
-		for (int index = 1; index < datas.size(); index++)
+		if (datas.size() > 0)
+			prev = datas.get(0);
+		else
+			return 0;
+		
+		if (datas.size() > 1)
 		{
-			if (absolute)
-				variation += Math.abs(datas.get(index) - prev);
-			else
-				variation += datas.get(index) - prev;
+			for (int index = 1; index < datas.size(); index++)
+			{
+				if (absolute)
+					variation += Math.abs(datas.get(index) - prev);
+				else
+					variation += datas.get(index) - prev;
+
+				prev = datas.get(index);
+			}
 			
-			prev = datas.get(index);
+			return variation;
 		}
-		
-		return variation;
+		else
+			return prev;
 	}
 	
 	/**
@@ -629,7 +639,7 @@ public class CallbackAdapter extends DefaultAudioCallbackAdapter
 	{
 		streamingService.processCoordinates(positionsToLighten);
 
-		positionsToLighten = new int[algoNeededSize * getLighteningSize(lightening)][3];
+		positionsToLighten = new int[algoNeededSize * getLighteningSize()][3];
 		lighteningIndex = 0;
 		
 		lineMaxAnalysis.clear();

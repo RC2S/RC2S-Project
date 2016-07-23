@@ -77,7 +77,7 @@ public class StreamingService implements IStreamingService
 		}
 
 		factory = new MediaPlayerFactory();
-		callbackAdapter = new CallbackAdapter(this, 4, getSyncSize());
+		callbackAdapter = new CallbackAdapter(this, 4, getSyncSize(), 'S');
 
 		// newDirectAudioPlayer(format, rate, channel, new callback(blocksize of samples))
 		audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, callbackAdapter);
