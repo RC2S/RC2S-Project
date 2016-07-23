@@ -84,10 +84,13 @@ public class EJB
 	 */
     public static void closeContext()
     {
-        try {
+        try
+		{
             if (context != null)
                 context.close();
-        } catch (NamingException e) {
+        }
+		catch (NamingException e)
+		{
             System.err.println(e.getMessage());
         }
     }
