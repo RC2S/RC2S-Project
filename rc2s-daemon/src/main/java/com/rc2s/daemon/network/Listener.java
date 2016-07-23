@@ -31,10 +31,12 @@ public class Listener extends Thread
 		this.daemon = daemon;
 		this.port = port;
 			
-		try {
+		try
+		{
 			this.socket = new DatagramSocket(port);
 		}
-		catch(SocketException e) {
+		catch(SocketException e)
+		{
 			e.printStackTrace();
 		}
     }

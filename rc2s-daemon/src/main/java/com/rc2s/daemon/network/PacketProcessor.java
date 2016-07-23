@@ -49,7 +49,7 @@ public class PacketProcessor extends Thread
 		String raw = new String(packet.getData()).trim();
 		System.out.println("Received: |" + raw + "|");
 		
-		if(raw.equals("status"))
+		if (raw.equals("status"))
 			validateStatus();
 		else
 			processPacket();
@@ -84,17 +84,13 @@ public class PacketProcessor extends Thread
 
 		List<Stage> stages = new ArrayList<>();
 
-		for(int i = 0 ; i < y ; i++)
+		for (int i = 0 ; i < y ; i++)
 		{
 			boolean[][] stageData = new boolean[x][z];
 
-			for(int j = 0 ; j < x ; j++)
-			{
-				for(int k = 0 ; k < z ; k++)
-				{
+			for (int j = 0 ; j < x ; j++)
+				for (int k = 0 ; k < z ; k++)
 					stageData[j][k] = dis.readBoolean();
-				}
-			}
 
 			stages.add(new Stage(stageData));
 		}

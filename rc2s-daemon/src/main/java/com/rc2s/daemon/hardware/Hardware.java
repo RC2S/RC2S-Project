@@ -97,7 +97,7 @@ public class Hardware
 
     public void sendStage(final int i, final int maxStage)
     {
-        if(i == 0)
+        if (i == 0)
             mGpio.get(getStageGpio(i)).high();
         else
         {
@@ -166,7 +166,7 @@ public class Hardware
 	 */
     public void unlock()
     {
-        if(lock != null)
+        if (lock != null)
         {
             lock.low();
             lock = null;

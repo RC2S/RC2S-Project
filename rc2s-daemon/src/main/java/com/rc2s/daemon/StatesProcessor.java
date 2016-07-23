@@ -48,8 +48,9 @@ public class StatesProcessor implements Runnable
 				daemon.getHardware().clear();
 				daemon.getHardware().send();
 			}
-			catch(NoSuchElementException e) {}
-        } while(daemon.isRunning());
+			catch (NoSuchElementException e) {}
+			
+        } while (daemon.isRunning());
     }
 
     private void sweep(final Packet packet)
@@ -73,13 +74,13 @@ public class StatesProcessor implements Runnable
     {
         boolean[][] states = stage.getStates();
 
-        for(int i = 0; i < states.length; i++)
+        for (int i = 0; i < states.length; i++)
         {
-            for(int j = 0; j < states[i].length; j++)
+            for (int j = 0; j < states[i].length; j++)
             {
                 GpioPinDigitalOutput gpdo = null;
 
-                if(states[i][j])
+                if (states[i][j])
                 {
                     gpdo = daemon.getHardware().bit();
                 }
