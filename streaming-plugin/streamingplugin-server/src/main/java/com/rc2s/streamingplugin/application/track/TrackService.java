@@ -16,6 +16,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -35,8 +36,7 @@ public class TrackService implements ITrackService
     @EJB
     private ITrackDAO trackDAO;
     
-    @Inject
-    private Logger log;
+    private Logger log = LogManager.getLogger(TrackService.class);
 
 	/**
 	 * add

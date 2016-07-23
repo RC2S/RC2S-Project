@@ -4,7 +4,6 @@ import com.rc2s.streamingplugin.application.streaming.IStreamingService;
 import com.rc2s.common.vo.Synchronization;
 import com.rc2s.common.vo.User;
 import com.rc2s.annotations.SourceControl;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -31,7 +30,6 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
 	 * @param mrl 
 	 */
     @Override
-    @RolesAllowed({"user"})
     public void startStreaming(final String mrl)
     {
         streamingService.start(mrl);
@@ -44,7 +42,6 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
 	 * @param caller 
 	 */
     @Override
-    @RolesAllowed({"user"})
     public void stopStreaming()
     {
         streamingService.stop();
@@ -58,7 +55,6 @@ public class StreamingFacadeBean implements StreamingFacadeRemote
 	 * @param synchronization 
 	 */
 	@Override
-    @RolesAllowed({"user"})
     public void setSynchronization(final Synchronization synchronization)
 	{
 		streamingService.setSynchronization(synchronization);

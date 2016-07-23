@@ -136,7 +136,7 @@ public class MainController extends TabController implements Initializable
         try
         {
 			List<Track> tracks = trackEJB.getTracksByUser(Tools.getAuthenticatedUser());
-
+			
 			// Clear metadata HashMap
 			tracksMetadata.clear();
 

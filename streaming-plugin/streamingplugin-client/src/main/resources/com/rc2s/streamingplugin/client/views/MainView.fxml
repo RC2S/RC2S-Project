@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="musicAnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/musicPlaylist-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.streamingplugin.client.controllers.MainController">
+<AnchorPane fx:id="musicAnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/mainview-style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rc2s.streamingplugin.client.controllers.MainController">
    <children>
       <GridPane fx:id="anchorGridPaneMain" layoutX="93.0" layoutY="140.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>

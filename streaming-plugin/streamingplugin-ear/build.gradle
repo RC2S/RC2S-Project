@@ -16,7 +16,7 @@ dependencies {
 ear {
 	appDirName 'META-INF/'
 	libDirName 'APP-INF/lib'
-	archiveName 'streamingplugin-server.ear'
+	archiveName 'streamingplugin_server.ear'
 	deploymentDescriptor {
 		applicationName 	= 'streamingplugin-project'
 		initializeInOrder 	= true

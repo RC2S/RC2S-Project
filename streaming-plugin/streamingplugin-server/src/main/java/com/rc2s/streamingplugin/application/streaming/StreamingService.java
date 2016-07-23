@@ -1,6 +1,6 @@
 package com.rc2s.streamingplugin.application.streaming;
 
-import com.rc2s.application.services.daemon.IDaemonService;
+import com.rc2s.ejb.daemon.DaemonFacadeRemote;
 import com.rc2s.common.bo.CubeState;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
@@ -18,6 +18,10 @@ import javax.ejb.Stateful;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+import java.util.Properties;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  * StreamingService
@@ -33,10 +37,11 @@ public class StreamingService implements IStreamingService
 {
     private static final Logger log = LogManager.getLogger(StreamingService.class);
 
-	@EJB
-	private IDaemonService daemonService;
+	private DaemonFacadeRemote daemonService;
 
 	private Synchronization synchronization;
+	
+	private InitialContext initialContext;
     
     // Synchronisation object to wait for the audio to finish.
     private Semaphore sync = new Semaphore(0);
@@ -61,6 +66,20 @@ public class StreamingService implements IStreamingService
     {
 		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+			
+	    try
+		{
+			/*Properties props = new Properties();
+			props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
+			props.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
+			props.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
+			props.put("org.omg.CORBA.ORBInitialHost", EJB.serverIp);
+			props.put("org.omg.CORBA.ORBInitialPort", EJB.serverPort);*/
+            
+			initialContext = new InitialContext();
+			daemonService = (DaemonFacadeRemote) initialContext.lookup("DaemonEJB");
+		}
+		catch (Exception e) { System.out.println("azeaze"); }
 	}
 
 	/**

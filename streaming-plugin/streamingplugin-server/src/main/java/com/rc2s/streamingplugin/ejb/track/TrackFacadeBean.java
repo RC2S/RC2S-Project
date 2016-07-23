@@ -12,7 +12,9 @@ import javax.ejb.Stateless;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 /**
  * TrackFacadeBean
@@ -28,8 +30,7 @@ public class TrackFacadeBean implements TrackFacadeRemote
     @EJB
     private ITrackService trackService;
     
-    @Inject
-    private Logger log;
+    private Logger log = LogManager.getLogger(TrackFacadeBean.class);
 
 	/**
 	 * add
@@ -41,7 +42,6 @@ public class TrackFacadeBean implements TrackFacadeRemote
 	 * @throws EJBException 
 	 */
     @Override
-    @RolesAllowed({"user"})
     public Track add(final Track track) throws EJBException
     {
         try
@@ -65,7 +65,6 @@ public class TrackFacadeBean implements TrackFacadeRemote
 	 * @throws EJBException 
 	 */
     @Override
-    @RolesAllowed({"user"})
     public Track update(final Track track) throws EJBException
 	{
         try
@@ -88,7 +87,6 @@ public class TrackFacadeBean implements TrackFacadeRemote
 	 * @throws EJBException 
 	 */
     @Override
-    @RolesAllowed({"user"})
     public void delete(final Track track) throws EJBException
 	{
 		try
@@ -112,7 +110,6 @@ public class TrackFacadeBean implements TrackFacadeRemote
 	 * @throws EJBException 
 	 */
     @Override
-    @RolesAllowed({"user"})
     public List<Track> getTracksByUser(final User user) throws EJBException
     {
         try

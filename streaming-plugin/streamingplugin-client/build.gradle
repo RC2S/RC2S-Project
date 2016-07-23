@@ -7,8 +7,8 @@ repositories {
 dependencies {
 	compile project(':streamingplugin-common')
 	compile name: "streamingplugin-interfaces-$version"
-	compile group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
-	compile group: 'org.apache.tika', name: 'tika-bundle', version: '1.13'
+	provided group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
+	provided group: 'org.apache.tika', name: 'tika-bundle', version: '1.13'
 }
 
 project.tasks.compileJava.dependsOn(
@@ -25,17 +25,9 @@ project.tasks.compileJava.doFirst {
 	propFile.write("path=${project.projectDir}")
 }
 
-task cleanProperties(type : Delete) {
-	delete "${project.projectDir}/src/main/resources/gradle.properties"
-}
-
-project.tasks.compileJava.doLast {
-	//tasks.cleanProperties.execute()
-}
-
 // Create a FatJar (one jar with all dependencies)
 jar {
-	archiveName 'streamingplugin-client.jar'
+	archiveName 'streamingplugin_client.jar'
 	from {
 		(configurations.runtime - configurations.provided).collect {
 			it.isDirectory() ? it : zipTree(it)

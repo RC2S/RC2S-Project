@@ -1,4 +1,4 @@
-package com.rc2s.application.services.daemon;
+package com.rc2s.ejb.daemon;
 
 import com.rc2s.common.bo.CubeState;
 import com.rc2s.common.exceptions.ServiceException;
@@ -7,18 +7,10 @@ import com.rc2s.common.vo.Size;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.Map;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
-/**
- * IDaemonService interface
- * 
- * Service interface for daemon manipulation
- * Does not need any DAO
- * 
- * @author RC2S
- */
-@Local
-public interface IDaemonService
+@Remote
+public interface DaemonFacadeRemote
 {
     public void sendCubesStates(final Map<Cube, CubeState> cubesStates) throws ServiceException;
     
