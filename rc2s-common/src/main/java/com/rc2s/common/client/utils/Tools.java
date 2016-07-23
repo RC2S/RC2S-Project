@@ -1,5 +1,7 @@
-package com.rc2s.client.utils;
+package com.rc2s.common.client.utils;
 
+import com.rc2s.common.utils.EJB;
+import com.rc2s.common.vo.User;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,6 +18,8 @@ public class Tools
 	private static final Validator VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
 	
     private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+    
+    private static User user;
     
     public static boolean matchIP(final String ip)
 	{
@@ -62,5 +66,15 @@ public class Tools
     public static boolean isLoopBackAdress() throws UnknownHostException
     {
         return InetAddress.getLocalHost().isLoopbackAddress();
+    }
+
+    public static User getAuthenticatedUser()
+    {
+        return Tools.user;
+    }
+
+    public static void setAuthenticatedUser(final User user)
+    {
+        Tools.user = user;
     }
 }

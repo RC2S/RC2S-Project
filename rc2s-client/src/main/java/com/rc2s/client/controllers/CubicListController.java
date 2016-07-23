@@ -2,7 +2,8 @@ package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.client.utils.Resources;
+import com.rc2s.common.client.utils.Resources;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;
@@ -47,7 +48,7 @@ public class CubicListController extends TabController implements Initializable
 		try
 		{
 			GridPane grid = new GridPane();
-			List<Cube> cubes = cubeEJB.getCubes(EJB.getAuthenticatedUser());
+			List<Cube> cubes = cubeEJB.getCubes(Tools.getAuthenticatedUser());
             
             log.info("Getting Cubes List");
 

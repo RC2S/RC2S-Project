@@ -1,8 +1,8 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
-import com.rc2s.client.utils.Dialog;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Dialog;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;

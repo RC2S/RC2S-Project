@@ -1,7 +1,6 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.ejb.streaming.StreamingFacadeRemote;
 import java.io.File;
@@ -71,9 +70,9 @@ public class StreamingUtils extends Thread
             String mrl = new RtspMrl().host(Tools.getIPAdress()).port(EJB.getRtspPort()).path("/" + id).value();
 
             System.err.println("------- Start StreamingUtils RMI -------");
-			System.err.println("User : " + EJB.getAuthenticatedUser().toString());
+			System.err.println("User : " + Tools.getAuthenticatedUser().toString());
 			System.err.println("MRL : " + mrl);
-            streamingEJB.startStreaming(EJB.getAuthenticatedUser(), mrl);
+            streamingEJB.startStreaming(Tools.getAuthenticatedUser(), mrl);
             setStreamingState(StreamingState.PLAY);
             System.err.println("------- Thread join -------");
 
@@ -106,7 +105,7 @@ public class StreamingUtils extends Thread
 		catch (InterruptedException | UnknownHostException e) {}
         
 		System.err.println("------- Stop StreamingUtils RMI -------");
-		streamingEJB.stopStreaming(EJB.getAuthenticatedUser());
+		streamingEJB.stopStreaming(Tools.getAuthenticatedUser());
 		System.err.println("------- Stop Media Player -------");
 		mediaPlayer.stop();
 		mediaPlayer.release();

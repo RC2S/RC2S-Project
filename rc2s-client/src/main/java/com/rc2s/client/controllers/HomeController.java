@@ -1,7 +1,8 @@
 package com.rc2s.client.controllers;
 
 import com.rc2s.client.Main;
-import com.rc2s.client.utils.Resources;
+import com.rc2s.common.client.utils.Resources;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
@@ -49,7 +50,7 @@ public class HomeController implements Initializable
 	
 	private void initAdminTabs()
 	{
-		if (isAdmin(EJB.getAuthenticatedUser()))
+		if (isAdmin(Tools.getAuthenticatedUser()))
 		{
 			loadTab("Access Management", Resources.loadFxml("AccessManagementView"));
 			loadTab("Plugins Management", Resources.loadFxml("PluginsManagementView"));
@@ -65,7 +66,7 @@ public class HomeController implements Initializable
 			for (Plugin plugin : availablePlugins)
 			{
 				if (plugin.getAccess().equalsIgnoreCase("rc2s-usergrp")
-				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(EJB.getAuthenticatedUser())))
+				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(Tools.getAuthenticatedUser())))
 				{
 					log.info("Initializing plugin " + plugin.getName());
                     

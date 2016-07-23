@@ -14,8 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.rc2s.client.Main;
-import com.rc2s.client.utils.Resources;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Resources;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.utils.Hash;
@@ -101,7 +101,7 @@ public class LoginController implements Initializable
 
 								if(user != null)
 								{
-									EJB.setAuthenticatedUser(user);
+									Tools.setAuthenticatedUser(user);
 
 									log.info("Access granted for user " + user.getUsername());
 

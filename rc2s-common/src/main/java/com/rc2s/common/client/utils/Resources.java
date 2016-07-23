@@ -1,4 +1,4 @@
-package com.rc2s.client.utils;
+package com.rc2s.common.client.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

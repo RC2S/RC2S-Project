@@ -3,10 +3,10 @@ package com.rc2s.client.controllers;
 import com.rc2s.client.Main;
 import com.rc2s.client.components.LedCube;
 import com.rc2s.client.components.LedEvent;
-import com.rc2s.client.utils.Dialog;
+import com.rc2s.common.client.utils.Dialog;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.client.utils.Resources;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Resources;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.common.vo.Size;
@@ -113,7 +113,7 @@ public class CubicDetailsController extends TabController implements Initializab
 			colorBox.getItems().addAll("RED", "GREEN", "YELLOW");
 
 			// Gather cubes (all, only available for this user... ?)
-			cubesBox.getItems().addAll(cubeEJB.getCubes(EJB.getAuthenticatedUser()));
+			cubesBox.getItems().addAll(cubeEJB.getCubes(Tools.getAuthenticatedUser()));
 		}
 		catch (EJBException e)
 		{
@@ -139,7 +139,7 @@ public class CubicDetailsController extends TabController implements Initializab
 		cube.setSynchronization(new Synchronization());
 		cube.setSynchronizations(Arrays.asList(new Synchronization[] {cube.getSynchronization()}));
 		cube.getSynchronization().setCubes(Arrays.asList(new Cube[] {cube}));
-		cube.getSynchronization().setUsers(Arrays.asList(new User[] {EJB.getAuthenticatedUser()}));
+		cube.getSynchronization().setUsers(Arrays.asList(new User[] {Tools.getAuthenticatedUser()}));
 		
 		cube.setCreated(new Date());
 		cube.getSynchronization().setCreated(new Date());

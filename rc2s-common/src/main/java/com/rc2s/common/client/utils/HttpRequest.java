@@ -1,4 +1,4 @@
-package com.rc2s.client.utils;
+package com.rc2s.common.client.utils;
 
 import com.rc2s.common.exceptions.RC2SException;
 import java.io.BufferedReader;

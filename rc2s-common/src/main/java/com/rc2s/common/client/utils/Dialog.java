@@ -1,4 +1,4 @@
-package com.rc2s.client.utils;
+package com.rc2s.common.client.utils;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -6,13 +6,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
-import com.rc2s.client.Config;
 
 public class Dialog
 {
     public static void message(final String msg)
     {
-        message(Config.APP_NAME, null, msg, AlertType.INFORMATION);
+        message("RC2S Client", null, msg, AlertType.INFORMATION);
     }
     
     public static void message(final String title, final String msg)
@@ -41,7 +40,7 @@ public class Dialog
     
     public static ButtonType confirm(final String msg)
     {
-        return confirm(Config.APP_NAME, null, msg, null);
+        return confirm("RC2S Client", null, msg, null);
     }
     
     public static ButtonType confirm(final String title, final String msg)
@@ -76,7 +75,7 @@ public class Dialog
     
     public static String input(final String text)
     {
-        return input(Config.APP_NAME, null, text, null);
+        return input("RC2S Client", null, text, null);
     }
     
     public static String input(final String title, final String text)

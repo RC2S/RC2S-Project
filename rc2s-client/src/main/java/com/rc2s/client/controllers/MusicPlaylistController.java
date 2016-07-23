@@ -1,8 +1,7 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
-import com.rc2s.client.utils.Dialog;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Dialog;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Synchronization;
@@ -133,7 +132,7 @@ public class MusicPlaylistController extends TabController implements Initializa
     {
         try
         {
-			List<Track> tracks = trackEJB.getTracksByUser(EJB.getAuthenticatedUser());
+			List<Track> tracks = trackEJB.getTracksByUser(Tools.getAuthenticatedUser());
 
 			// Clear metadata HashMap
 			tracksMetadata.clear();
@@ -172,7 +171,7 @@ public class MusicPlaylistController extends TabController implements Initializa
         try
         {
             syncBox.getItems().clear();
-            syncBox.getItems().addAll(syncEJB.getByUser(EJB.getAuthenticatedUser()));
+            syncBox.getItems().addAll(syncEJB.getByUser(Tools.getAuthenticatedUser()));
 
 			syncBox.getSelectionModel().selectFirst();
         }
@@ -279,7 +278,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 		Track track = new Track();
 		track.setPath(uri.toString());
 		track.setOrder(getNextOrder());
-		track.setUser(EJB.getAuthenticatedUser());
+		track.setUser(Tools.getAuthenticatedUser());
 
 		return track;
 	}
@@ -386,7 +385,7 @@ public class MusicPlaylistController extends TabController implements Initializa
 
 			streamingHandler = new StreamingHandlerUtils(
 				streamingEJB,
-				EJB.getAuthenticatedUser().getUsername(),
+				Tools.getAuthenticatedUser().getUsername(),
 				Tools.replaceFile(URLDecoder.decode(track.getPath(), "UTF-8"))
 			);
 		}
