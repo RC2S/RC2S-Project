@@ -16,7 +16,7 @@ dependencies {
 ear {
 	appDirName 'META-INF/'
 	libDirName 'APP-INF/lib'
-	archiveName '[pluginname]-server.ear'
+	archiveName '[pluginname]_server.ear'
 	deploymentDescriptor {
 		applicationName 	= '[pluginname]-project'
 		initializeInOrder 	= true

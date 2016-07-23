@@ -1,8 +1,9 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.common.client.utils.TabController;
 import com.rc2s.client.components.LedCube;
 import com.rc2s.common.utils.EJB;
-import com.rc2s.client.utils.Resources;
+import com.rc2s.common.client.utils.Resources;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.vo.Cube;
 import com.rc2s.ejb.cube.CubeFacadeRemote;

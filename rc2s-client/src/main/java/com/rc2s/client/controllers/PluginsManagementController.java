@@ -1,8 +1,9 @@
 package com.rc2s.client.controllers;
 
+import com.rc2s.common.client.utils.TabController;
 import com.rc2s.client.Main;
-import com.rc2s.client.utils.Dialog;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.Dialog;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
@@ -144,7 +145,8 @@ public class PluginsManagementController extends TabController implements Initia
 			{
 				try
 				{
-					pluginLoaderEJB.uploadPlugin("Test Plugin", group, Files.readAllBytes(pluginFile.toPath()));
+					String pluginName = pluginFile.getName().toLowerCase();
+                    pluginLoaderEJB.uploadPlugin(pluginName.substring(0, pluginName.indexOf(".")), group, Files.readAllBytes(pluginFile.toPath()));
 					updatePlugins();
                     
                     log.info("Plugin successfully uploaded");

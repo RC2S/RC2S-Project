@@ -1,0 +1,6 @@
+rootProject.name = 'streamingplugin-Project'
+
+include 'streamingplugin-client'
+include 'streamingplugin-common'
+include 'streamingplugin-ear'
+include 'streamingplugin-server'

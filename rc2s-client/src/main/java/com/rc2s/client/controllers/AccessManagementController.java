@@ -1,8 +1,8 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
-import com.rc2s.client.utils.Dialog;
-import com.rc2s.client.utils.Tools;
+import com.rc2s.common.client.utils.TabController;
+import com.rc2s.common.client.utils.Dialog;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.utils.Hash;
@@ -13,7 +13,6 @@ import com.rc2s.ejb.group.GroupFacadeRemote;
 import com.rc2s.ejb.synchronization.SynchronizationFacadeRemote;
 import com.rc2s.ejb.user.UserFacadeRemote;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -300,7 +299,7 @@ public class AccessManagementController extends TabController implements Initial
 				{
 					User user = usersTable.getSelectionModel().getSelectedItem();
 					
-					if (!Main.getAuthenticatedUser().equals(user))
+					if (!Tools.getAuthenticatedUser().equals(user))
 					{
 						ButtonType answer = Dialog.confirm("Are you sure you want to definitely remove this user account?");
 

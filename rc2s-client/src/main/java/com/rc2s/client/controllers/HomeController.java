@@ -1,7 +1,8 @@
 package com.rc2s.client.controllers;
 
-import com.rc2s.client.Main;
-import com.rc2s.client.utils.Resources;
+import com.rc2s.common.client.utils.TabController;
+import com.rc2s.common.client.utils.Resources;
+import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
 import com.rc2s.common.vo.Plugin;
@@ -44,12 +45,11 @@ public class HomeController implements Initializable
 	private void initStaticTabs()
 	{
 		loadTab("Cubic List", Resources.loadFxml("CubicListView"));
-		loadTab("Music PlayList", Resources.loadFxml("MusicPlaylistView"));
 	}
 	
 	private void initAdminTabs()
 	{
-		if (isAdmin(Main.getAuthenticatedUser()))
+		if (isAdmin(Tools.getAuthenticatedUser()))
 		{
 			loadTab("Access Management", Resources.loadFxml("AccessManagementView"));
 			loadTab("Plugins Management", Resources.loadFxml("PluginsManagementView"));
@@ -65,15 +65,20 @@ public class HomeController implements Initializable
 			for (Plugin plugin : availablePlugins)
 			{
 				if (plugin.getAccess().equalsIgnoreCase("rc2s-usergrp")
-				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(Main.getAuthenticatedUser())))
+				|| (plugin.getAccess().equalsIgnoreCase("rc2s-admingrp") && isAdmin(Tools.getAuthenticatedUser())))
 				{
 					log.info("Initializing plugin " + plugin.getName());
                     
-                    String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/views/MainView.fxml";
+                    String mainView = "/com/rc2s/" + plugin.getName().toLowerCase().replace(" ", "") + "/client/views/MainView.fxml";
 					FXMLLoader loader = Resources.loadFxml(mainView);
 
 					if (loader != null)
-						tabPane.getTabs().add(new Tab(plugin.getName(), loader.getRoot()));
+                    {
+                        log.info("Loading plugin " + plugin.getName());
+                        loadTab(plugin.getName(), loader);
+                    }
+                    else
+                        log.error("Unable to load plugin " + plugin.getName());
 				}
 			}
 		}

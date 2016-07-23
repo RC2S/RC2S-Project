@@ -20,10 +20,11 @@ public class EJB
 	private static final Integer RTSP_PORT = 5555;
 
 	private static String serverIp = "127.0.0.1";
+    
 	private static String serverPort = "3700";
 
 	private static InitialContext context;
-
+    
 	/**
 	 * initContext
 	 * 
