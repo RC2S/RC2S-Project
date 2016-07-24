@@ -13,6 +13,11 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import com.rc2s.annotations.SourceControl;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import com.sun.jna.NativeLibrary;
+
 import javax.ejb.Stateful;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,8 +56,11 @@ public class StreamingService implements IStreamingService
 
 	public StreamingService()
     {
-		if (System.getProperty("os.name").toLowerCase().contains("windows"))
-			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+		if (!new NativeDiscovery().discover() && System.getProperty("os.name").toLowerCase().contains("windows")) {
+			//System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "C:\\Program Files\\VideoLAN\\VLC");
+		}
+		log.info("LibVLCJ instance version: " + LibVlc.INSTANCE.libvlc_get_version());
 			
 	    try
 		{            

@@ -30,6 +30,11 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import com.sun.jna.NativeLibrary;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -79,8 +84,11 @@ public class MainController extends TabController implements Initializable
     @Override
     public void initialize(final URL url, final ResourceBundle rb)
     {
-		if (System.getProperty("os.name").toLowerCase().contains("windows"))
-			System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+		if (!new NativeDiscovery().discover() && System.getProperty("os.name").toLowerCase().contains("windows")) {
+				//System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+				NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "C:\\Program Files\\VideoLAN\\VLC");
+		}
+		log.info("LibVLCJ instance version: " + LibVlc.INSTANCE.libvlc_get_version());
 
 		tracksMetadata = new HashMap<>();
 
