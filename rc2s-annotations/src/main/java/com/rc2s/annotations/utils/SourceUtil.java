@@ -168,12 +168,17 @@ public class SourceUtil
 			.append("com").append(File.separator)
 			.append("rc2s").append(File.separator)
 			.append(pluginName).append(File.separator)
+            .append("client").append(File.separator)
 			.append("controllers").append(File.separator)
 			.toString();
 		
-		// Views at /resources/views/
+		// Views at /resources/com/rc2s/[plugin-name]/views/
 		VIEWS_FOLDER_PATH = new StringBuilder(sb)
 			.append("resources").append(File.separator)
+            .append("com").append(File.separator)
+			.append("rc2s").append(File.separator)
+			.append(pluginName).append(File.separator)
+            .append("client").append(File.separator)
 			.append("views").append(File.separator)
 			.toString();
 	}
@@ -191,7 +196,7 @@ public class SourceUtil
 	 */
 	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
 	{
-		File testDirectory = new File(VIEWS_FOLDER_PATH);
+        File testDirectory = new File(VIEWS_FOLDER_PATH);
 		File[] files = testDirectory.listFiles(
 			(File pathname) -> pathname.getName().endsWith(".fxml") 
 							&& pathname.isFile()
@@ -250,7 +255,7 @@ public class SourceUtil
 	 */
 	private void getAllControllersNames()
 	{
-		File testDirectory = new File(CONTROLLERS_FOLDER_PATH);
+        File testDirectory = new File(CONTROLLERS_FOLDER_PATH);
 		File[] files = testDirectory.listFiles(
 			(File pathname) -> pathname.getName().endsWith(".java") 
 							&& pathname.isFile()
@@ -565,7 +570,7 @@ public class SourceUtil
 			Boolean b = m.matches();
 
 			if (!b)
-				throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
+				throw new SourceControlException("Class " + mainClass.getName() + " should be CamelCase.");
 
 			if (!mainClass.getAnnotations().contains(ENTITY_PACKAGE))
 				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + ENTITY_PACKAGE + "'");
