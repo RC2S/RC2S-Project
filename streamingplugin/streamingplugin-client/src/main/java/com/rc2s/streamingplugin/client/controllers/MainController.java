@@ -119,7 +119,12 @@ public class MainController extends TabController implements Initializable
 				int minutes = (int)(duration / 60.);
 				int seconds = (int)(duration - (60. * minutes));
 
-				value = new StringBuilder().append(minutes).append(":").append(seconds).toString();
+				StringBuilder sb = new StringBuilder().append(minutes).append(":");
+				if (seconds < 10)
+					sb.append("0");
+				sb.append(seconds);
+				
+				value = sb.toString();
 			}
 
 			return value;
