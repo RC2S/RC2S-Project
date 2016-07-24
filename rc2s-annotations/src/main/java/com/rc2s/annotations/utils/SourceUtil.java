@@ -64,16 +64,16 @@ public class SourceUtil
 	public SourceUtil()
 	{
 		if (expectedControllersList == null)
-			expectedControllersList = new ArrayList<>();
+			expectedControllersList = new ArrayList();
 		
 		if (controllersList == null)
-			controllersList = new ArrayList<>();
+			controllersList = new ArrayList();
 		
 		if (initialControllersList == null)
-			initialControllersList = new ArrayList<>();
+			initialControllersList = new ArrayList();
 		
 		if (viewsList == null)
-			viewsList = new ArrayList<>();
+			viewsList = new ArrayList();
 	}
 	
 	/**
