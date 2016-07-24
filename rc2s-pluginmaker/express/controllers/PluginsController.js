@@ -188,7 +188,7 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 				if (filename.indexOf('.java') > -1) {
 
 					content = fs.readFileSync(filename);
-					if(content.indexOf('@SourceControl') == -1)
+					if (filename.indexOf('test') == -1 && content.indexOf('@SourceControl') == -1)
 						return callback(false, 'Annotation @SourceControl not found in file ' + filename);
 
 					counter++;
@@ -202,9 +202,9 @@ PluginsController.prototype.downloadZip = function(pluginName, callback) {
 
 					var pluginZipPath = pluginName + '/' + formatedPluginName + '-client/build/' + formatedPluginName + '.zip';
 					exec('docker cp ' + idDockerMachine + ':/projects/' + pluginZipPath + ' ' + config.che.tmpFolder.replace(/\s+/g, "\\ "), function(errorCp, stdoutCp, stderrCp) {
-						if(errorCp && stderrCp)
+						if (errorCp && stderrCp)
 							return callback(false, stderrCp);
-						else if(errorCp)
+						else if (errorCp)
 							return callback(false, errorCp);
 
 						return callback(true, undefined);

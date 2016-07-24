@@ -19,10 +19,14 @@ public class SourceControlException extends RuntimeException
 	public SourceControlException(final String message)
 	{
 		super(message);
+        System.err.println(message);
+        System.exit(-1);
 	}
 	
 	public SourceControlException(final Throwable throwable)
 	{
 		super(throwable);
+        System.err.println(throwable.getMessage());
+        System.exit(-1);
 	}
 }

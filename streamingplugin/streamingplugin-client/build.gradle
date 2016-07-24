@@ -1,0 +1,41 @@
+repositories {
+	flatDir {
+		dirs "$rootDir/streamingplugin-server/build/libs"
+	}
+}
+
+dependencies {
+	compile project(':streamingplugin-common')
+	compile name: "streamingplugin-interfaces-$version"
+	provided group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
+	provided group: 'org.apache.tika', name: 'tika-bundle', version: '1.13'
+}
+
+project.tasks.compileJava.dependsOn(
+	rootProject.getSubprojects().findAll {
+		subproject -> subproject.name != project.name 
+	}.collect { 
+		subproject -> "${subproject.getPath()}:build"
+	}
+)
+
+// Create a FatJar (one jar with all dependencies)
+jar {
+	archiveName 'streamingplugin_client.jar'
+	from {
+		(configurations.runtime - configurations.provided).collect {
+			it.isDirectory() ? it : zipTree(it)
+		} 
+	}
+	
+	doLast {
+		tasks.generateZip.execute()
+	}
+}
+
+task generateZip(type: Zip) {
+	destinationDir buildDir
+	archiveName 'streamingplugin.zip'
+	from "$buildDir/libs"
+	from "$rootDir/streamingplugin-ear/build/libs"
+}

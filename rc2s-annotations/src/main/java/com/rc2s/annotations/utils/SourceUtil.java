@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,10 +36,10 @@ public class SourceUtil
 	private static String pluginName = null;
 	
 	// List of controllers & views within the plugin
-	private static ArrayList<String> expectedControllersList	= null;
-	private static ArrayList<String> initialControllersList		= null;
-	private static ArrayList<String> controllersList			= null;
-	private static ArrayList<String> viewsList					= null;
+	private static List<String> expectedControllersList	= null;
+	private static List<String> initialControllersList	= null;
+	private static List<String> controllersList			= null;
+	private static List<String> viewsList				= null;
 	
 	// Should contain exactly one MainController & one MainView
 	private static boolean hasMainController	= false;
@@ -63,16 +64,16 @@ public class SourceUtil
 	public SourceUtil()
 	{
 		if (expectedControllersList == null)
-			expectedControllersList = new ArrayList<>();
+			expectedControllersList = new ArrayList();
 		
 		if (controllersList == null)
-			controllersList = new ArrayList<>();
+			controllersList = new ArrayList();
 		
 		if (initialControllersList == null)
-			initialControllersList = new ArrayList<>();
+			initialControllersList = new ArrayList();
 		
 		if (viewsList == null)
-			viewsList = new ArrayList<>();
+			viewsList = new ArrayList();
 	}
 	
 	/**
@@ -93,13 +94,22 @@ public class SourceUtil
 	 */
 	public void verifySource(ElementMapper mainClass)
 	{
+		// Allow classes from com.rc2s.ejb
+		if (mainClass.getPackageName().startsWith("com.rc2s.ejb"))
+			return;
+		
 		String[] packageParts = mainClass.getPackageName().split("\\.");
+		
+		// Verify root - shall be com.rc2s.{plugin_name}
+		verifyRoot(packageParts);
+		
+		// Allow generic DAO use
+		if (mainClass.getPackageName().startsWith("com.rc2s." + pluginName + ".dao.generic"))
+			return;
 		
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
-		{
-			verifyRoot(packageParts);
-			
+		{	
 			buildControllersAndViewsFoldersPaths();
 			
 			try
@@ -119,9 +129,6 @@ public class SourceUtil
 			isFirstCheck = false;
 		}
 		
-		// Verify root - shall be com.rc2s.{plugin_name}
-		verifyRoot(packageParts);
-
 		// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
 		ClassNamesEnum cne = findClassName(packageParts);
 
@@ -153,6 +160,9 @@ public class SourceUtil
 	public void buildControllersAndViewsFoldersPaths()
 	{	
 		String pluginsRoot = System.getenv("RC2S_PLUGINS_ROOT");
+        
+        if (pluginsRoot == null || pluginsRoot.equals(""))
+            pluginsRoot = "/projects/";
 		
 		// Root is /[plugins-root]/[plugin-name]/[plugin-name]-client/src/main/
 		StringBuilder sb = new StringBuilder();
@@ -168,12 +178,17 @@ public class SourceUtil
 			.append("com").append(File.separator)
 			.append("rc2s").append(File.separator)
 			.append(pluginName).append(File.separator)
+            .append("client").append(File.separator)
 			.append("controllers").append(File.separator)
 			.toString();
 		
-		// Views at /resources/views/
+		// Views at /resources/com/rc2s/[plugin-name]/views/
 		VIEWS_FOLDER_PATH = new StringBuilder(sb)
 			.append("resources").append(File.separator)
+            .append("com").append(File.separator)
+			.append("rc2s").append(File.separator)
+			.append(pluginName).append(File.separator)
+            .append("client").append(File.separator)
 			.append("views").append(File.separator)
 			.toString();
 	}
@@ -191,7 +206,7 @@ public class SourceUtil
 	 */
 	private void getAllViewsNames() throws SourceControlException, IOException, ParserConfigurationException, SAXException
 	{
-		File testDirectory = new File(VIEWS_FOLDER_PATH);
+        File testDirectory = new File(VIEWS_FOLDER_PATH);
 		File[] files = testDirectory.listFiles(
 			(File pathname) -> pathname.getName().endsWith(".fxml") 
 							&& pathname.isFile()
@@ -250,7 +265,7 @@ public class SourceUtil
 	 */
 	private void getAllControllersNames()
 	{
-		File testDirectory = new File(CONTROLLERS_FOLDER_PATH);
+        File testDirectory = new File(CONTROLLERS_FOLDER_PATH);
 		File[] files = testDirectory.listFiles(
 			(File pathname) -> pathname.getName().endsWith(".java") 
 							&& pathname.isFile()
@@ -565,7 +580,7 @@ public class SourceUtil
 			Boolean b = m.matches();
 
 			if (!b)
-				throw new SourceControlException("Class " + mainClass.getName() + " shoul be CamelCase.");
+				throw new SourceControlException("Class " + mainClass.getName() + " should be CamelCase.");
 
 			if (!mainClass.getAnnotations().contains(ENTITY_PACKAGE))
 				throw new SourceControlException("Class " + mainClass.getName() + " should have annotation '" + ENTITY_PACKAGE + "'");
