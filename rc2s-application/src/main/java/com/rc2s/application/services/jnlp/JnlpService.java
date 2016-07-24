@@ -68,7 +68,7 @@ public class JnlpService implements IJnlpService
         Process p;
         
         String args[] = {
-            jarSignerPath,
+            "/opt/jdk1.8.0_92/bin/jarsigner",
             "-keystore", signKeyStore,
             "-storepass", signStorePass,
             jarPath,
