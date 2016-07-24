@@ -161,7 +161,7 @@ public class SourceUtil
 	{	
 		String pluginsRoot = System.getenv("RC2S_PLUGINS_ROOT");
         
-        if (pluginsRoot == null)
+        if (pluginsRoot == null || pluginsRoot.equals(""))
             pluginsRoot = "/projects/";
 		
 		// Root is /[plugins-root]/[plugin-name]/[plugin-name]-client/src/main/
