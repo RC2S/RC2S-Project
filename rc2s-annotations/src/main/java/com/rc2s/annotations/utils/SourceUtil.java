@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,10 +35,10 @@ public class SourceUtil
 	private static String pluginName = null;
 	
 	// List of controllers & views within the plugin
-	private static ArrayList<String> expectedControllersList	= null;
-	private static ArrayList<String> initialControllersList		= null;
-	private static ArrayList<String> controllersList			= null;
-	private static ArrayList<String> viewsList					= null;
+	private static List<String> expectedControllersList	= null;
+	private static List<String> initialControllersList	= null;
+	private static List<String> controllersList			= null;
+	private static List<String> viewsList				= null;
 	
 	// Should contain exactly one MainController & one MainView
 	private static boolean hasMainController	= false;
@@ -92,13 +93,22 @@ public class SourceUtil
 	 */
 	public void verifySource(ElementMapper mainClass)
 	{
+		// Allow classes from com.rc2s.ejb
+		if (mainClass.getPackageName().startsWith("com.rc2s.ejb"))
+			return;
+		
 		String[] packageParts = mainClass.getPackageName().split("\\.");
+		
+		// Verify root - shall be com.rc2s.{plugin_name}
+		verifyRoot(packageParts);
+		
+		// Allow generic DAO use
+		if (mainClass.getPackageName().startsWith("com.rc2s." + pluginName + ".dao.generic"))
+			return;
 		
 		// First, get all views names and verify there is a MainView.fxml
 		if (isFirstCheck)
-		{
-			verifyRoot(packageParts);
-			
+		{	
 			buildControllersAndViewsFoldersPaths();
 			
 			try
@@ -118,9 +128,6 @@ public class SourceUtil
 			isFirstCheck = false;
 		}
 		
-		// Verify root - shall be com.rc2s.{plugin_name}
-		verifyRoot(packageParts);
-
 		// Then find class type - see com.rc2s.annotations.utils.ClassNamesEnum
 		ClassNamesEnum cne = findClassName(packageParts);
 
