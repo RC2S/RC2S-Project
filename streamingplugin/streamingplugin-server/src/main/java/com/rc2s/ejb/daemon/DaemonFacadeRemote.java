@@ -1,5 +1,6 @@
 package com.rc2s.ejb.daemon;
 
+import com.rc2s.annotations.SourceControl;
 import com.rc2s.common.bo.CubeState;
 import com.rc2s.common.exceptions.ServiceException;
 import com.rc2s.common.vo.Cube;
@@ -10,6 +11,7 @@ import java.util.Map;
 import javax.ejb.Remote;
 
 @Remote
+@SourceControl
 public interface DaemonFacadeRemote
 {
     public void sendCubesStates(final Map<Cube, CubeState> cubesStates) throws ServiceException;
