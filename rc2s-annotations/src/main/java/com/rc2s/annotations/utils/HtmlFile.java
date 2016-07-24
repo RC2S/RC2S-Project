@@ -53,8 +53,8 @@ public class HtmlFile
         }
 		catch (IOException ex)
 		{
-            Logger.getLogger(HtmlFile.class.getName()).log(Level.SEVERE, null,
-                ex);
+            Logger.getLogger(HtmlFile.class.getName())
+					.log(Level.SEVERE, null,ex);
             return false;
         }
 		return true;
@@ -166,6 +166,14 @@ public class HtmlFile
 		return builder.toString();
 	}
 	
+	/**
+	 * generateDetails
+	 * 
+	 * Generate all details (not methods & fields) found in the class
+	 * 
+	 * @param list
+	 * @return String content
+	 */
 	private static String generateDetails(final List<ElementMapper> list)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -211,6 +219,7 @@ public class HtmlFile
 			}
 			builder.append("</div>");
 		}
+		
 		return builder.toString();
 	}
 }

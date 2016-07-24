@@ -5,6 +5,13 @@ import com.rc2s.common.vo.User;
 import com.rc2s.dao.IGenericDAO;
 import javax.ejb.Local;
 
+/**
+ * IUserDAO
+ * 
+ * Interface for users management
+ * 
+ * @author RC2S
+ */
 @Local
 public interface IUserDAO extends IGenericDAO<User>
 {

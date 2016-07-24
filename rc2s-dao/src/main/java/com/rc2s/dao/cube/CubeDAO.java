@@ -8,9 +8,25 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+/**
+ * CubeDAO
+ * 
+ * ICubeDAO implementation, bridge for database cubes management
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class CubeDAO extends GenericDAO<Cube> implements ICubeDAO
 {
+	/**
+	 * getCubes
+	 * 
+	 * Get all the cubes for the given user
+	 * 
+	 * @param user
+	 * @return List<Cube>
+	 * @throws DAOException 
+	 */
 	@Override
 	public List<Cube> getCubes(final User user) throws DAOException
 	{
@@ -35,6 +51,15 @@ public class CubeDAO extends GenericDAO<Cube> implements ICubeDAO
 		}
 	}
 
+	/**
+	 * getByIp
+	 * 
+	 * Get a cube from a given ip
+	 * 
+	 * @param ipAddress
+	 * @return Cube
+	 * @throws DAOException 
+	 */
 	@Override
 	public Cube getByIp(final String ipAddress) throws DAOException
 	{

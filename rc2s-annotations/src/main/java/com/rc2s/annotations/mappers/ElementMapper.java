@@ -9,7 +9,7 @@ import javax.lang.model.element.Modifier;
 /**
  * ElementMapper
  * 
- * @author captp
+ * @author RC2S
  */
 public class ElementMapper
 {

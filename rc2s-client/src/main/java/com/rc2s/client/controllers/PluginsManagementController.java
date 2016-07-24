@@ -84,7 +84,7 @@ public class PluginsManagementController extends TabController implements Initia
 		versionColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getVersion()));
 		authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthor()));
 		activatedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isActivated() ? "Yes" : "No"));
-		accessColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAccess().toUpperCase()));
+		accessColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAccess()));
 		createdColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getCreated())));
 		updatedColumn.setCellValueFactory(data -> new SimpleStringProperty(Tools.formatDate(data.getValue().getUpdated())));
 	}
@@ -216,6 +216,9 @@ public class PluginsManagementController extends TabController implements Initia
 		
 		for (Tab tab : tabPane.getTabs())
 		{
+			if(tab == null || tab.getText() == null)
+				continue;
+
 			if (tab.getText().equals(pluginName))
 			{
 				tabPane.getTabs().remove(tab);

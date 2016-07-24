@@ -7,9 +7,24 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+/**
+ * PluginDAO
+ * 
+ * IPluginDAO implementation, bridge for database plugins management
+ * 
+ * @author RC2S
+ */
 @Stateless
 public class PluginDAO extends GenericDAO<Plugin> implements IPluginDAO
 {
+	/**
+	 * getAvailables
+	 * 
+	 * Get all the available plugins
+	 * 
+	 * @return List<Plugin> the available plugins
+	 * @throws DAOException 
+	 */
 	@Override
 	public List<Plugin> getAvailables() throws DAOException
 	{
@@ -24,6 +39,15 @@ public class PluginDAO extends GenericDAO<Plugin> implements IPluginDAO
 		}
 	}
 	
+	/**
+	 * getByName
+	 * 
+	 * Get a plugin based on its name
+	 * 
+	 * @param name
+	 * @return Plugin
+	 * @throws DAOException 
+	 */
 	@Override
 	public Plugin getByName(final String name) throws DAOException
 	{

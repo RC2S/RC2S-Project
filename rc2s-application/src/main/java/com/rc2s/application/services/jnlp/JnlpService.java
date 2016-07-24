@@ -24,10 +24,10 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
 /**
- * GroupService
+ * JnlpService
  * 
- * Service for group (jaas) retrieving
- * Uses an IGroupDAO for db access
+ * Service for jnlp management
+ * Used to sign the jar and update dependencies
  * 
  * @author RC2S
  */
@@ -37,11 +37,16 @@ public class JnlpService implements IJnlpService
     @Inject
     private Logger log;
     
-    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI") + "applications" + File.separator + "rc2s-jnlp" + File.separator + "rc2s-client.jnlp";
+    private final String jnlpFilePath = System.getProperty("com.sun.aas.instanceRootURI")
+			+ "applications" + File.separator
+			+ "rc2s-jnlp" + File.separator
+			+ "rc2s-client.jnlp";
     
     private final String jnlpLibsFolder = "libs/";
     
-    private final String jarSignerPath = System.getenv("JAVA_HOME") + File.separator + "bin" + File.separator + "jarsigner" + (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
+    private final String jarSignerPath = System.getenv("JAVA_HOME") + File.separator
+			+ "bin" + File.separator + "jarsigner"
+			+ (System.getProperty("os.name").contains("Windows") ? ".exe" : "");
     
     private final String signKeyStore = JnlpService.class.getResource("/RC2S.jks").getPath();
     
