@@ -160,6 +160,9 @@ public class SourceUtil
 	public void buildControllersAndViewsFoldersPaths()
 	{	
 		String pluginsRoot = System.getenv("RC2S_PLUGINS_ROOT");
+        
+        if (pluginsRoot == null)
+            pluginsRoot = "/projects/";
 		
 		// Root is /[plugins-root]/[plugin-name]/[plugin-name]-client/src/main/
 		StringBuilder sb = new StringBuilder();
