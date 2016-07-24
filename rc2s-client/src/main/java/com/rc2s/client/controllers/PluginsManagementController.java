@@ -3,6 +3,7 @@ package com.rc2s.client.controllers;
 import com.rc2s.common.client.utils.TabController;
 import com.rc2s.client.Main;
 import com.rc2s.common.client.utils.Dialog;
+import com.rc2s.common.client.utils.ThreadPool;
 import com.rc2s.common.client.utils.Tools;
 import com.rc2s.common.exceptions.EJBException;
 import com.rc2s.common.utils.EJB;
@@ -191,7 +192,8 @@ public class PluginsManagementController extends TabController implements Initia
 		
 					if (answer == ButtonType.OK)
 					{
-						pluginLoaderEJB.deletePlugin(plugin);
+						ThreadPool.interruptChildrenProcesses();
+                        pluginLoaderEJB.deletePlugin(plugin);
                         
                         log.info("Delete plugin " + plugin.getName());
                         
